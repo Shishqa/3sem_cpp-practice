@@ -9,16 +9,19 @@ SRCEXT := cpp
 SOURCES := $(shell find $(SRC) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(SOURCES:.$(SRCEXT)=.o))
 
-CFLAGS := -g -std=c++17 -O3 -Werror -Wall -Wextra -fPIE -pie
+CFLAGS := -g -std=c++17 -O3 -Werror -Wall -Wextra
 
-LIB :=
+LIB := -lglut -lGL -lGLU
 INC := -I include
 
+all: run
+
 run: $(TARGET)
+	@printf "\n  >>>>>>>>>> Running <<<<<<<<<<  \n";
 	./$(TARGET)
 
 $(TARGET): $(OBJECTS)
-	@printf "  >>>>>>>>>> Linking <<<<<<<<<<  \n";
+	@printf "\n  >>>>>>>>>> Linking <<<<<<<<<<  \n";
 	$(CC) $^ -o $(TARGET) $(LIB)
 
 $(BUILD)/%.o: $(SRC)/%.$(SRCEXT)
@@ -27,7 +30,7 @@ $(BUILD)/%.o: $(SRC)/%.$(SRCEXT)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
-	@printf "  >>>>>>>>>> Cleaning <<<<<<<<<< \n";
+	@printf "\n  >>>>>>>>>> Cleaning <<<<<<<<<< \n";
 	$(RM) -r $(BUILD) $(TARGET)
 
 # Tests
