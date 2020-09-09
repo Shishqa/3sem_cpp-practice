@@ -1,10 +1,10 @@
 #ifndef ANALYSIS_HPP
 #define ANALYSIS_HPP
 
-#include "type_stat_wrap.hpp"
-#include "sorting_data.hpp"
 
 #include <vector>
+
+#include "sortable.hpp"
 
 
 template <typename T>
@@ -12,32 +12,18 @@ void fill_random(std::vector<T>& arr);
 
 
 template <typename RandomIter>
-SortingData analyse_sorting_func(void (*sorting_func)(RandomIter, RandomIter),
-                                 const size_t& lower_arr_size,
-                                 const size_t& upper_arr_size,
-                                 const size_t& step) {
+Stat analyse_sorting_func(void (* sorting_func)(RandomIter, RandomIter),
+                          const size_t& arr_size) {
 
-    std::vector<Stat<int>> array;
-    array.reserve(upper_arr_size);
+    std::vector<Sortable<int>> array(arr_size);
 
-    for (size_t arr_size = lower_arr_size; arr_size <= upper_arr_size; arr_size += step) {
+    fill_random(array);
 
-        array.resize(arr_size);
+    Sortable<int>::reset();
 
-        printf("%lu;", arr_size);
+    sorting_func(array.begin(), array.end());
 
-        fill_random(array);
-        // $D( print_array(data, arr_size); )
-
-        Stat<int>::reset();
-
-        sorting_func(array.begin(), array.end());
-        //$D( print_array(data, arr_size); )
-
-        Stat<int>::print_stat();
-    }
-
-    return SortingData();
+    return Sortable<int>::stat;
 }
 
 

@@ -1,37 +1,36 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-#include <cstddef>
+void onRender();
+void onReshape(int w, int h);
+void onIdle();
 
-class Application {
-public:
+void draw();
 
-    Application() = delete;
+//#include <cstddef>
+//#include <vector>
+//
+//class AppWindow {
+//public:
+//
+//    AppWindow(const char* title);
+//
+//    void run();
+//
+//private:
+//
+//    static const size_t INIT_WINDOW_HEIGHT = 640, // px
+//                        INIT_WINDOW_WIDTH  = 640, // px
+//                        INIT_GAP           = 10;  // px
+//
+//    void onRender();
+//
+//    void onReshape(int width, int height);
+//
+//    void onKeyPress(unsigned char key, int x, int y);
+//
+//    void onMouseClick(int button, int state, int x, int y);
+//};
 
-    Application(int* argc_ptr, char** argv);
-
-    void run();
-
-private:
-
-    const size_t INIT_WINDOW_HEIGHT = 640, // px
-                 INIT_WINDOW_WIDTH  = 640, // px
-                 INIT_GAP           = 10;  // px
-
-    int mainWindow,
-        plotAssignmentWindow,
-        plotComparisonWindow,
-        sortSelectionWindow;
-
-    void initWindowLayout();
-
-    void initHandlers();
-
-    static void renderBackground();
-
-    static void renderSubwindow();
-
-    static void changeSize(int width, int height);
-};
 
 #endif //APPLICATION_HPP

@@ -1,5 +1,5 @@
-#ifndef SORT_HPP
-#define SORT_HPP
+#ifndef SORT_COLLECTION_HPP
+#define SORT_COLLECTION_HPP
 
 
 #include <cstddef>
@@ -85,4 +85,4 @@ void id_sort(RandomIter begin, RandomIter end) {
 }
 
 
-#endif //SORT_HPP
+#endif //SORT_COLLECTION_HPP

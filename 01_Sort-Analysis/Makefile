@@ -1,4 +1,4 @@
-CC := g++
+CC := g+++
 # CC := clang
 
 SRC := src
@@ -12,7 +12,7 @@ OBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := -g -std=c++17 -O3 -Werror -Wall -Wextra
 
 LIB := -lglut -lGL -lGLU
-INC := -I include
+INC := -Iinclude
 
 all: run
 
