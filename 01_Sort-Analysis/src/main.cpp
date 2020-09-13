@@ -1,32 +1,24 @@
-#include <GL/freeglut.h>
+#include <cstdio>
+#include <cstdlib>
+
 #include <GL/gl.h>
+#include <GL/freeglut.h>
 
-#include "../include/application.hpp"
+#include "sort_analyser.hpp"
 
+Window* Window::current_window = nullptr;
 
 int main(int argc, char** argv) {
 
-    // init GLUT and create Window
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-    glutCreateWindow("plot");
+    Application* app = new SortAnalyser();
+    printf("analyser created\n");
 
+    app->init(&argc, argv);
+    printf("analyser initiated\n");
 
+    app->run();
 
-
-    // register callbacks
-    glutDisplayFunc(onRender);
-    //glutIdleFunc(onIdle);
-    glutReshapeFunc(onReshape);
-
-    glLineWidth(1.0);
-
-    // enter GLUT event processing cycle
-    glutMainLoop();
+    delete app;
 
     return 0;
 }
-
-
-
-

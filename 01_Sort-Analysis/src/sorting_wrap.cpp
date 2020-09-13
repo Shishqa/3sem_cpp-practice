@@ -1,7 +1,7 @@
 #include <stdexcept>
 
-#include "../include/sorting_wrap.hpp"
-#include "../include/sort_analysis.hpp"
+#include "sorting_wrap.hpp"
+#include "../include/sorting_stat/sort_analysis.hpp"
 
 
 SortingWrap::SortingWrap(void (*sort)(Iterator, Iterator))

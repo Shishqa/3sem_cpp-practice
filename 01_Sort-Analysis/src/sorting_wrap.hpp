@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "sortable.hpp"
+#include "../include/sorting_stat/sortable.hpp"
 
 
 struct SortingWrap {
