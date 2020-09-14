@@ -1,14 +1,30 @@
 
 #include "sort_analyser.hpp"
+#include "graph_window.hpp"
 
 
 SortAnalyser::SortAnalyser()
-        : Application("Sort Analyser", 1024, 800) { }
+        : Application("Sort Analyser", 1024, 800) {
+
+    printf("analyser created\n");
+
+    Window* graph = new GraphWindow(0, 0, 100, 100);
+
+    attachSubWindow(graph);
+
+}
+
+
+SortAnalyser::~SortAnalyser() {
+
+    printf("analyser deleted\n");
+
+}
 
 
 void SortAnalyser::onRender() {
 
-    glClearColor(0, 0, 0, 0);
+    glClearColor(0, 0, 1, 0);
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

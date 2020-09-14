@@ -14,7 +14,7 @@ public:
 
     SortAnalyser();
 
-    virtual ~SortAnalyser() { }
+    virtual ~SortAnalyser();
 
 private:
 
