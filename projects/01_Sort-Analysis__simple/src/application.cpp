@@ -84,12 +84,10 @@ void drawGraph(SortGraph& graph) {
     glScalef(1.0f / (MAX_ARR_SIZE - MIN_ARR_SIZE) / 3, 1.0f / Sorts::max_y_value, 1.0f);
     glTranslatef(-static_cast<float>(MIN_ARR_SIZE), 0.0f, 0.0f);
 
-
     glColor4ub(graph.line_color.r, graph.line_color.g, graph.line_color.b, graph.line_color.a);
     glLineWidth(2.0);
 
     Stat stat = {};
-
 
     // TODO: get rid of COPY-PASTE!
 
