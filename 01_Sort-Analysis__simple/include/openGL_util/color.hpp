@@ -4,10 +4,7 @@
 
 struct Color {
 
-    double red,
-           green,
-           blue,
-           alpha;
+    double r, g, b, a;
 
 };
 

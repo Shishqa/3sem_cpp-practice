@@ -22,6 +22,13 @@ int main(int argc, char** argv) {
     glutDisplayFunc(onRender);
     glutReshapeFunc(onReshape);
 
+    glutCreateMenu(processMenu);
+    glutAddMenuEntry("CLEAR", CLEAR);
+    glutAddMenuEntry("BUBBLE SORT", BUBBLE_SORT);
+    glutAddMenuEntry("MERGE SORT", MERGE_SORT);
+    glutAddMenuEntry("STD SORT", STD_SORT);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
     glutMainLoop();
 
     return 0;
