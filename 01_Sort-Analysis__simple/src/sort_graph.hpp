@@ -24,6 +24,8 @@ struct SortGraph {
 
 private:
 
+    std::map<size_t, Stat> cache;
+
     SortingWrap sort;
 
     size_t min_size,
@@ -31,7 +33,6 @@ private:
            size_step;
 
     bool is_cache_valid;
-    std::map<size_t, Stat> cache;
 
 };
 

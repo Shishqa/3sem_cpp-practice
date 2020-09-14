@@ -2,16 +2,19 @@
 #define SORT_COLLECTION_HPP
 
 
+#include <cstdio>
 #include <cstddef>
 #include <utility>
 #include <stack>
 
+#include <random>
+#include <ctime>
 
 template <typename RandomIter>
 void fill_random(RandomIter begin, RandomIter end) {
 
     static const int MAX_INT_BOUND = 1024;
-    srand(end - begin);
+    srand(time(nullptr));
 
     for (RandomIter i = begin; i < end; ++i) {
         *i = rand() % MAX_INT_BOUND;

@@ -1,10 +1,10 @@
 #include "sort_graph.hpp"
 
 
-SortGraph::SortGraph(const SortingWrap& sort,
+SortGraph::SortGraph(const SortingWrap& wrapped_sort,
                      const Color& color)
-        : sort(sort)
-        , line_color(color)
+        : line_color(color)
+        , sort(wrapped_sort)
         , is_cache_valid(false) { }
 
 
@@ -53,3 +53,4 @@ void SortGraph::fill(const size_t& min_arr_size,
     is_cache_valid = true;
 
 }
+

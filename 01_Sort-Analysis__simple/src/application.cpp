@@ -9,13 +9,15 @@
 
 namespace Sorts {
 
-    static SortGraph bubble = SortGraph(SortingWrap(bubble_sort, fill_random), {1.0, 0.0, 1.0, 1.0}),
-                     merge = SortGraph(SortingWrap(merge_sort, fill_random), {1.0, 1.0, 0.0, 1.0}),
-                     std_sort = SortGraph(SortingWrap(std::sort, fill_random), {1.0, 0.0, 0.0, 1.0});
+    SortGraph bubble   = SortGraph(SortingWrap(bubble_sort, fill_random),{250, 128, 114, 255}),
+              merge    = SortGraph(SortingWrap(merge_sort, fill_random), {107, 142,  35, 255}),
+              std_sort = SortGraph(SortingWrap(std::sort, fill_random),  {127, 255, 212, 255});
 
-    static std::set<SortGraph*> active_sorts;
+    std::set<SortGraph*> active_sorts;
 
-};
+    size_t max_y_value = 1;
+
+}
 
 
 void processMenu(int option) {
@@ -24,6 +26,11 @@ void processMenu(int option) {
 
         case CLEAR:
             Sorts::active_sorts.clear();
+            Sorts::max_y_value = 1;
+            glutPostRedisplay();
+            break;
+
+        case UPDATE:
             glutPostRedisplay();
             break;
 
@@ -44,7 +51,6 @@ void processMenu(int option) {
 
         default:
             throw std::runtime_error("Error: unknown sort chosen!\n");
-            break;
     }
 
 }
@@ -68,19 +74,24 @@ void onRender() {
 void drawGraph(SortGraph& graph) {
 
     static const int    MIN_ARR_SIZE = 10,
-                        MAX_ARR_SIZE = 100,
-                        STEP         = 5;
+                        MAX_ARR_SIZE = 10000,
+                        STEP         = 100;
 
     graph.fill(MIN_ARR_SIZE, MAX_ARR_SIZE, STEP);
 
     glPushMatrix();
 
-    glScalef(1.0f / (MAX_ARR_SIZE - MIN_ARR_SIZE) / 3, 1.0f / 10000, 1.0f);
+    glScalef(1.0f / (MAX_ARR_SIZE - MIN_ARR_SIZE) / 3, 1.0f / Sorts::max_y_value, 1.0f);
     glTranslatef(-static_cast<float>(MIN_ARR_SIZE), 0.0f, 0.0f);
-    glColor3d(graph.line_color.r, graph.line_color.g, graph.line_color.b);
+
+
+    glColor4ub(graph.line_color.r, graph.line_color.g, graph.line_color.b, graph.line_color.a);
     glLineWidth(2.0);
 
     Stat stat = {};
+
+
+    // TODO: get rid of COPY-PASTE!
 
     glBegin(GL_LINE_STRIP);
         for (size_t arr_size = MIN_ARR_SIZE; arr_size <= MAX_ARR_SIZE; arr_size += STEP) {
@@ -88,6 +99,8 @@ void drawGraph(SortGraph& graph) {
             stat = graph[arr_size];
 
             glVertex2d(static_cast<double>(arr_size), static_cast<double>(stat.compare_cnt));
+
+            Sorts::max_y_value = std::max(Sorts::max_y_value, stat.compare_cnt);
 
         }
     glEnd();
@@ -98,6 +111,8 @@ void drawGraph(SortGraph& graph) {
             stat = graph[arr_size];
 
             glVertex2d(static_cast<double>(arr_size + MAX_ARR_SIZE), static_cast<double>(stat.assign_cnt));
+
+            Sorts::max_y_value = std::max(Sorts::max_y_value, stat.assign_cnt);
 
         }
     glEnd();

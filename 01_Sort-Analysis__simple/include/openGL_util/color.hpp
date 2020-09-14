@@ -1,11 +1,10 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
+#include <cstdint>
 
 struct Color {
-
-    double r, g, b, a;
-
+    uint8_t r, g, b, a;
 };
 
 

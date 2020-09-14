@@ -10,9 +10,10 @@
 
 enum {
     CLEAR = 0,
-    BUBBLE_SORT = 1,
-    MERGE_SORT  = 2,
-    STD_SORT    = 3
+    UPDATE,
+    BUBBLE_SORT,
+    MERGE_SORT,
+    STD_SORT
 };
 
 
