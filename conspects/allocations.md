@@ -28,6 +28,8 @@
 
     new -> malloc -> nullptr -> 
 
+              г--> tries to free some unnecessary memory
+              |
     ---> int new_handler() -> != 0 -> malloc вызывается снова
                            -> == 0 -> exception 
 
