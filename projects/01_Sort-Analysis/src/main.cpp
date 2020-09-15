@@ -4,19 +4,15 @@
 #include <GL/gl.h>
 #include <GL/freeglut.h>
 
-#include "sort_analyser.hpp"
-
-Window* Window::current_window = nullptr;
+#include "essential.hpp"
 
 int main(int argc, char** argv) {
 
-    Application* app = new SortAnalyser();
+    ShishGL::init(&argc, argv, ShishGL::DEBUG);
 
-    app->run(&argc, argv);
+    printf("hello, world!\n");
 
-    delete app;
+    ShishGL::terminate();
 
     return 0;
 }
-
-
