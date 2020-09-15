@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Dia
+*.dia
+*.autosave
