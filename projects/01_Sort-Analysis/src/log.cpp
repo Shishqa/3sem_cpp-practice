@@ -9,8 +9,8 @@ bool ShishGL::do_log = false;
 
 
 enum {
-    LOG_SUCCESS = 0,
-    LOG_FAILURE = 1
+    LOG_SUCCESS = 1,
+    LOG_FAILURE = 0
 };
 
 
@@ -26,3 +26,6 @@ int ShishGL::closeLog() {
 
     return fclose(LOG_FILE);
 }
+
+
+

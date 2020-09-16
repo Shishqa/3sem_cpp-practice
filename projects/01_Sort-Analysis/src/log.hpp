@@ -12,7 +12,9 @@ namespace ShishGL {
     int printLog(const char* format, Args... args) {
         if (do_log) {
             fprintf(LOG_FILE, "### ");
-            return fprintf(LOG_FILE, format, args...);
+            int fprintf_ret = fprintf(LOG_FILE, format, args...);
+            fprintf(LOG_FILE, "\n");
+            return fprintf_ret;
         }
         return 0;
     }

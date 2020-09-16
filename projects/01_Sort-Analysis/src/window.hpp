@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <stdexcept>
 #include <vector>
+#include <queue>
 
 #include <GL/gl.h>
 #include <GL/freeglut.h>
@@ -22,9 +23,15 @@ namespace ShishGL {
         Window(const int& pos_x, const int& pos_y,
                const size_t& width, const size_t& height);
 
-        virtual ~Window();
+        Window(const Window& other);
 
-        void attachSubWindow(Window* window);
+        Window(Window&& other);
+
+        Window& operator=(const Window& other);
+
+        Window& operator=(Window&& other);
+
+        virtual ~Window();
 
         void dump();
 
@@ -38,68 +45,52 @@ namespace ShishGL {
 
         };
 
-    protected:
-
-        void setHandlers() {
-
-            glutSetWindow(window->info.id);
-
-            glutDisplayFunc(glutOnRender);
-            glutReshapeFunc(glutOnReshape);
-            glutKeyboardFunc(glutOnKeyPress);
-            glutMouseFunc(glutOnMouseClick);
-
-        }
-
         WindowInfo info;
-
-        std::vector<Window*> sub_windows;
-
-        static const int ID_UNDEFINED = 0;
-
-        static std::vector<Window*> active_windows;
 
         static void makeActive(Window* window);
 
+    protected:
+
+        static const int ID_UNDEFINED = 0;
+
+        std::vector<Window*> subwindows;
+
+        void attach(Window* window);
+
         //==========================================================================
 
-        virtual void onRender() = 0;
+        virtual void onIdle() { }
 
-        virtual void onReshape(int, int) = 0;
+        virtual void onRender() { }
 
-        virtual void onKeyPress(unsigned char, int, int) = 0;
+        virtual void onEntry(int) { }
 
-        virtual void onMouseClick(int, int, int, int) = 0;
+        virtual void onReshape(int, int) { }
 
-        //--------------------------------------------------------------------------
+        virtual void onKeyPress(unsigned char, int, int) { }
 
-        static void glutOnRender() {
-            Window* win_ptr = active_windows.at(glutGetWindow());
-            if (win_ptr) {
-                win_ptr->onRender();
-            }
-        }
+        virtual void onMouseClick(int, int, int, int) { }
 
-        static void glutOnReshape(int width, int height) {
-            Window* win_ptr = active_windows.at(glutGetWindow());
-            if (win_ptr) {
-                win_ptr->onReshape(width, height);
-            }
-        }
+        //==========================================================================
 
-        static void glutOnKeyPress(unsigned char key, int x, int y) {
-            Window* win_ptr = active_windows.at(glutGetWindow());
-            if (win_ptr) {
-                win_ptr->onKeyPress(key, x, y);
-            }
-        }
+        static const int MAX_ALLOWED_WINDOW_CNT = 200;
+        static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
 
-        static void glutOnMouseClick(int button, int state, int x, int y) {
-            Window* win_ptr = active_windows.at(glutGetWindow());
-            if (win_ptr) {
-                win_ptr->onMouseClick(button, state, x, y);
-            }
-        }
+
+
+        static Window* getCurrentActiveWindow();
+
+        static void manageOnIdle();
+
+        static void manageOnRender();
+
+        static void manageOnEntry(int state);
+
+        static void manageOnReshape(int width, int height);
+
+        static void manageOnKeyPress(unsigned char key, int x, int y);
+
+        static void manageOnMouseClick(int button, int state, int x, int y);
 
         //==========================================================================
 

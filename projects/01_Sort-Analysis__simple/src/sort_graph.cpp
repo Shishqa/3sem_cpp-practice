@@ -14,8 +14,6 @@ Stat SortGraph::operator[](const size_t& arr_size) {
         return cache[arr_size];
     }
 
-    printf("# dot recount\n");
-
     Stat stat = sort(arr_size);
 
     cache[arr_size] = stat;
@@ -37,7 +35,6 @@ void SortGraph::fill(const size_t& min_arr_size,
 
     }
 
-    printf("# cache recount\n");
     min_size  = min_arr_size;
     max_size  = max_arr_size;
     size_step = step;

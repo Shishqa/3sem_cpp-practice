@@ -11,6 +11,8 @@ namespace ShishGL {
 
     void init(int*argc_ptr, char**argv, uint8_t flags);
 
+    void run();
+
     void terminate();
 
     struct Color {

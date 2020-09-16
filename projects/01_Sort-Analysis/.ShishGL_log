@@ -1,3 +1,8 @@
 ### ShishGL initialization started
 ### ShishGL initialized
+### Created window 0x55638cfd3f30 at (0, 0) with width 300 px and height 100 px (but not initialised with GLUT)
+### Button created
+### Window 0x55638cfd3f30 is now active with id 1 (make sure it was initialized before!)
+### Button deleted
+### Destroyed window 1
 ### Terminating ShishGL
