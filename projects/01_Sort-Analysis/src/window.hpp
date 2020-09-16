@@ -45,17 +45,15 @@ namespace ShishGL {
 
         };
 
-        WindowInfo info;
-
-        static void makeActive(Window* window);
+        void attach(Window* window);
 
     protected:
+
+        WindowInfo info;
 
         static const int ID_UNDEFINED = 0;
 
         std::vector<Window*> subwindows;
-
-        void attach(Window* window);
 
         //==========================================================================
 
@@ -76,7 +74,7 @@ namespace ShishGL {
         static const int MAX_ALLOWED_WINDOW_CNT = 200;
         static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
 
-
+        static void makeActive(Window* window);
 
         static Window* getCurrentActiveWindow();
 

@@ -40,6 +40,17 @@ void Window::attach(Window* window) {
 
     subwindows.emplace_back(window);
 
+    if (info.id == ID_UNDEFINED) {
+        printLog("Warning: attached subwindow to not-initialized window!");
+        return;
+    }
+
+    window->info.id = glutCreateSubWindow(info.id,
+                                          window->info.pos_x, window->info.pos_y,
+                                          window->info.width, window->info.height);
+
+    makeActive(window);
+
 }
 
 
@@ -78,17 +89,6 @@ void Window::makeActive(Window* window) {
 
     printLog("Window %p is now active with id %d (make sure it was initialized before!)",
              window, window->info.id);
-
-//    for (auto& win : window->subwindows) {
-//
-//        win->info.id = glutCreateSubWindow(window->info.id,
-//                                           win->info.pos_x, win->info.pos_y,
-//                                           win->info.width, win->info.height);
-//
-//        printLog("Window %p initialized with GLUT with id %d", win, win->info.id);
-//
-//        makeActive(win);
-//    }
 
 }
 

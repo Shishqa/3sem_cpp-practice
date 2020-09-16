@@ -15,6 +15,8 @@ MainWindow::MainWindow(const char* title,
     info.id = glutCreateWindow(title);
     printLog("Window %p initialized with GLUT with id %d (but still not activated)", this, info.id);
 
+    makeActive(this);
+
 }
 
 

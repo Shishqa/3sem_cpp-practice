@@ -1,8 +1,17 @@
 ### ShishGL initialization started
 ### ShishGL initialized
-### Created window 0x55638cfd3f30 at (0, 0) with width 300 px and height 100 px (but not initialised with GLUT)
+### Created window 0x556f2b264f60 at (0, 0) with width 1024 px and height 720 px (but not initialised with GLUT)
+### Window 0x556f2b264f60 initialized with GLUT with id 1 (but still not activated)
+### Window 0x556f2b264f60 is now active with id 1 (make sure it was initialized before!)
+### Created window 0x556f2b2da7a0 at (200, 200) with width 500 px and height 50 px (but not initialised with GLUT)
 ### Button created
-### Window 0x55638cfd3f30 is now active with id 1 (make sure it was initialized before!)
+### Window 0x556f2b2da7a0 is now active with id 2 (make sure it was initialized before!)
+### Created window 0x556f2b314d20 at (0, 0) with width 100 px and height 100 px (but not initialised with GLUT)
+### Window 0x556f2b314d20 is now active with id 3 (make sure it was initialized before!)
+### created app
+### deleted app
 ### Button deleted
+### Destroyed window 2
+### Destroyed window 3
 ### Destroyed window 1
 ### Terminating ShishGL

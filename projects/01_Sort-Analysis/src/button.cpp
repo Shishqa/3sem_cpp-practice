@@ -35,8 +35,8 @@ void Button::onRender() {
                  color_current.g / 255.,
                  color_current.b / 255.,
                  color_current.a / 255.);
-
     glClear(GL_COLOR_BUFFER_BIT);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
