@@ -105,7 +105,14 @@ Window* Window::getCurrentActiveWindow() {
 }
 
 
+void Window::refresh() {
+    glutSetWindow(info.id);
+    glutPostRedisplay();
+}
+
+
 void Window::manageOnIdle() {
+    processNewEvents();
     Window* win_ptr = getCurrentActiveWindow();
     if (win_ptr) {
         win_ptr->onIdle();
@@ -151,4 +158,34 @@ void Window::manageOnMouseClick(int button, int state, int x, int y) {
     if (win_ptr) {
         win_ptr->onMouseClick(button, state, x, y);
     }
+}
+
+
+//------------------------------------------------------------------------------
+
+
+std::queue<Event> Window::events;
+
+
+void Window::generateEvent(const Event& event) {
+    events.push(event);
+}
+
+
+void Window::processNewEvents() {
+
+    while (!events.empty()) {
+
+        Event curr_event = events.front();
+
+        if (!curr_event.target) {
+            printLog("Warning: event with empty target passed!");
+        } else {
+            curr_event.target->processEvent(curr_event);
+        }
+
+        events.pop();
+
+    }
+
 }

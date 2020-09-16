@@ -18,7 +18,11 @@ namespace ShishGL {
 
     private:
 
+        Color curr_color;
+
         void onRender() override;
+
+        void processEvent(const Event& event) override;
 
     };
 

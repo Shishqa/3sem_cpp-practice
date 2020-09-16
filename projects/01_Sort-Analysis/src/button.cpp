@@ -6,17 +6,19 @@
 using namespace ShishGL;
 
 
-Button::Button(const char* button_label,
+Button::Button(const char* button_label, const Event& click_event,
                const int& pos_x, const int& pos_y,
                const size_t& width, const size_t& height,
-               const Color& default_color, const Color& hover_color,
-               const Color& click_color)
+               const Color default_color,
+               const Color hover_color,
+               const Color click_color)
         : Window(pos_x, pos_y, width, height)
+        , on_click(click_event)
         , label(button_label)
+        , color_current(default_color)
         , color_default(default_color)
         , color_hover(hover_color)
-        , color_click(click_color)
-        , color_current(default_color) {
+        , color_click(click_color) {
 
     label_len = strlen(label);
 
@@ -77,6 +79,7 @@ void Button::onMouseClick(int button, int state, int x, int y) {
     switch (state) {
         case GLUT_DOWN:
             color_current = color_click;
+            generateEvent(on_click);
             break;
 
         case GLUT_UP:

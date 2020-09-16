@@ -3,16 +3,21 @@
 #include "graph_window.hpp"
 #include "colors.hpp"
 #include "log.hpp"
+#include "event.hpp"
 
 SortAnalyserApp::SortAnalyserApp()
     : ShishGL::MainWindow("Sort Analyser", 1024, 720) {
 
-    attach(new ShishGL::Button("touch me", 200, 200, 500, 50,
+    Window* graph = new ShishGL::GraphWindow(0, 0, 100, 100);
+
+    attach(graph);
+
+    attach(new ShishGL::Button("touch me",
+                               {graph, 1},
+                               200, 200, 500, 50,
                                {DARK_KHAKI, 255},
                                {KHAKI, 255},
                                {PAPAYA_WHIP, 255}));
-
-    attach(new ShishGL::GraphWindow(0,0,100,100));
 
     ShishGL::printLog("created app");
 }

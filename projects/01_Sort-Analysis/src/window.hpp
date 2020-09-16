@@ -11,6 +11,7 @@
 #include <GL/freeglut.h>
 
 #include "essential.hpp"
+#include "event.hpp"
 
 
 namespace ShishGL {
@@ -57,6 +58,8 @@ namespace ShishGL {
 
         //==========================================================================
 
+        void refresh();
+
         virtual void onIdle() { }
 
         virtual void onRender() { }
@@ -68,6 +71,8 @@ namespace ShishGL {
         virtual void onKeyPress(unsigned char, int, int) { }
 
         virtual void onMouseClick(int, int, int, int) { }
+
+        virtual void processEvent(const Event& event) { }
 
         //==========================================================================
 
@@ -91,6 +96,12 @@ namespace ShishGL {
         static void manageOnMouseClick(int button, int state, int x, int y);
 
         //==========================================================================
+
+        static std::queue<Event> events;
+
+        static void generateEvent(const Event& event);
+
+        static void processNewEvents();
 
     };
 

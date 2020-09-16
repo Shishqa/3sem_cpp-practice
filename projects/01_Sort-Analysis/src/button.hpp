@@ -4,6 +4,7 @@
 
 #include <cstddef>
 #include "window.hpp"
+#include "colors.hpp"
 
 
 namespace ShishGL {
@@ -13,15 +14,18 @@ namespace ShishGL {
 
         Button() = delete;
 
-        Button(const char* button_label,
+        Button(const char* button_label, const Event& click_event,
                const int& pos_x, const int& pos_y,
                const size_t& width, const size_t& height,
-               const Color& default_color, const Color& hover_color,
-               const Color& click_color);
+               const Color default_color = {LEMON_CHIFFON, 255},
+               const Color hover_color   = {PAPAYA_WHIP,   255},
+               const Color click_color   = {WHITE,         255});
 
         virtual ~Button();
 
     protected:
+
+        Event on_click;
 
         const char* label;
         int label_len;
