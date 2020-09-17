@@ -1,7 +1,7 @@
 #include <cstring>
 
-#include "button.hpp"
-#include "log.hpp"
+#include "ShishGL/button.hpp"
+#include "ShishGL/log.hpp"
 
 using namespace ShishGL;
 
@@ -33,11 +33,7 @@ Button::~Button() {
 
 void Button::onRender() {
 
-    glClearColor(color_current.r / 255.,
-                 color_current.g / 255.,
-                 color_current.b / 255.,
-                 color_current.a / 255.);
-    glClear(GL_COLOR_BUFFER_BIT);
+    fillWithColor(color_current);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -51,18 +47,10 @@ void Button::onRender() {
 
 void Button::onEntry(int state) {
 
-    switch (state) {
-
-        case GLUT_ENTERED:
-            color_current = color_hover;
-            break;
-
-        case GLUT_LEFT:
-            color_current = color_default;
-            break;
-
-        default:
-            throw std::runtime_error("Error: unknown state of button passed\n");
+    if (state == GLUT_ENTERED) {
+        color_current = color_hover;
+    } else {
+        color_current = color_default;
     }
 
     glutPostRedisplay();
@@ -70,7 +58,7 @@ void Button::onEntry(int state) {
 }
 
 
-void Button::onMouseClick(int button, int state, int x, int y) {
+void Button::onMouseClick(int button, int state, int, int) {
 
     if (button != GLUT_LEFT_BUTTON) {
         return;
@@ -98,13 +86,13 @@ void Button::drawLabel() {
 
     glColor4ub(0, 0, 0, 1);
 
-    static const int FONT_HEIGHT = 15,
-                     FONT_WIDTH  = 9;
+    static const size_t FONT_HEIGHT = 15,
+                        FONT_WIDTH  = 9;
 
-    int bitmap_width = FONT_WIDTH * label_len;
+    size_t bitmap_width = FONT_WIDTH * label_len;
 
-    glRasterPos2d( - static_cast<double>(bitmap_width) / info.width,
-                   - static_cast<double>(FONT_HEIGHT)  / info.height);
+    glRasterPos2d( - static_cast<double>(bitmap_width) / static_cast<double>(info.width),
+                   - static_cast<double>(FONT_HEIGHT)  / static_cast<double>(info.height));
 
     for(const char* curr_symbol = label; *curr_symbol != '\0'; ++curr_symbol) {
 

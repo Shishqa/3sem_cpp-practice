@@ -1,40 +1,46 @@
-CC := g++
-# CC := clang
+CXX      := g++
+CXXFLAGS := -std=c++17 -pedantic-errors -Wall -Wextra -Werror
+LDFLAGS  := -L/usr/lib -lstdc++ -lm -lGL -lglut -lGLU -lGLEW
+BUILD    := ./build
+OBJ_DIR  := $(BUILD)/objects
+APP_DIR  := $(BUILD)/apps
+TARGET   := program
+INCLUDE  := -Iinclude/
+SRC      :=                           	\
+   	$(wildcard src/ShishGL/*.cpp)      	\
+   	$(wildcard src/SortAnalyser/*.cpp) 	\
+   	$(wildcard src/*.cpp)              	\
 
-SRC := src
-BUILD := build
-TARGET := bin/app # specify this name 
+OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-SRCEXT := cpp
-SOURCES := $(shell find $(SRC) -type f -name *.$(SRCEXT))
-OBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(SOURCES:.$(SRCEXT)=.o))
+all: build $(APP_DIR)/$(TARGET)
 
-CFLAGS := -g -std=c++17 -O3 -Wall -Wextra
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ $(LDFLAGS)
 
-LIB := -lGL -lGLU -lglut
-INC := -Iinclude
+$(APP_DIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
 
-all: run
+.PHONY: all build clean debug release
 
-run: $(TARGET)
-	@printf "\n  >>>>>>>>>> Running <<<<<<<<<<  \n";
-	./$(TARGET)
+build:
+	@mkdir -p $(APP_DIR)
+	@mkdir -p $(OBJ_DIR)
 
-$(TARGET): $(OBJECTS)
-	@printf "\n  >>>>>>>>>> Linking <<<<<<<<<<  \n";
-	$(CC) $^ -o $(TARGET) $(LIB)
+debug: CXXFLAGS += -O2 -DDEBUG -g -Wshadow -Wformat=2 -Wfloat-equal \
+				   -Wconversion -Wlogical-op -Wshift-overflow=2     \
+				   -Wduplicated-cond -Wcast-qual -Wcast-align       \
+				   -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC       \
+				   -D_FORTIFY_SOURCE=2 -fsanitize=address 		    \
+				   -fsanitize=undefined -fno-sanitize-recover 	    \
+				   -fstack-protector -Wno-format-nonliteral
+debug: all
 
-$(BUILD)/%.o: $(SRC)/%.$(SRCEXT)
-	@printf "  >>>>>>>>>> Building <<<<<<<<<<< \n";
-	@mkdir -p $(BUILD)
-	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
+release: CXXFLAGS += -O3
+release: all
 
 clean:
-	@printf "\n  >>>>>>>>>> Cleaning <<<<<<<<<< \n";
-	$(RM) -r $(BUILD) $(TARGET)
-
-# Tests
-tester:
-	$(CC) $(CFLAGS) test/tester.cpp $(INC) $(LIB) -o bin/tester
-
-.PHONY: clean
+	-@rm -rvf $(OBJ_DIR)/*
+	-@rm -rvf $(APP_DIR)/*

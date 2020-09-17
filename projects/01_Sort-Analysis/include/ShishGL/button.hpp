@@ -28,7 +28,7 @@ namespace ShishGL {
         Event on_click;
 
         const char* label;
-        int label_len;
+        size_t label_len;
 
         Color color_current,
               color_default,

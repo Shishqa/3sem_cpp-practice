@@ -1,17 +1,21 @@
 ### ShishGL initialization started
 ### ShishGL initialized
-### Created window 0x556a2af66150 at (0, 0) with width 1024 px and height 720 px (but not initialised with GLUT)
-### Window 0x556a2af66150 initialized with GLUT with id 1 (but still not activated)
-### Window 0x556a2af66150 is now active with id 1 (make sure it was initialized before!)
-### Created window 0x556a2afdad20 at (0, 0) with width 100 px and height 100 px (but not initialised with GLUT)
-### Window 0x556a2afdad20 is now active with id 2 (make sure it was initialized before!)
-### Created window 0x556a2b016730 at (200, 200) with width 500 px and height 50 px (but not initialised with GLUT)
-### Button created
-### Window 0x556a2b016730 is now active with id 3 (make sure it was initialized before!)
+### Created main window 0x56267959f210 at (0, 0) with width 1024 px and height 720 px (but not initialised with GLUT)
+### Window 0x56267959f210 initialized with GLUT with id 1 (but still not activated)
+### Window 0x56267959f210 is now active with id 1 (make sure it was initialized before!)
 ### created app
-### deleted app
-### Destroyed window 2
-### Button deleted
-### Destroyed window 3
-### Destroyed window 1
-### Terminating ShishGL
+### Created main window 0x56267947e650 at (0, 0) with width 890 px and height 460 px (but not initialised with GLUT)
+### Window 0x56267947e650 is now active with id 2 (make sure it was initialized before!)
+### Created main window 0x56267964f210 at (30, 30) with width 400 px and height 400 px (but not initialised with GLUT)
+### Created main window 0x56267964f9b0 at (460, 30) with width 400 px and height 400 px (but not initialised with GLUT)
+### Window 0x56267964f210 is now active with id 3 (make sure it was initialized before!)
+### Window 0x56267964f9b0 is now active with id 4 (make sure it was initialized before!)
+### Created main window 0x5626796c62f0 at (0, 460) with width 100 px and height 40 px (but not initialised with GLUT)
+### Button created
+### Window 0x5626796c62f0 is now active with id 5 (make sure it was initialized before!)
+### Created main window 0x562679701c80 at (100, 460) with width 100 px and height 40 px (but not initialised with GLUT)
+### Button created
+### Window 0x562679701c80 is now active with id 6 (make sure it was initialized before!)
+### Created main window 0x56267973cad0 at (200, 460) with width 100 px and height 40 px (but not initialised with GLUT)
+### Button created
+### Window 0x56267973cad0 is now active with id 7 (make sure it was initialized before!)

@@ -1,5 +1,5 @@
-#include "window.hpp"
-#include "log.hpp"
+#include "ShishGL/window.hpp"
+#include "ShishGL/log.hpp"
 
 using namespace ShishGL;
 
@@ -8,10 +8,9 @@ Window::Window(const int& pos_x, const int& pos_y,
                const size_t& width, const size_t& height)
         : info({ID_UNDEFINED, pos_x, pos_y, width, height}) {
 
-    printLog("Created window %p at (%d, %d) with width %lu px and height %lu px (but not initialised with GLUT)",
-             this, pos_x, pos_y, width, height);
+    printLog("Created main window %p at (%d, %d) with width %lu px and height %lu px (but not initialised with GLUT)",
+             reinterpret_cast<void*>(this), pos_x, pos_y, width, height);
 }
-
 
 
 Window::~Window() {
@@ -36,6 +35,11 @@ void Window::dump() {
 }
 
 
+const Window::WindowInfo& Window::getInfo() {
+    return info;
+}
+
+
 void Window::attach(Window* window) {
 
     subwindows.emplace_back(window);
@@ -47,9 +51,12 @@ void Window::attach(Window* window) {
 
     window->info.id = glutCreateSubWindow(info.id,
                                           window->info.pos_x, window->info.pos_y,
-                                          window->info.width, window->info.height);
+                                          static_cast<int>(window->info.width),
+                                          static_cast<int>(window->info.height));
 
     makeActive(window);
+
+    window->initLayout();
 
 }
 
@@ -88,7 +95,7 @@ void Window::makeActive(Window* window) {
     active_windows[window->info.id] = window;
 
     printLog("Window %p is now active with id %d (make sure it was initialized before!)",
-             window, window->info.id);
+             reinterpret_cast<void*>(window), window->info.id);
 
 }
 
@@ -143,6 +150,7 @@ void Window::manageOnReshape(int width, int height) {
         win_ptr->onReshape(width, height);
     }
 }
+
 
 
 void Window::manageOnKeyPress(unsigned char key, int x, int y) {

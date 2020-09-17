@@ -1,5 +1,5 @@
-#ifndef SORTABLE_HPP
-#define SORTABLE_HPP
+#ifndef STAT_WRAP_HPP
+#define STAT_WRAP_HPP
 
 #include <cstdio>
 #include <iostream>
@@ -8,7 +8,7 @@
 
 
 template <typename T>
-struct Sortable {
+struct StatWrap {
 
     T value;
 
@@ -18,49 +18,49 @@ struct Sortable {
     static void reset();
     static void print_stat();
 
-    Sortable();
+    StatWrap();
 
-    Sortable(T value);
+    StatWrap(T value);
 
-    Sortable(const Sortable<T>& other);
-    Sortable& operator=(const Sortable<T>& other);
+    StatWrap(const StatWrap<T>& other);
+    StatWrap& operator=(const StatWrap<T>& other);
 
-    Sortable(Sortable<T>&& other);
-    Sortable& operator=(Sortable<T>&& other);
+    StatWrap(StatWrap<T>&& other);
+    StatWrap& operator=(StatWrap<T>&& other);
 };
 
 
 template <typename T>
-bool operator<(const Sortable<T>& a, const Sortable<T>& b);
+bool operator<(const StatWrap<T>& a, const StatWrap<T>& b);
 
 template <typename T>
-std::ostream& operator<<(std::ostream& out, const Sortable<T>& value);
+std::ostream& operator<<(std::ostream& out, const StatWrap<T>& value);
 
 
 //==============================================================================
 
 
 template <typename T>
-Stat Sortable<T>::stat = {0, 0};
+Stat StatWrap<T>::stat = {0, 0};
 
 
 template <typename T>
-Sortable<T>::Sortable() : value(T()) {}
+StatWrap<T>::StatWrap() : value(T()) {}
 
 
 template <typename T>
-Sortable<T>::Sortable(T val) : value(val) {}
+StatWrap<T>::StatWrap(T val) : value(val) {}
 
 
 template <typename T>
-Sortable<T>::Sortable(const Sortable<T>& other) {
+StatWrap<T>::StatWrap(const StatWrap<T>& other) {
     ++stat.assign_cnt;
     value = other.value;
 }
 
 
 template <typename T>
-Sortable<T>& Sortable<T>::operator=(const Sortable<T>& other) {
+StatWrap<T>& StatWrap<T>::operator=(const StatWrap<T>& other) {
     if (&other == this) {
         return *this;
     }
@@ -71,14 +71,14 @@ Sortable<T>& Sortable<T>::operator=(const Sortable<T>& other) {
 
 
 template <typename T>
-Sortable<T>::Sortable(Sortable<T>&& other) {
+StatWrap<T>::StatWrap(StatWrap<T>&& other) {
     ++stat.assign_cnt;
     value = std::move(other.value);
 }
 
 
 template <typename T>
-Sortable<T>& Sortable<T>::operator=(Sortable<T>&& other) {
+StatWrap<T>& StatWrap<T>::operator=(StatWrap<T>&& other) {
     ++stat.assign_cnt;
     value = std::move(other.value);
     return *this;
@@ -86,31 +86,31 @@ Sortable<T>& Sortable<T>::operator=(Sortable<T>&& other) {
 
 
 template <typename T>
-void Sortable<T>::reset() {
+void StatWrap<T>::reset() {
     stat.assign_cnt  = 0;
     stat.compare_cnt = 0;
 }
 
 
 template <typename T>
-void Sortable<T>::print_stat() {
+void StatWrap<T>::print_stat() {
     printf("%lu;%lu\n",
            stat.assign_cnt, stat.compare_cnt);
 }
 
 
 template <typename T>
-bool operator<(const Sortable<T>& a, const Sortable<T>& b) {
-    ++Sortable<T>::stat.compare_cnt;
+bool operator<(const StatWrap<T>& a, const StatWrap<T>& b) {
+    ++StatWrap<T>::stat.compare_cnt;
     return (a.value < b.value);
 }
 
 
 template <typename T>
-std::ostream& operator<<(std::ostream& out, const Sortable<T>& item) {
+std::ostream& operator<<(std::ostream& out, const StatWrap<T>& item) {
     out << item.value;
     return out;
 }
 
 
-#endif //SORTABLE_HPP
+#endif //STAT_WRAP_HPP

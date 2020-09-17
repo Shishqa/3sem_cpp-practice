@@ -1,21 +1,13 @@
-#include <cstdio>
-#include <cstdlib>
-
-#include <GL/gl.h>
-#include <GL/freeglut.h>
-
-#include "essential.hpp"
-
-#include "sort_analyser_app.hpp"
+#include "ShishGL/ShishGL.hpp"
+#include "SortAnalyser/sort_analyser_app.hpp"
 
 
 int main(int argc, char** argv) {
 
-    ShishGL::init(&argc, argv, ShishGL::DEBUG);
+    ShishGL::init(&argc, argv);
 
-    SortAnalyserApp* app = new SortAnalyserApp();
-
-    ShishGL::run();
+    auto app = new SortAnalyserApp();
+    app->show();
 
     delete app;
 
@@ -23,4 +15,3 @@ int main(int argc, char** argv) {
 
     return 0;
 }
-

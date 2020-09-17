@@ -5,11 +5,7 @@
 
 namespace ShishGL {
 
-    enum INIT_FLAGS {
-        DEBUG = 0b1
-    };
-
-    void init(int*argc_ptr, char**argv, uint8_t flags);
+    void init(int*argc_ptr, char**argv);
 
     void run();
 
@@ -19,6 +15,7 @@ namespace ShishGL {
         uint8_t r, g, b, a;
     };
 
+    void fillWithColor(const Color& color);
 }
 
 #endif //ESSENTIAL_HPP
