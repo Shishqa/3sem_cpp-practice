@@ -13,6 +13,9 @@ SRC      :=                           	\
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
+run: $(APP_DIR)/$(TARGET)
+	./$(APP_DIR)/$(TARGET)
+
 all: build $(APP_DIR)/$(TARGET)
 
 $(OBJ_DIR)/%.o: %.cpp
