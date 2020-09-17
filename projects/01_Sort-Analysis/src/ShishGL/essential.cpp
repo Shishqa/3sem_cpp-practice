@@ -28,7 +28,7 @@ void ShishGL::init(int* argc_ptr, char** argv) {
 }
 
 
-void ShishGL::run() {
+void ShishGL::startMainLoop() {
 
     glutMainLoop();
 }

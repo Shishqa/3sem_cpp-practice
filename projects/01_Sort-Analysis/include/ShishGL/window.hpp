@@ -56,6 +56,8 @@ namespace ShishGL {
 
         void attach(Window* window);
 
+        void refresh() const;
+
         [[nodiscard]] const WindowInfo& getInfo();
 
     protected:
@@ -68,8 +70,6 @@ namespace ShishGL {
 
         //==========================================================================
 
-        void refresh();
-
         virtual void initLayout() { }
 
         virtual void onIdle() { }
@@ -78,26 +78,7 @@ namespace ShishGL {
 
         virtual void onEntry(int) { }
 
-        virtual void onReshape(int, int) {}
-//        {
-//
-//            glViewport(0, 0, width, height);
-//            glMatrixMode(GL_PROJECTION);
-//            glLoadIdentity();
-//            glOrtho(0, 1, 0, 1, -1, 1);
-//            glMatrixMode(GL_MODELVIEW);
-//
-//            for (auto& window : subwindows) {
-//
-//                window->onReshape(width * window->getInfo().width / info.width,
-//                                  height * window->getInfo().height / info.height);
-//
-//            }
-//
-//            info.width  = width;
-//            info.height = height;
-//
-//        }
+        virtual void onReshape(int, int) { }
 
         virtual void onKeyPress(unsigned char, int, int) { }
 

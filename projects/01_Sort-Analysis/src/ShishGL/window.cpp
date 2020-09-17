@@ -112,7 +112,7 @@ Window* Window::getCurrentActiveWindow() {
 }
 
 
-void Window::refresh() {
+void Window::refresh() const {
     glutSetWindow(info.id);
     glutPostRedisplay();
 }

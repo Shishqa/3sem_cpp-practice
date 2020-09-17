@@ -6,10 +6,11 @@ OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/apps
 TARGET   := program
 INCLUDE  := -Iinclude/
-SRC      :=                           	\
-   	$(wildcard src/ShishGL/*.cpp)      	\
-   	$(wildcard src/SortAnalyser/*.cpp) 	\
-   	$(wildcard src/*.cpp)              	\
+SRC      :=                           			\
+   	$(wildcard src/ShishGL/*.cpp)      			\
+   	$(wildcard src/SortAnalyser/*.cpp) 			\
+   	$(wildcard src/SortAnalyser/Sorts/*.cpp) 	\
+   	$(wildcard src/*.cpp)              			\
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
@@ -39,10 +40,10 @@ debug: CXXFLAGS += -O2 -DDEBUG -g -Wshadow -Wformat=2 -Wfloat-equal \
 				   -D_FORTIFY_SOURCE=2 -fsanitize=address 		    \
 				   -fsanitize=undefined -fno-sanitize-recover 	    \
 				   -fstack-protector -Wno-format-nonliteral
-debug: all
+debug: clean all
 
 release: CXXFLAGS += -O3
-release: all
+release: clean all
 
 clean:
 	-@rm -rvf $(OBJ_DIR)/*

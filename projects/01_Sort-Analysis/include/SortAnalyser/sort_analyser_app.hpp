@@ -2,90 +2,35 @@
 #define SORT_ANALYSER_APP_HPP
 
 
-#include "ShishGL/colors.hpp"
-#include "ShishGL/main_window.hpp"
-
-#include "sorting_wrap.hpp"
-#include "sort_collection.hpp"
-
+#include "../ShishGL/ShishGL.hpp"
 using namespace ShishGL;
 
+#include "Sorts/sorting_wrap.hpp"
+#include "Sorts/sort_collection.hpp"
 
-class SortAnalyserApp : public ShishGL::MainWindow {
-public:
+#include <algorithm>
 
-    SortAnalyserApp();
 
-    ~SortAnalyserApp() override = default;
+namespace SortAnalyser {
+
+    enum {
+        CLEAR_SIGNAL = -1
+    };
 
     struct Sort {
         const char* name;
         SortingWrap stat_function;
-        Color       color;
+        Color color;
     };
 
-    class GraphContainer : public ShishGL::Window {
-    public:
-
-        GraphContainer() = delete;
-
-        GraphContainer(const int& pos_x, const int& pos_y);
-
-        ~GraphContainer() override = default;
-
-        class GraphWindow : public ShishGL::Window {
-        public:
-
-            GraphWindow() = delete;
-
-            GraphWindow(const int& pos_x, const int& pos_y,
-                        const size_t& width, const size_t& height);
-
-            ~GraphWindow() override = default;
-
-        private:
-
-            void onRender() override;
-
-            void drawAxes();
-
-        };
-
-    private:
-
-        GraphWindow* assignments_graph;
-        GraphWindow* comparisons_graph;
-
-        enum {
-            GRAPH_WINDOWS_GAP   = 30,
-            GRAPH_WINDOW_WIDTH  = 400,
-            GRAPH_WINDOW_HEIGHT = 400
-        };
-
-        void initLayout() override;
-
-        void onRender() override;
-
-        void processEvent(const Event &) override;
-
-        void displaySortStat(const Sort& sort);
-
+    static const Sort SORTS[] = {
+        {"Bubble Sort", SortingWrap(bubble_sort, fill_random), {RED,   255}},
+        {"Merge Sort",  SortingWrap(merge_sort,  fill_random), {GREEN, 255}},
+        {"Std Sort",    SortingWrap(std::sort,   fill_random), {BLUE,  255}},
+        {"Id (sort)",   SortingWrap(id_sort,     fill_random), {WHITE, 255}}
     };
 
-
-private:
-
-    enum {
-        CLEAN_SIGNAL = -1,
-    };
-
-    static const std::vector<Sort> SORTS;
-
-    void initLayout() override;
-
-    void onRender() override;
-
-};
+}
 
 
 #endif //SORT_ANALYSER_APP_HPP

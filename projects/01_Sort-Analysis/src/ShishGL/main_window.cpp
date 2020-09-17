@@ -20,8 +20,8 @@ MainWindow::MainWindow(const char* window_title,
 }
 
 
-void MainWindow::show() {
-    this->initLayout();
-    run();
+void MainWindow::run() {
+    initLayout();
+    ShishGL::startMainLoop();
 }
 

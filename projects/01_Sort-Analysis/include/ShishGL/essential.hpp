@@ -7,7 +7,7 @@ namespace ShishGL {
 
     void init(int*argc_ptr, char**argv);
 
-    void run();
+    void startMainLoop();
 
     void terminate();
 

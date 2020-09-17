@@ -10,6 +10,7 @@
 #include <random>
 #include <ctime>
 
+
 template <typename RandomIter>
 void fill_random(RandomIter begin, RandomIter end) {
 
@@ -20,6 +21,7 @@ void fill_random(RandomIter begin, RandomIter end) {
         *i = rand() % MAX_INT_BOUND;
     }
 }
+
 
 template <typename RandomIter>
 void merge_sort(RandomIter begin, RandomIter end) {

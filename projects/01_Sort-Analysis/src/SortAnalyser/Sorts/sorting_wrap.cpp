@@ -1,6 +1,6 @@
 #include <stdexcept>
 
-#include "SortAnalyser/sorting_wrap.hpp"
+#include "SortAnalyser/Sorts/sorting_wrap.hpp"
 
 
 SortingWrap::SortingWrap(void (*sort)(Iterator, Iterator),

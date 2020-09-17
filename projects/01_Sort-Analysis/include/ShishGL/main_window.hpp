@@ -13,7 +13,7 @@ namespace ShishGL {
 
         MainWindow(const char* title, const size_t& width, const size_t& height);
 
-        void show();
+        void run();
 
         ~MainWindow() override = default;
 
