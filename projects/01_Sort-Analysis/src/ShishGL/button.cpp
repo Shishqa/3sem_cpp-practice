@@ -9,9 +9,9 @@ using namespace ShishGL;
 Button::Button(const char* button_label, const Event& click_event,
                const int& pos_x, const int& pos_y,
                const size_t& width, const size_t& height,
-               const Color default_color,
-               const Color hover_color,
-               const Color click_color)
+               const Color& default_color,
+               const Color& hover_color,
+               const Color& click_color)
         : Window(pos_x, pos_y, width, height)
         , on_click(click_event)
         , label(button_label)
@@ -23,11 +23,6 @@ Button::Button(const char* button_label, const Event& click_event,
     label_len = strlen(label);
 
     printLog("Button created");
-}
-
-
-Button::~Button() {
-    printLog("Button deleted");
 }
 
 

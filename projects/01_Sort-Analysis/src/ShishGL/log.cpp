@@ -36,7 +36,7 @@ int ShishGL::printLog(const char* format, ...) {
 
         va_list arg_list;
         va_start(arg_list, format);
-        int res = fprintf(LOG_FILE, format, arg_list);
+        int res = vfprintf(LOG_FILE, format, arg_list);
         va_end(arg_list);
 
         fprintf(LOG_FILE, "\n");
