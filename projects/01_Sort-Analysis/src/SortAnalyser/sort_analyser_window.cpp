@@ -25,7 +25,7 @@ void SortAnalyserWindow::initLayout() {
     for (; i < sizeof(SORTS) / sizeof(Sort); ++i) {
         attach( new ShishGL::Button(SORTS[i].name,
                                     {graphs, static_cast<int>(i)},
-                                    BUTTON_WIDTH * i, buttons_y,
+                                    static_cast<int>(BUTTON_WIDTH * i), buttons_y,
                                     BUTTON_WIDTH, BUTTON_HEIGHT,
                                     SORTS[i].color) );
 
@@ -33,15 +33,14 @@ void SortAnalyserWindow::initLayout() {
 
     attach( new ShishGL::Button("Clear",
                                 {graphs, CLEAR_SIGNAL},
-                                BUTTON_WIDTH * i, buttons_y,
+                                static_cast<int>(BUTTON_WIDTH * i), buttons_y,
                                 BUTTON_WIDTH, BUTTON_HEIGHT) );
 }
 
 
 void SortAnalyserWindow::onRender() {
 
-    glClearColor(0.1f, 0.1f, 0.1f, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
+    fillWithColor({PAPAYA_WHIP, 255});
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
