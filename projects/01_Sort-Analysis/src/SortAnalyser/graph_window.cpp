@@ -1,3 +1,4 @@
+#include "SortAnalyser/sort_analyser_app.hpp"
 #include "SortAnalyser/graph_window.hpp"
 using namespace SortAnalyser;
 
@@ -18,8 +19,14 @@ unsigned int GraphWindow::initCurve(const Color& color) {
 void GraphWindow::addPoint(const int& curve_id, double x, double y) {
 
     curves.at(curve_id).points.push_back({x, y});
-    refresh();
 
+    current_min_x = std::min(x, current_min_x);
+    current_max_x = std::max(x, current_max_x);
+
+    current_min_y = std::min(y, current_min_y);
+    current_max_y = std::max(y, current_max_y);
+
+    refresh();
 }
 
 
@@ -27,6 +34,11 @@ void GraphWindow::clear() {
 
     curves.clear();
     refresh();
+
+    current_min_x = +std::numeric_limits<double>::infinity();
+    current_min_y = +std::numeric_limits<double>::infinity();
+    current_max_x = -std::numeric_limits<double>::infinity();
+    current_max_y = -std::numeric_limits<double>::infinity();
 
 }
 
@@ -43,11 +55,13 @@ void GraphWindow::onRender() {
                    curve.line_color.g,
                    curve.line_color.b,
                    curve.line_color.a);
-        glLineWidth(2.0f);
+        glLineWidth(3.0f);
 
         glBegin(GL_LINE_STRIP);
         for (const auto& point : curve.points) {
-            glVertex2d(point.x / 600 - 0.9, point.y / 100000 - 0.9);
+            // TODO: fix random numbers
+            glVertex2d(2 * point.x / (current_max_x - current_min_x) + X_ZERO,
+                       2 * point.y / (current_max_y - current_min_y) + Y_ZERO);
         }
         glEnd();
     }
@@ -62,9 +76,9 @@ void GraphWindow::drawAxes() {
     glColor4ub(WHITE, 255);
 
     glBegin(GL_LINE_STRIP);
-        glVertex2d(-0.9,  0.9);
-        glVertex2d(-0.9, -0.9);
-        glVertex2d( 0.9, -0.9);
+        glVertex2d(X_ZERO,    0.9);
+        glVertex2d(X_ZERO, Y_ZERO);
+        glVertex2d(   0.9, Y_ZERO);
     glEnd();
 
 }

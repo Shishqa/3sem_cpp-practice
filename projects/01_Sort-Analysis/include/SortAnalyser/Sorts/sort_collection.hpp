@@ -28,7 +28,7 @@ void merge_sort(RandomIter begin, RandomIter end) {
 
     const size_t length = end - begin;
 
-    if (length == 1) {
+    if (length <= 1) {
         return;
     }
 
@@ -87,15 +87,12 @@ void bubble_sort(RandomIter begin, RandomIter end) {
 template <typename RandomIter>
 void id_sort(RandomIter begin, RandomIter end) {
 
-    static const size_t ID = 100;
-
-    if (begin == end) {
-        return;
-    }
+    const size_t MULTIPLIER = 10;
+    const size_t ID = MULTIPLIER * (end - begin);
 
     for (size_t i = 0; i < ID; ++i) {
         *begin < *begin;
-        *begin = 10;
+        *begin = 0;
     }
 
 }

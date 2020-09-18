@@ -27,7 +27,7 @@ void GraphContainer::initLayout() {
 
 void GraphContainer::onRender() {
 
-    fillWithColor({KHAKI, 255});
+    fillWithColor({DARK_SLATE_GRAY, 255});
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -39,10 +39,27 @@ void GraphContainer::onRender() {
 
 void GraphContainer::processEvent(const Event& event) {
 
-    if (event.event_code == CLEAR_SIGNAL) {
-        clear();
-    } else {
-        displaySortStat(SORTS[event.event_code]);
+    switch (event.event_code) {
+
+        case CLEAR_SIGNAL:
+            clear();
+            break;
+
+        case NORMAL_RANGE:
+            printf("not yet implemented: normal range [0; 1000] (step = 10)\n");
+            break;
+
+        case BIG_RANGE:
+            printf("not yet implemented: big range [0; 100000] (step = 1000)\n");
+            break;
+
+        default:
+            if (event.event_code >= static_cast<int>(sizeof(SORTS) / sizeof(Sort)) ||
+                0 > event.event_code) {
+                printLog("Warning: tried to display curve with id %d", event.event_code);
+                break;
+            }
+            displaySortStat(SORTS[event.event_code]);
     }
 
 }
@@ -57,12 +74,6 @@ void GraphContainer::clear() {
 
 
 void GraphContainer::displaySortStat(const Sort& sort) {
-
-    static const size_t
-            MIN_ARRAY_SIZE = 100,
-            MAX_ARRAY_SIZE = 1000,
-            NUM_OF_DOTS    = 100,
-            STEP           = (MAX_ARRAY_SIZE - MIN_ARRAY_SIZE) / NUM_OF_DOTS;
 
     uint32_t assign_id  = assignments_graph->initCurve(sort.color);
     uint32_t compare_id = comparisons_graph->initCurve(sort.color);

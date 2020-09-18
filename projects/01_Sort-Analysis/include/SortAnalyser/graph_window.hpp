@@ -37,6 +37,14 @@ namespace SortAnalyser {
 
         std::vector<Curve> curves;
 
+        double current_min_x = +std::numeric_limits<double>::infinity(),
+               current_min_y = +std::numeric_limits<double>::infinity(),
+               current_max_x = -std::numeric_limits<double>::infinity(),
+               current_max_y = -std::numeric_limits<double>::infinity();
+
+        const double X_ZERO = -0.9,
+                     Y_ZERO = -0.9;
+
         void onRender() override;
 
         void drawAxes();

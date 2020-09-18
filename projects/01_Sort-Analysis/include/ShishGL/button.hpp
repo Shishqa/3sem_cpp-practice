@@ -37,11 +37,11 @@ namespace ShishGL {
 
         void drawLabel();
 
-        virtual void onRender() override;
+        void onRender() override;
 
-        virtual void onEntry(int state) override;
+        void onEntry(int state) override;
 
-        virtual void onMouseClick(int button, int state, int x, int y) override;
+        void onMouseClick(int button, int state, int x, int y) override;
 
     };
 

@@ -21,7 +21,9 @@ MainWindow::MainWindow(const char* window_title,
 
 
 void MainWindow::run() {
+
     initLayout();
+
     ShishGL::startMainLoop();
 }
 

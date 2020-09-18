@@ -7,6 +7,8 @@ using namespace ShishGL;
 #include "sort_analyser_app.hpp"
 #include "graph_window.hpp"
 
+#include <limits>
+
 namespace SortAnalyser {
 
     class GraphContainer : public ShishGL::Window {
