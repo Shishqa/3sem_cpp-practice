@@ -6,7 +6,7 @@ using namespace SortAnalyser;
 
 
 SortAnalyserWindow::SortAnalyserWindow()
-    : ShishGL::MainWindow("Sort Analyser", 1024, 720) {
+    : ShishGL::MainWindow("Sort Analyser", {1024, 720}) {
     ShishGL::printLog("created app");
 }
 
@@ -17,42 +17,36 @@ void SortAnalyserWindow::initLayout() {
                         BUTTON_HEIGHT = 40,
                         BUTTON_GAP    = 10;
 
-    Window* graphs = new GraphContainer(0, 0);
+    Window* graphs = new GraphContainer({0, 0});
     attach(graphs);
 
-    int buttons_y = static_cast<int>(graphs->getInfo().height + BUTTON_GAP);
+    printLog("Graphs: %p", reinterpret_cast<void*>(graphs));
+
+    int buttons_y = static_cast<int>(graphs->getInfo().size.y + BUTTON_GAP);
 
     for (size_t i = 0; i < sizeof(SORTS) / sizeof(Sort); ++i) {
         attach( new ShishGL::Button(SORTS[i].name,
-                                    {graphs, static_cast<int>(i)},
-                                    static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i),
-                                    buttons_y,
-                                    BUTTON_WIDTH, BUTTON_HEIGHT,
-                                    SORTS[i].color) );
-
+                                    {dynamic_cast<Object*>(graphs), static_cast<int>(i)},
+                                    {static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), buttons_y},
+                                    {BUTTON_WIDTH, BUTTON_HEIGHT}) );
     }
     buttons_y += BUTTON_HEIGHT + BUTTON_GAP;
 
     for (size_t i = 0; i < sizeof(UTIL_BUTTONS) / sizeof(ButtonDescription); ++i) {
         attach( new ShishGL::Button(UTIL_BUTTONS[i].name,
-                                    {graphs, UTIL_BUTTONS[i].event_signal},
-                                    static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i),
-                                    buttons_y,
-                                    2 * BUTTON_WIDTH, BUTTON_HEIGHT,
-                                    UTIL_BUTTONS[i].color) );
+                                    {dynamic_cast<Object*>(graphs), UTIL_BUTTONS[i].event_signal},
+                                    {static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i), buttons_y},
+                                    {2 * BUTTON_WIDTH, BUTTON_HEIGHT}) );
     }
 
 }
 
 
 void SortAnalyserWindow::onRender() {
+    renderBegin(info.size);
 
-    fillWithColor({DIM_GRAY, 255});
+    ShishGL::fillWithColor({DIM_GRAY, 255});
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glutSwapBuffers();
-
+    renderEnd();
 }
 

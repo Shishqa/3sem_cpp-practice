@@ -1,0 +1,54 @@
+### ShishGL initialization started
+### ShishGL initialized
+### Created main window 0x60b0000045b0 at (0, 0) 1024x720px (but not initialised with GLUT)
+### Window 0x60b0000045b0 initialized with GLUT with id 1 (but still not activated)
+### Window 0x60b0000045b0 is now active with id 1 (make sure it was initialized before!)
+### created app
+### Created main window 0x60b000004c90 at (0, 0) 890x460px (but not initialised with GLUT)
+### Window 0x60b000004c90 is now active with id 2 (make sure it was initialized before!)
+### Created main window 0x610000026c40 at (30, 30) 400x400px (but not initialised with GLUT)
+### Created main window 0x610000026d40 at (460, 30) 400x400px (but not initialised with GLUT)
+### Window 0x610000026c40 is now active with id 3 (make sure it was initialized before!)
+### Window 0x610000026d40 is now active with id 4 (make sure it was initialized before!)
+### Graphs: 0x60b000004c90
+### Created main window 0x60e000002960 at (0, 470) 100x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000002960 is now active with id 5 (make sure it was initialized before!)
+### Created main window 0x60e000003220 at (110, 470) 100x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000003220 is now active with id 6 (make sure it was initialized before!)
+### Created main window 0x60e000003ae0 at (220, 470) 100x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000003ae0 is now active with id 7 (make sure it was initialized before!)
+### Created main window 0x60e0000043a0 at (330, 470) 100x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e0000043a0 is now active with id 8 (make sure it was initialized before!)
+### Created main window 0x60e000004c60 at (0, 520) 200x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000004c60 is now active with id 9 (make sure it was initialized before!)
+### Created main window 0x60e000005440 at (210, 520) 200x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000005440 is now active with id 10 (make sure it was initialized before!)
+### Created main window 0x60e000005d00 at (420, 520) 200x40px (but not initialised with GLUT)
+### Button created
+### Window 0x60e000005d00 is now active with id 11 (make sure it was initialized before!)
+### Target: 0x60b000004c90, code: 0
+### Target: 0x60b000004c90, code: 1
+### Target: 0x60b000004c90, code: 2
+### Target: 0x60b000004c90, code: -100
+### Target: 0x60b000004c90, code: 2
+### Target: 0x60b000004c90, code: 1
+### Target: 0x60b000004c90, code: 1
+### Target: 0x60b000004c90, code: 2
+### Destroyed window 3
+### Destroyed window 4
+### Destroyed window 2
+### Destroyed window 5
+### Destroyed window 6
+### Destroyed window 7
+### Destroyed window 8
+### Destroyed window 9
+### Destroyed window 10
+### Destroyed window 11
+### Destroyed window 1
+### Terminating ShishGL

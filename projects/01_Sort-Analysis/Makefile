@@ -1,5 +1,5 @@
 CXX      := g++
-CXXFLAGS := -std=c++17 -pedantic-errors -Wall -Wextra -Werror
+CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror
 LDFLAGS  := -L/usr/lib -lstdc++ -lm -lGL -lglut -lGLU -lGLEW
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
@@ -33,17 +33,17 @@ build:
 	@mkdir -p $(APP_DIR)
 	@mkdir -p $(OBJ_DIR)
 
-debug: CXXFLAGS += -O2 -DDEBUG -g -Wshadow -Wformat=2 -Wfloat-equal \
+debug: CXXFLAGS += -O3 -DDEBUG -g -Wshadow -Wformat=2 -Wfloat-equal \
 				   -Wconversion -Wlogical-op -Wshift-overflow=2     \
 				   -Wduplicated-cond -Wcast-qual -Wcast-align       \
 				   -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC       \
 				   -D_FORTIFY_SOURCE=2 -fsanitize=address 		    \
 				   -fsanitize=undefined -fno-sanitize-recover 	    \
 				   -fstack-protector -Wno-format-nonliteral
-debug: clean all
+debug: all
 
-release: CXXFLAGS += -O3
-release: clean all
+release: CXXFLAGS += -O3 -Wno-unused-parameter
+release: all
 
 clean:
 	-@rm -rvf $(OBJ_DIR)/*

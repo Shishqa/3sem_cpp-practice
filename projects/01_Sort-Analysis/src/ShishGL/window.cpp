@@ -1,15 +1,23 @@
+#include <cstdio>
+#include <stdexcept>
+
+#include <GL/freeglut.h>
+
 #include "ShishGL/window.hpp"
 #include "ShishGL/log.hpp"
 
 using namespace ShishGL;
 
 
-Window::Window(const int& pos_x, const int& pos_y,
-               const size_t& width, const size_t& height)
-        : info({ID_UNDEFINED, pos_x, pos_y, width, height}) {
+Window* Window::active_windows[MAX_ALLOWED_WINDOW_CNT + 1] = {};
 
-    printLog("Created main window %p at (%d, %d) with width %lu px and height %lu px (but not initialised with GLUT)",
-             reinterpret_cast<void*>(this), pos_x, pos_y, width, height);
+
+Window::Window(const Vector2<int>& position,
+               const Vector2<size_t>& size)
+        : info({ID_UNDEFINED, position, size}) {
+
+    printLog("Created main window %p at (%d, %d) %lux%lupx (but not initialised with GLUT)",
+             reinterpret_cast<void*>(this), position.x, position.y, size.x, size.y);
 }
 
 
@@ -50,21 +58,17 @@ void Window::attach(Window* window) {
     }
 
     window->info.id = glutCreateSubWindow(info.id,
-                                          window->info.pos_x, window->info.pos_y,
-                                          static_cast<int>(window->info.width),
-                                          static_cast<int>(window->info.height));
+                                          window->info.pos.x, window->info.pos.y,
+                                          static_cast<int>(window->info.size.x),
+                                          static_cast<int>(window->info.size.y));
 
     makeActive(window);
 
     window->initLayout();
-
 }
 
 
 //------------------------------------------------------------------------------
-
-
-Window* Window::active_windows[MAX_ALLOWED_WINDOW_CNT + 1] = {};
 
 
 void Window::makeActive(Window* window) {
@@ -119,13 +123,12 @@ void Window::refresh() const {
 
 
 void Window::manageOnIdle() {
-    processNewEvents();
+    EventSystem::processNewEvents();
     Window* win_ptr = getCurrentActiveWindow();
     if (win_ptr) {
         win_ptr->onIdle();
     }
 }
-
 
 
 void Window::manageOnRender() {
@@ -152,7 +155,6 @@ void Window::manageOnReshape(int width, int height) {
 }
 
 
-
 void Window::manageOnKeyPress(unsigned char key, int x, int y) {
     Window* win_ptr = getCurrentActiveWindow();
     if (win_ptr) {
@@ -170,30 +172,3 @@ void Window::manageOnMouseClick(int button, int state, int x, int y) {
 
 
 //------------------------------------------------------------------------------
-
-
-std::queue<Event> Window::events;
-
-
-void Window::generateEvent(const Event& event) {
-    events.push(event);
-}
-
-
-void Window::processNewEvents() {
-
-    while (!events.empty()) {
-
-        Event curr_event = events.front();
-
-        if (!curr_event.target) {
-            printLog("Warning: event with empty target passed!");
-        } else {
-            curr_event.target->processEvent(curr_event);
-        }
-
-        events.pop();
-
-    }
-
-}

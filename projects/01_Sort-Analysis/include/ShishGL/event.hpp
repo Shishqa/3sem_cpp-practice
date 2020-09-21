@@ -8,6 +8,7 @@
 namespace ShishGL {
 
     class Object;
+    class Window;
 
 
     struct Event {
@@ -19,7 +20,7 @@ namespace ShishGL {
     class EventSystem {
     public:
 
-        EventSystem() = default;
+        EventSystem()  = default;
         ~EventSystem() = default;
 
         static void addEvent(const Event& event);
@@ -30,8 +31,8 @@ namespace ShishGL {
         static void processNewEvents();
 
         friend Object;
+        friend Window;
     };
-
 }
 
 

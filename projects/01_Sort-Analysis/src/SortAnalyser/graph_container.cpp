@@ -1,43 +1,40 @@
+#include "ShishGL/ShishGL.hpp"
 #include "SortAnalyser/graph_container.hpp"
 #include "SortAnalyser/graph_window.hpp"
+
 using namespace SortAnalyser;
 
 
-GraphContainer::GraphContainer(const int& pos_x, const int& pos_y)
-        : ShishGL::Window(pos_x, pos_y,
-                          GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
-                          GRAPH_WINDOW_HEIGHT    + GRAPH_WINDOWS_GAP * 2)
+GraphContainer::GraphContainer(const Vector2<int>& pos)
+        : ShishGL::Window(pos, {GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
+                                GRAPH_WINDOW_HEIGHT    + GRAPH_WINDOWS_GAP * 2})
         , assignments_graph(nullptr)
         , comparisons_graph(nullptr) { }
 
 
 void GraphContainer::initLayout() {
 
-    assignments_graph = new GraphWindow(GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP,
-                                         GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT);
+    assignments_graph = new GraphWindow({GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP},
+                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT});
 
-    comparisons_graph = new GraphWindow(GRAPH_WINDOWS_GAP * 2 + GRAPH_WINDOW_WIDTH, GRAPH_WINDOWS_GAP,
-                                        GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT);
+    comparisons_graph = new GraphWindow({GRAPH_WINDOWS_GAP * 2 + GRAPH_WINDOW_WIDTH, GRAPH_WINDOWS_GAP},
+                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT});
 
     attach(assignments_graph);
     attach(comparisons_graph);
-
 }
 
 
 void GraphContainer::onRender() {
+    renderBegin(info.size);
 
-    fillWithColor({DARK_SLATE_GRAY, 255});
+    ShishGL::fillWithColor({DARK_SLATE_GRAY, 255});
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    glutSwapBuffers();
-
+    renderEnd();
 }
 
 
-void GraphContainer::processEvent(const Event& event) {
+void GraphContainer::getEvent(const Event& event) {
 
     switch (event.event_code) {
 
@@ -82,11 +79,11 @@ void GraphContainer::displaySortStat(const Sort& sort) {
 
         Stat stat = sort.stat_function(array_size);
 
-        assignments_graph->addPoint(assign_id,  static_cast<double>(array_size),
-                                    static_cast<double>(stat.assign_cnt));
+        assignments_graph->addPoint(assign_id, {static_cast<double>(array_size),
+                                                static_cast<double>(stat.assign_cnt)});
 
-        comparisons_graph->addPoint(compare_id, static_cast<double>(array_size),
-                                    static_cast<double>(stat.compare_cnt));
+        comparisons_graph->addPoint(compare_id, {static_cast<double>(array_size),
+                                                 static_cast<double>(stat.compare_cnt)});
 
     }
 

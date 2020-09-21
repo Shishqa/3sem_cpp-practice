@@ -25,9 +25,9 @@ namespace SortAnalyser {
         BIG_RANGE
     };
 
-    const ButtonDescription UTIL_BUTTONS[] = {
+    constexpr ButtonDescription UTIL_BUTTONS[] = {
             {"Clear",        CLEAR_SIGNAL, {WHITE, 255}},
-            {"Normal rng", NORMAL_RANGE, {DARK_SEA_GREEN, 255}},
+            {"Normal rng", NORMAL_RANGE,   {DARK_SEA_GREEN, 255}},
             {"Big range",    BIG_RANGE,    {FIRE_BRICK, 255}}
     };
 
@@ -48,7 +48,6 @@ namespace SortAnalyser {
         {"Std Sort",    SortingWrap(std::sort,   fill_random), {LAVENDER,  255}},
         {"Id (sort)",   SortingWrap(id_sort,     fill_random), {KHAKI, 255}}
     };
-
 }
 
 

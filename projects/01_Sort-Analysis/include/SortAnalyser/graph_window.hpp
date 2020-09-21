@@ -12,45 +12,37 @@ namespace SortAnalyser {
 
         struct Curve {
             Color line_color;
-
-            struct Point {
-                double x, y;
-            };
-
-            std::vector<Point> points;
+            std::vector<Vector2<double>> points;
         };
 
         GraphWindow() = delete;
 
-        GraphWindow(const int& pos_x, const int& pos_y,
-                    const size_t& width, const size_t& height);
+        GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size);
 
         ~GraphWindow() override = default;
 
         unsigned int initCurve(const Color& color);
 
-        void addPoint(const int& curve_id, double x, double y);
+        void addPoint(const int& curve_id, const Vector2<double>& point);
 
         void clear();
 
     private:
 
+        static constexpr double GAP_PROPORTION = 0.1; // in [0; 0.5]
+
         std::vector<Curve> curves;
 
-        double current_min_x = +std::numeric_limits<double>::infinity(),
-               current_min_y = +std::numeric_limits<double>::infinity(),
-               current_max_x = -std::numeric_limits<double>::infinity(),
-               current_max_y = -std::numeric_limits<double>::infinity();
-
-        const double X_ZERO = -0.9,
-                     Y_ZERO = -0.9;
+        Vector2<double> current_min = { +std::numeric_limits<double>::infinity(),
+                                        +std::numeric_limits<double>::infinity() },
+                        current_max = { -std::numeric_limits<double>::infinity(),
+                                        -std::numeric_limits<double>::infinity() };
 
         void onRender() override;
 
-        void drawAxes();
+        static void drawAxes(const Vector2<double>& viewport);
 
     };
-
 }
 
 

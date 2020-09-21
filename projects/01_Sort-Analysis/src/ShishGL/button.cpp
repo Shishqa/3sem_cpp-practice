@@ -1,24 +1,24 @@
 #include <cstring>
+#include <stdexcept>
+
+#include <GL/freeglut.h>
 
 #include "ShishGL/button.hpp"
 #include "ShishGL/log.hpp"
+#include "ShishGL/draw.hpp"
+#include "ShishGL/event.hpp"
 
 using namespace ShishGL;
 
 
 Button::Button(const char* button_label, const Event& click_event,
-               const int& pos_x, const int& pos_y,
-               const size_t& width, const size_t& height,
-               const Color& default_color,
-               const Color& hover_color,
-               const Color& click_color)
-        : Window(pos_x, pos_y, width, height)
+               const Vector2<int>& position, const Vector2<size_t>& size,
+               const ButtonColorScheme& colors)
+        : Window(position, size)
         , on_click(click_event)
         , label(button_label)
-        , color_current(default_color)
-        , color_default(default_color)
-        , color_hover(hover_color)
-        , color_click(click_color) {
+        , color_scheme(colors)
+        , bg_current(color_scheme.bg_default) {
 
     label_len = strlen(label);
 
@@ -27,29 +27,28 @@ Button::Button(const char* button_label, const Event& click_event,
 
 
 void Button::onRender() {
+    renderBegin(info.size);
 
-    fillWithColor(color_current);
+    fillWithColor(bg_current);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    displayText( label, label_len,
+                 {static_cast<int>(info.size.x / 2),
+                  static_cast<int>(info.size.y / 2)},
+                 color_scheme.fg_default );
 
-    drawLabel();
-
-    glutSwapBuffers();
-
+    renderEnd();
 }
 
 
 void Button::onEntry(int state) {
 
     if (state == GLUT_ENTERED) {
-        color_current = color_hover;
+        bg_current = color_scheme.bg_hover;
     } else {
-        color_current = color_default;
+        bg_current = color_scheme.bg_default;
     }
 
-    glutPostRedisplay();
-
+    refresh();
 }
 
 
@@ -61,40 +60,18 @@ void Button::onMouseClick(int button, int state, int, int) {
 
     switch (state) {
         case GLUT_DOWN:
-            color_current = color_click;
-            generateEvent(on_click);
+            bg_current = color_scheme.bg_click;
+            EventSystem::addEvent(on_click);
             break;
 
         case GLUT_UP:
-            color_current = color_hover;
+            bg_current = color_scheme.bg_hover;
             break;
 
         default:
             throw std::runtime_error("Error: unknown state of mouse button\n");
     }
 
-    glutPostRedisplay();
-}
-
-
-void Button::drawLabel() {
-
-    glColor4ub(0, 0, 0, 1);
-
-    static const size_t FONT_HEIGHT = 15,
-                        FONT_WIDTH  = 9;
-
-    size_t bitmap_width = FONT_WIDTH * label_len;
-
-    glRasterPos2d( - static_cast<double>(bitmap_width) / static_cast<double>(info.width),
-                   - static_cast<double>(FONT_HEIGHT)  / static_cast<double>(info.height));
-
-    for(const char* curr_symbol = label; *curr_symbol != '\0'; ++curr_symbol) {
-
-        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *curr_symbol);
-
-    }
-
-
+    refresh();
 }
 

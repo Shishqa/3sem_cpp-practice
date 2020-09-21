@@ -1,16 +1,18 @@
 #include "ShishGL/main_window.hpp"
 #include "ShishGL/log.hpp"
 
+#include <GL/freeglut.h>
+
 using namespace ShishGL;
 
 
 MainWindow::MainWindow(const char* window_title,
-                       const size_t& width, const size_t& height)
-        : Window(0, 0, width, height)
+                       const Vector2<size_t>& size)
+        : Window({0, 0}, size)
         , title(window_title) {
 
-    glutInitWindowPosition(info.pos_x, info.pos_y);
-    glutInitWindowSize(static_cast<int>(info.width), static_cast<int>(info.height));
+    glutInitWindowPosition(info.pos.x, info.pos.y);
+    glutInitWindowSize(static_cast<int>(info.size.x), static_cast<int>(info.size.y));
 
     info.id = glutCreateWindow(title);
     printLog("Window %p initialized with GLUT with id %d (but still not activated)",
@@ -24,6 +26,6 @@ void MainWindow::run() {
 
     initLayout();
 
-    ShishGL::startMainLoop();
+    ShishGL::enterMainLoop();
 }
 

@@ -18,6 +18,7 @@ namespace ShishGL {
 
         virtual void getEvent(const Event&) { }
 
+        friend EventSystem;
     };
 
 

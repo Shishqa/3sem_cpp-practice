@@ -2,9 +2,12 @@
 #define SHISH_GL_HPP
 
 
-#include "main_window.hpp"
+#include <GL/freeglut.h>
+
 #include "draw.hpp"
 #include "log.hpp"
+#include "main_window.hpp"
+#include "button.hpp"
 
 
 #endif //SHISH_GL_HPP

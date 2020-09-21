@@ -2,7 +2,12 @@
 #define LOG_HPP
 
 
+#include <cstdio>
+
+
 namespace ShishGL {
+
+    extern FILE* LOG_FILE;
 
     int openLog();
 

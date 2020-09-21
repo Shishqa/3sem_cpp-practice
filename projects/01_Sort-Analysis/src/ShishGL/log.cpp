@@ -1,11 +1,10 @@
 #include <cstdio>
+#include <cstdarg>
 
 #include "ShishGL/log.hpp"
 
 
 FILE* ShishGL::LOG_FILE = nullptr;
-
-bool ShishGL::do_log = false;
 
 
 enum {
@@ -30,18 +29,19 @@ int ShishGL::closeLog() {
 
 __attribute__((format(printf, 1, 2)))
 int ShishGL::printLog(const char* format, ...) {
-    if (do_log) {
+#ifdef DEBUG
+    fprintf(LOG_FILE, "### ");
 
-        fprintf(LOG_FILE, "### ");
+    va_list arg_list;
+    va_start(arg_list, format);
+    int res = vfprintf(LOG_FILE, format, arg_list);
+    va_end(arg_list);
 
-        va_list arg_list;
-        va_start(arg_list, format);
-        int res = vfprintf(LOG_FILE, format, arg_list);
-        va_end(arg_list);
+    fprintf(LOG_FILE, "\n");
+    fflush(LOG_FILE);
 
-        fprintf(LOG_FILE, "\n");
-
-        return res;
-    }
+    return res;
+#else
     return 0;
+#endif
 }

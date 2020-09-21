@@ -2,12 +2,9 @@
 #define ESSENTIAL_HPP
 
 
-namespace ShishGL {
+#include "vector2.hpp"
 
-    template <typename T>
-    struct Vector2 {
-        T x, y;
-    };
+namespace ShishGL {
 
     int init(int* argc_ptr, char** argv);
 

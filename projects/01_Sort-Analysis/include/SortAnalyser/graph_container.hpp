@@ -16,7 +16,7 @@ namespace SortAnalyser {
 
         GraphContainer() = delete;
 
-        GraphContainer(const int& pos_x, const int& pos_y);
+        explicit GraphContainer(const Vector2<int>& pos);
 
         ~GraphContainer() override = default;
 
@@ -35,7 +35,7 @@ namespace SortAnalyser {
 
         void onRender() override;
 
-        void processEvent(const Event &) override;
+        void getEvent(const Event &) override;
 
         void displaySortStat(const Sort& sort);
 
