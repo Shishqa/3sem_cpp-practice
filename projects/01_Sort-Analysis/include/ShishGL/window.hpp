@@ -2,35 +2,21 @@
 #define WINDOW_HPP
 
 
-#include <cstdio>
-#include <stdexcept>
+#include <cstddef>
 #include <vector>
-#include <queue>
 
-#include <GL/gl.h>
-#include <GL/freeglut.h>
-
-#include "window.hpp"
 #include "essential.hpp"
+#include "event.hpp"
+
 
 namespace ShishGL {
-
-    class Window;
-
-    struct Event {
-
-        Window* target;
-        int event_code;
-
-    };
 
     class Window {
     public:
 
         Window() = delete;
 
-        Window(const int& pos_x, const int& pos_y,
-               const size_t& width, const size_t& height);
+        Window(const Vector2<int>& pos, const Vector2<size_t>& size);
 
         Window(const Window& other);
 
@@ -45,13 +31,9 @@ namespace ShishGL {
         void dump();
 
         struct WindowInfo {
-
             int id;
-
-            int pos_x, pos_y;
-
-            size_t width, height;
-
+            Vector2<int> pos;
+            Vector2<size_t> size;
         };
 
         void attach(Window* window);
@@ -84,11 +66,9 @@ namespace ShishGL {
 
         virtual void onMouseClick(int, int, int, int) { }
 
-        virtual void processEvent(const Event&) { }
-
         //==========================================================================
 
-        static const int MAX_ALLOWED_WINDOW_CNT = 200;
+        static constexpr int MAX_ALLOWED_WINDOW_CNT = 200;
         static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
 
         static void makeActive(Window* window);
@@ -107,16 +87,8 @@ namespace ShishGL {
 
         static void manageOnMouseClick(int button, int state, int x, int y);
 
-        //==========================================================================
-
-        static std::queue<Event> events;
-
-        static void generateEvent(const Event& event);
-
-        static void processNewEvents();
-
     };
-
 }
+
 
 #endif //WINDOW_HPP

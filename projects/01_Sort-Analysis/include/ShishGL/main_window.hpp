@@ -1,17 +1,18 @@
 #ifndef MAIN_WINDOW_HPP
 #define MAIN_WINDOW_HPP
 
-#include <cstdio>
+
 #include <cstddef>
 
 #include "window.hpp"
+
 
 namespace ShishGL {
 
     class MainWindow : public Window {
     public:
 
-        MainWindow(const char* title, const size_t& width, const size_t& height);
+        MainWindow(const char* title, const Vector2<size_t>& size);
 
         void run();
 
@@ -24,5 +25,6 @@ namespace ShishGL {
     };
 
 }
+
 
 #endif //MAIN_WINDOW_HPP

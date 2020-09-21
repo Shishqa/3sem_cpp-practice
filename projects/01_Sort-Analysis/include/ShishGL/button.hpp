@@ -4,10 +4,31 @@
 
 #include <cstddef>
 #include "window.hpp"
-#include "colors.hpp"
+#include "draw.hpp"
 
 
 namespace ShishGL {
+
+
+    struct ButtonColorScheme {
+        Color bg_default,
+              bg_hover,
+              bg_click,
+              fg_default,
+              fg_hover,
+              fg_click;
+    };
+
+
+    constexpr ButtonColorScheme DEFAULT_BUTTON_COLORS = {
+            {LEMON_CHIFFON, 255},
+            {PAPAYA_WHIP,   255},
+            {WHITE,         255},
+            {BLACK,         255},   // not yet implemented
+            {BLACK,         255},   //
+            {BLACK,         255}    //
+    };
+
 
     class Button : public Window {
     public:
@@ -15,17 +36,14 @@ namespace ShishGL {
         Button() = delete;
 
         Button(const char* button_label, const Event& click_event,
-               const int& pos_x, const int& pos_y,
-               const size_t& width, const size_t& height,
-               const Color& default_color = {LEMON_CHIFFON, 255},
-               const Color& hover_color   = {PAPAYA_WHIP,   255},
-               const Color& click_color   = {WHITE,         255});
+               const Vector2<int> position, const Vector2<size_t>& size,
+               const ButtonColorScheme& colors = DEFAULT_BUTTON_COLORS);
 
         ~Button() override = default;
 
     protected:
 
-        Event on_click;
+        const Event& on_click;
 
         const char* label;
         size_t label_len;
@@ -34,8 +52,6 @@ namespace ShishGL {
               color_default,
               color_hover,
               color_click;
-
-        void drawLabel();
 
         void onRender() override;
 

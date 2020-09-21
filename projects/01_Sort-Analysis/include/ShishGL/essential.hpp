@@ -1,21 +1,21 @@
 #ifndef ESSENTIAL_HPP
 #define ESSENTIAL_HPP
 
-#include <cstdint>
 
 namespace ShishGL {
 
-    void init(int*argc_ptr, char**argv);
+    template <typename T>
+    struct Vector2 {
+        T x, y;
+    };
 
-    void startMainLoop();
+    int init(int* argc_ptr, char** argv);
+
+    int enterMainLoop();
 
     void terminate();
 
-    struct Color {
-        uint8_t r, g, b, a;
-    };
-
-    void fillWithColor(const Color& color);
 }
+
 
 #endif //ESSENTIAL_HPP
