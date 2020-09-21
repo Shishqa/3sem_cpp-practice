@@ -20,11 +20,11 @@ namespace ShishGL {
 
         Window(const Window& other);
 
-        Window(Window&& other);
+        Window(Window&& other) noexcept;
 
         Window& operator=(const Window& other);
 
-        Window& operator=(Window&& other);
+        Window& operator=(Window&& other) noexcept;
 
         virtual ~Window();
 

@@ -20,16 +20,18 @@ namespace SortAnalyser {
 
         ~GraphContainer() override = default;
 
+        enum {
+            GRAPH_WINDOWS_GAP   = 30,
+            GRAPH_WINDOW_WIDTH  = 400,
+            GRAPH_WINDOW_HEIGHT = 400,
+            CONTAINER_WIDTH     = 3 * GRAPH_WINDOWS_GAP + 2 * GRAPH_WINDOW_WIDTH,
+            CONTAINER_HEIGHT    = 2 * GRAPH_WINDOWS_GAP +     GRAPH_WINDOW_WIDTH
+        };
+
     private:
 
         GraphWindow* assignments_graph;
         GraphWindow* comparisons_graph;
-
-        enum {
-            GRAPH_WINDOWS_GAP   = 30,
-            GRAPH_WINDOW_WIDTH  = 400,
-            GRAPH_WINDOW_HEIGHT = 400
-        };
 
         void initLayout() override;
 

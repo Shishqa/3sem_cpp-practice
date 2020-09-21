@@ -6,37 +6,43 @@ using namespace SortAnalyser;
 
 
 SortAnalyserWindow::SortAnalyserWindow()
-    : ShishGL::MainWindow("Sort Analyser", {1024, 720}) {
+        : ShishGL::MainWindow("Sort Analyser", {1024, 720}) {
     ShishGL::printLog("created app");
 }
 
 
 void SortAnalyserWindow::initLayout() {
 
-    static const size_t BUTTON_WIDTH  = 100,
-                        BUTTON_HEIGHT = 40,
-                        BUTTON_GAP    = 10;
+    static const size_t BUTTON_WIDTH = 100,
+            BUTTON_HEIGHT = 40,
+            BUTTON_GAP = 10;
 
-    Window* graphs = new GraphContainer({0, 0});
+    static const int GAP = static_cast<int>(info.size.x - GraphContainer::CONTAINER_WIDTH) / 2;
+
+    Window* graphs = new GraphContainer({GAP, GAP});
     attach(graphs);
 
     printLog("Graphs: %p", reinterpret_cast<void*>(graphs));
 
-    int buttons_y = static_cast<int>(graphs->getInfo().size.y + BUTTON_GAP);
+    Vector2<int> buttons_pos = {GAP, static_cast<int>(GAP + GraphContainer::CONTAINER_HEIGHT + BUTTON_GAP)};
+
+    //TODO: refactor button descriptions!
 
     for (size_t i = 0; i < sizeof(SORTS) / sizeof(Sort); ++i) {
-        attach( new ShishGL::Button(SORTS[i].name,
-                                    {dynamic_cast<Object*>(graphs), static_cast<int>(i)},
-                                    {static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), buttons_y},
-                                    {BUTTON_WIDTH, BUTTON_HEIGHT}) );
+        attach(new ShishGL::Button(SORTS[i].name,
+                                   {dynamic_cast<Object*>(graphs), static_cast<int>(i)},
+                                   Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
+                                   buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT},
+                                   {SORTS[i].color, {MINT_CREAM, 255},
+                                    {WHITE, 255}, {BLACK, 255}}));
     }
-    buttons_y += BUTTON_HEIGHT + BUTTON_GAP;
+    buttons_pos.y += BUTTON_HEIGHT + BUTTON_GAP;
 
     for (size_t i = 0; i < sizeof(UTIL_BUTTONS) / sizeof(ButtonDescription); ++i) {
-        attach( new ShishGL::Button(UTIL_BUTTONS[i].name,
-                                    {dynamic_cast<Object*>(graphs), UTIL_BUTTONS[i].event_signal},
-                                    {static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i), buttons_y},
-                                    {2 * BUTTON_WIDTH, BUTTON_HEIGHT}) );
+        attach(new ShishGL::Button(UTIL_BUTTONS[i].name,
+                                   {dynamic_cast<Object*>(graphs), UTIL_BUTTONS[i].event_signal},
+                                   Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
+                                   buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT}));
     }
 
 }

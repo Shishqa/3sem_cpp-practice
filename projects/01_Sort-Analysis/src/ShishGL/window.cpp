@@ -15,8 +15,7 @@ Window* Window::active_windows[MAX_ALLOWED_WINDOW_CNT + 1] = {};
 Window::Window(const Vector2<int>& position,
                const Vector2<size_t>& size)
         : info({ID_UNDEFINED, position, size}) {
-
-    printLog("Created main window %p at (%d, %d) %lux%lupx (but not initialised with GLUT)",
+    printLog("Created window %p at (%d, %d) %lux%lupx (but not initialised with GLUT)",
              reinterpret_cast<void*>(this), position.x, position.y, size.x, size.y);
 }
 
@@ -28,6 +27,42 @@ Window::~Window() {
     }
 
     printLog("Destroyed window %d", info.id);
+}
+
+
+Window::Window(const Window& other)
+        : info(other.info) {
+    for (const auto& subwindow : other.subwindows) {
+        auto win_copy = new Window(*subwindow);
+        subwindows.emplace_back(win_copy);
+    }
+}
+
+
+Window& Window::operator=(const Window& other) {
+    if (&other == this) {
+        return *this;
+    }
+
+    info = other.info;
+    for (const auto& subwindow : other.subwindows) {
+        auto win_copy = new Window(*subwindow);
+        subwindows.emplace_back(win_copy);
+    }
+
+    return *this;
+}
+
+
+Window::Window(Window&& other) noexcept
+        : info(other.info), subwindows(other.subwindows) {}
+
+
+Window& Window::operator=(Window&& other) noexcept {
+    info = other.info;
+    subwindows = std::move(other.subwindows);
+
+    return *this;
 }
 
 
