@@ -6,12 +6,12 @@
 #include <vector>
 
 #include "essential.hpp"
-#include "event.hpp"
+#include "object.hpp"
 
 
 namespace ShishGL {
 
-    class Window {
+    class Window : public Object {
     public:
 
         Window() = delete;
@@ -68,12 +68,14 @@ namespace ShishGL {
 
         //==========================================================================
 
-        static constexpr int MAX_ALLOWED_WINDOW_CNT = 200;
-        static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
-
         static void makeActive(Window* window);
 
         static Window* getCurrentActiveWindow();
+
+    private:
+
+        static constexpr int MAX_ALLOWED_WINDOW_CNT = 200;
+        static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
 
         static void manageOnIdle();
 

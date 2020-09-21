@@ -2,9 +2,6 @@
 #define LOG_HPP
 
 
-#include <cstddef>
-
-
 namespace ShishGL {
 
     int openLog();
@@ -14,5 +11,6 @@ namespace ShishGL {
     int closeLog();
 
 }
+
 
 #endif //LOG_HPP

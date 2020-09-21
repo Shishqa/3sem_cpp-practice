@@ -2,8 +2,6 @@
 #define EVENT_HPP
 
 
-#include "essential.hpp"
-
 #include <queue>
 
 

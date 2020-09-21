@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-#include "essential.hpp"
+#include "colors.hpp"
 
 
 namespace ShishGL {
