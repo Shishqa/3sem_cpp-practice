@@ -11,17 +11,14 @@ namespace ShishGL {
 
     struct ButtonColorScheme {
         Color bg_default,
-              bg_hover,
-              bg_click,
-              fg_default;
+                bg_hover,
+                bg_click,
+                fg_default;
     };
 
 
     constexpr ButtonColorScheme DEFAULT_BUTTON_COLORS = {
-            {LEMON_CHIFFON, 255},
-            {PAPAYA_WHIP,   255},
-            {WHITE,         255},
-            {BLACK,         255},   // not yet implemented
+            LEMON_CHIFFON, PAPAYA_WHIP, WHITE, BLACK
     };
 
 

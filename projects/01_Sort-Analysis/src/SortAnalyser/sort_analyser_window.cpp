@@ -35,8 +35,7 @@ void SortAnalyserWindow::initLayout() {
                 {graphs, static_cast<int>(i)},
                 Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
                 buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT},
-                {Sorts()[i].color, {MINT_CREAM, 255},
-                 {WHITE, 255}, {BLACK, 255}}
+                {Sorts()[i].color, MINT_CREAM, WHITE, BLACK}
         ));
     }
     buttons_pos.y += BUTTON_HEIGHT + BUTTON_GAP;
@@ -55,7 +54,7 @@ void SortAnalyserWindow::initLayout() {
 void SortAnalyserWindow::onRender() {
     renderBegin(info.size);
 
-    ShishGL::fillWithColor({DIM_GRAY, 255});
+    ShishGL::fillWithColor(DIM_GRAY);
 
     renderEnd();
 }

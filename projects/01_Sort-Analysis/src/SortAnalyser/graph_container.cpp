@@ -30,7 +30,7 @@ void GraphContainer::initLayout() {
 void GraphContainer::onRender() {
     renderBegin(info.size);
 
-    ShishGL::fillWithColor({DARK_SLATE_GRAY, 255});
+    ShishGL::fillWithColor(DARK_SLATE_GRAY);
 
     renderEnd();
 }

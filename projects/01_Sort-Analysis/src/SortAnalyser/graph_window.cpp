@@ -47,12 +47,11 @@ void GraphWindow::onRender() {
     const Vector2<double> viewport = current_max - current_min;
     renderBegin((1.0 + 2 * GAP_PROPORTION) * viewport);
 
-    ShishGL::fillWithColor({BLACK, 255});
+    ShishGL::fillWithColor(BLACK);
 
     displayText(description,
-                {viewport.x / 2,
-                 viewport.y * GAP_PROPORTION / 2},
-                {WHITE, 255});
+                {viewport.x / 2, viewport.y * GAP_PROPORTION / 2},
+                WHITE);
 
     // TODO: fix bug: axes are not drawn on first render
     drawAxes(viewport);
@@ -77,7 +76,7 @@ void GraphWindow::onRender() {
 
 void GraphWindow::drawAxes(const Vector2<double>& viewport) {
 
-    setColor({WHITE, 255});
+    setColor(WHITE);
     glLineWidth(2.0f);
     drawLine({GAP_PROPORTION * viewport.x, (1.0 + GAP_PROPORTION) * viewport.y},
               GAP_PROPORTION * viewport);

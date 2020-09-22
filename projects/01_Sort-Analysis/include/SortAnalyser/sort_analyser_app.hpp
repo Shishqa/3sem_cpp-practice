@@ -26,9 +26,9 @@ namespace SortAnalyser {
     };
 
     constexpr ButtonDescription UTIL_BUTTONS[] = {
-            {"Clear",        CLEAR_SIGNAL, {WHITE, 255}},
-            {"Normal rng", NORMAL_RANGE,   {DARK_SEA_GREEN, 255}},
-            {"Big range",    BIG_RANGE,    {FIRE_BRICK, 255}}
+            {"Clear",      CLEAR_SIGNAL, WHITE},
+            {"Normal rng", NORMAL_RANGE, DARK_SEA_GREEN},
+            {"Big range",  BIG_RANGE,    FIRE_BRICK}
     };
 
     struct Sort {

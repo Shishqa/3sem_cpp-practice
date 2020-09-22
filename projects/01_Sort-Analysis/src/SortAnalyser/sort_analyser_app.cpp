@@ -5,10 +5,10 @@ using namespace SortAnalyser;
 
 const std::vector<SortAnalyser::Sort>& SortAnalyser::Sorts() {
     static const std::vector<Sort> SORTS {
-        {"Bubble Sort", SortingWrap(bubble_sort, fill_random), {FIRE_BRICK,   255}},
-        {"Merge Sort",  SortingWrap(merge_sort,  fill_random), {MEDIUM_AQUAMARINE, 255}},
-        {"Std Sort",    SortingWrap(std::sort,   fill_random), {LAVENDER,  255}},
-        {"Id (sort)",   SortingWrap(id_sort,     fill_random), {KHAKI, 255}}
+        {"Bubble Sort", SortingWrap(bubble_sort, fill_random), FIRE_BRICK},
+        {"Merge Sort",  SortingWrap(merge_sort,  fill_random), MEDIUM_AQUAMARINE},
+        {"Std Sort",    SortingWrap(std::sort,   fill_random), LAVENDER},
+        {"Id (sort)",   SortingWrap(id_sort,     fill_random), KHAKI}
     };
 
     return SORTS;
