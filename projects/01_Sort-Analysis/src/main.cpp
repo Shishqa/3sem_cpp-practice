@@ -10,11 +10,6 @@ int main(int argc, char** argv) {
 
     MainWindow* app = new SortAnalyserWindow();
 
-    if (!app) {
-        fprintf(stderr, "no app\n");
-        return 1;
-    }
-
     app->run();
 
     delete app;
