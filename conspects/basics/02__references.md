@@ -6,7 +6,7 @@
 
 > Область видимости ссылки <= области видимости объекта!
 
-```
+```c++
     int& func(int x) {  // плохо
         return x;
     }
@@ -30,6 +30,23 @@
 
 ### ADL -- argument dependent lookup
 
--- подбор нужной формы функции в зависимости от аргументов.
+--- подбор нужной формы функции в зависимости от аргументов.
+
+```c++
+
+    template <typename T>
+    struct TypeInspector {
+        std::string name() {
+            return typeid(T).name();
+        }              // ^^^^^^^^--------mangling
+    };
+
+    // RTTI -- realtime type information
+
+    ...
+
+
+
+```
 
 ### 

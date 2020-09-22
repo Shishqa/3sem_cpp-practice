@@ -34,3 +34,6 @@
 # Dia
 *.dia
 *.autosave
+
+# Vim drafts
+*.swp
