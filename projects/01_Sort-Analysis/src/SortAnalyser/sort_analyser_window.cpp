@@ -29,6 +29,18 @@ void SortAnalyserWindow::initLayout() {
 
     //TODO: refactor button descriptions!
 
+    /*
+     * for (size_t i = 0; i < ...) {
+     *
+     *      for (size_t j = 0; j < ...) {
+     *
+     *
+     *      }
+     *
+     * }
+     *
+     */
+
     for (size_t i = 0; i < Sorts().size(); ++i) {
         attach(new ShishGL::Button(
                 Sorts()[i].name,

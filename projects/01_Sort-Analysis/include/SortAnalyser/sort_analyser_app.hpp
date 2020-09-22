@@ -35,6 +35,7 @@ namespace SortAnalyser {
         const char* name;
         SortingWrap stat_function;
         Color color;
+        double correction_factor;
     };
 
     const size_t MIN_ARRAY_SIZE = 0,

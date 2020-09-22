@@ -14,28 +14,34 @@
 ### Created window 0x60e000002a40 at (67, 537) 100x40px (but not initialised with GLUT)
 ### Button created
 ### Window 0x60e000002a40 is now active with id 5 (make sure it was initialized before!)
-### Created window 0x60e000003220 at (177, 537) 100x40px (but not initialised with GLUT)
+### Created window 0x60e000003300 at (177, 537) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e000003220 is now active with id 6 (make sure it was initialized before!)
-### Created window 0x60e000003ae0 at (287, 537) 100x40px (but not initialised with GLUT)
+### Window 0x60e000003300 is now active with id 6 (make sure it was initialized before!)
+### Created window 0x60e000003bc0 at (287, 537) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e000003ae0 is now active with id 7 (make sure it was initialized before!)
-### Created window 0x60e0000043a0 at (397, 537) 100x40px (but not initialised with GLUT)
+### Window 0x60e000003bc0 is now active with id 7 (make sure it was initialized before!)
+### Created window 0x60e000004480 at (397, 537) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e0000043a0 is now active with id 8 (make sure it was initialized before!)
-### Created window 0x60e000004c60 at (67, 587) 100x40px (but not initialised with GLUT)
+### Window 0x60e000004480 is now active with id 8 (make sure it was initialized before!)
+### Created window 0x60e000004d40 at (67, 587) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e000004c60 is now active with id 9 (make sure it was initialized before!)
-### Created window 0x60e000005520 at (177, 587) 100x40px (but not initialised with GLUT)
+### Window 0x60e000004d40 is now active with id 9 (make sure it was initialized before!)
+### Created window 0x60e000005600 at (177, 587) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e000005520 is now active with id 10 (make sure it was initialized before!)
-### Created window 0x60e000005de0 at (287, 587) 100x40px (but not initialised with GLUT)
+### Window 0x60e000005600 is now active with id 10 (make sure it was initialized before!)
+### Created window 0x60e000005ec0 at (287, 587) 100x40px (but not initialised with GLUT)
 ### Button created
-### Window 0x60e000005de0 is now active with id 11 (make sure it was initialized before!)
+### Window 0x60e000005ec0 is now active with id 11 (make sure it was initialized before!)
+### Target: 0x60b000004c90, code: 0
 ### Target: 0x60b000004c90, code: 1
 ### Target: 0x60b000004c90, code: 2
 ### Target: 0x60b000004c90, code: 3
-### Target: 0x60b000004c90, code: 0
+### Target: 0x60b000004c90, code: -98
+### Target: 0x60b000004c90, code: -99
+### Target: 0x60b000004c90, code: -100
+### Target: 0x60b000004c90, code: 1
+### Target: 0x60b000004c90, code: 2
+### Target: 0x60b000004c90, code: 3
 ### Destroyed window 3
 ### Destroyed window 4
 ### Destroyed window 2

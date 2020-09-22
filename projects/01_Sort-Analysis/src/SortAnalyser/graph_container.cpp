@@ -7,9 +7,8 @@ using namespace SortAnalyser;
 
 GraphContainer::GraphContainer(const Vector2<int>& pos)
         : ShishGL::Window(pos, {GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
-                                GRAPH_WINDOW_HEIGHT    + GRAPH_WINDOWS_GAP * 2})
-        , assignments_graph(nullptr)
-        , comparisons_graph(nullptr) { }
+                                GRAPH_WINDOW_HEIGHT + GRAPH_WINDOWS_GAP * 2}), assignments_graph(nullptr),
+          comparisons_graph(nullptr) {}
 
 
 void GraphContainer::initLayout() {
@@ -74,10 +73,12 @@ void GraphContainer::clear() {
 
 void GraphContainer::displaySortStat(const Sort& sort) {
 
-    uint32_t assign_id  = assignments_graph->initCurve(sort.color);
+    uint32_t assign_id = assignments_graph->initCurve(sort.color);
     uint32_t compare_id = comparisons_graph->initCurve(sort.color);
 
-    for (size_t array_size = MIN_ARRAY_SIZE; array_size < MAX_ARRAY_SIZE; array_size += STEP) {
+    auto MAX_SIZE = static_cast<size_t>(sort.correction_factor * static_cast<double>(MAX_ARRAY_SIZE));
+
+    for (size_t array_size = MIN_ARRAY_SIZE; array_size < MAX_SIZE; array_size += STEP) {
 
         Stat stat = sort.stat_function(array_size);
 
@@ -86,7 +87,6 @@ void GraphContainer::displaySortStat(const Sort& sort) {
 
         comparisons_graph->addPoint(compare_id, {static_cast<double>(array_size),
                                                  static_cast<double>(stat.compare_cnt)});
-
     }
 
 }
