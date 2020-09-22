@@ -29,13 +29,13 @@ void SortAnalyserWindow::initLayout() {
 
     //TODO: refactor button descriptions!
 
-    for (size_t i = 0; i < sizeof(SORTS) / sizeof(Sort); ++i) {
+    for (size_t i = 0; i < Sorts().size(); ++i) {
         attach(new ShishGL::Button(
-                SORTS[i].name,
+                Sorts()[i].name,
                 {graphs, static_cast<int>(i)},
                 Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
                 buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT},
-                {SORTS[i].color, {MINT_CREAM, 255},
+                {Sorts()[i].color, {MINT_CREAM, 255},
                  {WHITE, 255}, {BLACK, 255}}
         ));
     }

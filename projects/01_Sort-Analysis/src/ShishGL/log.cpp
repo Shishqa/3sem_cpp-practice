@@ -27,6 +27,7 @@ int ShishGL::closeLog() {
 }
 
 
+// TODO: add urgency!
 __attribute__((format(printf, 1, 2)))
 int ShishGL::printLog(const char* format, ...) {
 #ifdef DEBUG

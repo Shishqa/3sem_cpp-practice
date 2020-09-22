@@ -51,12 +51,12 @@ void GraphContainer::getEvent(const Event& event) {
             break;
 
         default:
-            if (event.event_code >= static_cast<int>(sizeof(SORTS) / sizeof(Sort)) ||
+            if (event.event_code >= static_cast<int>(Sorts().size()) ||
                 0 > event.event_code) {
                 printLog("Warning: tried to display curve with id %d", event.event_code);
                 break;
             }
-            displaySortStat(SORTS[event.event_code]);
+            displaySortStat(Sorts()[event.event_code]);
     }
 
 }

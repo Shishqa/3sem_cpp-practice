@@ -3,19 +3,22 @@
 using namespace ShishGL;
 
 
-std::queue<Event> EventSystem::events;
+EventSystem::EventQueue& EventSystem::Events() {
+    static EventQueue events;
+    return events;
+}
 
 
 void EventSystem::addEvent(const Event& event) {
-    events.emplace(event);
+    Events().emplace(event);
 }
 
 
 void EventSystem::processNewEvents() {
 
-    while (!events.empty()) {
+    while (!Events().empty()) {
 
-        Event curr_event = events.front();
+        Event curr_event = Events().front();
 
         if (!curr_event.target) {
             printLog("Warning: event with empty target passed!");
@@ -25,6 +28,6 @@ void EventSystem::processNewEvents() {
             curr_event.target->getEvent(curr_event);
         }
 
-        events.pop();
+        Events().pop();
     }
 }

@@ -27,7 +27,9 @@ namespace ShishGL {
 
     private:
 
-        static std::queue<Event> events;
+        typedef std::queue<Event> EventQueue;
+
+        static EventQueue& Events();
         static void processNewEvents();
 
         friend Object;

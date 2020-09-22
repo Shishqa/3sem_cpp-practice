@@ -42,12 +42,7 @@ namespace SortAnalyser {
                  NUM_OF_DOTS    = 100,
                  STEP           = (MAX_ARRAY_SIZE - MIN_ARRAY_SIZE) / NUM_OF_DOTS;
 
-    const Sort SORTS[] = {
-        {"Bubble Sort", SortingWrap(bubble_sort, fill_random), {FIRE_BRICK,   255}},
-        {"Merge Sort",  SortingWrap(merge_sort,  fill_random), {MEDIUM_AQUAMARINE, 255}},
-        {"Std Sort",    SortingWrap(std::sort,   fill_random), {LAVENDER,  255}},
-        {"Id (sort)",   SortingWrap(id_sort,     fill_random), {KHAKI, 255}}
-    };
+    const std::vector<Sort>& Sorts();
 }
 
 
