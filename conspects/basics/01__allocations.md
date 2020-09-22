@@ -38,7 +38,7 @@
 
 STL port
 
-![Тонкости new / delete](./allocations.png)
+![Тонкости new / delete](./01__allocations.png)
 
 #### Для закрепления написать отладочную форму new / delete / placement-new
 

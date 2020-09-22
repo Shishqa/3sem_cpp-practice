@@ -7,10 +7,12 @@ namespace ShishGL {
     template <typename T>
     struct Vector2;
 
+
     template <typename T>
     Vector2<T> operator-(const Vector2<T>& vec) {
         return Vector2<T>{-vec.x, -vec.y};
     }
+
 
     template <typename T>
     Vector2<T> operator+(const Vector2<T>& left, const Vector2<T>& right) {
@@ -24,6 +26,7 @@ namespace ShishGL {
         left.y += right.y;
         return left;
     }
+
 
     template <typename T>
     Vector2<T> operator-(const Vector2<T>& left, const Vector2<T>& right) {
