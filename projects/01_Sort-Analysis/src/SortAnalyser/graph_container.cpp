@@ -15,10 +15,12 @@ GraphContainer::GraphContainer(const Vector2<int>& pos)
 void GraphContainer::initLayout() {
 
     assignments_graph = new GraphWindow({GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP},
-                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT});
+                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
+                                        "Assignments");
 
     comparisons_graph = new GraphWindow({GRAPH_WINDOWS_GAP * 2 + GRAPH_WINDOW_WIDTH, GRAPH_WINDOWS_GAP},
-                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT});
+                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
+                                        "Comparisons");
 
     attach(assignments_graph);
     attach(comparisons_graph);

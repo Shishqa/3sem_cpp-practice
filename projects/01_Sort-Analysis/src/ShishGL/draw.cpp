@@ -37,8 +37,8 @@ void ShishGL::setColor(const Color& color) {
 }
 
 
-size_t ShishGL::displayText(const char* text, const size_t& text_len,
-                            const Vector2<int>& position,
+size_t ShishGL::displayText(const std::string_view& text,
+                            const Vector2<double>& position,
                             const Color& color) {
 
     setColor(color);
@@ -46,13 +46,13 @@ size_t ShishGL::displayText(const char* text, const size_t& text_len,
     static const size_t FONT_HEIGHT = 15,
                         FONT_WIDTH  = 9;
 
-    size_t bitmap_width = FONT_WIDTH * text_len;
+    size_t bitmap_width = FONT_WIDTH * text.size();
 
-    glRasterPos2d(static_cast<double>(2 * position.x - bitmap_width) / 2,
-                  static_cast<double>(2 * position.y + FONT_HEIGHT)  / 2);
+    glRasterPos2d(position.x - static_cast<double>(bitmap_width) / 2,
+                  position.y - static_cast<double>(FONT_HEIGHT)  / 2);
 
-    for(const char* curr_symbol = text; *curr_symbol != '\0'; ++curr_symbol) {
-        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *curr_symbol);
+    for(const auto& symbol : text) {
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, symbol);
     }
 
     return bitmap_width;

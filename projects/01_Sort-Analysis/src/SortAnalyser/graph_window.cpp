@@ -3,8 +3,10 @@
 using namespace SortAnalyser;
 
 
-GraphWindow::GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size)
-        : Window(pos, size) { }
+GraphWindow::GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size,
+                         const std::string_view& graph_description)
+        : Window(pos, size)
+        , description(graph_description) { }
 
 
 unsigned int GraphWindow::initCurve(const Color& color) {
@@ -46,6 +48,11 @@ void GraphWindow::onRender() {
     renderBegin((1.0 + 2 * GAP_PROPORTION) * viewport);
 
     ShishGL::fillWithColor({BLACK, 255});
+
+    displayText(description,
+                {(1.0 + 2 * GAP_PROPORTION) * viewport.x / 2,
+                 viewport.y * GAP_PROPORTION / 2},
+                {WHITE, 255});
 
     // TODO: fix bug: axes are not drawn on first render
     drawAxes(viewport);

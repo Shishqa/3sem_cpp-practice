@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <string_view>
 
 #include "essential.hpp"
 #include "colors.hpp"
@@ -24,8 +25,8 @@ namespace ShishGL {
 
     void setColor(const Color& color);
 
-    size_t displayText(const char* text, const size_t& text_len,
-                       const Vector2<int>& position,
+    size_t displayText(const std::string_view& text,
+                       const Vector2<double>& position,
                        const Color& color);
 
     void drawLine(const Vector2<double>& begin,

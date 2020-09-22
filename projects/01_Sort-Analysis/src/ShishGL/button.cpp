@@ -11,7 +11,7 @@
 using namespace ShishGL;
 
 
-Button::Button(const char* button_label, const Event& click_event,
+Button::Button(const std::string_view& button_label, const Event& click_event,
                const Vector2<int>& position, const Vector2<size_t>& size,
                const ButtonColorScheme& colors)
         : Window(position, size)
@@ -19,9 +19,6 @@ Button::Button(const char* button_label, const Event& click_event,
         , label(button_label)
         , color_scheme(colors)
         , bg_current(color_scheme.bg_default) {
-
-    label_len = strlen(label);
-
     printLog("Button created");
 }
 
@@ -31,9 +28,9 @@ void Button::onRender() {
 
     fillWithColor(bg_current);
 
-    displayText( label, label_len,
-                 {static_cast<int>(info.size.x / 2),
-                  static_cast<int>(info.size.y / 2)},
+    displayText( label,
+                 {static_cast<double>(info.size.x) / 2,
+                  static_cast<double>(info.size.y) / 2},
                  color_scheme.fg_default );
 
     renderEnd();

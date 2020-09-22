@@ -30,7 +30,7 @@ namespace ShishGL {
 
         Button() = delete;
 
-        Button(const char* button_label, const Event& click_event,
+        Button(const std::string_view& button_label, const Event& click_event,
                const Vector2<int>& position, const Vector2<size_t>& size,
                const ButtonColorScheme& colors = DEFAULT_BUTTON_COLORS);
 
@@ -40,8 +40,7 @@ namespace ShishGL {
 
         const Event on_click;
 
-        const char* label;
-        size_t label_len;
+        const std::string_view label;
 
         ButtonColorScheme color_scheme;
         Color bg_current;

@@ -42,9 +42,7 @@ namespace SortAnalyser {
         void displaySortStat(const Sort& sort);
 
         void clear();
-
     };
-
 }
 
 

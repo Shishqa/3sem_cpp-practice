@@ -2,8 +2,11 @@
 #define GRAPH_WINDOW_HPP
 
 
+#include <string_view>
+
 #include "ShishGL/ShishGL.hpp"
 using namespace ShishGL;
+
 
 namespace SortAnalyser {
 
@@ -17,7 +20,8 @@ namespace SortAnalyser {
 
         GraphWindow() = delete;
 
-        GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size);
+        GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size,
+                    const std::string_view& graph_desctiption);
 
         ~GraphWindow() override = default;
 
@@ -28,6 +32,8 @@ namespace SortAnalyser {
         void clear();
 
     private:
+
+        const std::string_view description;
 
         static constexpr double GAP_PROPORTION = 0.1; // in [0; 0.5]
 
