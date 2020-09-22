@@ -49,7 +49,7 @@ size_t ShishGL::displayText(const std::string_view& text,
     size_t bitmap_width = FONT_WIDTH * text.size();
 
     glRasterPos2d(position.x - static_cast<double>(bitmap_width) / 2,
-                  position.y - static_cast<double>(FONT_HEIGHT)  / 2);
+                  position.y + static_cast<double>(FONT_HEIGHT)  / 2);
 
     for(const auto& symbol : text) {
         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, symbol);

@@ -50,7 +50,7 @@ void GraphWindow::onRender() {
     ShishGL::fillWithColor({BLACK, 255});
 
     displayText(description,
-                {(1.0 + 2 * GAP_PROPORTION) * viewport.x / 2,
+                {viewport.x / 2,
                  viewport.y * GAP_PROPORTION / 2},
                 {WHITE, 255});
 
