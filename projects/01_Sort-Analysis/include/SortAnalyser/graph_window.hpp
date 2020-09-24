@@ -46,6 +46,8 @@ namespace SortAnalyser {
 
         void onRender() override;
 
+        void onReshape(int width, int height) override;
+
         static void drawAxes(const Vector2<double>& viewport);
 
     };

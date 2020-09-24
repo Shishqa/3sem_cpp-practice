@@ -37,6 +37,8 @@ namespace SortAnalyser {
 
         void onRender() override;
 
+        void onReshape(int width, int height) override;
+
         void getEvent(const Event &) override;
 
         void displaySortStat(const Sort& sort);

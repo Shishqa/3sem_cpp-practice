@@ -31,7 +31,19 @@ void GraphContainer::onRender() {
 
     ShishGL::fillWithColor(DARK_SLATE_GRAY);
 
+    setColor(GREEN);
+    glBegin(GL_POLYGON);
+        glVertex2d(0, 0);
+        glVertex2d(100, 100);
+        glVertex2d(100, 0);
+    glEnd();
+
     renderEnd();
+}
+
+
+void GraphContainer::onReshape(int width, int height) {
+    glViewport(0, 0, width, height);
 }
 
 

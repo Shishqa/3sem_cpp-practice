@@ -204,6 +204,3 @@ void Window::manageOnMouseClick(int button, int state, int x, int y) {
         win_ptr->onMouseClick(button, state, x, y);
     }
 }
-
-
-//------------------------------------------------------------------------------

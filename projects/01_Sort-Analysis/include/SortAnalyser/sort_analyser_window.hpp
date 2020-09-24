@@ -24,6 +24,8 @@ namespace SortAnalyser {
 
         void onRender() override;
 
+        void onReshape(int width, int height) override;
+
         friend GraphContainer;
         friend GraphWindow;
     };

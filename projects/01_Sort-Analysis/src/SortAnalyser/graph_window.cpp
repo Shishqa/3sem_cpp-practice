@@ -49,13 +49,6 @@ void GraphWindow::onRender() {
 
     ShishGL::fillWithColor(BLACK);
 
-    displayText(description,
-                {viewport.x / 2, viewport.y * GAP_PROPORTION / 2},
-                WHITE);
-
-    // TODO: fix bug: axes are not drawn on first render
-    drawAxes(viewport);
-
     for (const auto& curve : curves) {
 
         setColor(curve.line_color);
@@ -69,9 +62,20 @@ void GraphWindow::onRender() {
         glEnd();
     }
 
+    displayText(description,
+                {viewport.x / 2, viewport.y * GAP_PROPORTION / 2},
+                WHITE);
+
+    // TODO: fix bug: axes are not drawn on first render
+    drawAxes(viewport);
+
     renderEnd();
 }
 
+
+void GraphWindow::onReshape(int width, int height) {
+    glViewport(0, 0, width, height);
+}
 
 
 void GraphWindow::drawAxes(const Vector2<double>& viewport) {

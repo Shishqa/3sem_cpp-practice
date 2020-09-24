@@ -27,20 +27,6 @@ void SortAnalyserWindow::initLayout() {
 
     Vector2<int> buttons_pos = {GAP, static_cast<int>(GAP + GraphContainer::CONTAINER_HEIGHT + BUTTON_GAP)};
 
-    //TODO: refactor button descriptions!
-
-    /*
-     * for (size_t i = 0; i < ...) {
-     *
-     *      for (size_t j = 0; j < ...) {
-     *
-     *
-     *      }
-     *
-     * }
-     *
-     */
-
     for (size_t i = 0; i < Sorts().size(); ++i) {
         attach(new ShishGL::Button(
                 Sorts()[i].name,
@@ -56,8 +42,8 @@ void SortAnalyserWindow::initLayout() {
         attach(new ShishGL::Button(
                 UTIL_BUTTONS[i].name,
                 {graphs, UTIL_BUTTONS[i].event_signal},
-                Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
-                buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT}
+                Vector2<int>{static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
+                buttons_pos, {2 * BUTTON_WIDTH, BUTTON_HEIGHT}
         ));
     }
 }
@@ -68,6 +54,17 @@ void SortAnalyserWindow::onRender() {
 
     ShishGL::fillWithColor(DIM_GRAY);
 
+    setColor(BLUE);
+    glBegin(GL_POLYGON);
+    glVertex2d(0, 0);
+    glVertex2d(1000, 1000);
+    glVertex2d(1000, 0);
+    glEnd();
+
     renderEnd();
 }
 
+
+void SortAnalyserWindow::onReshape(int width, int height) {
+    glViewport(0, 0, width, height);
+}
