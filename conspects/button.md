@@ -7,7 +7,7 @@
 3. Variadic Templates
 
 
-```
+```c++
 new Button(target, Signal(args));
 
 struct MySignal : public Signal {
@@ -22,5 +22,4 @@ Button {
 
     Object* target;
 }
-
 ```
