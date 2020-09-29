@@ -21,14 +21,16 @@ Window::~Window() {
     for (auto& win : subwindows) {
         delete win;
     }
-    printLog("Destroyed window %d", info.id);
 }
 
 
 void Window::display() {
-
     WindowManager::makeActive(this);
+}
 
+
+void Window::close() {
+    WindowManager::makeInactive(this);
 }
 
 

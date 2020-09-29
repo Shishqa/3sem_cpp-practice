@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
 
     app->display();
     ShishGL::enterMainLoop();
+    //app->close();
 
     delete app;
 

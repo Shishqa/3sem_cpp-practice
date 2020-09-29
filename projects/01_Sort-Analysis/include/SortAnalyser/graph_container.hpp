@@ -39,8 +39,6 @@ namespace SortAnalyser {
         uint64_t comparison_curve_id;
         bool   is_drawing;
 
-        void initLayout() override;
-
         void onRender() override;
 
         void onIdle() override;

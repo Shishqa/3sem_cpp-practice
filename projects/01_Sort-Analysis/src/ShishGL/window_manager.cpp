@@ -38,9 +38,6 @@ void WindowManager::makeActive(Window* window) {
     window->info.id = glutCreateWindow(window->info.title.data());
 
     activate(window);
-
-    printLog("Window %p is now active with id %d",
-             reinterpret_cast<void*>(window), window->info.id);
 }
 
 
@@ -49,17 +46,8 @@ void WindowManager::activate(Window* window) {
     ActiveWindows()[window->info.id] = window;
     setHandlers(window);
 
-    window->initLayout();
-    activateSubwindows(window);
-}
-
-
-void WindowManager::activateSubwindows(Window* window) {
-
-    if (!window) {
-        printLog("Warning: passed NULL to %s!", __PRETTY_FUNCTION__);
-        return;
-    }
+    printLog("Window %p is now active with id %d",
+             reinterpret_cast<void*>(window), window->info.id);
 
     for (const auto& p_subwindow : window->subwindows) {
 
@@ -69,10 +57,33 @@ void WindowManager::activateSubwindows(Window* window) {
                 p_subwindow->info.pos.y,
                 static_cast<int>(p_subwindow->info.size.x),
                 static_cast<int>(p_subwindow->info.size.y)
-                );
+        );
 
         activate(p_subwindow);
     }
+}
+
+
+void WindowManager::makeInactive(Window* window) {
+
+    if (!window) {
+        printLog("Warning: tried to deactivate NULL window!");
+        return;
+    } else if (window->info.id == Window::ID_UNDEFINED) {
+        //printLog("Warning: tried to deactivate not active window!");
+        return;
+    }
+
+    for (const auto& p_subwindow : window->subwindows) {
+        makeInactive(p_subwindow);
+    }
+
+    ActiveWindows().erase(window->info.id);
+    glutDestroyWindow(window->info.id);
+
+    window->info.id = Window::ID_UNDEFINED;
+
+    printLog("Window %p is now inactive", reinterpret_cast<void*>(window));
 }
 
 

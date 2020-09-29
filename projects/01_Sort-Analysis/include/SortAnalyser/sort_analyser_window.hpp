@@ -20,8 +20,6 @@ namespace SortAnalyser {
 
     private:
 
-        void initLayout() override;
-
         void onRender() override;
 
         void onReshape(int width, int height) override;

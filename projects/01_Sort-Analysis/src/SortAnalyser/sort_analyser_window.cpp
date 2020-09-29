@@ -7,11 +7,6 @@ using namespace SortAnalyser;
 
 SortAnalyserWindow::SortAnalyserWindow()
         : ShishGL::Window({1024, 720}, {0, 0}, "Sort Analyser") {
-    ShishGL::printLog("created Analyser");
-}
-
-
-void SortAnalyserWindow::initLayout() {
 
     static const size_t
             BUTTON_WIDTH = 100,

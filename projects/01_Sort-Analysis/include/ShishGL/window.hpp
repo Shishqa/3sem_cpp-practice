@@ -40,6 +40,8 @@ namespace ShishGL {
 
         void display();
 
+        void close();
+
         void refresh() const;
 
         void dump();
@@ -64,8 +66,6 @@ namespace ShishGL {
 
         virtual void onReshape(int, int) { /*nothing*/ };
 
-        virtual void initLayout() { /*empty layout*/ }
-
         virtual void onIdle() { /*nothing to do on idle*/ }
 
         virtual void onEntry(int) { /*nothing*/ }
@@ -77,23 +77,29 @@ namespace ShishGL {
 
 
     class WindowManager {
-    public:
+    private:
+
+        friend Window;
 
         static void makeActive(Window* window);
 
+        static void makeInactive(Window* window);
+
         static Window* getCurrentActiveWindow();
 
-    private:
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         using WindowMap = std::unordered_map<int, Window*>;
 
         static WindowMap& ActiveWindows();
 
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
         static void setHandlers(Window* window);
 
         static void activate(Window* window);
 
-        static void activateSubwindows(Window* window);
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         static void manageOnIdle();
 

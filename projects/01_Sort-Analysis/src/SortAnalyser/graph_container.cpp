@@ -15,10 +15,7 @@ GraphContainer::GraphContainer(const Vector2<int>& pos)
         , curr_animation_size(0)
         , assignment_curve_id(0)
         , comparison_curve_id(0)
-        , is_drawing(false) {}
-
-
-void GraphContainer::initLayout() {
+        , is_drawing(false) {
 
     assignments_graph = new GraphWindow({GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP},
                                         {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},

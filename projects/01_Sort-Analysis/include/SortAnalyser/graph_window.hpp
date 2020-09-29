@@ -52,8 +52,6 @@ namespace SortAnalyser {
 
         //
 
-        void initLayout() override {}
-
         void onIdle() override {}
 
         void onEntry(int) override {}

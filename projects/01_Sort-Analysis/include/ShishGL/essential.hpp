@@ -8,6 +8,8 @@ namespace ShishGL {
 
     int init(int* argc_ptr, char** argv);
 
+    void onExit();
+
     int enterMainLoop();
 
     void terminate();
