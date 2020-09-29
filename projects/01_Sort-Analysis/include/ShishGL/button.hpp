@@ -48,6 +48,16 @@ namespace ShishGL {
 
         void onMouseClick(int button, int state, int x, int y) override;
 
+        void initLayout() override {}
+
+        void onReshape(int, int) override {}
+
+        void onIdle() override {}
+
+        void onKeyPress(unsigned char, int, int) override {}
+
+        bool getEvent(const Event &) override { return false; }
+
     };
 
 }

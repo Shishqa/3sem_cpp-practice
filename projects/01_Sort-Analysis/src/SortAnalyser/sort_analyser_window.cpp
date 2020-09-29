@@ -43,7 +43,8 @@ void SortAnalyserWindow::initLayout() {
                 UTIL_BUTTONS[i].name,
                 {graphs, UTIL_BUTTONS[i].event_signal},
                 Vector2<int>{static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
-                buttons_pos, {2 * BUTTON_WIDTH, BUTTON_HEIGHT}
+                buttons_pos, {2 * BUTTON_WIDTH, BUTTON_HEIGHT},
+                {UTIL_BUTTONS[i].color, MINT_CREAM, WHITE, BLACK}
         ));
     }
 }
@@ -53,13 +54,6 @@ void SortAnalyserWindow::onRender() {
     renderBegin(info.size);
 
     ShishGL::fillWithColor(DIM_GRAY);
-
-    setColor(BLUE);
-    glBegin(GL_POLYGON);
-    glVertex2d(0, 0);
-    glVertex2d(1000, 1000);
-    glVertex2d(1000, 0);
-    glEnd();
 
     renderEnd();
 }

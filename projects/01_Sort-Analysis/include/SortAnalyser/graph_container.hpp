@@ -33,17 +33,33 @@ namespace SortAnalyser {
         GraphWindow* assignments_graph;
         GraphWindow* comparisons_graph;
 
+        Sort   curr_sort;
+        size_t curr_animation_size;
+        uint64_t assignment_curve_id;
+        uint64_t comparison_curve_id;
+        bool   is_drawing;
+
         void initLayout() override;
 
         void onRender() override;
 
+        void onIdle() override;
+
         void onReshape(int width, int height) override;
 
-        void getEvent(const Event &) override;
+        bool getEvent(const Event &) override;
 
         void displaySortStat(const Sort& sort);
 
         void clear();
+
+        ///
+
+        void onEntry(int) override {};
+
+        void onKeyPress(unsigned char, int, int) override {};
+
+        void onMouseClick(int, int, int, int) override {};
     };
 }
 

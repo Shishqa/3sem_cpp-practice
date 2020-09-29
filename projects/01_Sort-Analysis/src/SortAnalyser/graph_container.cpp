@@ -7,8 +7,14 @@ using namespace SortAnalyser;
 
 GraphContainer::GraphContainer(const Vector2<int>& pos)
         : ShishGL::Window(pos, {GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
-                                GRAPH_WINDOW_HEIGHT + GRAPH_WINDOWS_GAP * 2}), assignments_graph(nullptr),
-          comparisons_graph(nullptr) {}
+                                GRAPH_WINDOW_HEIGHT + GRAPH_WINDOWS_GAP * 2})
+        , assignments_graph(nullptr)
+        , comparisons_graph(nullptr)
+        , curr_sort(Sorts()[0])
+        , curr_animation_size(0)
+        , assignment_curve_id(0)
+        , comparison_curve_id(0)
+        , is_drawing(false) {}
 
 
 void GraphContainer::initLayout() {
@@ -31,13 +37,6 @@ void GraphContainer::onRender() {
 
     ShishGL::fillWithColor(DARK_SLATE_GRAY);
 
-    setColor(GREEN);
-    glBegin(GL_POLYGON);
-        glVertex2d(0, 0);
-        glVertex2d(100, 100);
-        glVertex2d(100, 0);
-    glEnd();
-
     renderEnd();
 }
 
@@ -47,7 +46,7 @@ void GraphContainer::onReshape(int width, int height) {
 }
 
 
-void GraphContainer::getEvent(const Event& event) {
+bool GraphContainer::getEvent(const Event& event) {
 
     switch (event.event_code) {
 
@@ -64,14 +63,19 @@ void GraphContainer::getEvent(const Event& event) {
             break;
 
         default:
+
             if (event.event_code >= static_cast<int>(Sorts().size()) ||
                 0 > event.event_code) {
                 printLog("Warning: tried to display curve with id %d", event.event_code);
-                break;
+                return false;
+            } else if (is_drawing) {
+                return false;
             }
+
             displaySortStat(Sorts()[event.event_code]);
     }
 
+    return true;
 }
 
 
@@ -79,26 +83,43 @@ void GraphContainer::clear() {
 
     assignments_graph->clear();
     comparisons_graph->clear();
+    is_drawing = false;
 
 }
 
 
 void GraphContainer::displaySortStat(const Sort& sort) {
 
-    uint32_t assign_id = assignments_graph->initCurve(sort.color);
-    uint32_t compare_id = comparisons_graph->initCurve(sort.color);
+    assignment_curve_id = assignments_graph->initCurve(sort.color);
+    comparison_curve_id = comparisons_graph->initCurve(sort.color);
 
-    auto MAX_SIZE = static_cast<size_t>(sort.correction_factor * static_cast<double>(MAX_ARRAY_SIZE));
+    is_drawing = true;
+    curr_sort  = sort; // TODO:: implement copy constructor
 
-    for (size_t array_size = MIN_ARRAY_SIZE; array_size < MAX_SIZE; array_size += STEP) {
+    curr_animation_size = MIN_ARRAY_SIZE;
+}
 
-        Stat stat = sort.stat_function(array_size);
 
-        assignments_graph->addPoint(assign_id, {static_cast<double>(array_size),
-                                                static_cast<double>(stat.assign_cnt)});
+void GraphContainer::onIdle() {
 
-        comparisons_graph->addPoint(compare_id, {static_cast<double>(array_size),
-                                                 static_cast<double>(stat.compare_cnt)});
+    if (!is_drawing) {
+        return;
     }
 
+    auto MAX_SIZE = static_cast<size_t>(curr_sort.correction_factor * static_cast<double>(MAX_ARRAY_SIZE));
+
+    if (curr_animation_size >= MAX_SIZE) {
+        is_drawing = false;
+        return;
+    }
+
+    Stat stat = curr_sort.stat_function(curr_animation_size);
+
+    assignments_graph->addPoint(assignment_curve_id, {static_cast<double>(curr_animation_size),
+                                            static_cast<double>(stat.assign_cnt)});
+
+    comparisons_graph->addPoint(comparison_curve_id, {static_cast<double>(curr_animation_size),
+                                             static_cast<double>(stat.compare_cnt)});
+
+    curr_animation_size += STEP;
 }

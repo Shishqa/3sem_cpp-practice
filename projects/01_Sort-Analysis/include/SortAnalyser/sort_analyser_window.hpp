@@ -26,6 +26,16 @@ namespace SortAnalyser {
 
         void onReshape(int width, int height) override;
 
+        void onIdle() override {}
+
+        void onEntry(int) override {}
+
+        void onKeyPress(unsigned char, int, int) override {}
+
+        void onMouseClick(int, int, int, int) override {}
+
+        bool getEvent(const Event &) override { return false; }
+
         friend GraphContainer;
         friend GraphWindow;
     };

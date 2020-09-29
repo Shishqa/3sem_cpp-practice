@@ -8,7 +8,7 @@
 namespace ShishGL {
 
     class Object;
-    class Window;
+    class WindowManager;
 
 
     struct Event {
@@ -33,7 +33,7 @@ namespace ShishGL {
         static void processNewEvents();
 
         friend Object;
-        friend Window;
+        friend WindowManager;
     };
 }
 

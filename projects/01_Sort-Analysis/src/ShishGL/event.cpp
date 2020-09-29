@@ -16,7 +16,9 @@ void EventSystem::addEvent(const Event& event) {
 
 void EventSystem::processNewEvents() {
 
-    while (!Events().empty()) {
+    size_t curr_events_size = Events().size();
+
+    while (curr_events_size--) {
 
         Event curr_event = Events().front();
 
@@ -25,7 +27,10 @@ void EventSystem::processNewEvents() {
         } else {
             printLog("Target: %p, code: %d", reinterpret_cast<void*>(curr_event.target),
                                              curr_event.event_code);
-            curr_event.target->getEvent(curr_event);
+
+            if (!curr_event.target->getEvent(curr_event)) {
+                Events().push(curr_event);
+            }
         }
 
         Events().pop();

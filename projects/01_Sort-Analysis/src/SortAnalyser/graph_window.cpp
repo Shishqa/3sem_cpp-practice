@@ -9,15 +9,15 @@ GraphWindow::GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size,
         , description(graph_description) { }
 
 
-unsigned int GraphWindow::initCurve(const Color& color) {
+uint64_t GraphWindow::initCurve(const Color& color) {
 
     curves.push_back({color, {}});
-    return static_cast<unsigned int>(curves.size()) - 1;
+    return static_cast<uint64_t>(curves.size()) - 1;
 
 }
 
 
-void GraphWindow::addPoint(const int& curve_id, const Vector2<double>& point) {
+void GraphWindow::addPoint(const uint64_t& curve_id, const Vector2<double>& point) {
 
     curves.at(curve_id).points.push_back(point);
 
@@ -52,7 +52,7 @@ void GraphWindow::onRender() {
     for (const auto& curve : curves) {
 
         setColor(curve.line_color);
-        glLineWidth(1.0f);
+        glLineWidth(3.0f);
 
         glBegin(GL_LINE_STRIP);
         for (const auto& point : curve.points) {

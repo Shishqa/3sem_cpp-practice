@@ -16,7 +16,7 @@ namespace ShishGL {
 
     protected:
 
-        virtual void getEvent(const Event&) { }
+        virtual bool getEvent(const Event&) = 0;
 
         friend EventSystem;
     };

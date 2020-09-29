@@ -9,12 +9,9 @@
 using namespace ShishGL;
 
 
-Window* Window::active_windows[MAX_ALLOWED_WINDOW_CNT + 1] = {};
-
-
 Window::Window(const Vector2<int>& position,
                const Vector2<size_t>& size)
-        : info({ID_UNDEFINED, position, size}) {
+        : info({WindowManager::WIN_ID_UNDEFINED, position, size}) {
     printLog("Created window %p at (%d, %d) %lux%lupx (but not initialised with GLUT)",
              reinterpret_cast<void*>(this), position.x, position.y, size.x, size.y);
 }
@@ -30,40 +27,40 @@ Window::~Window() {
 }
 
 
-Window::Window(const Window& other)
-        : info(other.info) {
-    for (const auto& subwindow : other.subwindows) {
-        auto win_copy = new Window(*subwindow);
-        subwindows.emplace_back(win_copy);
-    }
-}
-
-
-Window& Window::operator=(const Window& other) {
-    if (&other == this) {
-        return *this;
-    }
-
-    info = other.info;
-    for (const auto& subwindow : other.subwindows) {
-        auto win_copy = new Window(*subwindow);
-        subwindows.emplace_back(win_copy);
-    }
-
-    return *this;
-}
-
-
-Window::Window(Window&& other) noexcept
-        : info(other.info), subwindows(other.subwindows) {}
-
-
-Window& Window::operator=(Window&& other) noexcept {
-    info = other.info;
-    subwindows = std::move(other.subwindows);
-
-    return *this;
-}
+//Window::Window(const Window& other)
+//        : info(other.info) {
+//    for (const auto& subwindow : other.subwindows) {
+//        auto win_copy = new Window(*subwindow);
+//        subwindows.emplace_back(win_copy);
+//    }
+//}
+//
+//
+//Window& Window::operator=(const Window& other) {
+//    if (&other == this) {
+//        return *this;
+//    }
+//
+//    info = other.info;
+//    for (const auto& subwindow : other.subwindows) {
+//        auto win_copy = new Window(*subwindow);
+//        subwindows.emplace_back(win_copy);
+//    }
+//
+//    return *this;
+//}
+//
+//
+//Window::Window(Window&& other) noexcept
+//        : info(other.info), subwindows(other.subwindows) {}
+//
+//
+//Window& Window::operator=(Window&& other) noexcept {
+//    info = other.info;
+//    subwindows = std::move(other.subwindows);
+//
+//    return *this;
+//}
 
 
 void Window::dump() {
@@ -87,7 +84,7 @@ void Window::attach(Window* window) {
 
     subwindows.emplace_back(window);
 
-    if (info.id == ID_UNDEFINED) {
+    if (info.id == WindowManager::WIN_ID_UNDEFINED) {
         printLog("Warning: attached subwindow to not-initialized window!");
         return;
     }
@@ -97,59 +94,9 @@ void Window::attach(Window* window) {
                                           static_cast<int>(window->info.size.x),
                                           static_cast<int>(window->info.size.y));
 
-    makeActive(window);
-
+    WindowManager::makeActive(window);
     window->initLayout();
 }
-
-
-//------------------------------------------------------------------------------
-
-
-void Window::makeActive(Window* window) {
-
-    if (!window) {
-        printLog("Warning: tried to make NULL window active!");
-        return;
-    }
-
-    if (!window->info.id) {
-        printLog("Warning: tried to make uninitialized window active!");
-        return;
-    } else if (window->info.id > MAX_ALLOWED_WINDOW_CNT) {
-        printLog("Error: trying to make active window{%d} with id greater than %d!",
-                 window->info.id, MAX_ALLOWED_WINDOW_CNT);
-        throw std::runtime_error("Error: huge id!");
-    }
-
-    glutSetWindow(window->info.id);
-
-    glutIdleFunc(manageOnIdle);
-    glutDisplayFunc(manageOnRender);
-    glutEntryFunc(manageOnEntry);
-    glutReshapeFunc(manageOnReshape);
-    glutMouseFunc(manageOnMouseClick);
-    glutKeyboardFunc(manageOnKeyPress);
-
-    active_windows[window->info.id] = window;
-
-    printLog("Window %p is now active with id %d (make sure it was initialized before!)",
-             reinterpret_cast<void*>(window), window->info.id);
-
-}
-
-
-Window* Window::getCurrentActiveWindow() {
-
-    const int active_win_id = glutGetWindow();
-
-    if (active_win_id <= MAX_ALLOWED_WINDOW_CNT) {
-        return active_windows[active_win_id];
-    }
-
-    return nullptr;
-}
-
 
 void Window::refresh() const {
     glutSetWindow(info.id);
@@ -157,50 +104,7 @@ void Window::refresh() const {
 }
 
 
-void Window::manageOnIdle() {
-    EventSystem::processNewEvents();
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onIdle();
-    }
-}
+//------------------------------------------------------------------------------
 
 
-void Window::manageOnRender() {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onRender();
-    }
-}
 
-
-void Window::manageOnEntry(int state) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onEntry(state);
-    }
-}
-
-
-void Window::manageOnReshape(int width, int height) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onReshape(width, height);
-    }
-}
-
-
-void Window::manageOnKeyPress(unsigned char key, int x, int y) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onKeyPress(key, x, y);
-    }
-}
-
-
-void Window::manageOnMouseClick(int button, int state, int x, int y) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onMouseClick(button, state, x, y);
-    }
-}

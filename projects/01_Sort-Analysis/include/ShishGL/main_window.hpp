@@ -3,6 +3,7 @@
 
 
 #include <cstddef>
+#include <string_view>
 
 #include "window.hpp"
 
@@ -12,7 +13,7 @@ namespace ShishGL {
     class MainWindow : public Window {
     public:
 
-        MainWindow(const char* title, const Vector2<size_t>& size);
+        MainWindow(const std::string_view& title, const Vector2<size_t>& size);
 
         void run();
 
@@ -20,7 +21,7 @@ namespace ShishGL {
 
     protected:
 
-        const char* title;
+        const std::string_view title;
 
     };
 

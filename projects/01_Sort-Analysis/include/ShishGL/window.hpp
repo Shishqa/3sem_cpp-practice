@@ -4,12 +4,15 @@
 
 #include <cstddef>
 #include <vector>
+#include <unordered_map>
 
 #include "essential.hpp"
 #include "object.hpp"
 
 
 namespace ShishGL {
+
+    class WindowManager;
 
     class Window : public Object {
     public:
@@ -18,13 +21,13 @@ namespace ShishGL {
 
         Window(const Vector2<int>& pos, const Vector2<size_t>& size);
 
-        Window(const Window& other);
-
-        Window(Window&& other) noexcept;
-
-        Window& operator=(const Window& other);
-
-        Window& operator=(Window&& other) noexcept;
+//        Window(const Window& other);
+//
+//        Window(Window&& other) noexcept;
+//
+//        Window& operator=(const Window& other);
+//
+//        Window& operator=(Window&& other) noexcept;
 
         virtual ~Window();
 
@@ -44,29 +47,34 @@ namespace ShishGL {
 
     protected:
 
-        WindowInfo info;
+        friend WindowManager;
 
-        static const int ID_UNDEFINED = 0;
+        WindowInfo info;
 
         std::vector<Window*> subwindows;
 
         //==========================================================================
 
-        virtual void initLayout() { }
+        virtual void initLayout() = 0;
 
-        virtual void onIdle() { }
+        virtual void onIdle() = 0;
 
-        virtual void onRender() { }
+        virtual void onRender() = 0;
 
-        virtual void onEntry(int) { }
+        virtual void onEntry(int) = 0;
 
-        virtual void onReshape(int, int) { }
+        virtual void onReshape(int, int) = 0;
 
-        virtual void onKeyPress(unsigned char, int, int) { }
+        virtual void onKeyPress(unsigned char, int, int) = 0;
 
-        virtual void onMouseClick(int, int, int, int) { }
+        virtual void onMouseClick(int, int, int, int) = 0;
+    };
 
-        //==========================================================================
+
+    class WindowManager {
+    public:
+
+        static constexpr int WIN_ID_UNDEFINED = 0;
 
         static void makeActive(Window* window);
 
@@ -74,8 +82,9 @@ namespace ShishGL {
 
     private:
 
-        static constexpr int MAX_ALLOWED_WINDOW_CNT = 200;
-        static Window* active_windows[MAX_ALLOWED_WINDOW_CNT + 1];
+        using WindowMap = std::unordered_map<int, Window*>;
+
+        static WindowMap& ActiveWindows();
 
         static void manageOnIdle();
 
@@ -88,7 +97,6 @@ namespace ShishGL {
         static void manageOnKeyPress(unsigned char key, int x, int y);
 
         static void manageOnMouseClick(int button, int state, int x, int y);
-
     };
 }
 

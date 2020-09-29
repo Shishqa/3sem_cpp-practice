@@ -9,12 +9,13 @@ using namespace ShishGL;
 #include "Sorts/sort_collection.hpp"
 
 #include <algorithm>
+#include <string_view>
 
 
 namespace SortAnalyser {
 
     struct ButtonDescription {
-        const char* name;
+        std::string_view name;
         int event_signal;
         Color color;
     };
@@ -32,16 +33,16 @@ namespace SortAnalyser {
     };
 
     struct Sort {
-        const char* name;
+        std::string_view name;
         SortingWrap stat_function;
         Color color;
         double correction_factor;
     };
 
-    const size_t MIN_ARRAY_SIZE = 0,
-                 MAX_ARRAY_SIZE = 1000,
-                 NUM_OF_DOTS    = 100,
-                 STEP           = (MAX_ARRAY_SIZE - MIN_ARRAY_SIZE) / NUM_OF_DOTS;
+    constexpr size_t MIN_ARRAY_SIZE = 0,
+                     MAX_ARRAY_SIZE = 1000,
+                     NUM_OF_DOTS    = 100,
+                     STEP           = (MAX_ARRAY_SIZE - MIN_ARRAY_SIZE) / NUM_OF_DOTS;
 
     const std::vector<Sort>& Sorts();
 }

@@ -21,13 +21,13 @@ namespace SortAnalyser {
         GraphWindow() = delete;
 
         GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size,
-                    const std::string_view& graph_desctiption);
+                    const std::string_view& graph_description);
 
         ~GraphWindow() override = default;
 
-        unsigned int initCurve(const Color& color);
+        uint64_t initCurve(const Color& color);
 
-        void addPoint(const int& curve_id, const Vector2<double>& point);
+        void addPoint(const uint64_t& curve_id, const Vector2<double>& point);
 
         void clear();
 
@@ -49,6 +49,20 @@ namespace SortAnalyser {
         void onReshape(int width, int height) override;
 
         static void drawAxes(const Vector2<double>& viewport);
+
+        //
+
+        void initLayout() override {}
+
+        void onIdle() override {}
+
+        void onEntry(int) override {}
+
+        void onKeyPress(unsigned char, int, int) override {}
+
+        void onMouseClick(int, int, int, int) override {}
+
+        bool getEvent(const Event &) override { return false; }
 
     };
 }
