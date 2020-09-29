@@ -52,14 +52,6 @@ namespace SortAnalyser {
         void displaySortStat(const Sort& sort);
 
         void clear();
-
-        ///
-
-        void onEntry(int) override {};
-
-        void onKeyPress(unsigned char, int, int) override {};
-
-        void onMouseClick(int, int, int, int) override {};
     };
 }
 

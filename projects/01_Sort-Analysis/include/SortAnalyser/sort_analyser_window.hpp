@@ -11,7 +11,7 @@ using namespace ShishGL;
 
 namespace SortAnalyser {
 
-    class SortAnalyserWindow : public ShishGL::MainWindow {
+    class SortAnalyserWindow : public ShishGL::Window {
     public:
 
         SortAnalyserWindow();
@@ -25,16 +25,6 @@ namespace SortAnalyser {
         void onRender() override;
 
         void onReshape(int width, int height) override;
-
-        void onIdle() override {}
-
-        void onEntry(int) override {}
-
-        void onKeyPress(unsigned char, int, int) override {}
-
-        void onMouseClick(int, int, int, int) override {}
-
-        bool getEvent(const Event &) override { return false; }
 
         friend GraphContainer;
         friend GraphWindow;

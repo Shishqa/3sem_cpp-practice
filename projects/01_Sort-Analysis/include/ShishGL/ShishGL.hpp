@@ -6,7 +6,7 @@
 
 #include "draw.hpp"
 #include "log.hpp"
-#include "main_window.hpp"
+#include "window.hpp"
 #include "button.hpp"
 
 

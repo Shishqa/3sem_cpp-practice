@@ -6,8 +6,9 @@ using namespace SortAnalyser;
 
 
 GraphContainer::GraphContainer(const Vector2<int>& pos)
-        : ShishGL::Window(pos, {GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
-                                GRAPH_WINDOW_HEIGHT + GRAPH_WINDOWS_GAP * 2})
+        : ShishGL::Window({GRAPH_WINDOW_WIDTH * 2 + GRAPH_WINDOWS_GAP * 3,
+                           GRAPH_WINDOW_HEIGHT + GRAPH_WINDOWS_GAP * 2},
+                          pos)
         , assignments_graph(nullptr)
         , comparisons_graph(nullptr)
         , curr_sort(Sorts()[0])

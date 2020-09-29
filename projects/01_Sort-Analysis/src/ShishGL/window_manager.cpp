@@ -20,11 +20,63 @@ void WindowManager::makeActive(Window* window) {
     if (!window) {
         printLog("Warning: tried to make NULL window active!");
         return;
-    } else if (!window->info.id) {
-        printLog("Warning: tried to make uninitialized window %p active!",
-                 reinterpret_cast<void*>(window));
+    } else if (window->info.id != Window::ID_UNDEFINED) {
+        printLog("Warning: tried to activate window twice!");
         return;
     }
+
+    glutInitWindowSize(
+            static_cast<int>(window->info.size.x),
+            static_cast<int>(window->info.size.y)
+            );
+
+    glutInitWindowPosition(
+            window->info.pos.x,
+            window->info.pos.y
+            );
+
+    window->info.id = glutCreateWindow(window->info.title.data());
+
+    activate(window);
+
+    printLog("Window %p is now active with id %d",
+             reinterpret_cast<void*>(window), window->info.id);
+}
+
+
+void WindowManager::activate(Window* window) {
+
+    ActiveWindows()[window->info.id] = window;
+    setHandlers(window);
+
+    window->initLayout();
+    activateSubwindows(window);
+}
+
+
+void WindowManager::activateSubwindows(Window* window) {
+
+    if (!window) {
+        printLog("Warning: passed NULL to %s!", __PRETTY_FUNCTION__);
+        return;
+    }
+
+    for (const auto& p_subwindow : window->subwindows) {
+
+        p_subwindow->info.id = glutCreateSubWindow(
+                window->info.id,
+                p_subwindow->info.pos.x,
+                p_subwindow->info.pos.y,
+                static_cast<int>(p_subwindow->info.size.x),
+                static_cast<int>(p_subwindow->info.size.y)
+                );
+
+        activate(p_subwindow);
+    }
+}
+
+
+void WindowManager::setHandlers(Window* window) {
 
     glutSetWindow(window->info.id);
 
@@ -34,12 +86,6 @@ void WindowManager::makeActive(Window* window) {
     glutReshapeFunc(manageOnReshape);
     glutMouseFunc(manageOnMouseClick);
     glutKeyboardFunc(manageOnKeyPress);
-
-    ActiveWindows()[window->info.id] = window;
-
-    printLog("Window %p is now active with id %d (make sure it was initialized before!)",
-             reinterpret_cast<void*>(window), window->info.id);
-
 }
 
 

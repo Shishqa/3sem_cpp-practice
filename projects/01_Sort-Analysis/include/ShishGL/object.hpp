@@ -7,7 +7,6 @@
 
 namespace ShishGL {
 
-
     class Object {
     public:
 
@@ -16,11 +15,10 @@ namespace ShishGL {
 
     protected:
 
-        virtual bool getEvent(const Event&) = 0;
+        virtual bool getEvent(const Event &) { return false; }
 
         friend EventSystem;
     };
-
 
 }
 

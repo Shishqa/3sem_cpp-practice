@@ -30,9 +30,7 @@ int ShishGL::init(int* argc_ptr, char** argv) {
 
 
 int ShishGL::enterMainLoop() {
-
     glutMainLoop();
-
     return 0;
 }
 

@@ -14,13 +14,11 @@ using namespace ShishGL;
 Button::Button(const std::string_view& button_label, const Event& click_event,
                const Vector2<int>& position, const Vector2<size_t>& size,
                const ButtonColorScheme& colors)
-        : Window(position, size)
+        : Window(size, position)
         , on_click(click_event)
         , label(button_label)
         , color_scheme(colors)
-        , bg_current(color_scheme.bg_default) {
-    printLog("Button created");
-}
+        , bg_current(color_scheme.bg_default) {}
 
 
 void Button::onRender() {

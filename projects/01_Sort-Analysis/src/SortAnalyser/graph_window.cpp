@@ -5,7 +5,7 @@ using namespace SortAnalyser;
 
 GraphWindow::GraphWindow(const Vector2<int>& pos, const Vector2<size_t>& size,
                          const std::string_view& graph_description)
-        : Window(pos, size)
+        : Window(size, pos)
         , description(graph_description) { }
 
 

@@ -8,9 +8,10 @@ int main(int argc, char** argv) {
 
     ShishGL::init(&argc, argv);
 
-    MainWindow* app = new SortAnalyserWindow();
+    Window* app = new SortAnalyserWindow();
 
-    app->run();
+    app->display();
+    ShishGL::enterMainLoop();
 
     delete app;
 

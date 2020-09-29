@@ -17,31 +17,32 @@ namespace ShishGL {
     class Window : public Object {
     public:
 
-        Window() = delete;
-
-        Window(const Vector2<int>& pos, const Vector2<size_t>& size);
-
-//        Window(const Window& other);
-//
-//        Window(Window&& other) noexcept;
-//
-//        Window& operator=(const Window& other);
-//
-//        Window& operator=(Window&& other) noexcept;
-
-        virtual ~Window();
-
-        void dump();
+        static constexpr int ID_UNDEFINED = 0;
 
         struct WindowInfo {
+            const std::string_view title;
             int id;
             Vector2<int> pos;
             Vector2<size_t> size;
         };
 
-        void attach(Window* window);
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        Window() = delete;
+
+        explicit Window(const Vector2<size_t>& size,
+                        const Vector2<int>& pos = {0, 0},
+                        const std::string_view& win_title = "");
+
+        virtual ~Window();
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+        void display();
 
         void refresh() const;
+
+        void dump();
 
         [[nodiscard]] const WindowInfo& getInfo();
 
@@ -51,30 +52,32 @@ namespace ShishGL {
 
         WindowInfo info;
 
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
         std::vector<Window*> subwindows;
 
-        //==========================================================================
+        void attach(Window* window);
 
-        virtual void initLayout() = 0;
-
-        virtual void onIdle() = 0;
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         virtual void onRender() = 0;
 
-        virtual void onEntry(int) = 0;
+        virtual void onReshape(int, int) { /*nothing*/ };
 
-        virtual void onReshape(int, int) = 0;
+        virtual void initLayout() { /*empty layout*/ }
 
-        virtual void onKeyPress(unsigned char, int, int) = 0;
+        virtual void onIdle() { /*nothing to do on idle*/ }
 
-        virtual void onMouseClick(int, int, int, int) = 0;
+        virtual void onEntry(int) { /*nothing*/ }
+
+        virtual void onKeyPress(unsigned char, int, int) { /*nothing*/ }
+
+        virtual void onMouseClick(int, int, int, int) { /*nothing*/ }
     };
 
 
     class WindowManager {
     public:
-
-        static constexpr int WIN_ID_UNDEFINED = 0;
 
         static void makeActive(Window* window);
 
@@ -85,6 +88,12 @@ namespace ShishGL {
         using WindowMap = std::unordered_map<int, Window*>;
 
         static WindowMap& ActiveWindows();
+
+        static void setHandlers(Window* window);
+
+        static void activate(Window* window);
+
+        static void activateSubwindows(Window* window);
 
         static void manageOnIdle();
 

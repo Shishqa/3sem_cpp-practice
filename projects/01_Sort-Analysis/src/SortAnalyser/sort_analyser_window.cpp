@@ -6,7 +6,7 @@ using namespace SortAnalyser;
 
 
 SortAnalyserWindow::SortAnalyserWindow()
-        : ShishGL::MainWindow("Sort Analyser", {1024, 720}) {
+        : ShishGL::Window({1024, 720}, {0, 0}, "Sort Analyser") {
     ShishGL::printLog("created Analyser");
 }
 
