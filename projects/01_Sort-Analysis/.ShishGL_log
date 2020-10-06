@@ -24,4 +24,8 @@
 ### Window 0x60f000001210 is now active with id 10
 ### Window 0x60f000001300 is now active with id 11
 ### Target: 0x6110000377c0, code: 1
+### Target: 0x6110000377c0, code: 0
+### Target: 0x6110000377c0, code: 2
+### Target: 0x6110000377c0, code: 3
+### Target: 0x6110000377c0, code: -100
 ### Terminating ShishGL
