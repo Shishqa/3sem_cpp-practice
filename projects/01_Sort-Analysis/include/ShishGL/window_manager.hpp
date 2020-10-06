@@ -3,16 +3,28 @@
 
 #include "window.hpp"
 
+#include<X11/X.h>
+#include<X11/Xlib.h>
+#include<GL/gl.h>
+#include<GL/glx.h>
+#include<GL/glu.h>
+
 namespace ShishGL {
 
     class WindowManager {
     public:
 
-        ~WindowManager() = default;
+        static int initialize();
 
     private:
 
+        static Display* display;
+
         WindowManager() = default;
+
+        ~WindowManager() = default;
+
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
         friend Window;
 

@@ -1,8 +1,11 @@
 #include <stdexcept>
 
 
-#include <GL/glew.h>
-#include <GL/freeglut.h>
+#include<X11/X.h>
+#include<X11/Xlib.h>
+#include<GL/gl.h>
+#include<GL/glx.h>
+#include<GL/glu.h>
 
 
 #include "ShishGL/essential.hpp"
@@ -19,7 +22,6 @@ int ShishGL::init(int* argc_ptr, char** argv) {
 
     printLog("ShishGL initialization started");
 
-    glutInit(argc_ptr, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 

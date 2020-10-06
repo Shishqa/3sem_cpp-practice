@@ -1,12 +1,33 @@
-#include <cstdio>
 #include <stdexcept>
 
-#include <GL/freeglut.h>
+#include<X11/X.h>
+#include<X11/Xlib.h>
+#include<GL/gl.h>
+#include<GL/glx.h>
+#include<GL/glu.h>
 
 #include "ShishGL/window_manager.hpp"
 #include "ShishGL/log.hpp"
 
 using namespace ShishGL;
+
+
+int WindowManager::initialize() {
+
+    static bool IS_INITIALIZED = false;
+    if (IS_INITIALIZED) {
+        return 0;
+    }
+
+    display = XOpenDisplay(nullptr);
+    if (!display) {
+        printLog("Error: cannot connect to X-server!");
+        return 0;
+    }
+
+    IS_INITIALIZED = true;
+    return 1;
+}
 
 
 WindowManager::WindowMap& WindowManager::ActiveWindows() {
@@ -25,39 +46,39 @@ void WindowManager::makeActive(Window* window) {
         return;
     }
 
-    glutInitWindowSize(
-            static_cast<int>(window->info.size.x),
-            static_cast<int>(window->info.size.y)
-            );
+    int blackColor = BlackPixel(display, DefaultScreen(display));
 
-    glutInitWindowPosition(
-            window->info.pos.x,
-            window->info.pos.y
-            );
-
-    window->info.id = glutCreateWindow(window->info.title.data());
+    window->info.id = XCreateSimpleWindow(display,
+                                          XDefaultRootWindow(display),
+                                          window->info.pos.x, window->info.pos.y,
+                                          window->info.size.x, window->info.size.y,
+                                          0, blackColor, blackColor);
 
     activate(window);
+
+    XMapSubwindows(display, window->info.id);
 }
 
 
 void WindowManager::activate(Window* window) {
 
+    XSelectInput(display, window->info.id, StructureNotifyMask);
+
     ActiveWindows()[window->info.id] = window;
     setHandlers(window);
 
-    printLog("Window %p is now active with id %d",
+    printLog("Window %p is now active with id %lu",
              reinterpret_cast<void*>(window), window->info.id);
+
+    int blackColor = BlackPixel(display, DefaultScreen(display));
 
     for (const auto& p_subwindow : window->subwindows) {
 
-        p_subwindow->info.id = glutCreateSubWindow(
-                window->info.id,
-                p_subwindow->info.pos.x,
-                p_subwindow->info.pos.y,
-                static_cast<int>(p_subwindow->info.size.x),
-                static_cast<int>(p_subwindow->info.size.y)
-        );
+        window->info.id = XCreateSimpleWindow(display,
+                                              window->info.id,
+                                              window->info.pos.x, window->info.pos.y,
+                                              window->info.size.x, window->info.size.y,
+                                              0, blackColor, blackColor);
 
         activate(p_subwindow);
     }
