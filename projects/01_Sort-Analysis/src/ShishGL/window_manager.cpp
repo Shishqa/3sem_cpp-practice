@@ -3,7 +3,7 @@
 
 #include <GL/freeglut.h>
 
-#include "ShishGL/window.hpp"
+#include "ShishGL/window_manager.hpp"
 #include "ShishGL/log.hpp"
 
 using namespace ShishGL;
