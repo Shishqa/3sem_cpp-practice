@@ -33,4 +33,4 @@ void (*scale)(...)
 
 `-> vptr!`
 
-![illustration](./vtable.png)
+![illustration](./vtable.svg)
