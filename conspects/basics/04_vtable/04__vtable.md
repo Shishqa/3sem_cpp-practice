@@ -34,3 +34,7 @@ void (*scale)(...)
 `-> vptr!`
 
 ![illustration](./vtable.svg)
+
+## ДЗ
+
+`dynamic_cast` через `get_this()`
