@@ -1,6 +1,7 @@
 #ifndef SHISH_GL_HPP
 #define SHISH_GL_HPP
 
+
 #include <GL/freeglut.h>
 
 #include "draw.hpp"
