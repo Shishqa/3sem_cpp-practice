@@ -1,8 +1,7 @@
 #include "ShishGL/ShishGL.hpp"
-#include "SortAnalyser/sort_analyser_window.hpp"
+#include "YASA/sort_analyser_window.hpp"
 
 using namespace SortAnalyser;
-
 
 int main(int argc, char* argv[]) {
 

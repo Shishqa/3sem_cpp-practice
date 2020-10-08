@@ -54,6 +54,4 @@ namespace SortAnalyser {
 }
 
 
-
-
 #endif //GRAPH_CONTAINER_HPP
