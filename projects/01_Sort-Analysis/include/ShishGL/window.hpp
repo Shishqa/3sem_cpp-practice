@@ -58,7 +58,12 @@ namespace ShishGL {
 
         std::vector<Window*> subwindows;
 
-        void attach(Window* window);
+        template <typename T, typename... Args>
+        T* attach(Args&&... args) {
+            T* win_ptr = new T(std::forward<Args>(args)...);
+            subwindows.emplace_back(win_ptr);
+            return win_ptr;
+        }
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

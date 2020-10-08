@@ -48,11 +48,6 @@ const Window::WindowInfo& Window::getInfo() {
 }
 
 
-void Window::attach(Window* window) {
-    subwindows.emplace_back(window);
-}
-
-
 void Window::refresh() const {
     glutSetWindow(info.id);
     glutPostRedisplay();

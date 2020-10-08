@@ -1,5 +1,5 @@
-#include "SortAnalyser/sort_analyser_window.hpp"
-#include "SortAnalyser/graph_container.hpp"
+#include "YASA/sort_analyser_window.hpp"
+#include "YASA/graph_container.hpp"
 #include "ShishGL/ShishGL.hpp"
 
 using namespace SortAnalyser;
@@ -15,32 +15,48 @@ SortAnalyserWindow::SortAnalyserWindow()
 
     static const int GAP = static_cast<int>(info.size.x - GraphContainer::CONTAINER_WIDTH) / 2;
 
-    Window* graphs = new GraphContainer({GAP, GAP});
-    attach(graphs);
+    Window* graphs = attach<GraphContainer>(Vector2<int>{GAP, GAP});
 
-    printLog("Graphs: %p", reinterpret_cast<void*>(graphs));
-
-    Vector2<int> buttons_pos = {GAP, static_cast<int>(GAP + GraphContainer::CONTAINER_HEIGHT + BUTTON_GAP)};
+    Vector2<size_t> button_size{
+        BUTTON_WIDTH,
+        BUTTON_HEIGHT
+    };
+    Vector2<int> button_pos{
+        GAP,
+        static_cast<int>(GAP + GraphContainer::CONTAINER_HEIGHT + BUTTON_GAP)
+    };
+    ButtonColorScheme color_scheme = {GREEN, MINT_CREAM, WHITE, BLACK};
 
     for (size_t i = 0; i < Sorts().size(); ++i) {
-        attach(new ShishGL::Button(
-                Sorts()[i].name,
-                {graphs, static_cast<int>(i)},
-                Vector2<int>{static_cast<int>(BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
-                buttons_pos, {BUTTON_WIDTH, BUTTON_HEIGHT},
-                {Sorts()[i].color, MINT_CREAM, WHITE, BLACK}
-        ));
-    }
-    buttons_pos.y += BUTTON_HEIGHT + BUTTON_GAP;
 
-    for (size_t i = 0; i < sizeof(UTIL_BUTTONS) / sizeof(ButtonDescription); ++i) {
-        attach(new ShishGL::Button(
-                UTIL_BUTTONS[i].name,
-                {graphs, UTIL_BUTTONS[i].event_signal},
-                Vector2<int>{static_cast<int>(2 * BUTTON_WIDTH * i + BUTTON_GAP * i), 0} +
-                buttons_pos, {2 * BUTTON_WIDTH, BUTTON_HEIGHT},
-                {UTIL_BUTTONS[i].color, MINT_CREAM, WHITE, BLACK}
-        ));
+        color_scheme.bg_default = Sorts()[i].color;
+
+        attach<ShishGL::Button>(
+                Sorts()[i].name,
+                Event{graphs, static_cast<int>(i)},
+                button_pos, button_size,
+                color_scheme
+        );
+
+        button_pos += Vector2<int>{static_cast<int>(button_size.x + BUTTON_GAP), 0};
+    }
+
+    button_pos.x   = GAP;
+    button_pos.y  += BUTTON_HEIGHT + BUTTON_GAP;
+    button_size.x *= 2;
+
+    for (const auto& util : UTIL_BUTTONS) {
+
+        color_scheme.bg_default = util.color;
+
+        attach<ShishGL::Button>(
+                util.name,
+                Event{graphs, util.event_signal},
+                button_pos, button_size,
+                color_scheme
+        );
+
+        button_pos += Vector2<int>{static_cast<int>(button_size.x + BUTTON_GAP), 0};
     }
 }
 

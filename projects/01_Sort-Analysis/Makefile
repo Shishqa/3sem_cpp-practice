@@ -6,11 +6,11 @@ OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/
 TARGET   := yasa
 INCLUDE  := -Iinclude/
-SRC      :=                           			\
-   	$(wildcard src/ShishGL/*.cpp)      			\
-   	$(wildcard src/SortAnalyser/*.cpp) 			\
-   	$(wildcard src/SortAnalyser/Sorts/*.cpp) 	\
-   	$(wildcard src/*.cpp)              			\
+SRC      :=                           	\
+   	$(wildcard src/ShishGL/*.cpp)      	\
+   	$(wildcard src/YASA/*.cpp) 			\
+   	$(wildcard src/YASA/Sorts/*.cpp) 	\
+   	$(wildcard src/*.cpp)               \
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

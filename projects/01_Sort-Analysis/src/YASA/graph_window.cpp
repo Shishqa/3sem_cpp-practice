@@ -1,5 +1,5 @@
-#include "SortAnalyser/sort_analyser_app.hpp"
-#include "SortAnalyser/graph_window.hpp"
+#include "YASA/sort_analyser_app.hpp"
+#include "YASA/graph_window.hpp"
 using namespace SortAnalyser;
 
 

@@ -1,6 +1,6 @@
 #include "ShishGL/ShishGL.hpp"
-#include "SortAnalyser/graph_container.hpp"
-#include "SortAnalyser/graph_window.hpp"
+#include "YASA/graph_container.hpp"
+#include "YASA/graph_window.hpp"
 
 using namespace SortAnalyser;
 
@@ -17,16 +17,17 @@ GraphContainer::GraphContainer(const Vector2<int>& pos)
         , comparison_curve_id(0)
         , is_drawing(false) {
 
-    assignments_graph = new GraphWindow({GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP},
-                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
-                                        "Assignments");
+    assignments_graph = attach<GraphWindow>(
+            Vector2<int>{GRAPH_WINDOWS_GAP, GRAPH_WINDOWS_GAP},
+            Vector2<size_t>{GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
+            "Assignments"
+            );
 
-    comparisons_graph = new GraphWindow({GRAPH_WINDOWS_GAP * 2 + GRAPH_WINDOW_WIDTH, GRAPH_WINDOWS_GAP},
-                                        {GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
-                                        "Comparisons");
-
-    attach(assignments_graph);
-    attach(comparisons_graph);
+    comparisons_graph = attach<GraphWindow>(
+            Vector2<int>{GRAPH_WINDOWS_GAP * 2 + GRAPH_WINDOW_WIDTH, GRAPH_WINDOWS_GAP},
+            Vector2<size_t>{GRAPH_WINDOW_WIDTH, GRAPH_WINDOW_HEIGHT},
+            "Comparisons"
+            );
 }
 
 

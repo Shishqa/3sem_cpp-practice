@@ -1,4 +1,4 @@
-#include "SortAnalyser/sort_analyser_app.hpp"
+#include "YASA/sort_analyser_app.hpp"
 
 using namespace SortAnalyser;
 
