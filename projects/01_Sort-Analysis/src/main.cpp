@@ -4,7 +4,7 @@
 using namespace SortAnalyser;
 
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
 
     ShishGL::init(&argc, argv);
 
@@ -12,7 +12,6 @@ int main(int argc, char** argv) {
 
     app->display();
     ShishGL::enterMainLoop();
-    //app->close();
 
     delete app;
 

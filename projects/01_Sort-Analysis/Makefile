@@ -3,7 +3,7 @@ CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror -O3
 LDFLAGS  := -L/usr/lib -lstdc++ -lm -lGL -lglut -lGLU -lGLEW
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
-APP_DIR  := $(BUILD)/apps
+APP_DIR  := ./bin
 TARGET   := program
 INCLUDE  := -Iinclude/
 SRC      :=                           			\
