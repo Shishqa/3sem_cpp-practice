@@ -24,29 +24,12 @@ namespace ShishGL {
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        using WindowMap = std::unordered_map<int, Window*>;
+        using WindowMap = std::unordered_map<GI::WIN_ID, Window*>;
 
         static WindowMap& ActiveWindows();
 
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        static void setHandlers(Window* window);
-
         static void activate(Window* window);
 
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        static void manageOnIdle();
-
-        static void manageOnRender();
-
-        static void manageOnEntry(int state);
-
-        static void manageOnReshape(int width, int height);
-
-        static void manageOnKeyPress(unsigned char key, int x, int y);
-
-        static void manageOnMouseClick(int button, int state, int x, int y);
     };
 
 }

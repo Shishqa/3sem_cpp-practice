@@ -3,12 +3,15 @@
 
 
 #include "vector2.hpp"
+#include "graphic_interface.hpp"
+#include "GLUT/graphic_system.hpp"
+
 
 namespace ShishGL {
 
-    int init(int* argc_ptr, char** argv);
+    using GI = GraphicInterface<GlutSystem>;
 
-    void onExit();
+    int init(int* argc_ptr, char** argv);
 
     int enterMainLoop();
 

@@ -8,6 +8,7 @@ TARGET   := yasa
 INCLUDE  := -Iinclude/
 SRC      :=                           	\
    	$(wildcard src/ShishGL/*.cpp)      	\
+   	$(wildcard src/ShishGL/GLUT/*.cpp)  \
    	$(wildcard src/YASA/*.cpp) 			\
    	$(wildcard src/YASA/Sorts/*.cpp) 	\
    	$(wildcard src/*.cpp)               \

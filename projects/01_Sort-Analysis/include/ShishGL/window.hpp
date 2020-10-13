@@ -20,8 +20,8 @@ namespace ShishGL {
         static constexpr int ID_UNDEFINED = 0;
 
         struct WindowInfo {
-            const std::string_view title;
-            int id;
+            const std::string_view name;
+            GI::WIN_ID id;
             Vector2<int> pos;
             Vector2<size_t> size;
         };
@@ -67,17 +67,15 @@ namespace ShishGL {
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        virtual void onRender() = 0;
+        virtual void onRender() { /* nothing */ }
 
-        virtual void onReshape(int, int) { /*nothing*/ };
+        virtual void onReshape(int, int) { /* nothing */ }
 
-        virtual void onIdle() { /*nothing to do on idle*/ }
+        virtual void onIdle() { /* nothing to do on idle */ }
 
-        virtual void onEntry(int) { /*nothing*/ }
+        virtual void onMouse(int) { /* nothing */ }
 
-        virtual void onKeyPress(unsigned char, int, int) { /*nothing*/ }
-
-        virtual void onMouseClick(int, int, int, int) { /*nothing*/ }
+        virtual void onKey(unsigned char, int, int) { /* nothing */ }
     };
 
 }

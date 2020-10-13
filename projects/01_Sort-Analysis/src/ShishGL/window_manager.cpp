@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <stdexcept>
 
-#include <GL/freeglut.h>
+#include "X11/Xlib.h"
 
 #include "ShishGL/window_manager.hpp"
 #include "ShishGL/log.hpp"
@@ -25,17 +25,9 @@ void WindowManager::makeActive(Window* window) {
         return;
     }
 
-    glutInitWindowSize(
-            static_cast<int>(window->info.size.x),
-            static_cast<int>(window->info.size.y)
-            );
-
-    glutInitWindowPosition(
-            window->info.pos.x,
-            window->info.pos.y
-            );
-
-    window->info.id = glutCreateWindow(window->info.title.data());
+    window->info.id = GI::create_window(window->info.title,
+                                        window->info.pos,
+                                        window->info.size);
 
     activate(window);
 }
@@ -50,15 +42,9 @@ void WindowManager::activate(Window* window) {
              reinterpret_cast<void*>(window), window->info.id);
 
     for (const auto& p_subwindow : window->subwindows) {
-
-        p_subwindow->info.id = glutCreateSubWindow(
-                window->info.id,
-                p_subwindow->info.pos.x,
-                p_subwindow->info.pos.y,
-                static_cast<int>(p_subwindow->info.size.x),
-                static_cast<int>(p_subwindow->info.size.y)
-        );
-
+        p_subwindow->info.id = GI::create_window(window->info.id,
+                                                 p_subwindow->info.pos,
+                                                 p_subwindow->info.size);
         activate(p_subwindow);
     }
 }
@@ -79,7 +65,7 @@ void WindowManager::makeInactive(Window* window) {
     }
 
     ActiveWindows().erase(window->info.id);
-    glutDestroyWindow(window->info.id);
+    GI::destroy_window(window->info.id);
 
     window->info.id = Window::ID_UNDEFINED;
 
@@ -88,9 +74,7 @@ void WindowManager::makeInactive(Window* window) {
 
 
 void WindowManager::setHandlers(Window* window) {
-
     glutSetWindow(window->info.id);
-
     glutIdleFunc(manageOnIdle);
     glutDisplayFunc(manageOnRender);
     glutEntryFunc(manageOnEntry);

@@ -1,7 +1,5 @@
 #include "ShishGL/draw.hpp"
 
-#include <GL/freeglut.h>
-
 
 void ShishGL::renderBegin(const Vector2<double>& viewport) {
     glMatrixMode(GL_MODELVIEW);

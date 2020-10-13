@@ -5,11 +5,15 @@
 #include <GL/freeglut.h>
 
 
+#include "ShishGL/graphic_interface.hpp"
 #include "ShishGL/essential.hpp"
 #include "ShishGL/log.hpp"
 
 
-int ShishGL::init(int* argc_ptr, char** argv) {
+using namespace ShishGL;
+
+
+int init(int* argc_ptr, char** argv) {
 
 #ifdef DEBUG
     if (!openLog()) {
@@ -19,9 +23,11 @@ int ShishGL::init(int* argc_ptr, char** argv) {
 
     printLog("ShishGL initialization started");
 
-    glutInit(argc_ptr, argv);
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+    GraphicSystem
+
+//    glutInit(argc_ptr, argv);
+//    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+//    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
     printLog("ShishGL initialized");
 

@@ -3,6 +3,7 @@
 
 
 #include <queue>
+#include "graphic_interface.hpp"
 
 
 namespace ShishGL {
@@ -12,24 +13,42 @@ namespace ShishGL {
 
 
     struct Event {
-        Object* target;
-        int event_code;
+    public:
+
+        enum EventTypes {
+            NONE,
+            IDLE,
+            MOUSE_BUTTON_PRESSED,
+            MOUSE_BUTTON_RELEASED,
+            MOUSE_ENTERED,
+            MOUSE_LEFT,
+            MOUSE_MOVED,
+            KEY_PRESSED,
+            KEY_RELEASED,
+            RESIZED
+        };
+
+        virtual int type() = 0;
+
+        virtual GI::WIN_ID object() = 0;
     };
 
 
     class EventSystem {
     public:
 
-        EventSystem()  = default;
         ~EventSystem() = default;
 
-        static void addEvent(const Event& event);
+        static void sendSignal(const Signal* signal);
 
     private:
 
-        using EventQueue = std::queue<Event>;
+        EventSystem()  = default;
+
+        using EventQueue = std::queue<const GI::Event*>;
 
         static EventQueue& Events();
+
         static void processNewEvents();
 
         friend Object;

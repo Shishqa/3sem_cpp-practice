@@ -1,8 +1,6 @@
 #include <cstring>
 #include <stdexcept>
 
-#include <GL/freeglut.h>
-
 #include "ShishGL/button.hpp"
 #include "ShishGL/log.hpp"
 #include "ShishGL/draw.hpp"
