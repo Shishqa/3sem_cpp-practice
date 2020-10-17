@@ -1,17 +1,24 @@
+/*============================================================================*/
+
 #include <cstdio>
 #include <cstdarg>
 
+/*----------------------------------------------------------------------------*/
+
 #include "ShishGL/log.hpp"
 
+/*============================================================================*/
 
 FILE* ShishGL::LOG_FILE = nullptr;
 
+/*----------------------------------------------------------------------------*/
 
 enum {
     LOG_SUCCESS = 1,
     LOG_FAILURE = 0
 };
 
+/*============================================================================*/
 
 int ShishGL::openLog() {
 
@@ -20,17 +27,19 @@ int ShishGL::openLog() {
     return (LOG_FILE ? LOG_SUCCESS : LOG_FAILURE);
 }
 
+/*----------------------------------------------------------------------------*/
 
 int ShishGL::closeLog() {
 
     return fclose(LOG_FILE);
 }
 
+/*----------------------------------------------------------------------------*/
 
 // TODO: add urgency!
 __attribute__((format(printf, 1, 2)))
 int ShishGL::printLog(const char* format, ...) {
-#ifdef DEBUG
+#ifdef LOG
     fprintf(LOG_FILE, "### ");
 
     va_list arg_list;
@@ -46,3 +55,5 @@ int ShishGL::printLog(const char* format, ...) {
     return 0;
 #endif
 }
+
+/*============================================================================*/

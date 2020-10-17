@@ -1,20 +1,17 @@
 #include "ShishGL/ShishGL.hpp"
-#include "YASA/sort_analyser_window.hpp"
 
-using namespace SortAnalyser;
 
 int main(int argc, char* argv[]) {
 
-    ShishGL::init(&argc, argv);
+    ShishGL::Application::init(&argc, argv);
 
-    Window* app = new SortAnalyserWindow();
+    ShishGL::Application::display<ShishGL::Window>(
+            ShishGL::Vector2<size_t>{400, 400}
+            );
 
-    app->display();
-    ShishGL::enterMainLoop();
+    ShishGL::Application::display<ShishGL::Window>(
+            ShishGL::Vector2<size_t>{400, 400}
+    );
 
-    delete app;
-
-    ShishGL::terminate();
-
-    return 0;
+    return ShishGL::Application::run();
 }

@@ -6,22 +6,22 @@
 #include <vector>
 #include <unordered_map>
 
-#include "essential.hpp"
-#include "object.hpp"
+//#include "essential.hpp"
+#include "ShishGL/drafts/object.hpp"
 
 
 namespace ShishGL {
 
     class WindowManager;
 
-    class Window : public Object {
+    class Window {
     public:
 
         static constexpr int ID_UNDEFINED = 0;
 
         struct WindowInfo {
             const std::string_view name;
-            GI::WIN_ID id;
+            typename GraphicBase::WIN_ID id;
             Vector2<int> pos;
             Vector2<size_t> size;
         };
@@ -42,9 +42,9 @@ namespace ShishGL {
 
         void close();
 
-        void refresh() const;
+//        void refresh() const;
 
-        void dump();
+//        void dump();
 
         [[nodiscard]] const WindowInfo& getInfo();
 
@@ -53,17 +53,6 @@ namespace ShishGL {
         friend WindowManager;
 
         WindowInfo info;
-
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        std::vector<Window*> subwindows;
-
-        template <typename T, typename... Args>
-        T* attach(Args&&... args) {
-            T* win_ptr = new T(std::forward<Args>(args)...);
-            subwindows.emplace_back(win_ptr);
-            return win_ptr;
-        }
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

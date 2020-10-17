@@ -9,9 +9,9 @@ INCLUDE  := -Iinclude/
 SRC      :=                           	\
    	$(wildcard src/ShishGL/*.cpp)      	\
    	$(wildcard src/ShishGL/GLUT/*.cpp)  \
-   	$(wildcard src/YASA/*.cpp) 			\
-   	$(wildcard src/YASA/Sorts/*.cpp) 	\
-   	$(wildcard src/*.cpp)               \
+   	$(wildcard src/*.cpp)
+  	#$(wildcard src/YASA/*.cpp) 		\
+    #$(wildcard src/YASA/Sorts/*.cpp) 	\
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
@@ -34,7 +34,7 @@ build:
 	@mkdir -p $(APP_DIR)
 	@mkdir -p $(OBJ_DIR)
 
-debug: CXXFLAGS += -DDEBUG -Wshadow -Wformat=2 -Wfloat-equal \
+debug: CXXFLAGS += -DLOG -DDEBUG -Wshadow -Wformat=2 -Wfloat-equal  \
 				   -Wconversion -Wlogical-op -Wshift-overflow=2     \
 				   -Wduplicated-cond -Wcast-qual -Wcast-align       \
 				   -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC       \

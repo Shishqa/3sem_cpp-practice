@@ -1,19 +1,25 @@
+/*============================================================================*/
+
 #include <cstdio>
 #include <stdexcept>
 
-#include "X11/Xlib.h"
+/*----------------------------------------------------------------------------*/
 
 #include "ShishGL/window_manager.hpp"
 #include "ShishGL/log.hpp"
 
+/*----------------------------------------------------------------------------*/
+
 using namespace ShishGL;
 
+/*============================================================================*/
 
 WindowManager::WindowMap& WindowManager::ActiveWindows() {
     static WindowMap ACTIVE_WINDOWS;
     return ACTIVE_WINDOWS;
 }
 
+/*----------------------------------------------------------------------------*/
 
 void WindowManager::makeActive(Window* window) {
 
@@ -25,30 +31,33 @@ void WindowManager::makeActive(Window* window) {
         return;
     }
 
-    window->info.id = GI::create_window(window->info.title,
-                                        window->info.pos,
-                                        window->info.size);
+    window->info.id = GraphicBase::createWindow(
+            window->info.name,
+            window->info.pos,
+            window->info.size
+            );
 
     activate(window);
 }
 
+/*----------------------------------------------------------------------------*/
 
 void WindowManager::activate(Window* window) {
 
     ActiveWindows()[window->info.id] = window;
-    setHandlers(window);
 
     printLog("Window %p is now active with id %d",
              reinterpret_cast<void*>(window), window->info.id);
 
-    for (const auto& p_subwindow : window->subwindows) {
-        p_subwindow->info.id = GI::create_window(window->info.id,
-                                                 p_subwindow->info.pos,
-                                                 p_subwindow->info.size);
-        activate(p_subwindow);
-    }
+//    for (const auto& p_subwindow : window->subwindows) {
+//        p_subwindow->info.id = GI::create_window(window->info.id,
+//                                                 p_subwindow->info.pos,
+//                                                 p_subwindow->info.size);
+//        activate(p_subwindow);
+//    }
 }
 
+/*----------------------------------------------------------------------------*/
 
 void WindowManager::makeInactive(Window* window) {
 
@@ -60,12 +69,8 @@ void WindowManager::makeInactive(Window* window) {
         return;
     }
 
-    for (const auto& p_subwindow : window->subwindows) {
-        makeInactive(p_subwindow);
-    }
-
     ActiveWindows().erase(window->info.id);
-    GI::destroy_window(window->info.id);
+    GraphicBase::destroyWindow(window->info.id);
 
     window->info.id = Window::ID_UNDEFINED;
 
@@ -73,17 +78,19 @@ void WindowManager::makeInactive(Window* window) {
 }
 
 
-void WindowManager::setHandlers(Window* window) {
-    glutSetWindow(window->info.id);
-    glutIdleFunc(manageOnIdle);
-    glutDisplayFunc(manageOnRender);
-    glutEntryFunc(manageOnEntry);
-    glutReshapeFunc(manageOnReshape);
-    glutMouseFunc(manageOnMouseClick);
-    glutKeyboardFunc(manageOnKeyPress);
-}
+//void WindowManager::setHandlers(Window* window) {
+//    glutSetWindow(window->info.id);
+//    glutIdleFunc(manageOnIdle);
+//    glutDisplayFunc(manageOnRender);
+//    glutEntryFunc(manageOnEntry);
+//    glutReshapeFunc(manageOnReshape);
+//    glutMouseFunc(manageOnMouseClick);
+//    glutKeyboardFunc(manageOnKeyPress);
+//}
 
+/*----------------------------------------------------------------------------*/
 
+/*
 Window* WindowManager::getCurrentActiveWindow() {
     const int active_win_id = glutGetWindow();
     try {
@@ -92,53 +99,6 @@ Window* WindowManager::getCurrentActiveWindow() {
         return nullptr;
     }
 }
+*/
 
-
-void WindowManager::manageOnIdle() {
-    EventSystem::processNewEvents();
-    for (const auto& win : ActiveWindows()) {
-        if (win.second) {
-            win.second->onIdle();
-        }
-    }
-}
-
-
-void WindowManager::manageOnRender() {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onRender();
-    }
-}
-
-
-void WindowManager::manageOnEntry(int state) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onEntry(state);
-    }
-}
-
-
-void WindowManager::manageOnReshape(int width, int height) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onReshape(width, height);
-    }
-}
-
-
-void WindowManager::manageOnKeyPress(unsigned char key, int x, int y) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onKeyPress(key, x, y);
-    }
-}
-
-
-void WindowManager::manageOnMouseClick(int button, int state, int x, int y) {
-    Window* win_ptr = getCurrentActiveWindow();
-    if (win_ptr) {
-        win_ptr->onMouseClick(button, state, x, y);
-    }
-}
+/*============================================================================*/

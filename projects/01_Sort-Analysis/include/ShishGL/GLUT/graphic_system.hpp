@@ -7,7 +7,6 @@
 #include <queue>
 
 #include "../vector2.hpp"
-#include "../graphic_interface.hpp"
 
 
 namespace ShishGL {
@@ -16,44 +15,48 @@ namespace ShishGL {
     public:
 
         using WIN_ID = int;
-        
-        static WIN_ID create_window(
+
+        static void init(int* argc_ptr, char** argv);
+
+        static void enterMainLoop();
+
+        static WIN_ID createWindow(
                 const std::string_view& name,
                 Vector2<int> position,
                 Vector2<size_t> size
                 );
 
-        static WIN_ID create_window(
+        static WIN_ID createWindow(
                 WIN_ID parent_id,
                 Vector2<int> position,
                 Vector2<size_t> size
                 );
 
-        static void destroy_window(WIN_ID window_id);
+        static void destroyWindow(WIN_ID window_id);
 
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-        static Event* nextEvent();
+//        static Event* nextEvent();
         
     private:
 
         GlutSystem() = default;
 
-        using EventQueue = std::queue<Event>;
+//        using EventQueue = std::queue<Event>;
+//
+//        static EventQueue& getEvents();
 
-        static EventQueue& getEvents();
+        static void manageOnIdle() {}
 
-        static void manageOnIdle();
+        static void manageOnRender() {}
 
-        static void manageOnRender();
+        static void manageOnEntry(int) {}
 
-        static void manageOnEntry(int state);
+        static void manageOnReshape(int, int) {}
 
-        static void manageOnReshape(int width, int height);
+        static void manageOnKeyPress(unsigned char, int, int) {}
 
-        static void manageOnKeyPress(unsigned char key, int x, int y);
-
-        static void manageOnMouseClick(int button, int state, int x, int y);
+        static void manageOnMouseClick(int, int, int, int) {}
     };
 
 

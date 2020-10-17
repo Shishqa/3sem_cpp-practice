@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <string_view>
 
-#include "vector2.hpp"
+#include "GLUT/graphic_system.hpp"
 
 
 namespace ShishGL {
@@ -23,9 +23,7 @@ namespace ShishGL {
         GraphicInterface() = default;
     };
 
-
-
-
+    using GraphicBase = GraphicInterface<GlutSystem>;
 
 }
 

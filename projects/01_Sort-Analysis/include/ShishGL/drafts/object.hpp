@@ -2,7 +2,7 @@
 #define OBJECT_HPP
 
 
-#include "event.hpp"
+#include "../event.hpp"
 
 
 namespace ShishGL {

@@ -6,44 +6,64 @@
 using namespace ShishGL;
 
 
-GlutSystem::WIN_ID
-GlutSystem::create_window(const std::string_view& name,
-                          Vector2<int> position,
-                          Vector2<size_t> size) {
+void GlutSystem::init(int* argc_ptr, char** argv) {
 
-    glutInitWindowPosition(position.x, position.y);
-    glutInitWindowSize(size.x, size.y);
+    glutInit(argc_ptr, argv);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
-    return glutCreateWindow(name.data());
+}
+
+
+void GlutSystem::enterMainLoop() {
+    glutMainLoop();
 }
 
 
 GlutSystem::WIN_ID
-GlutSystem::create_window(WIN_ID parent_id,
+GlutSystem::createWindow(const std::string_view& name,
+                          Vector2<int> position,
+                          Vector2<size_t> size) {
+
+    glutInitWindowPosition(position.x, position.y);
+    glutInitWindowSize(static_cast<int>(size.x),
+                       static_cast<int>(size.y));
+
+    WIN_ID id = glutCreateWindow(name.data());
+
+    glutDisplayFunc(manageOnRender);
+
+    return id;
+}
+
+
+GlutSystem::WIN_ID
+GlutSystem::createWindow(WIN_ID parent_id,
                           Vector2<int> position,
                           Vector2<size_t> size) {
 
     return glutCreateSubWindow(parent_id,
                                position.x, position.y,
-                               size.x, size.y);
+                               static_cast<int>(size.x),
+                               static_cast<int>(size.y));
 }
 
 
-void GlutSystem::destroy_window(WIN_ID window_id) {
+void GlutSystem::destroyWindow(WIN_ID window_id) {
     glutDestroyWindow(window_id);
 }
 
 
-GlutSystem::EventQueue& GlutSystem::getEvents() {
-    static EventQueue EVENTS;
-    return EVENTS;
-}
-
-
-Event* GlutSystem::nextEvent() {
-
-    if (getEvents().empty()) {
-
-    }
-
-}
+//GlutSystem::EventQueue& GlutSystem::getEvents() {
+//    static EventQueue EVENTS;
+//    return EVENTS;
+//}
+//
+//
+//Event* GlutSystem::nextEvent() {
+//
+//    if (getEvents().empty()) {
+//
+//    }
+//
+//}
