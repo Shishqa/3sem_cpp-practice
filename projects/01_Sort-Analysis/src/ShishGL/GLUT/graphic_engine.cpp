@@ -1,7 +1,7 @@
 
 #include <GL/freeglut.h>
 
-#include "ShishGL/GLUT/graphic_engine.hpp"
+#include "ShishGL/engines/GLUT/graphic_engine.hpp"
 
 using namespace ShishGL;
 

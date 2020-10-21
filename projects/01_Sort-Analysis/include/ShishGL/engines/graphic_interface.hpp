@@ -1,12 +1,15 @@
+/*============================================================================*/
 #ifndef GRAPHIC_SYSTEM_HPP
 #define GRAPHIC_SYSTEM_HPP
-
+/*============================================================================*/
 
 #include <cstddef>
 #include <string_view>
 
 #include "GLUT/graphic_engine.hpp"
+#include "GLUT/window_engine.hpp"
 
+/*============================================================================*/
 
 namespace ShishGL {
 
@@ -14,7 +17,7 @@ namespace ShishGL {
     class GraphicInterface : public GraphicEngine, public WindowEngine {
     public:
 
-        using WIN_ID = typename GraphicEngine::WIN_ID;
+        using WIN_ID = typename WindowEngine::WIN_ID;
 
         virtual ~GraphicInterface() = default;
 
@@ -23,8 +26,10 @@ namespace ShishGL {
         GraphicInterface() = default;
     };
 
-    using GraphicBase = GraphicInterface<GlutSystem>;
+    using Engine = GraphicInterface<GlutGraphicEngine, GlutWindowEngine>;
 
 }
 
+/*============================================================================*/
 #endif //GRAPHIC_SYSTEM_HPP
+/*============================================================================*/

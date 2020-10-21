@@ -3,7 +3,7 @@
 import re
 import sys
 
-good_text = []
+good_text = [
 
 text = sys.stdin.readlines()
 

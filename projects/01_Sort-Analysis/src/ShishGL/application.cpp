@@ -4,7 +4,7 @@
 
 /*----------------------------------------------------------------------------*/
 
-#include "ShishGL/graphic_interface.hpp"
+#include "ShishGL/engines/graphic_interface.hpp"
 #include "ShishGL/application.hpp"
 #include "ShishGL/log.hpp"
 

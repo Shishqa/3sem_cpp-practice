@@ -4,58 +4,61 @@
 /*============================================================================*/
 
 #include <queue>
-#include "graphic_interface.hpp"
+
+#include "ShishGL/engines/graphic_interface.hpp"
 
 /*============================================================================*/
 
 namespace ShishGL {
 
-    class Object;
-    class Window;
-    class WindowManager;
+    using KeyboardModifiers = uint8_t;
+
+    /* TODO: arrange values */
+    constexpr KeyboardModifiers KB_LSHIFT = 0b00000000,
+                                KB_RSHIFT = 0b00000000,
+                                KB_LCTRL  = 0b00000000,
+                                KB_RCTRL  = 0b00000000,
+                                KB_LALT   = 0b00000000,
+                                KB_RALT   = 0b00000000,
+                                KB_META   = 0b00000000;
 
     /*------------------------------------------------------------------------*/
 
     class Event {
     public:
 
-        Event() = default;
-
-        virtual void operator()() = 0;
-
         virtual ~Event() = default;
+
     };
 
     /*------------------------------------------------------------------------*/
 
-    class TargetedEvent : public Event {
+    class RenderEvent : public Event {
     public:
 
-        TargetedEvent() = delete;
+        ~RenderEvent() override = default;
+    };
 
-        TargetedEvent(Object* target);
+    /*------------------------------------------------------------------------*/
 
-        virtual ~TargetedEvent() = default;
+    class IdleEvent : public Event {
+    public:
+
+        ~IdleEvent() override = default;
+    };
+
+    /*------------------------------------------------------------------------*/
+
+    class InputEvent : public Event {
+    public:
+
+
+        KeyboardModifiers modifiers();
 
     private:
-        Object* target;
-    };
 
-    /*------------------------------------------------------------------------*/
+        KeyboardModifiers kb_modifiers;
 
-    class RenderEvent : public TargetedEvent {
-    public:
-
-        RenderEvent(Window* target);
-
-        virtual ~RenderEvent() = default;
-    };
-
-    /*------------------------------------------------------------------------*/
-
-    class IdleEvent : public TargetedEvent {
-    public:
-        virtual ~IdleEvent() = default;
     };
 
     /*------------------------------------------------------------------------*/

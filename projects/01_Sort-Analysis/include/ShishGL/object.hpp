@@ -11,11 +11,11 @@ namespace ShishGL {
     public:
 
         Object() = default;
-        ~Object() = default;
+        virtual ~Object() = default;
 
     protected:
 
-        virtual bool getEvent(const Event &) { return false; }
+        virtual bool getEvent(const Event*) { return false; }
 
         friend EventSystem;
     };

@@ -7,7 +7,7 @@
 #include <unordered_map>
 
 //#include "essential.hpp"
-#include "ShishGL/drafts/object.hpp"
+#include "object.hpp"
 
 
 namespace ShishGL {
