@@ -2,22 +2,21 @@
 #define OBJECT_HPP
 
 
-#include "../event.hpp"
-
-
 namespace ShishGL {
+
+    class EventBuffer;
 
     class Object {
     public:
 
         Object() = default;
-        ~Object() = default;
+        virtual ~Object() = default;
 
     protected:
 
-        virtual bool getEvent(const Event &) { return false; }
+        virtual bool getEvent(const Event*) { return false; }
 
-        friend EventSystem;
+        friend EventBuffer;
     };
 
 }

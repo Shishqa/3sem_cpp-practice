@@ -5,16 +5,16 @@
 #include <cstddef>
 #include <string_view>
 
-#include "GLUT/graphic_system.hpp"
+#include "GLUT/graphic_engine.hpp"
 
 
 namespace ShishGL {
 
-    template <typename GraphicSystem>
-    class GraphicInterface : public GraphicSystem {
+    template <typename GraphicEngine, typename WindowEngine>
+    class GraphicInterface : public GraphicEngine, public WindowEngine {
     public:
 
-        using WIN_ID = typename GraphicSystem::WIN_ID;
+        using WIN_ID = typename GraphicEngine::WIN_ID;
 
         virtual ~GraphicInterface() = default;
 
