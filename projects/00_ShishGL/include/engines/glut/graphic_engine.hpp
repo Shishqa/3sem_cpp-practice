@@ -3,11 +3,7 @@
 #define GLUT_GRAPHIC_ENGINE_HPP
 /*============================================================================*/
 
-#include <cstddef>
-#include <string_view>
-#include <queue>
 
-#include "../../vector2.hpp"
 
 /*============================================================================*/
 
@@ -17,6 +13,8 @@ namespace ShishGL {
     public:
 
         virtual ~GlutGraphicEngine() = default;
+
+
 
     private:
 

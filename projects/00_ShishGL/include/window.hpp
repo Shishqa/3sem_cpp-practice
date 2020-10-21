@@ -17,7 +17,7 @@ namespace ShishGL {
     class Window {
     public:
 
-        static constexpr int ID_UNDEFINED = 0;
+        static constexpr Engine::WIN_ID ID_UNDEFINED = 0;
 
         struct WindowInfo {
             const std::string_view name;
@@ -43,8 +43,6 @@ namespace ShishGL {
         void close();
 
         void refresh();
-
-//        void dump();
 
         [[nodiscard]] const WindowInfo& getInfo();
 

@@ -17,6 +17,8 @@ namespace ShishGL {
         Object* target;
     };
 
+    /*------------------------------------------------------------------------*/
+
     class EventBuffer {
     public:
 
@@ -26,47 +28,37 @@ namespace ShishGL {
 
         EventBuffer& operator=(const EventBuffer& other) = delete;
 
-        virtual ~EventBuffer();
+        virtual ~EventBuffer() = default;
 
-        void postEvent(Object* target, const Event* event) {
-            events.push(EventBind{event, target});
-        }
+        //void postEvent(Object* target, const Event* event);
 
-        void sendEvent(Object* target, const Event* event) {
-            target->getEvent(event);
-        }
-
-        void flush() {
-            const EventBind event = events.front();
-                                    events.pop();
-            return event_p;
-        }
+        //void flush();
 
     private:
 
         using EventQueue = std::queue<EventBind>;
 
         EventQueue events;
-
     };
+
+    /*------------------------------------------------------------------------*/
 
     class EventSystem {
     public:
 
         ~EventSystem() = default;
 
+        //static void sendEvent(Object* target, const Event* event);
+
+        //static void postEvent(const Event* event);
+
     private:
 
-        EventSystem()  = default;
+        EventSystem() = default;
 
-        using EventQueue = std::queue<const Event*>;
+        //static EventBuffer& Events();
 
-        static EventQueue& Events();
-
-        static void processNewEvents();
-
-        friend Object;
-        friend WindowManager;
+        //static void processNewEvents();
     };
 }
 

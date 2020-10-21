@@ -5,6 +5,8 @@
 
 #include <cstdint>
 
+#include "vector2.hpp"
+
 /*============================================================================*/
 
 namespace ShishGL {
@@ -40,8 +42,6 @@ namespace ShishGL {
     class InputEvent : public Event {
     public:
 
-        KeyboardModifiers modifiers();
-
         ~InputEvent() override = default;
 
     private:
@@ -76,5 +76,5 @@ namespace ShishGL {
 }
 
 /*============================================================================*/
-#endif //EVENT_HPP
+#endif //SHISHGL_EVENT_HPP
 /*============================================================================*/

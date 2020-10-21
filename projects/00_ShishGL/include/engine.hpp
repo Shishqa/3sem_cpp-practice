@@ -6,8 +6,8 @@
 #include <cstddef>
 #include <ctime>
 
-#include "engines/GLUT/window_engine.hpp"
-#include "engines/GLUT/graphic_engine.hpp"
+#include "engines/glut/window_engine.hpp"
+#include "engines/glut/graphic_engine.hpp"
 
 #include "log.hpp"
 
@@ -20,8 +20,6 @@ namespace ShishGL {
     template <typename GraphicEngine, typename WindowEngine>
     class GEngine : public GraphicEngine, public WindowEngine {
     public:
-
-        using WIN_ID = typename WindowEngine::WIN_ID;
 
         static void initialize(int* argc_ptr, char* argv[]) {
 

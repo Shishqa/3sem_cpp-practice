@@ -6,7 +6,7 @@
 #include <string_view>
 #include <cstddef>
 
-#include "ShishGL/vector2.hpp"
+#include "../../vector2.hpp"
 
 /*============================================================================*/
 
@@ -19,27 +19,25 @@ namespace ShishGL {
 
         using WIN_ID = int;
 
+        static constexpr WIN_ID ID_UNDEFINED = -1;
+
         static void init(int* argc_ptr, char** argv);
 
         static void enterMainLoop();
 
         static WIN_ID createWindow(
                 const std::string_view& name,
-                Vector2<int> position,
-                Vector2<size_t> size
+                const Vector2<int>& position,
+                const Vector2<size_t>& size
                 );
 
         static WIN_ID createWindow(
-                WIN_ID parent_id,
-                Vector2<int> position,
-                Vector2<size_t> size
+                const WIN_ID& parent_id,
+                const Vector2<int>& position,
+                const Vector2<size_t>& size
                 );
 
-        static void destroyWindow(WIN_ID window_id);
-
-        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-        static Event nextEvent();
+        static void destroyWindow(const WIN_ID& window_id);
 
         virtual ~GlutWindowEngine() = default;
 
@@ -47,21 +45,23 @@ namespace ShishGL {
 
         GlutWindowEngine() = default;
 
-//        using EventQueue = std::queue<Event>;
-//
-//        static EventQueue& getEvents();
+        static void setHandlers();
 
-        static void manageOnIdle() {}
+        static void manageIdle();
 
-        static void manageOnRender() {}
+        static void manageRender();
 
-        static void manageOnEntry(int) {}
+        static void manageEntry(int state);
 
-        static void manageOnReshape(int, int) {}
+        static void manageReshape(int x, int y);
 
-        static void manageOnKeyPress(unsigned char, int, int) {}
+        static void manageKey(unsigned char key, int x, int y);
 
-        static void manageOnMouseClick(int, int, int, int) {}
+        static void manageMouse(int button, int state, int x, int y);
+
+        static void manageMotion(int x, int y);
+
+        static void managePassiveMotion(int x, int y);
     };
 
 }

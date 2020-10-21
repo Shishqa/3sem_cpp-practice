@@ -5,13 +5,12 @@ BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/
 
-TARGET   := libshishgl.a
+TARGET   := test
 
 INCLUDE  := -Iinclude/
 SRC      :=                           	 \
    	$(wildcard src/*.cpp) 				 \
-   	$(wildcard src/engines/*.cpp)        \
-   	$(wildcard src/engines/GLUT/*.cpp)   \
+   	$(wildcard src/engines/glut/*.cpp)   \
    	$(wildcard test/*.cpp)
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

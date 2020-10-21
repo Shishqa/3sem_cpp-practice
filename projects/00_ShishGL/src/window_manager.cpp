@@ -3,10 +3,8 @@
 #include <cstdio>
 #include <stdexcept>
 
-/*----------------------------------------------------------------------------*/
-
-#include "ShishGL/window_manager.hpp"
-#include "ShishGL/log.hpp"
+#include "window_manager.hpp"
+#include "log.hpp"
 
 /*----------------------------------------------------------------------------*/
 
