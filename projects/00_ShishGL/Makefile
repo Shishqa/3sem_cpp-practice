@@ -1,5 +1,6 @@
 CXX      := g++
-CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror -O3 -fPIC
+CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror -O3 -fPIC \
+			-Wno-unused-parameter -Wno-unused-variable
 LDFLAGS  := -L/usr/lib -lstdc++ -lm -lGL -lglut -lGLU -lGLEW
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
@@ -8,10 +9,13 @@ APP_DIR  := $(BUILD)/
 TARGET   := test
 
 INCLUDE  := -Iinclude/
-SRC      :=                           	 \
-   	$(wildcard src/*.cpp) 				 \
-   	$(wildcard src/engines/glut/*.cpp)   \
-   	$(wildcard test/*.cpp)
+SRC      :=                           	        \
+   	$(wildcard src/*.cpp)				        \
+   	$(wildcard src/ShishGL/engines/glut/*.cpp)	\
+   	$(wildcard src/ShishGL/window/*.cpp)		\
+   	$(wildcard src/ShishGL/event/*.cpp)	        \
+   	$(wildcard src/ShishGL/*.cpp)
+
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
 all: build $(APP_DIR)/$(TARGET)
@@ -40,9 +44,6 @@ debug: CXXFLAGS += -DLOG -DDEBUG -Wshadow -Wformat=2 -Wfloat-equal  \
 			      -fsanitize=undefined -fno-sanitize-recover 	   \
 				  -fstack-protector -Wno-format-nonliteral
 debug: all
-
-release: CXXFLAGS += -Wno-unused-parameters
-release: all
 
 clean:
 	-@rm -rvf $(OBJ_DIR)/*

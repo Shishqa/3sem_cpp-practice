@@ -1,10 +1,20 @@
 /*============================================================================*/
-#ifndef SHISHGL_HPP
-#define SHISHGL_HPP
+#ifndef SHISHGL_COLOR_HPP
+#define SHISHGL_COLOR_HPP
 /*============================================================================*/
-
-#include "ShishGL/application.hpp"
-
+#include <cstdint>
 /*============================================================================*/
-#endif //SHISHGL_HPP
+namespace ShishGL {
+
+    struct Color {
+
+        uint8_t r, g, b, a;
+
+        /* TODO: useful operators */
+
+    };
+
+}
+/*============================================================================*/
+#endif //SHISHGL_COLOR_HPP
 /*============================================================================*/
