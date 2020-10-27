@@ -1,0 +1,10 @@
+- scroll-bar
+    - Event-system -- visitor of Event Buffer!
+    - Arch:
+        scroll-bar -> up-button
+                   -> slider-container -> slider
+                   -> down-button
+
+- text-buffer
+    - scroll 1 line up/down
+    - scroll %
