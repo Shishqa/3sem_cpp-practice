@@ -13,51 +13,76 @@ EventSystem::EventQueue& EventSystem::Events() {
 
 /*----------------------------------------------------------------------------*/
 
+bool EventSystem::send(Object* object, const Event* event) {
+    return (object->filterEvent(event) && object->getEvent(event));
+}
+
+/*----------------------------------------------------------------------------*/
+
 void EventSystem::pollEngine() {
 
-    Event curr_event = {};
-    if (!Engine::pollEvent(curr_event)) {
+    Event event = {};
+
+    if (!Engine::pollEvent(event)) {
         return;
     }
 
-    postEvent(curr_event);
+    Events().emplace(new Event{event});
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool EventSystem::dispatchEvents() {
+void EventSystem::dispatchEvents() {
 
     pollEngine();
 
-    while (!Events().empty()) {
-        if (!dispatchSingleEvent()) {
-            return false;
-        }
+    if (!Engine::isRunning()) {
+        return;
     }
 
-    return true;
+    while (!Events().empty()) {
+        dispatchSingleEvent();
+    }
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool EventSystem::dispatchSingleEvent() {
+void EventSystem::dispatchSingleEvent() {
 
     if (Events().empty()) {
-        return true;
+        return;
     }
 
     const Event* event = Events().front();
                          Events().pop();
 
-    bool status = (event->type != Event::TERMINATE);
+    bool status = false;
+    for (const auto& obj : CoreApplication::ActiveObjects()) {
+        if (obj->filterEvent(event) && obj->getEvent(event)) {
+            status = true;
+        }
+    }
 
-    if (!CoreApplication::Root().getEvent(event)) {
-        LogSystem::printWarning("missed event {type=%d}", event->type);
+    if (!status) {
+        //LogSystem::printWarning("missed event {type=%d}", event->type);
     }
 
     delete event;
+}
 
-    return status;
+/*----------------------------------------------------------------------------*/
+
+void EventSystem::flush() {
+
+    const Event* event = nullptr;
+    while (!Events().empty()) {
+
+        event = Events().front();
+                Events().pop();
+
+        delete event;
+    }
+
 }
 
 /*============================================================================*/

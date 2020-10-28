@@ -4,10 +4,11 @@
 /*============================================================================*/
 #include <cstdint>
 #include <chrono>
+#include <unordered_set>
 
+#include "log.hpp"
 #include "engine.hpp"
 #include "event_system.hpp"
-#include "window_container.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -20,9 +21,20 @@ namespace ShishGL {
 
         static uint8_t run();
 
-        template <typename SomeWindow, typename... Args>
-        static SomeWindow* create(Args... args) {
-            return Root().attach<SomeWindow>(nullptr, std::forward<Args>(args)...);
+        static bool terminate();
+
+        template <typename SomeObject, typename... Args>
+        static SomeObject* create(Args&&... args) {
+
+            if (!initialized) {
+                LogSystem::printError("Creating window when not initialized");
+            }
+
+            auto new_obj = new SomeObject(std::forward<Args>(args)...);
+
+            ActiveObjects().insert(new_obj);
+
+            return new_obj;
         }
 
         static const high_resolution_clock::time_point& getInitTime() {
@@ -46,7 +58,9 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        static WindowContainer& Root();
+        using ObjectSet = std::unordered_set<Object*>;
+
+        static ObjectSet& ActiveObjects();
 
         friend EventSystem;
 

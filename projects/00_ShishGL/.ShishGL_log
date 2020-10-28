@@ -1,5 +1,9 @@
-[0.059010]	Initializing engine...
-[260.244380]	Engine initialized
-[4620.104297]	Warning: missed event {type=7}
-[4620.242448]	Terminating engine...
-[4622.848109]	Engine terminated
+<OK>  [1603894618846.119] : initializing engine...
+<OK>  [1603894619101.621] : engine initialized
+<OK>  [1603894619101.701] : Created window 0x7ffd74214400 (parent=(nil))
+<OK>  [1603894619101.737] : Created rectangle 140726551790624x0 at (0; 1948337184)
+<OK>  [1603894619101.760] : Created shaped window 0x7ffd74214420 at (0; 0)
+<OK>  [1603894619705.915] : I AM CLICKED!
+<OK>  [1603894620479.706] : I AM CLICKED!
+<OK>  [1603894621989.369] : terminating engine...
+<OK>  [1603894621992.067] : engine terminated

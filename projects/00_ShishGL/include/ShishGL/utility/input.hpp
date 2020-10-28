@@ -27,10 +27,13 @@ namespace ShishGL {
 
         enum CursorState {
             IN,
-            OUT
+            OUT,
+            MOVED
         };
 
     };
+
+    /*------------------------------------------------------------------------*/
 
     class Keyboard {
     public:

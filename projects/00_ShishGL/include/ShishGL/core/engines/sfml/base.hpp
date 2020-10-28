@@ -21,6 +21,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
         static bool initialize(int* argc_ptr, char* argv[]);
 
+        static bool isRunning();
+
         static bool terminate();
 
         static Vector2<size_t> getDisplaySize();
@@ -50,6 +52,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
     private:
+
+        static bool& RunningStatus();
 
         /* Implementation special */
         /*====================================================================*/

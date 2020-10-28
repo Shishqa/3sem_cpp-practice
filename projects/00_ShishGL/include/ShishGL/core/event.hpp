@@ -13,41 +13,45 @@ namespace ShishGL {
     /*------------------------------------------------------------------------*/
     struct Event {
 
+        /* Mouse */
         /*====================================================================*/
-        struct EmptyEvent {
-        };
-        /*====================================================================*/
-
-        /*====================================================================*/
-        struct MouseMoveEvent {
+        struct MouseEvent {
             Vector2<int> where;
+        };
+        /*--------------------------------------------------------------------*/
+        struct MouseMoveEvent : public MouseEvent {
             Mouse::CursorState state;
         };
         /*--------------------------------------------------------------------*/
-        struct MouseClickEvent {
-            Vector2<int> where;
+        struct MouseClickEvent : public MouseEvent {
             Mouse::Button button;
             Mouse::State  state;
         };
         /*--------------------------------------------------------------------*/
-        struct MouseScrollEvent {
-            Vector2<int> where;
+        struct MouseScrollEvent : public MouseEvent {
             Mouse::Wheel wheel;
         };
         /*====================================================================*/
 
-
+        /* Keyboard */
+        /*====================================================================*/
         struct KeyboardEvent {
             /* mouse position ? */
             Keyboard::Key code;
             Keyboard::State state;
             Keyboard::Modifier modifiers;
         };
+        /*====================================================================*/
 
+        /* Timer */
+        /*====================================================================*/
         struct TimerEvent {
+            /* TODO */
         };
+        /*====================================================================*/
 
         typedef enum {
+            NONE,    /* https://youtu.be/JCwS3lGxJCU */
             RENDER,
             MOUSE_CLICK,
             MOUSE_MOVE,
@@ -56,16 +60,18 @@ namespace ShishGL {
             TIMER
         } EventType;
 
+        /* Public data */
+        /*====================================================================*/
         EventType type;
-
         union {
-            EmptyEvent empty;
+            MouseEvent mouse;
             MouseClickEvent mouse_button;
             MouseMoveEvent mouse_cursor;
             MouseScrollEvent mouse_wheel;
             KeyboardEvent keyboard;
             TimerEvent timer;
         };
+        /*====================================================================*/
 
     };
 

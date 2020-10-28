@@ -9,13 +9,13 @@ namespace ShishGL {
 
         T x, y;
 
-        Vector2<T> operator-();
+        Vector2<T> operator-() const;
 
         Vector2<T>& operator+=(const Vector2<T>& right);
-        Vector2<T>  operator+ (const Vector2<T>& right);
+        Vector2<T>  operator+ (const Vector2<T>& right) const;
 
         Vector2<T>& operator-=(const Vector2<T>& right);
-        Vector2<T>  operator- (const Vector2<T>& right);
+        Vector2<T>  operator- (const Vector2<T>& right) const;
 
         Vector2<T>& operator*=(const T& mul);
 
@@ -31,7 +31,7 @@ namespace ShishGL {
     /*========================================================================*/
 
     template <typename T>
-    Vector2<T> Vector2<T>::operator-() {
+    Vector2<T> Vector2<T>::operator-() const {
         return Vector2<T>{-x, -y};
     }
 
@@ -45,7 +45,7 @@ namespace ShishGL {
     }
 
     template <typename T>
-    Vector2<T> Vector2<T>::operator+(const Vector2<T>& right) {
+    Vector2<T> Vector2<T>::operator+(const Vector2<T>& right) const {
         return (Vector2<T>{*this} += right);
     }
 
@@ -57,7 +57,7 @@ namespace ShishGL {
     }
 
     template <typename T>
-    Vector2<T> Vector2<T>::operator-(const Vector2<T>& right) {
+    Vector2<T> Vector2<T>::operator-(const Vector2<T>& right) const {
         return (Vector2<T>{*this} -= right);
     }
 

@@ -28,35 +28,42 @@ namespace ShishGL {
             Events().push(event);
         }
         /*--------------------------------------------------------------------*/
-        template <typename... Args>
-        static void postEvent(Args&&... args) {
+        static void postEvent(Event::EventType type) {
 
-            auto event = new Event{std::forward<Args>(args)...};
-
+            auto event = new Event{type, {}};
             Events().push(event);
         }
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
         static bool sendEvent(Object* object, Event::EventType type, Args&&... args) {
 
-            /* TODO: check inheritance relations */
-
             auto event = new Event{
                 type,
                 SomeEvent{std::forward<Args>(args)...}
             };
 
-            bool status = object->getEvent(event);
+            bool status = send(object, event);
 
             delete event;
             return status;
         }
+        /*--------------------------------------------------------------------*/
+        static bool sendEvent(Object* object, Event::EventType type) {
 
+            auto event = new Event{type, { }};
+
+            bool status = send(object, event);
+
+            delete event;
+            return status;
+        }
         /*--------------------------------------------------------------------*/
 
         virtual ~EventSystem() = default;
 
     private:
+
+        static bool send(Object* object, const Event* event);
 
         EventSystem() = default;
 
@@ -66,9 +73,11 @@ namespace ShishGL {
 
         static void pollEngine();
 
-        static bool dispatchEvents();
+        static void dispatchEvents();
 
-        static bool dispatchSingleEvent();
+        static void dispatchSingleEvent();
+
+        static void flush();
 
         /*--------------------------------------------------------------------*/
 

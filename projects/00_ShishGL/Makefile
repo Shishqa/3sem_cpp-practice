@@ -7,11 +7,11 @@ APP_DIR  := $(BUILD)/
 TARGET   := yasa
 INCLUDE  := -Iinclude/
 SRC      :=                           						\
-   	$(wildcard src/ShishGL/*.cpp)      						\
+   	$(wildcard src/*.cpp)									\
    	$(wildcard src/ShishGL/core/*.cpp)      				\
    	$(wildcard src/ShishGL/core/engines/sfml/*.cpp)      	\
-   	$(wildcard src/ShishGL/window/*.cpp)      				\
-   	$(wildcard src/*.cpp)
+   	$(wildcard src/ShishGL/window/*.cpp)					\
+   	$(wildcard src/ShishGL/*.cpp)
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

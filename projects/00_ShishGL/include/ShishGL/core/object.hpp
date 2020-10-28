@@ -6,7 +6,7 @@ namespace ShishGL {
 
     struct Event;
 
-    class alignas(8) Object {
+    class Object {
     public:
 
         Object() = default;
@@ -14,7 +14,15 @@ namespace ShishGL {
 
     protected:
 
-        virtual bool getEvent(const Event*) = 0;
+        virtual bool filterEvent(const Event*) { return false; }
+
+        virtual bool getEvent(const Event* event);
+
+        virtual void onMouse(const Event*) { /* nothing */ }
+
+        virtual void onKeyboard(const Event*) { /* nothing */ }
+
+        virtual void onIdle(const Event*) { /* nothing */ }
 
         friend class EventSystem;
     };

@@ -6,18 +6,26 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-WindowContainer::WindowContainer(Window* parent,
-                                 const Vector2<int>& position)
-                                 : Window(parent, position) {
+WindowContainer::WindowContainer(Window* parent)
+        : Window(parent) {
 
-    printf("Window %p is a container",
+    LogSystem::printLog("Window %p is a container",
                         reinterpret_cast<void*>(this));
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool WindowContainer::detach(Window* win_ptr) {
-    return (0 != subwindows.erase(win_ptr));
+WindowContainer::~WindowContainer() {
+    for (const auto& win : subwindows) {
+        delete win;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+
+Window* WindowContainer::detach(Window* win_ptr) {
+
+    return (subwindows.erase(win_ptr) ? win_ptr : nullptr);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -26,12 +34,12 @@ bool WindowContainer::getEvent(const Event* event) {
 
     bool status = false;
 
-    if (Window::getEvent(event)) {
+    if (this->filterEvent(event) && Window::getEvent(event)) {
         status = true;
     }
 
     for (auto& win : subwindows) {
-        if (win->getEvent(event)) {
+        if (win->filterEvent(event) && win->getEvent(event)) {
             status = true;
         }
     }

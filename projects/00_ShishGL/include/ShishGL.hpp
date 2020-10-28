@@ -3,6 +3,8 @@
 #define SHISHGL_HPP
 /*============================================================================*/
 
+#include "ShishGL/utility/color_collection.hpp"
+
 #include "ShishGL/core/core_application.hpp"
 
 #include "ShishGL/window.hpp"

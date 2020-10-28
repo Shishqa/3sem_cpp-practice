@@ -9,7 +9,7 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    class alignas(8) WindowContainer : public Window {
+    class WindowContainer : public Window {
     protected:
 
         using WindowSet = std::unordered_set<Window*>;
@@ -18,12 +18,11 @@ namespace ShishGL {
 
     public:
 
-        explicit WindowContainer(Window* parent,
-                                 const Vector2<int>& pos = {0, 0});
+        explicit WindowContainer(Window* parent = nullptr);
 
         WindowContainer() = delete;
 
-        ~WindowContainer() override = default;
+        ~WindowContainer() override;
 
         /*--------------------------------------------------------------------*/
         template <typename SomeWindow, typename... Args>
@@ -40,7 +39,7 @@ namespace ShishGL {
             return win_ptr;
         }
 
-        bool detach(Window* win_ptr);
+        Window* detach(Window* win_ptr);
         /*--------------------------------------------------------------------*/
 
     protected:

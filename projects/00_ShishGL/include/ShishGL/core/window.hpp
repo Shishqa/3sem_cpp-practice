@@ -10,32 +10,28 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    class alignas(8) Window : public Object {
+    class Window : public Object {
     protected:
 
         Window* parent;
-        Vector2<int> rel_pos;
-        Vector2<int> abs_pos;
 
     public:
 
-        explicit Window(Window* parent, const Vector2<int>& pos = {0, 0});
+        explicit Window(Window* parent = nullptr);
 
         Window() = delete;
 
-        ~Window() override;
+        ~Window() override = default;
 
         /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
-        const Vector2<int>& getRelPos() const;
+        virtual Vector2<int> getRelPos() = 0;
 
         [[nodiscard]]
-        const Vector2<int>& getAbsPos() const;
+        virtual Vector2<int> getAbsPos() = 0;
 
         void refresh();
-
-        virtual bool contains(const Vector2<int>&) { return false; }
 
     protected:
 
@@ -43,13 +39,7 @@ namespace ShishGL {
 
         bool getEvent(const Event* event) override;
 
-        virtual void onRender() { /* nothing */ };
-
-        virtual void onMouse(const MouseEvent*) { /* nothing */ }
-
-        virtual void onKeyboard(const KeyboardEvent*) { /* nothing */ }
-
-        virtual void onIdle(const TimerEvent*) { /* nothing */ }
+        virtual void onRender() = 0;
     };
 
 }
