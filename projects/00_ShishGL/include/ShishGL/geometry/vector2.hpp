@@ -2,6 +2,8 @@
 #ifndef VECTOR_2_HPP
 #define VECTOR_2_HPP
 /*============================================================================*/
+#include <cmath>
+/*============================================================================*/
 namespace ShishGL {
 
     template <typename T>
@@ -11,6 +13,8 @@ namespace ShishGL {
 
         Vector2<T> operator-() const;
 
+        Vector2<T> operator!() const;
+
         Vector2<T>& operator+=(const Vector2<T>& right);
         Vector2<T>  operator+ (const Vector2<T>& right) const;
 
@@ -19,10 +23,21 @@ namespace ShishGL {
 
         Vector2<T>& operator*=(const T& mul);
 
-                T  operator^ (const Vector2<T>& right) const;
+        T operator^(const Vector2<T>& right) const;
+        T len() const;
 
         Vector2<T>& operator|=(const Vector2<T>& right);
         Vector2<T>  operator| (const Vector2<T>& right) const;
+
+        //bool        operator||(const Vector2<T>& right) const;
+
+        template <typename P>
+        explicit operator Vector2<P>() const {
+            return Vector2<P>{
+                static_cast<P>(x),
+                static_cast<P>(y)
+            };
+        }
 
     };
 
@@ -87,13 +102,30 @@ namespace ShishGL {
         return x * right.x + y * right.y;
     }
 
+    template <typename T>
+    T Vector2<T>::len() const {
+        return sqrt(x * x + y * y);
+    }
+
     /*------------------------------------------------------------------------*/
 
     template <typename T>
     Vector2<T>& Vector2<T>::operator|=(const Vector2<T> &right) {
+        *this = ((*this ^ right) / (right ^ right)) * right;
+        return *this;
+    }
 
+    template <typename T>
+    Vector2<T> Vector2<T>::operator|(const Vector2<T>& right) const {
+        return (Vector2<T>{*this} |= right);
+    }
 
+    /*------------------------------------------------------------------------*/
 
+    template <typename T>
+    Vector2<T> Vector2<T>::operator!() const {
+        Vector2<T> copy{*this};
+        return (1 / sqrt(copy ^ copy)) * copy;
     }
 
 }

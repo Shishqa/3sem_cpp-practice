@@ -71,10 +71,9 @@ namespace ShishGL {
         }
 
         bool getEvent(const Event* event) override {
-
-            bool is_event_inside = SomeShape::contains(event->mouse.where);
-
             if (event->type == Event::MOUSE_MOVE) {
+
+                bool is_event_inside = SomeShape::contains(event->mouse.where);
 
                 if (is_mouse_inside && !is_event_inside) {
 
@@ -89,18 +88,6 @@ namespace ShishGL {
                     return true;
 
                 }
-
-                return Window::getEvent(event);
-
-            } else if (event->type == Event::MOUSE_CLICK &&
-                       event->mouse_button.state == Mouse::DOWN) {
-
-                if (is_event_inside) {
-                    return Window::getEvent(event);
-                }
-
-                return false;
-
             }
 
             return Window::getEvent(event);

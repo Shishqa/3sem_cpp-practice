@@ -43,6 +43,12 @@ namespace ShishGL {
         virtual void reactOnRelease(const Event*) = 0;
 
         void onMouseClick(const Event* event) override {
+
+            if (!ShapedWindow<SomeShape>::contains(event->mouse.where) &&
+                event->mouse_button.state == Mouse::DOWN) {
+                return;
+            }
+
             if(event->mouse_button.button == Mouse::LEFT) {
                 if (event->mouse_button.state == Mouse::DOWN) {
 

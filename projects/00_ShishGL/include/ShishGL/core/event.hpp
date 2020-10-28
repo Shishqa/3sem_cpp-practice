@@ -28,7 +28,7 @@ namespace ShishGL {
         };
         /*--------------------------------------------------------------------*/
         struct MouseScrollEvent : public MouseEvent {
-            Mouse::Wheel wheel;
+            double delta;
         };
         /*====================================================================*/
 
@@ -56,7 +56,12 @@ namespace ShishGL {
             MOUSE_MOVE,
             MOUSE_SCROLL,
             KEYBOARD,
-            TIMER
+            TIMER,
+
+            USER_MIN = 100,
+            /* USER_EVENTS */
+            USER_MAX = 200
+
         } EventType;
 
         /* Public data */

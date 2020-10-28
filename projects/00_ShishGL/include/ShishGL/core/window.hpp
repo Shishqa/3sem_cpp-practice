@@ -26,6 +26,9 @@ namespace ShishGL {
 
         Window() = delete;
 
+        Window(const Window& other) = delete;
+        Window& operator=(const Window& other) = delete;
+
         ~Window() override;
 
         /*--------------------------------------------------------------------*/

@@ -52,14 +52,10 @@ void pollMouseScroll(Event& event, const sf::Event& sf_event) {
     event.type = Event::MOUSE_SCROLL;
 
     event.mouse_wheel.where = Vector2<int> {
-            sf_event.mouseWheel.x, sf_event.mouseWheel.y
+            sf_event.mouseWheelScroll.x, sf_event.mouseWheelScroll.y
     };
 
-    if (sf_event.mouseWheel.delta >= 0) {
-        event.mouse_wheel.wheel = Mouse::SCROLL_UP;
-    } else {
-        event.mouse_wheel.wheel = Mouse::SCROLL_DOWN;
-    }
+    event.mouse_wheel.delta = sf_event.mouseWheelScroll.delta;
 }
 
 /*----------------------------------------------------------------------------*/
