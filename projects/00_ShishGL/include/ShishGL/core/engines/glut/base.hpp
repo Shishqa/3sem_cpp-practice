@@ -2,11 +2,11 @@
 #ifndef GLUT_ENGINE_HPP
 #define GLUT_ENGINE_HPP
 /*============================================================================*/
-#include <string_view>
 #include <cstddef>
 
 #include "ShishGL/utility/color.hpp"
 #include "ShishGL/geometry/vector2.hpp"
+#include "ShishGL/core/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -15,29 +15,30 @@ namespace ShishGL {
 
         /* Essential */
         /*--------------------------------------------------------------------*/
-        static void initialize(int* argc_ptr, char* argv[]);
+        static bool initialize(int* argc_ptr, char* argv[]);
 
-        static void terminate();
+        static bool terminate();
 
-        static uint8_t enterMainLoop();
+        static Vector2<size_t> getDisplaySize();
+        /*--------------------------------------------------------------------*/
 
-        static size_t getDisplayWidth();
-
-        static size_t getDisplayHeight();
+        /* Events */
+        /*--------------------------------------------------------------------*/
+        static Event* pollEvent();
         /*--------------------------------------------------------------------*/
 
         /* Draw */
         /*--------------------------------------------------------------------*/
         static void setColor(const Color& color);
 
-        static void fillWithColor(const Color& color);
+        static void fillBackground(const Color& color);
 
         static void drawRectangle(const Vector2<int>& pos,
                                   const Vector2<size_t>& size);
         /*--------------------------------------------------------------------*/
 
-        /* Implementation details */
-        /*--------------------------------------------------------------------*/
+        /* Implementation special */
+        /*====================================================================*/
         static int canvas_id;
 
         static void setInitOptions();

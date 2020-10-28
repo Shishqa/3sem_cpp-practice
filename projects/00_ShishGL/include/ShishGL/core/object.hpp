@@ -4,9 +4,9 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    class Event;
+    struct Event;
 
-    class Object {
+    class alignas(8) Object {
     public:
 
         Object() = default;
@@ -14,7 +14,7 @@ namespace ShishGL {
 
     protected:
 
-        virtual bool getEvent(const Event*) { return false; }
+        virtual bool getEvent(const Event*) = 0;
 
         friend class EventSystem;
     };

@@ -1,6 +1,6 @@
 /*============================================================================*/
-#ifndef SHISHGL_WINDOW_CONTAINER_HPP
-#define SHISHGL_WINDOW_CONTAINER_HPP
+#ifndef SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
+#define SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
 /*============================================================================*/
 #include <unordered_set>
 #include <type_traits>
@@ -9,27 +9,27 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    class WindowContainer : public Window {
+    class alignas(8) WindowContainer : public Window {
+    protected:
+
+        using WindowSet = std::unordered_set<Window*>;
+
+        WindowSet subwindows;
+
     public:
 
-        explicit WindowContainer(const Vector2<size_t>& size,
+        explicit WindowContainer(Window* parent,
                                  const Vector2<int>& pos = {0, 0});
 
         WindowContainer() = delete;
 
         ~WindowContainer() override = default;
 
-    protected:
-
-        using WindowSet = std::unordered_set<Window*>;
-
         /*--------------------------------------------------------------------*/
-        WindowSet subwindows;
-        /*--------------------------------------------------------------------*/
-
         template <typename SomeWindow, typename... Args>
         SomeWindow* attach(Args&&... args) {
 
+            /* TODO: sfinae! */
             if (!std::is_base_of<Window, SomeWindow>::value) {
                 return nullptr;
             }
@@ -41,16 +41,17 @@ namespace ShishGL {
         }
 
         bool detach(Window* win_ptr);
-
         /*--------------------------------------------------------------------*/
+
+    protected:
 
         bool getEvent(const Event* event) override;
 
-        friend class Application;
+        friend class EventSystem;
 
     };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_WINDOW_CONTAINER_HPP
+#endif //SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
 /*============================================================================*/

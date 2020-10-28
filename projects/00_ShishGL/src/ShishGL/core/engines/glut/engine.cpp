@@ -1,7 +1,7 @@
 /*============================================================================*/
 #include <GL/freeglut.h>
 
-#include "ShishGL/engines/glut/base.hpp"
+#include "ShishGL/core/engines/glut/base.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -10,7 +10,7 @@ int GlutEngine::canvas_id = 0;
 
 /*----------------------------------------------------------------------------*/
 
-void GlutEngine::initialize(int* argc_ptr, char** argv) {
+bool GlutEngine::initialize(int* argc_ptr, char** argv) {
 
     /* initializing glut */
     glutInit(argc_ptr, argv);
@@ -19,16 +19,20 @@ void GlutEngine::initialize(int* argc_ptr, char** argv) {
     /* setting some specific glut options */
     setInitOptions();
 
-    /* initializing canvas */
+    /* initializing "display" */
     glutInitWindowPosition(0, 0);
-    glutInitWindowSize(static_cast<int>(getDisplayWidth()),
-                       static_cast<int>(getDisplayHeight()));
 
-    /* TODO: user-defined window name */
+    Vector2<size_t> display_size = getDisplaySize();
+    glutInitWindowSize(static_cast<int>(display_size.x),
+                       static_cast<int>(display_size.y));
+
+    /* TODO: defined window name */
     canvas_id = glutCreateWindow("glut engine");
 
     /* setting handlers for event processing */
     setHandlers();
+
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -40,24 +44,17 @@ void GlutEngine::setInitOptions() {
 
 /*----------------------------------------------------------------------------*/
 
-void GlutEngine::terminate() {
+bool GlutEngine::terminate() {
+    return true;
 }
 
 /*============================================================================*/
 
-uint8_t GlutEngine::enterMainLoop() {
-    glutMainLoop();
-    return 0;
-}
-
-/*============================================================================*/
-
-size_t GlutEngine::getDisplayWidth() {
-    return static_cast<size_t>(glutGet(GLUT_SCREEN_WIDTH));
-}
-
-size_t GlutEngine::getDisplayHeight() {
-    return static_cast<size_t>(glutGet(GLUT_SCREEN_HEIGHT));
+Vector2<size_t> GlutEngine::getDisplaySize() {
+    return Vector2<size_t>{
+        static_cast<size_t>(glutGet(GLUT_SCREEN_WIDTH)),
+        static_cast<size_t>(glutGet(GLUT_SCREEN_HEIGHT))
+    };
 }
 
 /*----------------------------------------------------------------------------*/

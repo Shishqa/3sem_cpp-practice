@@ -6,7 +6,7 @@
 #include <cstddef>
 #include <string_view>
 
-#include "../ShishGL/application.hpp"
+#include "../ShishGL/core/core_application.hpp"
 #include "colors.hpp"
 
 

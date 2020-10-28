@@ -2,9 +2,7 @@
 #ifndef SHISHGL_LOG_HPP
 #define SHISHGL_LOG_HPP
 /*============================================================================*/
-
 #include <cstdio>
-
 /*============================================================================*/
 namespace ShishGL {
 
@@ -22,7 +20,16 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
+        static LogStatus print(const char* format, ...)
+        __attribute__((format(printf, 1, 2)));
+
         static LogStatus printLog(const char* format, ...)
+        __attribute__((format(printf, 1, 2)));
+
+        static LogStatus printWarning(const char* format, ...)
+        __attribute__((format(printf, 1, 2)));
+
+        static LogStatus printError(const char* format, ...)
         __attribute__((format(printf, 1, 2)));
 
         static void flush();
@@ -45,8 +52,7 @@ namespace ShishGL {
         static FILE* LOG_FILE;
         /*--------------------------------------------------------------------*/
 
-        template <typename GraphicEngine>
-        friend class GEngine;
+        friend class CoreApplication;
     };
 
 }

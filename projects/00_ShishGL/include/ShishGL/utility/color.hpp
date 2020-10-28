@@ -14,6 +14,12 @@ namespace ShishGL {
 
     };
 
+    struct ColorPair {
+        Color bg; /* background color */
+        Color fg; /* foreground color */
+    };
+
+
 }
 /*============================================================================*/
 #endif //SHISHGL_COLOR_HPP

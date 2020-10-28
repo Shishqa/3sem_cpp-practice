@@ -1,73 +1,52 @@
-#==============================================================================#
+CXX      := g++
+CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror -O3
+LDFLAGS  := -L/usr/lib -lstdc++ -lm -lsfml-graphics -lsfml-window -lsfml-system
+BUILD    := ./build
+OBJ_DIR  := $(BUILD)/objects
+APP_DIR  := $(BUILD)/
+TARGET   := yasa
+INCLUDE  := -Iinclude/
+SRC      :=                           						\
+   	$(wildcard src/ShishGL/*.cpp)      						\
+   	$(wildcard src/ShishGL/core/*.cpp)      				\
+   	$(wildcard src/ShishGL/core/engines/sfml/*.cpp)      	\
+   	$(wildcard src/ShishGL/window/*.cpp)      				\
+   	$(wildcard src/*.cpp)
 
-CXX       := g++
-CXXFLAGS  := -std=c++20 -pedantic-errors -Wall -Wextra -Werror -O3 -fPIC \
-		   	 -Wno-unused-parameter -Wno-unused-variable
-LDFLAGS   := -L/usr/lib -lstdc++ -lm -lGL -lglut -lGLU -lGLEW
+OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-#==============================================================================#
+run: $(APP_DIR)/$(TARGET)
+	./$(APP_DIR)/$(TARGET)
 
-BUILD_DIR := ./build
-OBJ_DIR   := $(BUILD)/objects
-
-LIB_DIR   := $(BUILD)/lib
-LIBRARY   := ShishGL
-
-TEST_DIR  := $(BUILD)/test
-
-#==============================================================================#
-
-INCLUDE   := -Iinclude/
-SRC       :=
-OBJECTS   :=
-
-#==============================================================================#
-
-.PHONY: all build lib test clean debug release
-
-all: debug
-
-#------------------------------------------------------------------------------#
-
-build:
-	@mkdir -p $(APP_DIR)
-	@mkdir -p $(LIB_DIR)
-	@mkdir -p $(TEST_DIR)
-
-#------------------------------------------------------------------------------#
-
-release: lib
-
-#-----
-
-debug: CXXFLAGS += -DLOG -DDEBUG -Wshadow -Wformat=2 -Wfloat-equal  \
-	 			   -Wconversion -Wlogical-op -Wshift-overflow=2     \
-	   			   -Wduplicated-cond -Wcast-qual -Wcast-align       \
-				   -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC       \
-				   -D_FORTIFY_SOURCE=2 -fsanitize=address 		    \
-			       -fsanitize=undefined -fno-sanitize-recover 	    \
-				   -fstack-protector -Wno-format-nonliteral
-debug: lib
-
-#------------------------------------------------------------------------------#
-
-lib: SRC     += $(wildcard src/ShishGL/**/*.cpp)
-lib: OBJECTS += $(SRC:%.cpp=$(OBJ_DIR)/%.o)
-lib: $(OBJECTS)
-	@mkdir -p $(@D)
-	ar ru $(LIB_DIR)/$(LIBRARY) $^
-
-#------------------------------------------------------------------------------#
+all: build $(APP_DIR)/$(TARGET)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ $(LDFLAGS)
 
-#------------------------------------------------------------------------------#
+$(APP_DIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
 
-#clean:
-#	-@rm -rvf $(OBJ_DIR)/*
-#	-@rm -rvf $(LIB_DIR)/*
-#	-@rm -rvf $()
+.PHONY: all build clean debug release
 
-#==============================================================================#
+build:
+	@mkdir -p $(APP_DIR)
+	@mkdir -p $(OBJ_DIR)
+
+debug: CXXFLAGS += -DDEBUG -Wshadow -Wformat=2 -Wfloat-equal \
+				   -Wconversion -Wlogical-op -Wshift-overflow=2     \
+				   -Wduplicated-cond -Wcast-qual -Wcast-align       \
+				   -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC       \
+				   -D_FORTIFY_SOURCE=2 -fsanitize=address 		    \
+				   -fsanitize=undefined -fno-sanitize-recover 	    \
+				   -fstack-protector -Wno-format-nonliteral    \
+				   -Wno-shadow
+debug: all
+
+release: CXXFLAGS += -Wno-unused-parameter
+release: all
+
+clean:
+	-@rm -rvi $(OBJ_DIR)/*
+	-@rm -rvi $(APP_DIR)/*

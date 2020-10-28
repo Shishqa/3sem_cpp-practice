@@ -1,15 +1,16 @@
 /*============================================================================*/
-#include "ShishGL/log.hpp"
-#include "ShishGL/window/window_container.hpp"
+#include "ShishGL/core/log.hpp"
+#include "ShishGL/core/window_container.hpp"
+#include "ShishGL/core/event.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-WindowContainer::WindowContainer(const Vector2<size_t>& size,
-                                 const Vector2<int>& pos)
-                                 : Window(size, pos) {
+WindowContainer::WindowContainer(Window* parent,
+                                 const Vector2<int>& position)
+                                 : Window(parent, position) {
 
-    LogSystem::printLog("Window %p is a container",
+    printf("Window %p is a container",
                         reinterpret_cast<void*>(this));
 }
 
@@ -21,9 +22,21 @@ bool WindowContainer::detach(Window* win_ptr) {
 
 /*----------------------------------------------------------------------------*/
 
-/* TODO: */
 bool WindowContainer::getEvent(const Event* event) {
-    return true;
+
+    bool status = false;
+
+    if (Window::getEvent(event)) {
+        status = true;
+    }
+
+    for (auto& win : subwindows) {
+        if (win->getEvent(event)) {
+            status = true;
+        }
+    }
+
+    return status;
 }
 
 /*============================================================================*/
