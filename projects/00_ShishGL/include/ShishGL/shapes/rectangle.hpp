@@ -19,11 +19,7 @@ namespace ShishGL {
         Rectangle(const Vector2<int>& pos,
                   const Vector2<size_t>& size)
             : Shape2D(pos)
-            , size(size) {
-
-            LogSystem::printLog("Created rectangle %lux%lu at (%d; %d)",
-                                size.x, size.y, abs_pos.x, abs_pos.y);
-        }
+            , size(size) {}
 
         void render() override {
             Engine::drawRectangle(abs_pos, size);

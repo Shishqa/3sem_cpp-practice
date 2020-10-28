@@ -73,8 +73,6 @@ void pollMouseMove(Event& event, const sf::Event& sf_event) {
     event.mouse_cursor.where = Vector2<int> {
             sf_event.mouseMove.x, sf_event.mouseMove.y
     };
-
-    event.mouse_cursor.state = Mouse::MOVED;
 }
 
 /*----------------------------------------------------------------------------*/

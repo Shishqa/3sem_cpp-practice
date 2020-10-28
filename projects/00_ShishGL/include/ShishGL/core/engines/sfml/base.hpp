@@ -41,6 +41,8 @@ namespace ShishGL {
 
     public:
 
+        static Vector2<int> getMousePos();
+
         /* Draw */
         /*--------------------------------------------------------------------*/
         static void setColor(const Color& color);

@@ -1,9 +1,18 @@
-<OK>  [1603894618846.119] : initializing engine...
-<OK>  [1603894619101.621] : engine initialized
-<OK>  [1603894619101.701] : Created window 0x7ffd74214400 (parent=(nil))
-<OK>  [1603894619101.737] : Created rectangle 140726551790624x0 at (0; 1948337184)
-<OK>  [1603894619101.760] : Created shaped window 0x7ffd74214420 at (0; 0)
-<OK>  [1603894619705.915] : I AM CLICKED!
-<OK>  [1603894620479.706] : I AM CLICKED!
-<OK>  [1603894621989.369] : terminating engine...
-<OK>  [1603894621992.067] : engine terminated
+<OK>  [1603910080069.969] : initializing engine...
+<OK>  [1603910080346.614] : engine initialized
+<OK>  [1603910080346.692] : Created window 0x7ffce51088b0 (parent=(nil))
+<OK>  [1603910080346.796] : Created shaped window 0x7ffce51088e0 at (0; 0)
+<OK>  [1603910080346.845] : Created window 0x7ffce51087d0 (parent=(nil))
+<OK>  [1603910080346.891] : Created shaped window 0x7ffce5108800 at (0; 0)
+<OK>  [1603910080346.900] : Created window 0x7ffce51088b0 (parent=(nil))
+<OK>  [1603910080346.937] : Created shaped window 0x7ffce51088e0 at (0; 0)
+<OK>  [1603910081995.914] : I AM CLICKED!
+<OK>  [1603910085548.436] : I AM RELEASED!
+<OK>  [1603910086656.778] : I AM CLICKED!
+<OK>  [1603910089247.842] : I AM RELEASED!
+<OK>  [1603910090187.226] : I AM CLICKED!
+<OK>  [1603910091508.325] : I AM RELEASED!
+<OK>  [1603910092063.809] : I AM CLICKED!
+<OK>  [1603910099629.938] : I AM RELEASED!
+<OK>  [1603910114005.455] : terminating engine...
+<OK>  [1603910114008.340] : engine terminated

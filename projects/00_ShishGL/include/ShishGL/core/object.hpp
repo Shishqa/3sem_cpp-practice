@@ -14,11 +14,15 @@ namespace ShishGL {
 
     protected:
 
-        virtual bool filterEvent(const Event*) { return false; }
+        virtual bool filterEvent(const Event*) { return true; }
 
         virtual bool getEvent(const Event* event);
 
-        virtual void onMouse(const Event*) { /* nothing */ }
+        virtual void onMouseMove(const Event*) { /* nothing */ }
+
+        virtual void onMouseClick(const Event*) { /* nothing */ }
+
+        virtual void onMouseScroll(const Event*) { /* nothing */ }
 
         virtual void onKeyboard(const Event*) { /* nothing */ }
 

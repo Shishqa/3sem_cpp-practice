@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <type_traits>
 
-#include "window.hpp"
+#include "../ShishGL/core/window.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

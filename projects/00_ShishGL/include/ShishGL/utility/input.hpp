@@ -25,12 +25,6 @@ namespace ShishGL {
             SCROLL_DOWN
         };
 
-        enum CursorState {
-            IN,
-            OUT,
-            MOVED
-        };
-
     };
 
     /*------------------------------------------------------------------------*/

@@ -25,6 +25,10 @@ namespace ShishGL {
             abs_pos += delta;
         }
 
+        void move_to(const Vector2<int>& pos) {
+            abs_pos = pos;
+        }
+
         virtual bool contains(const Vector2<int>& point) = 0;
 
         virtual void render() = 0;

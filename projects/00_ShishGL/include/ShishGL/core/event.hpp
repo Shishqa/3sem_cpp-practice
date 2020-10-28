@@ -20,7 +20,6 @@ namespace ShishGL {
         };
         /*--------------------------------------------------------------------*/
         struct MouseMoveEvent : public MouseEvent {
-            Mouse::CursorState state;
         };
         /*--------------------------------------------------------------------*/
         struct MouseClickEvent : public MouseEvent {

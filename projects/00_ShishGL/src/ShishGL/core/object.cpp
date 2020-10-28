@@ -9,18 +9,26 @@ bool Object::getEvent(const Event* event) {
     switch (event->type) {
 
         case Event::MOUSE_CLICK:
+            this->onMouseClick(event);
+            break;
+
         case Event::MOUSE_SCROLL:
+            this->onMouseScroll(event);
+            break;
+
         case Event::MOUSE_MOVE:
-            this->onMouse(event);
-            return true;
+            this->onMouseMove(event);
+            break;
 
         case Event::KEYBOARD:
             this->onKeyboard(event);
-            return true;
+            break;
 
         default:
             return false;
     }
+
+    return true;
 }
 
 /*============================================================================*/

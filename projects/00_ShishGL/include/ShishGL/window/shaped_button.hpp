@@ -2,17 +2,20 @@
 #ifndef SHISHGL_SHAPED_BUTTON_HPP
 #define SHISHGL_SHAPED_BUTTON_HPP
 /*============================================================================*/
+#include "ShishGL/utility/color_collection.hpp"
 #include "shaped_window.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
+    /*========================================================================*/
     struct ButtonColorScheme {
         Color normal, hover, click;
     };
-
+    /*------------------------------------------------------------------------*/
     static constexpr ButtonColorScheme DEFAULT_BUTTON_COLORS = {
             SANDY_BROWN, SALMON, WHITE_SMOKE
     };
+    /*========================================================================*/
 
     template <typename SomeShape>
     class ShapedButton : public ShapedWindow<SomeShape> {
@@ -20,31 +23,57 @@ namespace ShishGL {
 
         const ButtonColorScheme colorscheme;
 
+        bool is_pressed;
+
     public:
 
         template <typename... Args>
         explicit ShapedButton(Window* parent, const ButtonColorScheme& colors,
                               Args&&... args)
-            : ShapedWindow<SomeShape>(parent, colors.normal, std::forward<Args>(args)...)
-            , colorscheme(colors) {}
+            : ShapedWindow<SomeShape>(parent, colors.normal,
+                                      std::forward<Args>(args)...)
+            , colorscheme(colors)
+            , is_pressed(false) {}
 
         ~ShapedButton() override = default;
 
-        virtual void reactOnClick() = 0;
+    protected:
 
-        void onMouse(const Event* event) override {
+        virtual void reactOnClick(const Event*) = 0;
+        virtual void reactOnRelease(const Event*) = 0;
 
-            if (event->type == Event::MOUSE_CLICK &&
-                event->mouse_button.button == Mouse::LEFT) {
-
+        void onMouseClick(const Event* event) override {
+            if(event->mouse_button.button == Mouse::LEFT) {
                 if (event->mouse_button.state == Mouse::DOWN) {
+
+                    is_pressed = true;
+                    reactOnClick(event);
+
                     ShapedWindow<SomeShape>::color = colorscheme.click;
 
-                    reactOnClick();
+                } else if (is_pressed) {
 
-                } else {
-                    ShapedWindow<SomeShape>::color = colorscheme.normal;
+                    is_pressed = false;
+                    reactOnRelease(event);
+
+                    if (ShapedWindow<SomeShape>::contains(event->mouse.where)) {
+                        ShapedWindow<SomeShape>::color = colorscheme.hover;
+                    } else {
+                        ShapedWindow<SomeShape>::color = colorscheme.normal;
+                    }
                 }
+            }
+        }
+
+        void onMouseEntered(const Event*) override {
+            if (!is_pressed) {
+                ShapedWindow<SomeShape>::color = colorscheme.hover;
+            }
+        }
+
+        void onMouseLeft(const Event*) override {
+            if (!is_pressed) {
+                ShapedWindow<SomeShape>::color = colorscheme.normal;
             }
         }
 

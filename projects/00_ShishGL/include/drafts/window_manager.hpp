@@ -4,7 +4,7 @@
 /*============================================================================*/
 #include <unordered_set>
 
-#include "../ShishGL/core/window_container.hpp"
+#include "window_container.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

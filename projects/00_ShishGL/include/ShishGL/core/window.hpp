@@ -3,6 +3,7 @@
 #define SHISHGL_ABSTRACT_WINDOW_HPP
 /*============================================================================*/
 #include <cstddef>
+#include <unordered_set>
 
 #include "object.hpp"
 #include "event.hpp"
@@ -13,6 +14,10 @@ namespace ShishGL {
     class Window : public Object {
     protected:
 
+        using WindowSet = std::unordered_set<Window*>;
+
+        WindowSet subwindows;
+
         Window* parent;
 
     public:
@@ -21,7 +26,7 @@ namespace ShishGL {
 
         Window() = delete;
 
-        ~Window() override = default;
+        ~Window() override;
 
         /*--------------------------------------------------------------------*/
 
@@ -33,9 +38,27 @@ namespace ShishGL {
 
         void refresh();
 
+        /*--------------------------------------------------------------------*/
+
     protected:
 
-        friend class WindowContainer;
+        /*--------------------------------------------------------------------*/
+        template <typename SomeWindow, typename... Args>
+        SomeWindow* attach(Args&&... args) {
+
+            /* TODO: sfinae! */
+            if (!std::is_base_of<Window, SomeWindow>::value) {
+                return nullptr;
+            }
+
+            auto win_ptr = new SomeWindow(this, std::forward<Args>(args)...);
+
+            subwindows.insert(win_ptr);
+            return win_ptr;
+        }
+
+        Window* detach(Window* win_ptr);
+        /*--------------------------------------------------------------------*/
 
         bool getEvent(const Event* event) override;
 

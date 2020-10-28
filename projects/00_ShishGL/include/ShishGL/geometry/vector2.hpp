@@ -19,6 +19,11 @@ namespace ShishGL {
 
         Vector2<T>& operator*=(const T& mul);
 
+                T  operator^ (const Vector2<T>& right) const;
+
+        Vector2<T>& operator|=(const Vector2<T>& right);
+        Vector2<T>  operator| (const Vector2<T>& right) const;
+
     };
 
     /*------------------------------------------------------------------------*/
@@ -73,6 +78,22 @@ namespace ShishGL {
     template <typename T>
     Vector2<T> operator*(const T& mul, const Vector2<T>& vec) {
         return (Vector2<T>{vec} *= mul);
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    template <typename T>
+    T Vector2<T>::operator^(const Vector2<T>& right) const {
+        return x * right.x + y * right.y;
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    template <typename T>
+    Vector2<T>& Vector2<T>::operator|=(const Vector2<T> &right) {
+
+
+
     }
 
 }
