@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "ShishGL.hpp"
-#include "ShishGL/ui/scrollbar/scrollbar.hpp"
+#include "ShishGL/widgets/scrollbar/scrollbar.hpp"
 #include "test/dummy_button.hpp"
 /*============================================================================*/
 using namespace ShishGL;

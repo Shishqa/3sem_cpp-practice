@@ -20,9 +20,6 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        static LogStatus print(const char* format, ...)
-        __attribute__((format(printf, 1, 2)));
-
         static LogStatus printLog(const char* format, ...)
         __attribute__((format(printf, 1, 2)));
 
@@ -47,6 +44,8 @@ namespace ShishGL {
         static LogStatus openLog();
 
         static LogStatus closeLog();
+
+        static void printTimeStamp();
 
         /*--------------------------------------------------------------------*/
         static FILE* LOG_FILE;

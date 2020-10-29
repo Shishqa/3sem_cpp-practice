@@ -32,12 +32,20 @@ LogSystem::LogStatus LogSystem::closeLog() {
 
 /*----------------------------------------------------------------------------*/
 
-LogSystem::LogStatus LogSystem::print(const char* format, ...) {
+void LogSystem::printTimeStamp() {
 
     high_resolution_clock::time_point now = high_resolution_clock::now();
     duration<double, std::milli> delta_time = now - CoreApplication::getInitTime();
 
     fprintf(LOG_FILE, "[%6.3lf] : ", delta_time.count());
+}
+
+/*----------------------------------------------------------------------------*/
+
+LogSystem::LogStatus LogSystem::printLog(const char *format, ...) {
+
+    fprintf(LOG_FILE, "%s ", "<OK> ");
+    printTimeStamp();
 
     va_list arg_list = {};
     va_start(arg_list, format);
@@ -52,13 +60,18 @@ LogSystem::LogStatus LogSystem::print(const char* format, ...) {
 
 /*----------------------------------------------------------------------------*/
 
-LogSystem::LogStatus LogSystem::printLog(const char *format, ...) {
-    fprintf(LOG_FILE, "%s ", "<OK> ");
+LogSystem::LogStatus LogSystem::printWarning(const char *format, ...) {
+
+    fprintf(LOG_FILE, "%s ", "<WW> ");
+    printTimeStamp();
 
     va_list arg_list = {};
     va_start(arg_list, format);
-    print(format, arg_list);
+    vfprintf(LOG_FILE, format, arg_list);
     va_end(arg_list);
+
+    fprintf(LOG_FILE, "\n");
+    flush();
 
     return LOG_OK;
 }
@@ -66,25 +79,17 @@ LogSystem::LogStatus LogSystem::printLog(const char *format, ...) {
 /*----------------------------------------------------------------------------*/
 
 LogSystem::LogStatus LogSystem::printError(const char *format, ...) {
+
     fprintf(LOG_FILE, "%s ", "<EE> ");
+    printTimeStamp();
 
     va_list arg_list = {};
     va_start(arg_list, format);
-    print(format, arg_list);
+    vfprintf(LOG_FILE, format, arg_list);
     va_end(arg_list);
 
-    return LOG_OK;
-}
-
-/*----------------------------------------------------------------------------*/
-
-LogSystem::LogStatus LogSystem::printWarning(const char *format, ...) {
-    fprintf(LOG_FILE, "%s ", "<WW> ");
-
-    va_list arg_list = {};
-    va_start(arg_list, format);
-    print(format, arg_list);
-    va_end(arg_list);
+    fprintf(LOG_FILE, "\n");
+    flush();
 
     return LOG_OK;
 }

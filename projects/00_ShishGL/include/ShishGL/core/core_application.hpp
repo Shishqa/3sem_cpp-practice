@@ -7,7 +7,7 @@
 #include <unordered_set>
 
 #include "log.hpp"
-#include "engine.hpp"
+#include "ShishGL/core/engine/template_engine.hpp"
 #include "event_system.hpp"
 /*============================================================================*/
 namespace ShishGL {

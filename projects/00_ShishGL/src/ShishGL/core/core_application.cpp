@@ -1,7 +1,9 @@
 /*============================================================================*/
+#include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
 #include "ShishGL/core/event_system.hpp"
+#include "ShishGL/color/color_collection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -24,7 +26,7 @@ bool CoreApplication::init(int *argc_ptr, char **argv) {
     LogSystem::openLog();
 
     LogSystem::printLog("initializing engine...");
-    Engine::initialize(argc_ptr, argv);
+    Engine::initDisplay(argc_ptr, argv);
     LogSystem::printLog("engine initialized");
 
     initialized = true;
@@ -43,13 +45,13 @@ uint8_t CoreApplication::run() {
 
     while (Engine::isRunning()) {
 
-        Engine::clear();
+        Engine::clear(BLACK);
 
         for (const auto& obj : ActiveObjects()) {
-            EventSystem::sendEvent(obj, Event::RENDER);
+            EventSystem::sendEvent<Event>(obj, Event::RENDER);
         }
 
-        Engine::display();
+        Engine::render();
 
         EventSystem::dispatchEvents();
     }
@@ -70,7 +72,7 @@ bool CoreApplication::terminate() {
     }
 
     LogSystem::printLog("terminating engine...");
-    Engine::terminate();
+    Engine::closeDisplay();
     LogSystem::printLog("engine terminated");
 
     LogSystem::closeLog();

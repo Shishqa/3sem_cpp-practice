@@ -15,12 +15,8 @@ namespace ShishGL {
             : ShapedButton<SomeShape>(parent, DEFAULT_BUTTON_COLORS,
                                       std::forward<Args>(args)...) {}
 
-        void reactOnClick(const Event*) override {
+        void reactOnButton(const MouseButtonEvent*) override {
             LogSystem::printLog("I AM CLICKED!");
-        }
-
-        void reactOnRelease(const Event*) override {
-            LogSystem::printLog("I AM RELEASED!");
         }
 
     };

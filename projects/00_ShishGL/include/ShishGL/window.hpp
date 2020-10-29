@@ -2,11 +2,11 @@
 #ifndef SHISHGL_WINDOW_HPP
 #define SHISHGL_WINDOW_HPP
 /*============================================================================*/
-#include "window/shaped_window.hpp"
-#include "window/shaped_button.hpp"
-#include "window/shaped_float.hpp"
-#include "window/shaped_slider.hpp"
-#include "ShishGL/shapes/rectangle.hpp"
+#include "abstracts/shaped_window.hpp"
+#include "abstracts/shaped_button.hpp"
+#include "abstracts/shaped_float.hpp"
+#include "abstracts/shaped_slider.hpp"
+#include "ShishGL/geometry/shapes/rectangle.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

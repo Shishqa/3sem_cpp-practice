@@ -1,14 +1,10 @@
 /*============================================================================*/
-#ifndef SHISHGL_HPP
-#define SHISHGL_HPP
+#ifndef SHISHGL_EVENT_HPP
+#define SHISHGL_EVENT_HPP
 /*============================================================================*/
-
-#include "ShishGL/color/color_collection.hpp"
-
-#include "ShishGL/core/core_application.hpp"
-
-#include "ShishGL/window/window.hpp"
-
+#include "base_event.hpp"
+#include "mouse_event.hpp"
+#include "kbd_event.hpp"
 /*============================================================================*/
-#endif //SHISHGL_HPP
+#endif //SHISHGL_EVENT_HPP
 /*============================================================================*/

@@ -6,8 +6,8 @@
 #include <queue>
 #include <cstdio>
 
-#include "object.hpp"
-#include "event.hpp"
+#include "object/object.hpp"
+#include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -16,41 +16,18 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
-        static void postEvent(Event::EventType type, Args&&... args) {
+        static void postEvent(Args&&... args) {
 
             /* TODO: check inheritance relations */
 
-            auto event = new Event{
-                type,
-                SomeEvent{std::forward<Args>(args)...}
-            };
-
-            Events().push(event);
-        }
-        /*--------------------------------------------------------------------*/
-        static void postEvent(Event::EventType type) {
-
-            auto event = new Event{type, {}};
+            auto event = new SomeEvent(std::forward<Args>(args)...);
             Events().push(event);
         }
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
-        static bool sendEvent(Object* object, Event::EventType type, Args&&... args) {
+        static bool sendEvent(Object* object, Args&&... args) {
 
-            auto event = new Event{
-                type,
-                SomeEvent{std::forward<Args>(args)...}
-            };
-
-            bool status = send(object, event);
-
-            delete event;
-            return status;
-        }
-        /*--------------------------------------------------------------------*/
-        static bool sendEvent(Object* object, Event::EventType type) {
-
-            auto event = new Event{type, { }};
+            auto event = new SomeEvent(std::forward<Args>(args)...);
 
             bool status = send(object, event);
 
@@ -71,7 +48,7 @@ namespace ShishGL {
         friend class CoreApplication;
         /*--------------------------------------------------------------------*/
 
-        static void pollEngine();
+        static bool pollEngine();
 
         static void dispatchEvents();
 

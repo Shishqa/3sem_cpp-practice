@@ -6,7 +6,7 @@
 
 #include "../ShishGL/utility/color.hpp"
 #include "../ShishGL/geometry/vector2.hpp"
-#include "../ShishGL/core/event.hpp"
+#include "../ShishGL/core/event/base_event.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

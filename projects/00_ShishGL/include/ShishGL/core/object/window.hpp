@@ -1,30 +1,37 @@
 /*============================================================================*/
-#ifndef SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
-#define SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
+#ifndef SHISHGL_ABSTRACT_WINDOW_HPP
+#define SHISHGL_ABSTRACT_WINDOW_HPP
 /*============================================================================*/
+#include <cstddef>
 #include <unordered_set>
-#include <type_traits>
 
-#include "../ShishGL/core/object/window.hpp"
+#include "object.hpp"
+#include "ShishGL/core/event/base_event.hpp"
+#include "../../geometry/vector2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class WindowContainer : public Window {
-    protected:
-
-        using WindowSet = std::unordered_set<Window*>;
-
-        WindowSet subwindows;
-
+    class Window : public Object {
     public:
 
-        explicit WindowContainer(Window* parent = nullptr);
+        explicit Window(Window* parent = nullptr);
 
-        WindowContainer() = delete;
+        Window() = delete;
 
-        ~WindowContainer() override;
+        ~Window() override;
 
         /*--------------------------------------------------------------------*/
+
+        [[nodiscard]]
+        virtual Vector2<int> getRelPos() = 0;
+
+        [[nodiscard]]
+        virtual Vector2<int> getAbsPos() = 0;
+
+        void refresh();
+
+        /*--------------------------------------------------------------------*/
+
         template <typename SomeWindow, typename... Args>
         SomeWindow* attach(Args&&... args) {
 
@@ -33,24 +40,32 @@ namespace ShishGL {
                 return nullptr;
             }
 
-            auto win_ptr = new SomeWindow(std::forward<Args>(args)...);
+            auto win_ptr = new SomeWindow(this, std::forward<Args>(args)...);
 
             subwindows.insert(win_ptr);
             return win_ptr;
         }
 
         Window* detach(Window* win_ptr);
+
         /*--------------------------------------------------------------------*/
 
     protected:
 
+        using WindowSet = std::unordered_set<Window*>;
+
+        WindowSet subwindows;
+
+        Window* parent;
+
+        /*--------------------------------------------------------------------*/
+
         bool getEvent(const Event* event) override;
 
-        friend class EventSystem;
-
+        virtual void onRender() = 0;
     };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_ABSTRACT_WINDOW_CONTAINER_HPP
+#endif //SHISHGL_ABSTRACT_WINDOW_HPP
 /*============================================================================*/

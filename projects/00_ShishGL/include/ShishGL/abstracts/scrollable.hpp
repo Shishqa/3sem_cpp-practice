@@ -1,14 +1,21 @@
 /*============================================================================*/
-#ifndef SHISHGL_HPP
-#define SHISHGL_HPP
+#ifndef SHISHGL_SCROLLABLE_HPP
+#define SHISHGL_SCROLLABLE_HPP
 /*============================================================================*/
+namespace ShishGL {
 
-#include "ShishGL/color/color_collection.hpp"
+    class Scrollable {
+    public:
 
-#include "ShishGL/core/core_application.hpp"
+        virtual void scroll(double ratio) = 0;
 
-#include "ShishGL/window/window.hpp"
+        virtual double getProportion() = 0;
 
+        virtual ~Scrollable() = default;
+
+    };
+
+}
 /*============================================================================*/
-#endif //SHISHGL_HPP
+#endif //SHISHGL_SCROLLABLE_HPP
 /*============================================================================*/

@@ -1,14 +1,15 @@
 /*============================================================================*/
-#ifndef SHISHGL_HPP
-#define SHISHGL_HPP
+#ifndef SHISHGL_ENGINE_HPP
+#define SHISHGL_ENGINE_HPP
 /*============================================================================*/
-
-#include "ShishGL/color/color_collection.hpp"
-
-#include "ShishGL/core/core_application.hpp"
-
-#include "ShishGL/window/window.hpp"
-
+#include "sfml/engine.hpp"
+#include "template_engine.hpp"
 /*============================================================================*/
-#endif //SHISHGL_HPP
+namespace ShishGL {
+
+    using Engine = TemplateEngine<SfmlEngine>;
+
+}
+/*============================================================================*/
+#endif //SHISHGL_ENGINE_HPP
 /*============================================================================*/

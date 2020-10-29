@@ -9,9 +9,11 @@ INCLUDE  := -Iinclude/
 SRC      :=                           						\
    	$(wildcard src/*.cpp)									\
    	$(wildcard src/ShishGL/core/*.cpp)      				\
-   	$(wildcard src/ShishGL/core/engines/sfml/*.cpp)      	\
+   	$(wildcard src/ShishGL/core/input/*.cpp)      			\
+   	$(wildcard src/ShishGL/core/object/*.cpp)      			\
+   	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      	\
    	$(wildcard src/ShishGL/*.cpp)							\
-   	$(wildcard src/ShishGL/ui/scrollbar/*.cpp)
+   	$(wildcard src/ShishGL/widgets/scrollbar/*.cpp)
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

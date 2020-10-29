@@ -19,15 +19,15 @@ bool EventSystem::send(Object* object, const Event* event) {
 
 /*----------------------------------------------------------------------------*/
 
-void EventSystem::pollEngine() {
+bool EventSystem::pollEngine() {
 
-    Event event = {};
-
-    if (!Engine::pollEvent(event)) {
-        return;
+    auto event = Engine::pollEvent();
+    if (!event) {
+        return false;
     }
 
-    Events().emplace(new Event{event});
+    Events().emplace(event);
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -64,7 +64,7 @@ void EventSystem::dispatchSingleEvent() {
     }
 
     if (!status) {
-        //LogSystem::printWarning("missed event {type=%d}", event->type);
+        //LogSystem::printWarning("missed event {type=%d}", event->type());
     }
 
     delete event;
