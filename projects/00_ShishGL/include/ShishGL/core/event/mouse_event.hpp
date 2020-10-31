@@ -60,7 +60,15 @@ namespace ShishGL {
         MouseScrollEvent(Event::Type type, const Vector2<int>& where,
                          Mouse::ScrollDelta delta)
             : MouseEvent(type, where)
-            , m_delta(delta) {}
+            , m_delta(delta) {
+
+            if (m_delta > 1.0) {
+                m_delta = 1.0;
+            } else if (m_delta < -1.0) {
+                m_delta = -1.0;
+            }
+
+        }
 
         ~MouseScrollEvent() override = default;
 

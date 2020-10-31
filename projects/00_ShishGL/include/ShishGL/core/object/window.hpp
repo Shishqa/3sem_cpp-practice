@@ -7,14 +7,12 @@
 
 #include "object.hpp"
 #include "ShishGL/core/event/base_event.hpp"
-#include "../../geometry/vector2.hpp"
+#include "ShishGL/geometry/vector2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     class Window : public Object {
     public:
-
-        explicit Window(Window* parent = nullptr);
 
         Window() = delete;
 
@@ -51,6 +49,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
     protected:
+
+        explicit Window(Window* parent = nullptr);
 
         using WindowSet = std::unordered_set<Window*>;
 

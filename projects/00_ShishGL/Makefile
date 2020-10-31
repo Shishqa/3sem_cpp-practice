@@ -6,14 +6,17 @@ OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/
 TARGET   := yasa
 INCLUDE  := -Iinclude/
-SRC      :=                           						\
-   	$(wildcard src/*.cpp)									\
-   	$(wildcard src/ShishGL/core/*.cpp)      				\
-   	$(wildcard src/ShishGL/core/input/*.cpp)      			\
-   	$(wildcard src/ShishGL/core/object/*.cpp)      			\
-   	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      	\
-   	$(wildcard src/ShishGL/*.cpp)							\
-   	$(wildcard src/ShishGL/widgets/scrollbar/*.cpp)
+SRC      :=                           							\
+   	$(wildcard src/*.cpp)										\
+   	$(wildcard src/ShishGL/core/*.cpp)      					\
+   	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      		\
+   	$(wildcard src/ShishGL/*.cpp)								\
+   	$(wildcard src/ShishGL/core/input/*.cpp)      				\
+   	$(wildcard src/ShishGL/core/object/*.cpp)      				\
+   	$(wildcard src/ShishGL/text/*.cpp)      					\
+   	$(wildcard src/ShishGL/user_interface/scrollbar/*.cpp)		\
+   	$(wildcard src/ShishGL/user_interface/text_buffer/*.cpp)	\
+   	$(wildcard src/ShishGL/user_interface/viewport/*.cpp)
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

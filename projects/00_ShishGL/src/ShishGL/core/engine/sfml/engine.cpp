@@ -15,6 +15,11 @@ bool SfmlEngine::initDisplay(int*, char**) {
     canvas = new sf::RenderWindow(sf::VideoMode::getDesktopMode(), "sfml",
                                   sf::Style::Fullscreen);
 
+    /* todo: fix hard-coded font */
+    if (!ActiveFont().loadFromFile("./FiraCode-Regular.ttf")) {
+        return false;
+    }
+
     is_running = true;
 
     return true;

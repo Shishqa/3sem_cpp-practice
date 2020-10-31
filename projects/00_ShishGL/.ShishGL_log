@@ -1,16 +1,25 @@
-<OK>  [1603973583221.207] : initializing engine...
-<OK>  [1603973583506.823] : engine initialized
-<OK>  [1603973583506.903] : Created window 0x60f000004780 (parent=(nil))
-<OK>  [1603973583507.011] : Created shaped window 0x60f000004780 at (500; 500)
-<OK>  [1603973583507.062] : Created window 0x60e000001b60 (parent=(nil))
-<OK>  [1603973583507.113] : Created shaped window 0x60e000001b60 at (100; 100)
-<OK>  [1603973583507.141] : Created window 0x611000043d40 (parent=0x60e000001b60)
-<OK>  [1603973583507.197] : Created shaped window 0x611000043d40 at (100; 100)
-<OK>  [1603973583507.238] : Created window 0x60f000004870 (parent=(nil))
-<OK>  [1603973583507.285] : Created shaped window 0x60f000004870 at (1000; 500)
-<OK>  [1603973588778.290] : I AM CLICKED!
-<OK>  [1603973588874.984] : I AM CLICKED!
-<OK>  [1603973588916.013] : I AM CLICKED!
-<OK>  [1603973589005.985] : I AM CLICKED!
-<OK>  [1603973613116.721] : terminating engine...
-<OK>  [1603973613120.031] : engine terminated
+<OK>  [1604177468806.175] : initializing engine...
+<OK>  [1604177469075.689] : engine initialized
+<OK>  [1604177469075.810] : Created window 0x5593a5188530 (parent=(nil))
+<OK>  [1604177469075.944] : Created shaped window 0x5593a5188530 at (100; 100)
+<OK>  [1604177469075.984] : Created window 0x5593a4fd5ab0 (parent=(nil))
+<OK>  [1604177469076.063] : Created shaped window 0x5593a4fd5ab0 at (300; 300)
+<OK>  [1604177469076.076] : Created window 0x5593a4fd5bd0 (parent=0x5593a4fd5ab0)
+<OK>  [1604177469076.130] : Created shaped window 0x5593a4fd5bd0 at (300; 300)
+<OK>  [1604177469076.142] : Created window 0x5593a4fd5cf0 (parent=0x5593a4fd5ab0)
+<OK>  [1604177469076.196] : Created shaped window 0x5593a4fd5cf0 at (300; 950)
+<OK>  [1604177469076.207] : Created window 0x5593a515fdb0 (parent=0x5593a4fd5ab0)
+<OK>  [1604177469076.263] : Created shaped window 0x5593a515fdb0 at (300; 350)
+<OK>  [1604177469076.276] : Created window 0x5593a511a960 (parent=(nil))
+<OK>  [1604177469076.330] : Created shaped window 0x5593a511a960 at (500; 500)
+<OK>  [1604177469076.461] : Created window 0x5593a51ab460 (parent=0x5593a511a960)
+<OK>  [1604177469076.541] : Created shaped window 0x5593a51ab460 at (1180; 500)
+<OK>  [1604177469076.557] : Created window 0x5593a51ab4f0 (parent=0x5593a51ab460)
+<OK>  [1604177469076.603] : Created shaped window 0x5593a51ab4f0 at (1180; 500)
+<OK>  [1604177469076.610] : Created window 0x5593a51ab580 (parent=0x5593a51ab460)
+<OK>  [1604177469076.647] : Created shaped window 0x5593a51ab580 at (1180; 760)
+<OK>  [1604177469076.655] : Created window 0x5593a51878c0 (parent=0x5593a51ab460)
+<OK>  [1604177469076.691] : Created shaped window 0x5593a51878c0 at (1180; 520)
+<WW>  [1604177549727.568] : missed event {type=6}
+<OK>  [1604177549866.431] : terminating engine...
+<OK>  [1604177549867.545] : engine terminated

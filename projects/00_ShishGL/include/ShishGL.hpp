@@ -7,7 +7,7 @@
 
 #include "ShishGL/core/core_application.hpp"
 
-#include "ShishGL/window/window.hpp"
+#include "ShishGL/window.hpp"
 
 /*============================================================================*/
 #endif //SHISHGL_HPP

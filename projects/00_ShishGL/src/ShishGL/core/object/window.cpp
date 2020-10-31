@@ -2,6 +2,7 @@
 #include "ShishGL/core/object/window.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/event/base_event.hpp"
+#include "ShishGL/core/event_system.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -41,24 +42,22 @@ bool Window::getEvent(const Event* event) {
 
     bool status = false;
 
-    if (this->filterEvent(event)) {
-        switch (event->type()) {
+    switch (event->type()) {
 
-            case Event::RENDER:
-                this->onRender();
+        case Event::RENDER:
+            this->onRender();
+            status = true;
+            break;
+
+        default:
+            if (Object::getEvent(event)) {
                 status = true;
-                break;
+            }
 
-            default:
-                if (Object::getEvent(event)) {
-                    status = true;
-                }
-
-        }
     }
 
     for (auto& win : subwindows) {
-        if (win->filterEvent(event) && win->getEvent(event)) {
+        if (EventSystem::sendEvent(win, event)) {
             status = true;
         }
     }

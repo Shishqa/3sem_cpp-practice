@@ -56,7 +56,7 @@ Event* pollMouseScroll(const sf::Event& sf_event) {
             sf_event.mouseWheelScroll.y
     };
 
-    Mouse::ScrollDelta delta = sf_event.mouseWheelScroll.delta;
+    Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
     auto event = new MouseScrollEvent(Event::MOUSE_SCROLL, where, delta);
 
@@ -87,7 +87,6 @@ Event* pollKeyboard(const sf::Event& sf_event) {
            sf_event.type == sf::Event::KeyReleased);
 
     Keyboard::Key key = Keyboard::Key::UNKNOWN;
-
     if (sf_event.key.code <= sf::Keyboard::Num9) {
 
         key = static_cast<Keyboard::Key>(sf_event.key.code);
@@ -107,25 +106,19 @@ Event* pollKeyboard(const sf::Event& sf_event) {
     }
 
     Keyboard::ModifierMask modifiers = 0;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-        modifiers |= Keyboard::L_SHIFT_MOD;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) {
-        modifiers |= Keyboard::R_SHIFT_MOD;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
-        modifiers |= Keyboard::L_CTRL_MOD;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)) {
-        modifiers |= Keyboard::R_CTRL_MOD;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt)) {
+    if (sf_event.key.alt) {
         modifiers |= Keyboard::L_ALT_MOD;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt)) {
         modifiers |= Keyboard::R_ALT_MOD;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LSystem)) {
+    if (sf_event.key.control) {
+        modifiers |= Keyboard::L_CTRL_MOD;
+        modifiers |= Keyboard::R_CTRL_MOD;
+    }
+    if (sf_event.key.shift) {
+        modifiers |= Keyboard::L_SHIFT_MOD;
+        modifiers |= Keyboard::R_SHIFT_MOD;
+    }
+    if (sf_event.key.system) {
         modifiers |= Keyboard::META_MOD;
     }
 

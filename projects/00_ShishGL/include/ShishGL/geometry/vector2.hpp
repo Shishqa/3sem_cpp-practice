@@ -11,6 +11,10 @@ namespace ShishGL {
 
         T x, y;
 
+        T length() const {
+            return sqrt(*this ^ *this);
+        }
+
         Vector2<T> operator-() const;
 
         Vector2<T> operator!() const;
@@ -24,7 +28,6 @@ namespace ShishGL {
         Vector2<T>& operator*=(const T& mul);
 
         T operator^(const Vector2<T>& right) const;
-        T len() const;
 
         Vector2<T>& operator|=(const Vector2<T>& right);
         Vector2<T>  operator| (const Vector2<T>& right) const;
@@ -102,11 +105,6 @@ namespace ShishGL {
         return x * right.x + y * right.y;
     }
 
-    template <typename T>
-    T Vector2<T>::len() const {
-        return sqrt(x * x + y * y);
-    }
-
     /*------------------------------------------------------------------------*/
 
     template <typename T>
@@ -124,8 +122,15 @@ namespace ShishGL {
 
     template <typename T>
     Vector2<T> Vector2<T>::operator!() const {
+
+        T len = this->length();
+
+        if (len == 0) {
+            return *this;
+        }
+
         Vector2<T> copy{*this};
-        return (1 / sqrt(copy ^ copy)) * copy;
+        return (1 / len) * copy;
     }
 
 }

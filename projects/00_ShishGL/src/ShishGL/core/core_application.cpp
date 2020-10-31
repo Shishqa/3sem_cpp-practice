@@ -82,4 +82,12 @@ bool CoreApplication::terminate() {
     return true;
 }
 
+/*----------------------------------------------------------------------------*/
+
+void CoreApplication::remove(Object* object) {
+    if (!ActiveObjects().erase(object)) {
+        delete object;
+    }
+}
+
 /*============================================================================*/

@@ -2,7 +2,7 @@
 #ifndef SHISHGL_DUMMY_BUTTON_HPP
 #define SHISHGL_DUMMY_BUTTON_HPP
 /*============================================================================*/
-#include "ShishGL/window/shaped_button.hpp"
+#include "ShishGL/abstracts/shaped_button.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

@@ -37,6 +37,8 @@ namespace ShishGL {
             return new_obj;
         }
 
+        static void remove(Object* object);
+
         static const high_resolution_clock::time_point& getInitTime() {
             return InitTime();
         }

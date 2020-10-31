@@ -2,7 +2,7 @@
 #ifndef SHISHGL_SCROLLBAR_HPP
 #define SHISHGL_SCROLLBAR_HPP
 /*============================================================================*/
-#include "ShishGL/abstracts/scrollable.hpp"
+#include "ShishGL/ables/scrollable.hpp"
 #include "ShishGL/window.hpp"
 /*============================================================================*/
 namespace ShishGL {
@@ -11,36 +11,51 @@ namespace ShishGL {
     struct ScrollbarColorscheme {
         Color bg;
         ButtonColorScheme slider;
-        ButtonColorScheme arrow;
+        ButtonColorScheme button;
     };
     /*------------------------------------------------------------------------*/
     static constexpr ScrollbarColorscheme DEFAULT_SCROLLBAR_COLORS = {
             DARK_SLATE_GREY,
-            {PAPAYA_WHIP, WHITE_SMOKE, WHITE},
-            {DARK_SEA_GREEN, WHITE_SMOKE, WHITE}
+            {PAPAYA_WHIP, LIGHT_SLATE_GRAY, WHITE},
+            {DARK_SEA_GREEN, LIGHT_SLATE_GRAY, WHITE}
     };
     /*========================================================================*/
 
-    class ScrollbarSlider;
+    class ScrollSlider;
 
-    class ScrollbarButton;
+    class ScrollButton;
 
     /*------------------------------------------------------------------------*/
 
-    class Scrollbar : public RectWindow {
+    class Scrollbar : public RectWindow, public FrameScrollable {
     protected:
 
-        Scrollable* scrollable;
-        ScrollbarSlider* slider;
+        static constexpr double DEFAULT_PROPORTION = 0.2;
+        static constexpr double DEFAULT_STEP_SIZE = 1.0;
+
+        ScrollSlider* slider;
+        FrameScrollable* target;
 
     public:
 
-        Scrollbar(Window* parent, Scrollable* scrollable,
+        Scrollbar(Window* parent, FrameScrollable* target,
                   const ScrollbarColorscheme& colors,
                   const Vector2<int>& pos,
                   const Vector2<size_t>& size);
 
         ~Scrollbar() override = default;
+
+        double contentProportion();
+
+        /*--------------------------------------------------------------------*/
+
+        void slide(int delta) override;
+
+        size_t stepSize() override;
+
+        size_t getFrameSize() override;
+
+        size_t getContentSize() override;
 
     protected:
 
@@ -48,18 +63,20 @@ namespace ShishGL {
 
         bool onMouseScroll(const MouseScrollEvent* event) override;
 
+        bool unhandledEvent(const Event* event) override;
+
     };
 
     /*------------------------------------------------------------------------*/
 
-    class ScrollbarSlider : public RectSlider {
+    class ScrollSlider : public RectSlider {
     public:
 
-        ScrollbarSlider(Window* parent, const ButtonColorScheme& colors,
-                        const Vector2<int>& slide, const Vector2<int>& pos,
-                        const Vector2<size_t>& size);
+        ScrollSlider(Window* parent, const ButtonColorScheme& colors,
+                     const Vector2<int>& slide, const Vector2<int>& pos,
+                     const Vector2<size_t>& size);
 
-        ~ScrollbarSlider() override = default;
+        ~ScrollSlider() override = default;
 
     protected:
 
@@ -70,17 +87,26 @@ namespace ShishGL {
     /*------------------------------------------------------------------------*/
 
     class ScrollButton : public RectButton {
+    protected:
+
+        Mouse::ScrollDelta delta;
+
     public:
 
-        ScrollUpButton(Window* parent, const ButtonColorScheme& colors,
-                       const Vector2<int>& pos,
-                       const Vector2<size_t>& size);
+        ScrollButton(Window* parent, Mouse::ScrollDelta delta,
+                     const ButtonColorScheme& colors,
+                     const Vector2<int>& pos,
+                     const Vector2<size_t>& size);
 
-        ~ScrollUpButton() override = default;
+        ~ScrollButton() override = default;
+
+        void setDelta(Mouse::ScrollDelta mouse_delta) {
+            delta = mouse_delta;
+        }
 
     protected:
 
-        void reactOnButton(const MouseButtonEvent*) override {}
+        void reactOnButton(const MouseButtonEvent* event) override;
 
     };
 

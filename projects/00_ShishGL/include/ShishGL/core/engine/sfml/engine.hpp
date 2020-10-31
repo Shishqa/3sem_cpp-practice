@@ -3,6 +3,7 @@
 #define SHISHGL_SFML_ENGINE_HPP
 /*============================================================================*/
 #include <cstddef>
+#include <string_view>
 
 #include <SFML/Graphics.hpp>
 
@@ -29,6 +30,13 @@ namespace ShishGL {
 
         static void drawCircle(const Vector2<int>& pos,
                                const size_t& radius);
+        /*--------------------------------------------------------------------*/
+
+        /* TODO: Text */
+        /*--------------------------------------------------------------------*/
+        static void displayText(const std::string_view& text,
+                                size_t font_height,
+                                const Vector2<int>& pos);
         /*--------------------------------------------------------------------*/
 
         virtual ~SfmlEngine() = default;
@@ -70,6 +78,8 @@ namespace ShishGL {
         static sf::RenderWindow* canvas;
 
         static Color active_color;
+
+        static sf::Font& ActiveFont();
 
     };
 

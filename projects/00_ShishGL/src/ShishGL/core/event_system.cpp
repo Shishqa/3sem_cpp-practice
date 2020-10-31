@@ -13,7 +13,7 @@ EventSystem::EventQueue& EventSystem::Events() {
 
 /*----------------------------------------------------------------------------*/
 
-bool EventSystem::send(Object* object, const Event* event) {
+bool EventSystem::sendEvent(Object* object, const Event* event) {
     return (object->filterEvent(event) && object->getEvent(event));
 }
 
@@ -64,7 +64,7 @@ void EventSystem::dispatchSingleEvent() {
     }
 
     if (!status) {
-        //LogSystem::printWarning("missed event {type=%d}", event->type());
+        LogSystem::printWarning("missed event {type=%d}", event->type());
     }
 
     delete event;

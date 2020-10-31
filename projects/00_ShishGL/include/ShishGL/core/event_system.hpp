@@ -29,18 +29,19 @@ namespace ShishGL {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
 
-            bool status = send(object, event);
+            bool status = sendEvent(object, event);
 
             delete event;
             return status;
         }
+        /*--------------------------------------------------------------------*/
+        static bool sendEvent(Object* object, const Event* event);
         /*--------------------------------------------------------------------*/
 
         virtual ~EventSystem() = default;
 
     private:
 
-        static bool send(Object* object, const Event* event);
 
         EventSystem() = default;
 

@@ -30,6 +30,9 @@ namespace ShishGL {
                     abs_pos.y <= point.y && point.y <= abs_pos.y + static_cast<int>(size.y));
         }
 
+        [[nodiscard]]
+        const Vector2<size_t>& getSize() const { return size; }
+
     };
 
 }

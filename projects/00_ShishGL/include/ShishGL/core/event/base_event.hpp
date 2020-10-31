@@ -38,6 +38,26 @@ namespace ShishGL {
 
     };
 
+    /*------------------------------------------------------------------------*/
+
+    class SlideEvent : public Event {
+    public:
+
+        SlideEvent(Event::Type type, double delta)
+            : Event(type)
+            , e_delta(delta) {}
+
+        ~SlideEvent() override = default;
+
+        [[nodiscard]]
+        inline double delta() const { return e_delta; }
+
+    protected:
+
+        double e_delta;
+
+    };
+
 }
 /*============================================================================*/
 

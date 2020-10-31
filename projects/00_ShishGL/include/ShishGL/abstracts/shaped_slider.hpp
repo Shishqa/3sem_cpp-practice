@@ -3,48 +3,52 @@
 #define SHISHGL_SHAPED_SLIDER_HPP
 /*============================================================================*/
 #include "shaped_float.hpp"
+#include "ShishGL/ables/scrollable.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename SomeShape>
-    class ShapedSlider : public ShapedFloat<SomeShape> {
+    class ShapedSlider : public ShapedFloat<SomeShape>, public Slidable {
     protected:
 
-        Vector2<double> slide;
-        Vector2<double> slide_pos;
+        Vector2<double> guide;
+        Vector2<double> guide_pos;
 
     public:
 
         template <typename... Args>
         ShapedSlider(Window* parent, const ButtonColorScheme& colors,
-                     const Vector2<int>& slide_vec,
+                     const Vector2<int>& guide,
                      Args&&... args)
             : ShapedFloat<SomeShape>(parent, colors, std::forward<Args>(args)...)
-            , slide(static_cast<Vector2<double>>(slide_vec))
-            , slide_pos({}) {
+            , guide(static_cast<Vector2<double>>(guide))
+            , guide_pos({}) {
 
-            slide_pos = static_cast<Vector2<double>>(ShapedFloat<SomeShape>::getAbsPos());
+            guide_pos = static_cast<Vector2<double>>(ShapedFloat<SomeShape>::getAbsPos());
         }
 
         ~ShapedSlider() override = default;
 
-        void advance(double ratio) {
-            Vector2<double> delta = static_cast<double>(ratio) * slide;
-            advance(delta);
+        /*--------------------------------------------------------------------*/
+
+        void slide(int delta) override {
+            advance(static_cast<double>(delta) * !guide);
         }
+
+        /*--------------------------------------------------------------------*/
 
     protected:
 
         Vector2<double> advance(const Vector2<double>& delta) {
 
             auto curr_pos = static_cast<Vector2<double>>(ShapedFloat<SomeShape>::getAbsPos());
-            Vector2<double> proj_delta = delta | slide;
+            Vector2<double> proj_delta = delta | guide;
             Vector2<double> dest = curr_pos + proj_delta;
-            Vector2<double> max_pos = slide_pos + slide;
+            Vector2<double> max_pos = guide_pos + guide;
 
-            if (((dest - slide_pos) ^ slide) <= 0) {
-                dest = slide_pos;
-            } else if (((dest - max_pos) ^ slide) >= 0) {
+            if (((dest - guide_pos) ^ guide) <= 0) {
+                dest = guide_pos;
+            } else if (((dest - max_pos) ^ guide) >= 0) {
                 dest = max_pos;
             }
 
@@ -53,10 +57,12 @@ namespace ShishGL {
             return dest - curr_pos;
         }
 
+        /*--------------------------------------------------------------------*/
+
         bool onMouseMove(const MouseEvent* event) override {
 
             if (!ShapedButton<SomeShape>::is_pressed) {
-                return true;
+                return false;
             }
 
             auto drag_delta = static_cast<Vector2<double>>(
