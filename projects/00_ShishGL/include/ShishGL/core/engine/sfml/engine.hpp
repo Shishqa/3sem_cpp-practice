@@ -18,25 +18,29 @@ namespace ShishGL {
 
         /* Input */
         /*--------------------------------------------------------------------*/
-        static Vector2<int> getMousePos();
+        static Vector2<double> getMousePos();
         /*--------------------------------------------------------------------*/
 
         /* Draw */
         /*--------------------------------------------------------------------*/
         static void setColor(const Color& color);
 
-        static void drawRectangle(const Vector2<int>& pos,
-                                  const Vector2<size_t>& size);
+        static void drawPoint(const Vector2<double>& pos);
 
-        static void drawCircle(const Vector2<int>& pos,
+        static void drawLine(const Vector2<double>& start,
+                             const Vector2<double>& end);
+
+        static void drawRectangle(const Vector2<double>& pos,
+                                  const Vector2<double>& size);
+
+        static void drawCircle(const Vector2<double>& pos,
                                const size_t& radius);
         /*--------------------------------------------------------------------*/
 
         /* TODO: Text */
         /*--------------------------------------------------------------------*/
-        static void displayText(const std::string_view& text,
-                                size_t font_height,
-                                const Vector2<int>& pos);
+        static void displayText(const std::string_view& text, size_t font_size,
+                                const Vector2<double>& pos);
         /*--------------------------------------------------------------------*/
 
         virtual ~SfmlEngine() = default;

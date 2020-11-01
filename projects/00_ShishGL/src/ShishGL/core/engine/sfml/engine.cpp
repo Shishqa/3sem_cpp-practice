@@ -66,10 +66,10 @@ Vector2<size_t> SfmlEngine::getDisplaySize() {
 
 /*----------------------------------------------------------------------------*/
 
-Vector2<int> SfmlEngine::getMousePos() {
-    return Vector2<int>{
-        sf::Mouse::getPosition(*canvas).x,
-        sf::Mouse::getPosition(*canvas).y
+Vector2<double> SfmlEngine::getMousePos() {
+    return Vector2<double>{
+        static_cast<double>(sf::Mouse::getPosition(*canvas).x),
+        static_cast<double>(sf::Mouse::getPosition(*canvas).y)
     };
 }
 

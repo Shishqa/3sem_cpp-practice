@@ -1,5 +1,6 @@
 /*============================================================================*/
 #include "ShishGL/core/log.hpp"
+#include "ShishGL/core/event_system.hpp"
 #include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
 /*============================================================================*/
 using namespace ShishGL;
@@ -7,47 +8,44 @@ using namespace ShishGL;
 
 Scrollbar::Scrollbar(Window* parent, FrameScrollable* target,
                      const ScrollbarColorscheme& colors,
-                     const Vector2<int>& pos,
-                     const Vector2<size_t>& size)
-        : RectWindow(parent, colors.bg, pos, size)
+                     const Vector2<double>& size,
+                     const Vector2<double>& pos)
+        : RectButton(parent, colors.bg, size, pos)
         , FrameScrollable()
         , target(target) {
 
-    Vector2<size_t> button_size{size.x, size.x};
-    auto slide_size = size - Vector2<size_t>{0, 2 * button_size.y};
+    Vector2<double> button_size{size.x, size.x};
+    auto slide_space_size = size - Vector2<double>{0, 2 * button_size.y};
 
     /*------------------------------------------------------------------------*/
-    attach<ScrollButton>(
+    up_button = attach<ScrollButton>(
         -1.0,
         colors.button,
-        Vector2<int>{0, 0},
-        button_size
+        button_size,
+        Vector2<double>{0, 0}
         );
 
-    attach<ScrollButton>(
+    down_button = attach<ScrollButton>(
         +1.0,
         colors.button,
-        Vector2<int>{0, static_cast<int>(button_size.y + slide_size.y)},
-        button_size
+        button_size,
+        Vector2<double>{0, button_size.y + slide_space_size.y}
         );
     /*------------------------------------------------------------------------*/
 
-    double proportion = (target ? target->getProportion() : DEFAULT_PROPORTION);
-    Vector2<size_t> slider_size{
-        slide_size.x,
-        static_cast<size_t>(proportion * static_cast<double>(slide_size.y))
-        };
+    //double proportion = (target ? target->getProportion() : DEFAULT_PROPORTION);
+    //static_cast<size_t>(proportion * static_cast<double>(slide_size.y))
 
-    Vector2<int> slider_guide{
-        0, static_cast<int>(slide_size.y - slider_size.y)
-    };
+    Vector2<double> slider_size{slide_space_size.x, MIN_SLIDER_SIZE};
+    Vector2<double> slider_guide{0, slide_space_size.y - slider_size.y};
+    Vector2<double> slider_pos{0, button_size.y};
 
     slider = attach<ScrollSlider>(
             colors.slider,
             slider_guide,
-            Vector2<int>{0, static_cast<int>(button_size.y)},
-            slider_size
-            );
+            slider_size,
+            slider_pos
+    );
 
 }
 
@@ -55,21 +53,20 @@ Scrollbar::Scrollbar(Window* parent, FrameScrollable* target,
 
 double Scrollbar::contentProportion() {
     if (target) {
-        return static_cast<double>(getFrameSize()) /
-               static_cast<double>(target->getFrameSize());
+        return frameSize() / target->frameSize();
     }
     return 1.0;
 }
 
 /*----------------------------------------------------------------------------*/
 
-void Scrollbar::slide(int delta) {
-    slider->slide(delta);
+void Scrollbar::slide(double delta_in_pixels) {
+    slider->slide(delta_in_pixels);
 }
 
 /*----------------------------------------------------------------------------*/
 
-size_t Scrollbar::stepSize() {
+double Scrollbar::stepSize() {
     if (target) {
         return target->stepSize() * contentProportion();
     }
@@ -78,14 +75,8 @@ size_t Scrollbar::stepSize() {
 
 /*----------------------------------------------------------------------------*/
 
-size_t Scrollbar::getFrameSize() {
-    return slider->getSize().y;
-}
-
-/*----------------------------------------------------------------------------*/
-
-size_t Scrollbar::getContentSize() {
-    return getSize().y - 2 * getSize().x;
+double Scrollbar::frameSize() {
+    return slider->getGuide().length();
 }
 
 /*----------------------------------------------------------------------------*/
@@ -106,7 +97,7 @@ bool Scrollbar::filterEvent(const Event* event) {
         return true;
     }
 
-    return RectWindow::filterEvent(event);
+    return RectButton::filterEvent(event);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -136,13 +127,33 @@ bool Scrollbar::unhandledEvent(const Event* event) {
         }
 
         if (target) {
-            target->slide(static_cast<int>(converted->delta() / contentProportion()));
+            target->slide(converted->delta() / contentProportion());
         }
 
         return true;
     }
 
     return false;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Scrollbar::reactOnButton(const MouseButtonEvent* event) {
+
+    if (slider->contains(event->where()) ||
+        up_button->contains(event->where()) ||
+        down_button->contains(event->where())) {
+        return;
+    }
+
+    if (event->state() == Mouse::DOWN) {
+        EventSystem::sendEvent<MouseButtonEvent>(slider, Event::MOUSE_BUTTON,
+                                                 slider->getAbsPos(),
+                                                 Mouse::LEFT, Mouse::DOWN);
+
+        EventSystem::sendEvent<MouseEvent>(slider, Event::MOUSE_MOVE,
+                                           event->where() - Vector2<double>{0, slider->getSize().y / 2});
+    }
 }
 
 /*============================================================================*/

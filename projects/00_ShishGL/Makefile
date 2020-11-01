@@ -8,9 +8,10 @@ TARGET   := yasa
 INCLUDE  := -Iinclude/
 SRC      :=                           							\
    	$(wildcard src/*.cpp)										\
+   	$(wildcard src/ShishGL/*.cpp)								\
+   	$(wildcard src/ShishGL/geometry/*.cpp)						\
    	$(wildcard src/ShishGL/core/*.cpp)      					\
    	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      		\
-   	$(wildcard src/ShishGL/*.cpp)								\
    	$(wildcard src/ShishGL/core/input/*.cpp)      				\
    	$(wildcard src/ShishGL/core/object/*.cpp)      				\
    	$(wildcard src/ShishGL/text/*.cpp)      					\

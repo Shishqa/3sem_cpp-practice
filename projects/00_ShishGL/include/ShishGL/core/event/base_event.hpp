@@ -2,6 +2,7 @@
 #ifndef SHISHGL_BASE_EVENT_HPP
 #define SHISHGL_BASE_EVENT_HPP
 /*============================================================================*/
+#include "ShishGL/core/input/timer.hpp"
 #include <cstdint>
 /*============================================================================*/
 namespace ShishGL {
@@ -11,12 +12,13 @@ namespace ShishGL {
 
         enum Type {
             NONE = 0,
-            TIMER,
             RENDER,
             MOUSE_BUTTON,
             MOUSE_SCROLL,
             MOUSE_MOVE,
             KBD_BUTTON,
+            TIMER,
+            IDLE,
             SLIDE,
 
             USER_MIN = 100,
@@ -55,6 +57,26 @@ namespace ShishGL {
     protected:
 
         double e_delta;
+
+    };
+
+    /*------------------------------------------------------------------------*/
+
+    class TimerEvent : public Event {
+    public:
+
+        TimerEvent(Event::Type type, const TimeDelta& delta)
+            : Event(type)
+            , time_delta(delta) {}
+
+        ~TimerEvent() override = default;
+
+        [[nodiscard]]
+        inline const TimeDelta& delta() const { return time_delta; }
+
+    protected:
+
+        TimeDelta time_delta;
 
     };
 

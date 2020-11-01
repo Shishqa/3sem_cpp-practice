@@ -42,7 +42,6 @@ namespace ShishGL {
 
     private:
 
-
         EventSystem() = default;
 
         /*--------------------------------------------------------------------*/
@@ -62,6 +61,11 @@ namespace ShishGL {
         using EventQueue = std::queue<const Event*>;
 
         static EventQueue& Events();
+
+        /*--------------------------------------------------------------------*/
+
+        static Timer& EventTimer();
+
     };
 
 }

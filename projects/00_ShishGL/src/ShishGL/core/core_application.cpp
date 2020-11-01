@@ -1,4 +1,5 @@
 /*============================================================================*/
+#include "ShishGL/core/input/timer.hpp"
 #include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
@@ -8,7 +9,7 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-bool CoreApplication::initialized = false;
+bool CoreApplication::is_initialized = false;
 
 CoreApplication::ObjectSet& CoreApplication::ActiveObjects() {
     static ObjectSet ACTIVE_OBJECTS;
@@ -19,17 +20,19 @@ CoreApplication::ObjectSet& CoreApplication::ActiveObjects() {
 
 bool CoreApplication::init(int *argc_ptr, char **argv) {
 
-    if (initialized) {
+    if (is_initialized) {
         return false;
     }
 
     LogSystem::openLog();
 
+    RunTimer().reset();
+
     LogSystem::printLog("initializing engine...");
     Engine::initDisplay(argc_ptr, argv);
     LogSystem::printLog("engine initialized");
 
-    initialized = true;
+    is_initialized = true;
 
     return true;
 }
@@ -38,10 +41,12 @@ bool CoreApplication::init(int *argc_ptr, char **argv) {
 
 uint8_t CoreApplication::run() {
 
-    if (!initialized) {
+    if (!is_initialized) {
         LogSystem::printError("Running CoreApplication before initialization");
         return 1; /* todo */
     }
+
+    EventSystem::EventTimer().reset();
 
     while (Engine::isRunning()) {
 
@@ -77,7 +82,7 @@ bool CoreApplication::terminate() {
 
     LogSystem::closeLog();
 
-    initialized = false;
+    is_initialized = false;
 
     return true;
 }

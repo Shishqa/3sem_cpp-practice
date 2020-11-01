@@ -9,7 +9,7 @@ namespace ShishGL {
     class Slidable {
     public:
 
-        virtual void slide(int delta) = 0;
+        virtual void slide(double delta) = 0;
 
         virtual ~Slidable() = default;
 
@@ -20,10 +20,10 @@ namespace ShishGL {
     class Scrollable : public Slidable {
     public:
 
-        virtual size_t stepSize() = 0;
+        virtual double stepSize() = 0;
 
         void scroll(int n_steps) {
-            slide(static_cast<int>(stepSize()) * n_steps);
+            slide(stepSize() * static_cast<double>(n_steps));
         }
 
         ~Scrollable() override = default;
@@ -35,14 +35,7 @@ namespace ShishGL {
     class FrameScrollable : public Scrollable {
     public:
 
-        virtual size_t getFrameSize() = 0;
-
-        virtual size_t getContentSize() = 0;
-
-        double getProportion() {
-            return static_cast<double>(getFrameSize()) /
-                   static_cast<double>(getContentSize());
-        }
+        virtual double frameSize() = 0;
 
         ~FrameScrollable() override = default;
 

@@ -23,9 +23,9 @@ Event* pollMouseButton(const sf::Event& sf_event) {
 
     }
 
-    Vector2<int> where{
-            sf_event.mouseButton.x,
-            sf_event.mouseButton.y
+    Vector2<double> where{
+            static_cast<double>(sf_event.mouseButton.x),
+            static_cast<double>(sf_event.mouseButton.y)
     };
 
     Mouse::Button button = Mouse::LEFT;
@@ -51,11 +51,12 @@ Event* pollMouseScroll(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::MouseWheelScrolled);
 
-    Vector2<int> where{
-            sf_event.mouseWheelScroll.x,
-            sf_event.mouseWheelScroll.y
+    Vector2<double> where{
+            static_cast<double>(sf_event.mouseWheelScroll.x),
+            static_cast<double>(sf_event.mouseWheelScroll.y)
     };
 
+    /* todo: make configs of mouse inversion */
     Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
     auto event = new MouseScrollEvent(Event::MOUSE_SCROLL, where, delta);
@@ -69,9 +70,9 @@ Event* pollMouseMove(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::MouseMoved);
 
-    Vector2<int> where{
-            sf_event.mouseMove.x,
-            sf_event.mouseMove.y
+    Vector2<double> where{
+            static_cast<double>(sf_event.mouseMove.x),
+            static_cast<double>(sf_event.mouseMove.y)
     };
 
     auto event = new MouseEvent(Event::MOUSE_MOVE, where);

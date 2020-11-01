@@ -23,7 +23,7 @@ namespace ShishGL {
 
         using ScrollDelta = double;
 
-        static inline Vector2<int> getPosition() {
+        static inline Vector2<double> getPosition() {
             return Engine::getMousePos();
         }
 

@@ -21,10 +21,10 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
-        virtual Vector2<int> getRelPos() = 0;
+        virtual Vector2<double> getRelPos() = 0;
 
         [[nodiscard]]
-        virtual Vector2<int> getAbsPos() = 0;
+        virtual Vector2<double> getAbsPos() = 0;
 
         void refresh();
 

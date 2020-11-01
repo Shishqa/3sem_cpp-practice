@@ -37,18 +37,18 @@ namespace ShishGL {
                 is_mouse_inside = true;
             }
 
-            LogSystem::printLog("Created shaped window %p at (%d; %d)",
+            LogSystem::printLog("Created shaped window %p at (%lg; %lg)",
                                 reinterpret_cast<void*>(this),
                                 SomeShape::getPos().x, SomeShape::getPos().y);
         }
 
         [[nodiscard]]
-        Vector2<int> getAbsPos() override {
+        Vector2<double> getAbsPos() override {
             return SomeShape::getPos();
         }
 
         [[nodiscard]]
-        Vector2<int> getRelPos() override {
+        Vector2<double> getRelPos() override {
             if (!parent) {
                 return getAbsPos();
             }
@@ -75,7 +75,6 @@ namespace ShishGL {
 
                 auto m_event = dynamic_cast<const MouseEvent*>(event);
                 if (!m_event) {
-                    LogSystem::printWarning("passed non-mouse event with type MOUSE_MOVE");
                     return false;
                 }
 

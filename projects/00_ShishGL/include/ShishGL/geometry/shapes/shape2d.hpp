@@ -9,27 +9,28 @@ namespace ShishGL {
     class Shape2D {
     protected:
 
-        Vector2<int> abs_pos;
+        Vector2<double> abs_pos;
 
     public:
 
-        explicit Shape2D(const Vector2<int>& abs_pos)
+        explicit Shape2D(const Vector2<double>& abs_pos)
             : abs_pos(abs_pos) {}
 
         [[nodiscard]]
-        const Vector2<int>& getPos() const {
+        const Vector2<double>& getPos() const {
             return abs_pos;
         }
 
-        void translate(const Vector2<int>& delta) {
+        void translate(const Vector2<double>& delta) {
             abs_pos += delta;
         }
 
-        void move_to(const Vector2<int>& pos) {
+        void move_to(const Vector2<double>& pos) {
             abs_pos = pos;
         }
 
-        virtual bool contains(const Vector2<int>& point) = 0;
+        [[nodiscard]]
+        virtual bool contains(const Vector2<double>& point) const = 0;
 
         virtual void render() = 0;
 

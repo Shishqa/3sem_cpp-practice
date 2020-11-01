@@ -18,21 +18,23 @@ namespace ShishGL {
 
         template <typename... Args>
         ShapedSlider(Window* parent, const ButtonColorScheme& colors,
-                     const Vector2<int>& guide,
+                     const Vector2<double>& guide,
                      Args&&... args)
             : ShapedFloat<SomeShape>(parent, colors, std::forward<Args>(args)...)
-            , guide(static_cast<Vector2<double>>(guide))
+            , guide(guide)
             , guide_pos({}) {
-
-            guide_pos = static_cast<Vector2<double>>(ShapedFloat<SomeShape>::getAbsPos());
+            guide_pos = ShapedFloat<SomeShape>::getAbsPos();
         }
 
         ~ShapedSlider() override = default;
 
+        [[nodiscard]]
+        const Vector2<double>& getGuide() const { return guide; }
+
         /*--------------------------------------------------------------------*/
 
-        void slide(int delta) override {
-            advance(static_cast<double>(delta) * !guide);
+        void slide(double delta_in_pixels) override {
+            advance(delta_in_pixels * !guide);
         }
 
         /*--------------------------------------------------------------------*/
@@ -41,18 +43,19 @@ namespace ShishGL {
 
         Vector2<double> advance(const Vector2<double>& delta) {
 
-            auto curr_pos = static_cast<Vector2<double>>(ShapedFloat<SomeShape>::getAbsPos());
-            Vector2<double> proj_delta = delta | guide;
-            Vector2<double> dest = curr_pos + proj_delta;
-            Vector2<double> max_pos = guide_pos + guide;
+            Vector2<double> delta_projected = delta | guide;
+            auto curr_pos = ShapedFloat<SomeShape>::getAbsPos();
 
+            Vector2<double> dest = curr_pos + delta_projected;
+
+            Vector2<double> max_pos = guide_pos + guide;
             if (((dest - guide_pos) ^ guide) <= 0) {
                 dest = guide_pos;
             } else if (((dest - max_pos) ^ guide) >= 0) {
                 dest = max_pos;
             }
 
-            ShapedFloat<SomeShape>::move_to(static_cast<Vector2<int>>(dest));
+            ShapedFloat<SomeShape>::move_to(dest);
 
             return dest - curr_pos;
         }
@@ -65,13 +68,9 @@ namespace ShishGL {
                 return false;
             }
 
-            auto drag_delta = static_cast<Vector2<double>>(
-                    event->where() -
-                    ShapedFloat<SomeShape>::where_dragged
-            );
+            auto drag_delta = event->where() - ShapedFloat<SomeShape>::where_dragged;
 
-            ShapedFloat<SomeShape>::where_dragged +=
-                    static_cast<Vector2<int>>(advance(drag_delta));
+            ShapedFloat<SomeShape>::where_dragged += advance(drag_delta);
 
             return true;
         }

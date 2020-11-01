@@ -13,11 +13,11 @@ sf::Font& SfmlEngine::ActiveFont() {
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::displayText(const std::string_view& str,
-                             size_t font_height,
-                             const Vector2<int>& pos) {
+void SfmlEngine::displayText(const std::string_view& str, size_t font_size,
+                             const Vector2<double>& pos) {
 
-    sf::Text display_text(sf::String(str.data()), ActiveFont(), font_height);
+    sf::Text display_text(sf::String(str.data()), ActiveFont(),
+                          static_cast<unsigned int>(font_size));
 
     display_text.setFillColor(sf::Color{
         active_color.r,
@@ -26,10 +26,7 @@ void SfmlEngine::displayText(const std::string_view& str,
         active_color.a
     });
 
-    display_text.setPosition(sf::Vector2f{
-        static_cast<float>(pos.x),
-        static_cast<float>(pos.y)
-    });
+    display_text.setPosition(sf::Vector2f(pos.x, pos.y));
 
     canvas->draw(display_text);
 }

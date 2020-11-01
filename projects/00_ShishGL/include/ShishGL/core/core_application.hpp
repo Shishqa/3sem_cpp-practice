@@ -3,16 +3,14 @@
 #define SHISHGL_CORE_APPLICATION_HPP
 /*============================================================================*/
 #include <cstdint>
-#include <chrono>
 #include <unordered_set>
 
 #include "log.hpp"
+#include "ShishGL/core/input/timer.hpp"
 #include "ShishGL/core/engine/template_engine.hpp"
 #include "event_system.hpp"
 /*============================================================================*/
 namespace ShishGL {
-
-    using namespace std::chrono;
 
     class CoreApplication {
     public:
@@ -23,10 +21,11 @@ namespace ShishGL {
 
         static bool terminate();
 
+        /*--------------------------------------------------------------------*/
         template <typename SomeObject, typename... Args>
         static SomeObject* create(Args&&... args) {
 
-            if (!initialized) {
+            if (!is_initialized) {
                 LogSystem::printError("Creating window when not initialized");
             }
 
@@ -38,9 +37,10 @@ namespace ShishGL {
         }
 
         static void remove(Object* object);
+        /*--------------------------------------------------------------------*/
 
-        static const high_resolution_clock::time_point& getInitTime() {
-            return InitTime();
+        static const Timer& getRunTimer() {
+            return RunTimer();
         }
 
         virtual ~CoreApplication() = default;
@@ -51,11 +51,11 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        static bool initialized;
+        static bool is_initialized;
 
-        static high_resolution_clock::time_point& InitTime() {
-            static high_resolution_clock::time_point INIT_TIME;
-            return INIT_TIME;
+        static Timer& RunTimer() {
+            static Timer RUN_TIMER;
+            return RUN_TIMER;
         }
 
         /*--------------------------------------------------------------------*/

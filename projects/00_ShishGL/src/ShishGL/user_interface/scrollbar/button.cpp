@@ -6,23 +6,21 @@ using namespace ShishGL;
 /*============================================================================*/
 
 ScrollButton::ScrollButton(Window *parent, Mouse::ScrollDelta delta,
-                           const ButtonColorScheme &colors,
-                           const Vector2<int> &pos,
-                           const Vector2<size_t> &size)
-    : RectButton(parent, colors, pos, size)
+                           const ButtonColorScheme& colors,
+                           const Vector2<double>& size,
+                           const Vector2<double>& pos)
+    : RectHoldableButton(parent, colors, size, pos)
     , delta(delta) {}
 
 /*----------------------------------------------------------------------------*/
 
-void ScrollButton::reactOnButton(const MouseButtonEvent* event) {
-    if (event->state() == Mouse::DOWN) {
-        EventSystem::sendEvent<MouseScrollEvent>(
-                parent,
-                Event::MOUSE_SCROLL,
-                getAbsPos(),
-                delta
-                );
-    }
+void ScrollButton::reactOnHold(const TimerEvent*) {
+    EventSystem::sendEvent<MouseScrollEvent>(
+            parent,
+            Event::MOUSE_SCROLL,
+            getAbsPos(),
+            delta
+            );
 }
 
 /*============================================================================*/

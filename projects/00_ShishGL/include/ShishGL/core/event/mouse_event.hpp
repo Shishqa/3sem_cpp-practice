@@ -11,18 +11,18 @@ namespace ShishGL {
     class MouseEvent : public Event {
     public:
 
-        MouseEvent(Event::Type type, const Vector2<int>& where)
+        MouseEvent(Event::Type type, const Vector2<double>& where)
             : Event(type)
             , m_where(where) {}
 
         ~MouseEvent() override = default;
 
         [[nodiscard]]
-        const Vector2<int>& where() const { return m_where; }
+        const Vector2<double>& where() const { return m_where; }
 
     protected:
 
-        Vector2<int> m_where;
+        Vector2<double> m_where;
 
     };
 
@@ -31,7 +31,7 @@ namespace ShishGL {
     class MouseButtonEvent : public MouseEvent {
     public:
 
-        MouseButtonEvent(Event::Type type, const Vector2<int>& where,
+        MouseButtonEvent(Event::Type type, const Vector2<double>& where,
                          Mouse::Button button, Mouse::ButtonState state)
             : MouseEvent(type, where)
             , m_button(button)
@@ -57,7 +57,7 @@ namespace ShishGL {
     class MouseScrollEvent : public MouseEvent {
     public:
 
-        MouseScrollEvent(Event::Type type, const Vector2<int>& where,
+        MouseScrollEvent(Event::Type type, const Vector2<double>& where,
                          Mouse::ScrollDelta delta)
             : MouseEvent(type, where)
             , m_delta(delta) {

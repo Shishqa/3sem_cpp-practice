@@ -6,16 +6,16 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-Viewport::Viewport(Window *parent, const Vector2<int> &pos,
-                   const Vector2<size_t> &size)
-    : RectWindow(parent, WHITE, pos, size) {
+Viewport::Viewport(Window *parent, const Vector2<double>& size,
+                   const Vector2<double>& pos)
+    : RectWindow(parent, WHITE, size, pos) {
 
     attach<Scrollbar>(
             nullptr,
             DEFAULT_SCROLLBAR_COLORS,
-            Vector2<int>{static_cast<int>(size.x - SCROLLBAR_WIDTH), 0},
-            Vector2<size_t>{SCROLLBAR_WIDTH, size.y - SCROLLBAR_WIDTH}
-            );
+            Vector2<double>{SCROLLBAR_WIDTH, size.y - SCROLLBAR_WIDTH},
+            Vector2<double>{size.x - SCROLLBAR_WIDTH, 0}
+    );
 
 }
 

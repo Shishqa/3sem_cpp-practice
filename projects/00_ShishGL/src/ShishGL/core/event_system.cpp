@@ -13,6 +13,13 @@ EventSystem::EventQueue& EventSystem::Events() {
 
 /*----------------------------------------------------------------------------*/
 
+Timer& EventSystem::EventTimer() {
+    static Timer EVENT_TIMER;
+    return EVENT_TIMER;
+}
+
+/*============================================================================*/
+
 bool EventSystem::sendEvent(Object* object, const Event* event) {
     return (object->filterEvent(event) && object->getEvent(event));
 }
@@ -43,6 +50,14 @@ void EventSystem::dispatchEvents() {
     while (!Events().empty()) {
         dispatchSingleEvent();
     }
+
+    TimeDelta elapsed = EventTimer().elapsed();
+    if (elapsed.count() > 55000000) { /* todo: fix hardcoded 55ms */
+
+        postEvent<TimerEvent>(Event::TIMER, elapsed);
+        EventTimer().reset();
+
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -64,7 +79,7 @@ void EventSystem::dispatchSingleEvent() {
     }
 
     if (!status) {
-        LogSystem::printWarning("missed event {type=%d}", event->type());
+        //LogSystem::printWarning("missed event {type=%d}", event->type());
     }
 
     delete event;

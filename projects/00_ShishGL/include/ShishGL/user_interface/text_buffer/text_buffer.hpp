@@ -17,34 +17,34 @@ namespace ShishGL {
 
         Text text;
 
-        size_t n_lines;
         size_t curr_line_height;
 
         Scrollbar* scrollbar;
-        int curr_delta;
+        double curr_delta;
 
     public:
 
         TextBuffer(Window* parent, const std::string_view& filename,
-                   const Vector2<int>& pos, const Vector2<size_t>& size);
+                   const Vector2<double>& size,
+                   const Vector2<double>& pos = {0, 0});
 
         ~TextBuffer() override = default;
 
-        void slide(int delta) override;
+        void slide(double delta_in_pixels) override;
 
-        size_t stepSize() override;
+        double stepSize() override;
 
-        size_t getFrameSize() override;
-
-        size_t getContentSize() override;
+        double frameSize() override;
 
     protected:
+
+        void adjust();
+
+        /*--------------------------------------------------------------------*/
 
         bool filterEvent(const Event* event) override;
 
         bool onMouseScroll(const MouseScrollEvent* event) override;
-
-        void adjust();
 
         void onRender() override;
     };

@@ -13,8 +13,9 @@ namespace ShishGL {
 
     public:
 
-        Viewport(Window* parent, const Vector2<int>& pos,
-                 const Vector2<size_t>& size);
+        Viewport(Window* parent,
+                 const Vector2<double>& pos,
+                 const Vector2<double>& size);
 
     protected:
 

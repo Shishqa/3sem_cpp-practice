@@ -1,13 +1,12 @@
 /*============================================================================*/
 #include <cstdio>
 #include <cstdarg>
-#include <chrono>
 
+#include "ShishGL/core/input/timer.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
 /*============================================================================*/
 using namespace ShishGL;
-using namespace std::chrono;
 /*============================================================================*/
 
 FILE* LogSystem::LOG_FILE = nullptr;
@@ -34,10 +33,9 @@ LogSystem::LogStatus LogSystem::closeLog() {
 
 void LogSystem::printTimeStamp() {
 
-    high_resolution_clock::time_point now = high_resolution_clock::now();
-    duration<double, std::milli> delta_time = now - CoreApplication::getInitTime();
+    TimeDelta elapsed = CoreApplication::getRunTimer().elapsed();
 
-    fprintf(LOG_FILE, "[%6.3lf] : ", delta_time.count());
+    fprintf(LOG_FILE, "[%ld] : ", elapsed.count());
 }
 
 /*----------------------------------------------------------------------------*/

@@ -53,6 +53,10 @@ namespace ShishGL {
 
         virtual bool onKeyboard(const KeyboardEvent* event);
 
+        virtual bool onTimer(const TimerEvent* event);
+
+        virtual bool onIdle(const TimerEvent* event);
+
         virtual bool unhandledEvent(const Event* event);
         /*-------------------------------------------------------*/
 

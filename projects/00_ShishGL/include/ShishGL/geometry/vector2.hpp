@@ -123,15 +123,11 @@ namespace ShishGL {
     template <typename T>
     Vector2<T> Vector2<T>::operator!() const {
 
-        T len = this->length();
-
-        if (len == 0) {
-            return *this;
-        }
-
-        Vector2<T> copy{*this};
-        return (1 / len) * copy;
+        return *this;
     }
+
+    template <>
+    Vector2<double> Vector2<double>::operator!() const;
 
 }
 /*============================================================================*/

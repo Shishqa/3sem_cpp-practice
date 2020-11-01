@@ -10,7 +10,7 @@ namespace ShishGL {
     class ShapedFloat : public ShapedButton<SomeShape> {
     protected:
 
-        Vector2<int> where_dragged = {};
+        Vector2<double> where_dragged = {};
 
     public:
 
@@ -19,6 +19,8 @@ namespace ShishGL {
                              Args&&... args)
                 : ShapedButton<SomeShape>(parent, colors,
                                           std::forward<Args>(args)...) {}
+
+        ~ShapedFloat() override = default;
 
     protected:
 
