@@ -162,6 +162,7 @@ void Scrollbar::reactOnButton(const MouseButtonEvent* event) {
                                                  slider->getAbsPos(),
                                                  Mouse::LEFT, Mouse::DOWN);
 
+        /* TODO: fix bug: ckick under the slider */
         EventSystem::sendEvent<MouseEvent>(slider, Event::MOUSE_MOVE,
                                            event->where() - Vector2<double>{0, slider->getSize().y / 2});
     }

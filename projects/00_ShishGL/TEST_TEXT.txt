@@ -4,7 +4,7 @@ Shakespeare homepage | Hamlet | Entire play
 ACT I
 SCENE I. Elsinore. A platform before the castle.
 FRANCISCO at his post. Enter to him BERNARDO
-BERNARDO
+BERNARDOa
 Who's there?
 FRANCISCO
 Nay, answer me: stand, and unfold yourself.

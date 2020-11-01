@@ -39,6 +39,8 @@ namespace ShishGL {
          * default: always return true */
         virtual bool filterEvent(const Event* event);
 
+        /* TODO: get_event() ----> event->activate(target) */
+
         /* > calls suitable handler from defined below
          *   return true if event received */
         virtual bool getEvent(const Event* event);
