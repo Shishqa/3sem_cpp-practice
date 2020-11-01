@@ -20,14 +20,20 @@ TextBuffer::TextBuffer(Window *parent, const std::string_view& filename,
 
 /*----------------------------------------------------------------------------*/
 
-double TextBuffer::stepSize() {
+double TextBuffer::stepSize() const {
     return static_cast<double>(curr_line_height);
 }
 
 /*----------------------------------------------------------------------------*/
 
-double TextBuffer::frameSize() {
+double TextBuffer::limitSize() const {
     return static_cast<double>((text.lines().size() + 1) * curr_line_height) - size.y;
+}
+
+/*----------------------------------------------------------------------------*/
+
+double TextBuffer::frameSize() const {
+    return size.y;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -37,8 +43,8 @@ void TextBuffer::slide(double delta_in_pixels) {
     curr_delta += delta_in_pixels;
     if (curr_delta < 0) {
         curr_delta = 0;
-    } else if (curr_delta > frameSize()) {
-        curr_delta = frameSize();
+    } else if (curr_delta > limitSize()) {
+        curr_delta = limitSize();
     }
 }
 
@@ -46,7 +52,7 @@ void TextBuffer::slide(double delta_in_pixels) {
 
 void TextBuffer::adjust() {
 
-    if (frameSize() > size.y) {
+    if (limitSize() > size.y) {
 
         scrollbar = attach<Scrollbar>(
                 this,
@@ -59,8 +65,8 @@ void TextBuffer::adjust() {
                "scrollbar step: %lg\n"
                "text height: %lg\n"
                "text step: %lg\n",
-               scrollbar->frameSize(), scrollbar->stepSize(),
-               frameSize(), stepSize());
+               scrollbar->limitSize(), scrollbar->stepSize(),
+               limitSize(), stepSize());
     }
 
 }
@@ -79,7 +85,7 @@ void TextBuffer::onRender() {
     Vector2<double> curr_pos = getAbsPos();
     const Vector2<double> delta{0, static_cast<double>(curr_line_height)};
 
-    Engine::setColor(RED);
+    Engine::setColor(BLACK);
     for (size_t i = curr_start; i < curr_end; ++i) {
 
         Engine::displayText(text.lines()[i], curr_line_height, curr_pos);

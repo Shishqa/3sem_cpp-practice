@@ -39,7 +39,7 @@ namespace ShishGL {
 
     protected:
 
-        virtual void reactOnButton(const MouseButtonEvent*) = 0;
+        virtual void reactOnButton(const MouseButtonEvent*) {}
 
         bool filterEvent(const Event* event) override {
 

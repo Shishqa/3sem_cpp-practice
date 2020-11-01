@@ -32,9 +32,11 @@ namespace ShishGL {
 
         void slide(double delta_in_pixels) override;
 
-        double stepSize() override;
+        double stepSize() const override;
 
-        double frameSize() override;
+        double limitSize() const override;
+
+        double frameSize() const override;
 
     protected:
 

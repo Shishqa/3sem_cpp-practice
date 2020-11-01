@@ -33,10 +33,15 @@ Scrollbar::Scrollbar(Window* parent, FrameScrollable* target,
         );
     /*------------------------------------------------------------------------*/
 
-    //double proportion = (target ? target->getProportion() : DEFAULT_PROPORTION);
-    //static_cast<size_t>(proportion * static_cast<double>(slide_size.y))
+    double slider_height = MIN_SLIDER_SIZE;
+    if (target) {
+        slider_height = std::max(
+                slider_height,
+                slide_space_size.y * target->frameSize() / target->limitSize()
+                );
+    }
 
-    Vector2<double> slider_size{slide_space_size.x, MIN_SLIDER_SIZE};
+    Vector2<double> slider_size{slide_space_size.x, slider_height};
     Vector2<double> slider_guide{0, slide_space_size.y - slider_size.y};
     Vector2<double> slider_pos{0, button_size.y};
 
@@ -51,9 +56,9 @@ Scrollbar::Scrollbar(Window* parent, FrameScrollable* target,
 
 /*----------------------------------------------------------------------------*/
 
-double Scrollbar::contentProportion() {
+double Scrollbar::contentProportion() const {
     if (target) {
-        return frameSize() / target->frameSize();
+        return limitSize() / target->limitSize();
     }
     return 1.0;
 }
@@ -66,7 +71,7 @@ void Scrollbar::slide(double delta_in_pixels) {
 
 /*----------------------------------------------------------------------------*/
 
-double Scrollbar::stepSize() {
+double Scrollbar::stepSize() const {
     if (target) {
         return target->stepSize() * contentProportion();
     }
@@ -75,8 +80,14 @@ double Scrollbar::stepSize() {
 
 /*----------------------------------------------------------------------------*/
 
-double Scrollbar::frameSize() {
+double Scrollbar::limitSize() const {
     return slider->getGuide().length();
+}
+
+/*----------------------------------------------------------------------------*/
+
+double Scrollbar::frameSize() const {
+    return slider->getSize().y;
 }
 
 /*----------------------------------------------------------------------------*/

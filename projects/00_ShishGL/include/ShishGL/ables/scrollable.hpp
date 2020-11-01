@@ -17,10 +17,23 @@ namespace ShishGL {
 
     /*------------------------------------------------------------------------*/
 
-    class Scrollable : public Slidable {
+    class LimitSlidable : public Slidable {
     public:
 
-        virtual double stepSize() = 0;
+        [[nodiscard]]
+        virtual double limitSize() const = 0;
+
+        ~LimitSlidable() override = default;
+
+    };
+
+    /*------------------------------------------------------------------------*/
+
+    class Scrollable : public LimitSlidable {
+    public:
+
+        [[nodiscard]]
+        virtual double stepSize() const = 0;
 
         void scroll(int n_steps) {
             slide(stepSize() * static_cast<double>(n_steps));
@@ -35,7 +48,8 @@ namespace ShishGL {
     class FrameScrollable : public Scrollable {
     public:
 
-        virtual double frameSize() = 0;
+        [[nodiscard]]
+        virtual double frameSize() const = 0;
 
         ~FrameScrollable() override = default;
 

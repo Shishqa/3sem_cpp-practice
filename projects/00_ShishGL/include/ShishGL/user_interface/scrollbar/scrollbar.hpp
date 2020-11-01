@@ -52,7 +52,7 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        double contentProportion();
+        double contentProportion() const;
 
         /*--------------------------------------------------------------------*/
 
@@ -62,9 +62,11 @@ namespace ShishGL {
 
         void slide(double delta_in_pixels) override;
 
-        double stepSize() override;
+        double stepSize() const override;
 
-        double frameSize() override;
+        double limitSize() const  override;
+
+        double frameSize() const override;
 
     protected:
 
@@ -115,8 +117,6 @@ namespace ShishGL {
         }
 
     protected:
-
-        void reactOnButton(const MouseButtonEvent*) override {};
 
         void reactOnHold(const TimerEvent* event) override;
 
