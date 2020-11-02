@@ -5,13 +5,14 @@
 #include <cstddef>
 #include <unordered_set>
 
-#include "object.hpp"
-#include "ShishGL/core/event/base_event.hpp"
-#include "ShishGL/geometry/vector2.hpp"
+#include "ShishGL/core/object.hpp"
+#include "ShishGL/core/event/event.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
+#include "ShishGL/core/geometry/shape2d.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Window : public Object {
+    class Window : public RenderableObject {
     public:
 
         Window() = delete;
@@ -21,15 +22,14 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
-        virtual Vector2<double> getRelPos() = 0;
+        Vector2<double> getRelPos() const;
 
         [[nodiscard]]
-        virtual Vector2<double> getAbsPos() = 0;
+        const Vector2<double>& getAbsPos() const;
 
         void refresh();
 
         /*--------------------------------------------------------------------*/
-
         template <typename SomeWindow, typename... Args>
         SomeWindow* attach(Args&&... args) {
 
@@ -45,24 +45,34 @@ namespace ShishGL {
         }
 
         Window* detach(Window* win_ptr);
-
         /*--------------------------------------------------------------------*/
+
+        bool onRender() override;
+
+        bool onMouseMove(const MouseEvent* event) override;
+
+        virtual void onMouseEnter(const MouseEvent*) { /* nothing */ }
+
+        virtual void onMouseLeave(const MouseEvent*) { /* nothing */ }
 
     protected:
 
-        explicit Window(Window* parent = nullptr);
-
         using WindowSet = std::unordered_set<Window*>;
 
+        Window* parent;
         WindowSet subwindows;
 
-        Window* parent;
+        bool is_mouse_inside;
+        Shape2D* shape;
 
-        /*--------------------------------------------------------------------*/
+        template <typename SomeShape, typename... Args>
+        explicit Window(Window* parent, Args&&... args)
+                : RenderableObject()
+                , parent(parent) {
+            shape = new SomeShape(std::forward<Args>(args)...);
+            is_mouse_inside = shape->contains(Engine::getMousePos());
+        }
 
-        bool getEvent(const Event* event) override;
-
-        virtual void onRender() = 0;
     };
 
 }

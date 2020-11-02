@@ -9,12 +9,11 @@ INCLUDE  := -Iinclude/
 SRC      :=                           							\
    	$(wildcard src/*.cpp)										\
    	$(wildcard src/ShishGL/*.cpp)								\
-   	$(wildcard src/ShishGL/geometry/*.cpp)						\
    	$(wildcard src/ShishGL/core/*.cpp)      					\
+   	$(wildcard src/ShishGL/core/geometry/*.cpp)						\
    	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      		\
-   	$(wildcard src/ShishGL/core/input/*.cpp)      				\
-   	$(wildcard src/ShishGL/core/object/*.cpp)      				\
-   	$(wildcard src/ShishGL/text/*.cpp)      					\
+   	$(wildcard src/ShishGL/graphics/text/*.cpp)      					\
+   	$(wildcard src/ShishGL/graphics/window/*.cpp)      					\
    	$(wildcard src/ShishGL/user_interface/scrollbar/*.cpp)		\
    	$(wildcard src/ShishGL/user_interface/text_buffer/*.cpp)	\
    	$(wildcard src/ShishGL/user_interface/viewport/*.cpp)

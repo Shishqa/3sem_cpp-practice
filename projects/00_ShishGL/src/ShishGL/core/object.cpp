@@ -1,5 +1,5 @@
 /*============================================================================*/
-#include "ShishGL/core/object/object.hpp"
+#include "ShishGL/core/object.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 using namespace ShishGL;

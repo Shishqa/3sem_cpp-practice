@@ -2,7 +2,7 @@
 #ifndef SHISHGL_MOUSE_HPP
 #define SHISHGL_MOUSE_HPP
 /*============================================================================*/
-#include "ShishGL/geometry/vector2.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
 #include "ShishGL/core/engine/engine.hpp"
 /*============================================================================*/
 namespace ShishGL {

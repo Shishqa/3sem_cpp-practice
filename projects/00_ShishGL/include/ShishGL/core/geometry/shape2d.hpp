@@ -2,7 +2,7 @@
 #ifndef INC_00_SHISHGL_SHAPE2D_HPP
 #define INC_00_SHISHGL_SHAPE2D_HPP
 /*============================================================================*/
-#include "../vector2.hpp"
+#include "vector2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -15,6 +15,8 @@ namespace ShishGL {
 
         explicit Shape2D(const Vector2<double>& abs_pos)
             : abs_pos(abs_pos) {}
+
+        virtual ~Shape2D() = default;
 
         [[nodiscard]]
         const Vector2<double>& getPos() const {

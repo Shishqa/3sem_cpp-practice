@@ -6,7 +6,7 @@
 #include <queue>
 #include <cstdio>
 
-#include "object/object.hpp"
+#include "object.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
@@ -29,7 +29,7 @@ namespace ShishGL {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
 
-            bool status = sendEvent(object, event);
+            bool status = event->happen(object);
 
             delete event;
             return status;

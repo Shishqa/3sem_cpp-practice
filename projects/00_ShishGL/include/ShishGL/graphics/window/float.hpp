@@ -2,12 +2,11 @@
 #ifndef SHISHGL_SHAPED_FLOAT_HPP
 #define SHISHGL_SHAPED_FLOAT_HPP
 /*============================================================================*/
-#include "shaped_button.hpp"
+#include "button.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename SomeShape>
-    class ShapedFloat : public ShapedButton<SomeShape> {
+    class ShapedFloat : public Button {
     protected:
 
         Vector2<double> where_dragged = {};

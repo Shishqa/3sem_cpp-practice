@@ -29,6 +29,10 @@ namespace ShishGL {
         [[nodiscard]]
         inline Keyboard::ModifierMask modifiers() const { return k_modifiers; }
 
+        bool happen(Object* object) const override {
+            return object->onKeyboard(this);
+        }
+
     protected:
 
         Keyboard::Key k_key;

@@ -2,12 +2,12 @@
 #ifndef SHISHGL_WINDOW_HPP
 #define SHISHGL_WINDOW_HPP
 /*============================================================================*/
-#include "abstracts/shaped_window.hpp"
-#include "abstracts/shaped_button.hpp"
-#include "abstracts/shaped_holdable_button.hpp"
-#include "abstracts/shaped_float.hpp"
-#include "abstracts/shaped_slider.hpp"
-#include "ShishGL/geometry/shapes/rectangle.hpp"
+#include "graphics/window/shaped_window.hpp"
+#include "graphics/window/button.hpp"
+#include "graphics/window/holdable_button.hpp"
+#include "graphics/window/float.hpp"
+#include "graphics/window/slider.hpp"
+#include "ShishGL/graphics/shapes/rectangle.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

@@ -2,7 +2,7 @@
 #ifndef SHISHGL_SHAPED_SLIDER_HPP
 #define SHISHGL_SHAPED_SLIDER_HPP
 /*============================================================================*/
-#include "shaped_float.hpp"
+#include "float.hpp"
 #include "ShishGL/ables/scrollable.hpp"
 /*============================================================================*/
 namespace ShishGL {

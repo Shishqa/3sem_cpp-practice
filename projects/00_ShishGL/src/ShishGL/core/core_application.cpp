@@ -1,5 +1,5 @@
 /*============================================================================*/
-#include "ShishGL/core/input/timer.hpp"
+#include "ShishGL/core/time.hpp"
 #include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"

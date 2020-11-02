@@ -4,7 +4,7 @@
 /*============================================================================*/
 #include "base_event.hpp"
 #include "ShishGL/core/input/mouse.hpp"
-#include "ShishGL/geometry/vector2.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -19,6 +19,10 @@ namespace ShishGL {
 
         [[nodiscard]]
         const Vector2<double>& where() const { return m_where; }
+
+        bool happen(Object* object) const override {
+            return object->onMouseMove(this);
+        }
 
     protected:
 
@@ -44,6 +48,10 @@ namespace ShishGL {
 
         [[nodiscard]]
         inline Mouse::ButtonState state() const { return m_state; }
+
+        bool happen(Object* object) const override {
+            return object->onMouseClick(this);
+        }
 
     protected:
 
@@ -74,6 +82,10 @@ namespace ShishGL {
 
         [[nodiscard]]
         inline Mouse::ScrollDelta delta() const { return m_delta; }
+
+        bool happen(Object* object) const override {
+            object->onMouseScroll(this);
+        }
 
     protected:
 

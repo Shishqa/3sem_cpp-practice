@@ -5,16 +5,16 @@
 namespace ShishGL {
 
     template <typename GraphicEngine>
-    class TemplateEngine : public GraphicEngine {
+    class ModularEngine : public GraphicEngine {
     private:
-        TemplateEngine() = default;
+        ModularEngine() = default;
 
         /* giving roots for some classes */
         friend class EventSystem;
         friend class CoreApplication;
 
     public:
-        virtual ~TemplateEngine() = default;
+        virtual ~ModularEngine() = default;
     };
 
 }

@@ -7,8 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "ShishGL/color/color.hpp"
-#include "ShishGL/geometry/vector2.hpp"
+#include "ShishGL/core/color.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
 #include "ShishGL/core/event/base_event.hpp"
 /*============================================================================*/
 namespace ShishGL {

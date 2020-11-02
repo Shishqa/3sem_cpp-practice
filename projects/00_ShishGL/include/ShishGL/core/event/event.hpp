@@ -3,8 +3,9 @@
 #define SHISHGL_EVENT_HPP
 /*============================================================================*/
 #include "base_event.hpp"
+#include "timer_event.hpp"
 #include "mouse_event.hpp"
-#include "kbd_event.hpp"
+#include "keyboard_event.hpp"
 /*============================================================================*/
 #endif //SHISHGL_EVENT_HPP
 /*============================================================================*/

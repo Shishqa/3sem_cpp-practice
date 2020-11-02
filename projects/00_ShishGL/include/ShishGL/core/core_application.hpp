@@ -6,8 +6,8 @@
 #include <unordered_set>
 
 #include "log.hpp"
-#include "ShishGL/core/input/timer.hpp"
-#include "ShishGL/core/engine/template_engine.hpp"
+#include "time.hpp"
+#include "ShishGL/core/engine/modular_engine.hpp"
 #include "event_system.hpp"
 /*============================================================================*/
 namespace ShishGL {
@@ -26,7 +26,7 @@ namespace ShishGL {
         static SomeObject* create(Args&&... args) {
 
             if (!is_initialized) {
-                LogSystem::printError("Creating window when not initialized");
+                LogSystem::printError("Creating object when not initialized");
             }
 
             auto new_obj = new SomeObject(std::forward<Args>(args)...);

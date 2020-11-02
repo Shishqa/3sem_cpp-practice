@@ -3,11 +3,11 @@
 #define SHISHGL_ENGINE_HPP
 /*============================================================================*/
 #include "sfml/engine.hpp"
-#include "template_engine.hpp"
+#include "modular_engine.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    using Engine = TemplateEngine<SfmlEngine>;
+    using Engine = ModularEngine<SfmlEngine>;
 
 }
 /*============================================================================*/

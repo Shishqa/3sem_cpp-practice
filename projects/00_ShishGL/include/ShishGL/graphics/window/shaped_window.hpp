@@ -8,16 +8,15 @@
 
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/engine/template_engine.hpp"
-#include "ShishGL/core/object/window.hpp"
+#include "window.hpp"
 #include "ShishGL/color/color.hpp"
 /*----------------------------------------------------------------------------*/
 namespace ShishGL {
 
-    template <typename SomeShape>
-    class ShapedWindow : public Window, public SomeShape {
+    class ShapedWindow : public Window {
     protected:
 
-        Color color;
+        SomeShape*
         bool is_mouse_inside;
 
     public:

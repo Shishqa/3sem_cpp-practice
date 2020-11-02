@@ -3,9 +3,9 @@
 #define INC_00_SHISHGL_RECTANGLE_HPP
 /*============================================================================*/
 #include "ShishGL/core/engine/engine.hpp"
-#include "ShishGL/color/color.hpp"
-#include "ShishGL/geometry/vector2.hpp"
-#include "shape2d.hpp"
+#include "ShishGL/core/color.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
+#include "ShishGL/core/geometry/shape2d.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -35,23 +35,7 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         void render() override {
-
             Engine::drawRectangle(getPos(), size);
-
-#ifdef DRAW_GUIDES
-            Engine::setColor(RED);
-            Engine::drawLine(getRealPos(),
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), 0});
-            Engine::drawLine(getRealPos() + Vector2<int>{static_cast<int>(size.x), 0},
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), static_cast<int>(size.y)});
-            Engine::drawLine(getRealPos() + Vector2<int>{0, static_cast<int>(size.y)},
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), static_cast<int>(size.y)});
-            Engine::drawLine(getRealPos(),
-                             getRealPos() + Vector2<int>{0, static_cast<int>(size.y)});
-
-            Engine::setColor(BLUE);
-            Engine::drawPoint(getPos());
-#endif
         }
 
         /*--------------------------------------------------------------------*/

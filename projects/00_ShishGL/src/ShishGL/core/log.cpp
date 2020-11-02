@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstdarg>
 
-#include "ShishGL/core/input/timer.hpp"
+#include "ShishGL/core/time.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
 /*============================================================================*/
