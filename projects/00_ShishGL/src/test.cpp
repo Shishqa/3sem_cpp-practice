@@ -1,4 +1,5 @@
 /*============================================================================*/
+#include "ShishGL/graphics/shapes/shape2d.hpp"
 #include "ShishGL.hpp"
 #include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
 #include "ShishGL/user_interface/viewport/viewport.hpp"

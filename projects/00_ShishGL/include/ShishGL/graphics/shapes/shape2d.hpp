@@ -2,11 +2,12 @@
 #ifndef INC_00_SHISHGL_SHAPE2D_HPP
 #define INC_00_SHISHGL_SHAPE2D_HPP
 /*============================================================================*/
-#include "vector2.hpp"
+#include "ShishGL/core/geometry/vector2.hpp"
+#include "ShishGL/core/object/renderable_object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Shape2D {
+    class Shape2D : public RenderableObject {
     protected:
 
         Vector2<double> abs_pos;
@@ -34,7 +35,7 @@ namespace ShishGL {
         [[nodiscard]]
         virtual bool contains(const Vector2<double>& point) const = 0;
 
-        virtual void render() = 0;
+        virtual void draw() = 0;
 
     };
 

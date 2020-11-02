@@ -1,4 +1,6 @@
 /*============================================================================*/
+#include <cassert>
+
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/event_system.hpp"
 #include "ShishGL/core/core_application.hpp"
@@ -21,7 +23,8 @@ Timer& EventSystem::EventTimer() {
 /*============================================================================*/
 
 bool EventSystem::sendEvent(Object* object, const Event* event) {
-    return (object->filterEvent(event) && object->getEvent(event));
+    assert(object); assert(event);
+    return (object->filterEvent(event) && event->happen(object));
 }
 
 /*----------------------------------------------------------------------------*/

@@ -44,18 +44,7 @@ namespace ShishGL {
          *   false if you don't
          * override for filtering some events
          * default: always return true */
-        virtual bool filterEvent(const class Event* event);
-
-    };
-
-    /*------------------------------------------------------------------------*/
-
-    class RenderableObject : public Object {
-    public:
-
-        ~RenderableObject() override = default;
-
-        virtual bool onRender() { return false; }
+        virtual bool filterEvent(const class Event* event) { return true; }
 
     };
 

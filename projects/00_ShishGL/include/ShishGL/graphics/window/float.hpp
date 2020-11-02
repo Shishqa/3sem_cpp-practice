@@ -6,7 +6,7 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    class ShapedFloat : public Button {
+    class Float : public Button {
     protected:
 
         Vector2<double> where_dragged = {};
@@ -14,12 +14,10 @@ namespace ShishGL {
     public:
 
         template <typename... Args>
-        explicit ShapedFloat(Window* parent, const ButtonColorScheme& colors,
-                             Args&&... args)
-                : ShapedButton<SomeShape>(parent, colors,
-                                          std::forward<Args>(args)...) {}
+        explicit Float(RenderableObject* parent, Args&&... args)
+                : Button(parent, std::forward<Args>(args)...) {}
 
-        ~ShapedFloat() override = default;
+        ~Float() override = default;
 
     protected:
 

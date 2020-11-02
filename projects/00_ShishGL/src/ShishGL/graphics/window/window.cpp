@@ -9,49 +9,32 @@ using namespace ShishGL;
 
 Window::~Window() {
     delete shape;
-    for (const auto& sub_win : subwindows) {
-        delete sub_win;
-    }
 }
 
 /*----------------------------------------------------------------------------*/
 
-const Vector2<double>& Window::getAbsPos() const {
+Vector2<double> Window::getAbsPos() const {
     return shape->getPos();
 }
 
 /*----------------------------------------------------------------------------*/
 
-Vector2<double> Window::getRelPos() const {
-    if (parent) {
-        return getAbsPos() - parent->getAbsPos();
-    }
-    return getAbsPos();
-}
-
-/*----------------------------------------------------------------------------*/
-
-void Window::refresh() {
-    this->onRender();
-}
-
-/*----------------------------------------------------------------------------*/
-
-Window* Window::detach(Window* win_ptr) {
-    return (subwindows.erase(win_ptr) ? win_ptr : nullptr);
+bool Window::contains(const Vector2<double>& point) const {
+    return shape->contains(point);
 }
 
 /*----------------------------------------------------------------------------*/
 
 bool Window::onRender() {
-    shape->render();
+    shape->draw();
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
 bool Window::onMouseMove(const MouseEvent* event) {
 
-    const bool is_event_inside = shape->contains(event->where());
+    const bool is_event_inside = contains(event->where());
 
     if (is_event_inside && !is_mouse_inside) {
 

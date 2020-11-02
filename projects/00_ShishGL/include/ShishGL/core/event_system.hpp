@@ -6,7 +6,7 @@
 #include <queue>
 #include <cstdio>
 
-#include "object.hpp"
+#include "ShishGL/core/object/object.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
@@ -29,7 +29,7 @@ namespace ShishGL {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
 
-            bool status = event->happen(object);
+            bool status = sendEvent(object, event);
 
             delete event;
             return status;
@@ -43,6 +43,8 @@ namespace ShishGL {
     private:
 
         EventSystem() = default;
+
+        static Timer& EventTimer();
 
         /*--------------------------------------------------------------------*/
         friend class CoreApplication;
@@ -59,12 +61,9 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         using EventQueue = std::queue<const Event*>;
-
         static EventQueue& Events();
 
         /*--------------------------------------------------------------------*/
-
-        static Timer& EventTimer();
 
     };
 

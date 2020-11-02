@@ -4,7 +4,6 @@
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
 #include "ShishGL/core/event_system.hpp"
-#include "ShishGL/color/color_collection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -50,10 +49,10 @@ uint8_t CoreApplication::run() {
 
     while (Engine::isRunning()) {
 
-        Engine::clear(BLACK);
+        Engine::clear(Color{0, 0, 0, 255});
 
         for (const auto& obj : ActiveObjects()) {
-            EventSystem::sendEvent<Event>(obj, Event::RENDER);
+            EventSystem::sendEvent<RenderEvent>(obj);
         }
 
         Engine::render();

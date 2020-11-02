@@ -4,7 +4,8 @@
 /*============================================================================*/
 #include <cstdint>
 
-#include "ShishGL/core/object.hpp"
+#include "ShishGL/core/object/object.hpp"
+#include "ShishGL/core/object/renderable_object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -56,7 +57,11 @@ namespace ShishGL {
         ~RenderEvent() override = default;
 
         bool happen(Object* object) const override {
-            object->onRender(this);
+            auto renderable = dynamic_cast<RenderableObject*>(object);
+            if (renderable) {
+                return renderable->onRender();
+            }
+            return false;
         }
 
     };

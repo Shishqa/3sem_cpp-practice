@@ -4,45 +4,53 @@
 using namespace ShishGL;
 /*============================================================================*/
 
+bool Button::filterEvent(const Event* event) {
+
+    if (num_pressed) {
+        return true;
+    }
+
+    if (event->type() == Event::MOUSE_BUTTON) {
+
+        auto mouse = dynamic_cast<const MouseEvent*>(event);
+        if (!mouse) {
+            return false;
+        }
+
+        if (!contains(mouse->where())) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/*----------------------------------------------------------------------------*/
+
 bool Button::onMouseClick(const MouseButtonEvent* event) {
 
-    if(event->button() == Mouse::LEFT) {
-        if (event->state() == Mouse::DOWN) {
+    if (event->state() == Mouse::DOWN) {
 
-            is_pressed = true;
-            reactOnButton(event);
+        num_pressed++;
+        reactOnButton(event);
 
-ShapedWindow<SomeShape>::color = colorscheme.click;
+    } else if (num_pressed) {
 
-} else if (is_pressed) {
+        num_pressed--;
+        reactOnButton(event);
 
-is_pressed = false;
-reactOnButton(event);
-
-if (ShapedWindow<SomeShape>::contains(event->where())) {
-ShapedWindow<SomeShape>::color = colorscheme.hover;
-} else {
-ShapedWindow<SomeShape>::color = colorscheme.normal;
-}
-}
-}
-return true;
+    }
+    return true;
 }
 
-bool onMouseEntered(const MouseEvent*) override {
-if (!is_pressed) {
-ShapedWindow<SomeShape>::color = colorscheme.hover;
-}
-return true;
-}
+/*----------------------------------------------------------------------------*/
 
-bool onMouseLeft(const MouseEvent*) override {
-if (!is_pressed) {
-ShapedWindow<SomeShape>::color = colorscheme.normal;
+bool Button::onTimer(const TimerEvent* event) {
+    if (num_pressed) {
+        reactOnHold(event);
+        return true;
+    }
+    return false;
 }
-return true;
-}
-
-bool onTimer(const TimerEvent*) override;
 
 /*============================================================================*/

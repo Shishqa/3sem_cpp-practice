@@ -5,7 +5,7 @@
 #include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/color.hpp"
 #include "ShishGL/core/geometry/vector2.hpp"
-#include "ShishGL/core/geometry/shape2d.hpp"
+#include "shape2d.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -34,7 +34,7 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        void render() override {
+        void draw() override {
             Engine::drawRectangle(getPos(), size);
         }
 
