@@ -23,20 +23,21 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
         template <typename SomeObject, typename... Args>
-        static SomeObject* create(Args&&... args) {
+        static Object::ID create(Args&&... args) {
 
             if (!is_initialized) {
                 LogSystem::printError("Creating window when not initialized");
             }
 
-            auto new_obj = new SomeObject(std::forward<Args>(args)...);
+            Object::ID id =
+                    ObjectManager::create<SomeObject>(std::forward<Args>(args)...);
 
-            ActiveObjects().insert(new_obj);
+            ActiveObjects().insert(id);
 
-            return new_obj;
+            return id;
         }
 
-        static void remove(Object* object);
+        static void remove(Object::ID id);
         /*--------------------------------------------------------------------*/
 
         static const Timer& getRunTimer() {
@@ -60,7 +61,7 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        using ObjectSet = std::unordered_set<Object*>;
+        using ObjectSet = std::unordered_set<Object::ID>;
 
         static ObjectSet& ActiveObjects();
 

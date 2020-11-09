@@ -15,9 +15,9 @@ namespace ShishGL {
     public:
 
         template <typename... Args>
-        explicit ShapedFloat(Window* parent, const ButtonColorScheme& colors,
+        explicit ShapedFloat(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                              Args&&... args)
-                : ShapedButton<SomeShape>(parent, colors,
+                : ShapedButton<SomeShape>(id, parent, colors,
                                           std::forward<Args>(args)...) {}
 
         ~ShapedFloat() override = default;

@@ -2,6 +2,8 @@
 #ifndef SHISHGL_OBJECT_HPP
 #define SHISHGL_OBJECT_HPP
 /*============================================================================*/
+#include <cstdint>
+
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
@@ -17,6 +19,8 @@ namespace ShishGL {
     class Object {
     public:
 
+        using ID = uint64_t;
+
         Object(const Object& other) = delete;
 
         Object& operator=(const Object& other) = delete;
@@ -25,13 +29,16 @@ namespace ShishGL {
 
     protected:
 
-        Object() = default;
+        // to deprecate!
+        Object::ID my_id;
+
+        explicit Object(Object::ID id) : my_id(id) {}
 
         /* delivers events */
         friend class EventSystem;
 
         /* creates objects */
-        friend class CoreApplication;
+        friend class ObjectManager;
 
         /* > return true if you wish to receive this event or
          *   false if you don't

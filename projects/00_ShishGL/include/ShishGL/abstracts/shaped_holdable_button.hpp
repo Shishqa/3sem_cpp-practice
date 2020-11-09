@@ -11,15 +11,15 @@ namespace ShishGL {
     public:
 
         template <typename... Args>
-        ShapedHoldableButton(Window* parent, const ButtonColorScheme& colors,
+        ShapedHoldableButton(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                              Args&&... args)
-            : ShapedButton<SomeShape>(parent, colors, std::forward<Args>(args)...) {}
+            : ShapedButton<SomeShape>(id, parent, colors, std::forward<Args>(args)...) {}
 
         ~ShapedHoldableButton() override = default;
 
     protected:
 
-        virtual void reactOnHold(const TimerEvent* event) {};
+        virtual void reactOnHold(const TimerEvent*) {};
 
         bool onTimer(const TimerEvent* event) override {
             if (ShapedButton<SomeShape>::is_pressed) {

@@ -6,36 +6,41 @@
 #include <queue>
 #include <cstdio>
 
-#include "object/object.hpp"
+#include "object/object_manager.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     class EventSystem {
+    private:
+
+        template <typename SomeEvent, typename T>
+        using Helper =
+                std::enable_if_t<std::is_base_of<Event, SomeEvent>::value, T>;
+
     public:
 
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
-        static void postEvent(Args&&... args) {
-
-            /* TODO: check inheritance relations */
+        static Helper<SomeEvent, void> postEvent(Args&&... args) {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
             Events().push(event);
         }
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
-        static bool sendEvent(Object* object, Args&&... args) {
+        static Helper<SomeEvent, bool>
+        sendEvent(Object::ID receiver, Args&&... args) {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
 
-            bool status = sendEvent(object, event);
+            bool status = sendEvent(receiver, event);
 
             delete event;
             return status;
         }
         /*--------------------------------------------------------------------*/
-        static bool sendEvent(Object* object, const Event* event);
+        static bool sendEvent(Object::ID receiver, const Event* event);
         /*--------------------------------------------------------------------*/
 
         virtual ~EventSystem() = default;

@@ -28,9 +28,9 @@ namespace ShishGL {
     public:
 
         template <typename... Args>
-        explicit ShapedButton(Window* parent, const ButtonColorScheme& colors,
+        explicit ShapedButton(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                               Args&&... args)
-            : ShapedWindow<SomeShape>(parent, colors.normal,
+            : ShapedWindow<SomeShape>(id, parent, colors.normal,
                                       std::forward<Args>(args)...)
             , colorscheme(colors)
             , is_pressed(false) {}

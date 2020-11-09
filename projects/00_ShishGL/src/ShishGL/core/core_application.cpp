@@ -1,4 +1,5 @@
 /*============================================================================*/
+#include "ShishGL/core/object/object_manager.hpp"
 #include "ShishGL/core/input/timer.hpp"
 #include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/log.hpp"
@@ -73,7 +74,7 @@ bool CoreApplication::terminate() {
     EventSystem::flush();
 
     for (const auto& obj : ActiveObjects()) {
-        delete obj;
+        ObjectManager::remove(obj);
     }
 
     LogSystem::printLog("terminating engine...");
@@ -89,10 +90,9 @@ bool CoreApplication::terminate() {
 
 /*----------------------------------------------------------------------------*/
 
-void CoreApplication::remove(Object* object) {
-    if (!ActiveObjects().erase(object)) {
-        delete object;
-    }
+void CoreApplication::remove(Object::ID id) {
+    ActiveObjects().erase(id);
+    ObjectManager::remove(id);
 }
 
 /*============================================================================*/

@@ -23,14 +23,14 @@ namespace ShishGL {
     public:
 
         template<typename... Args>
-        explicit ShapedWindow(Window* parent, const Color& color, Args&&... args)
-            : Window(parent)
+        explicit ShapedWindow(Object::ID id, Object::ID parent, const Color& color, Args&&... args)
+            : Window(id, parent)
             , SomeShape(std::forward<Args>(args)...)
             , color(color)
             , is_mouse_inside(false) {
 
             if (parent) {
-                SomeShape::translate(parent->getAbsPos());
+                SomeShape::translate(ObjectManager::get<Window>(parent).getAbsPos());
             }
 
             if (SomeShape::contains(Engine::getMousePos())) {
@@ -52,7 +52,7 @@ namespace ShishGL {
             if (!parent) {
                 return getAbsPos();
             }
-            return getAbsPos() - parent->getAbsPos();
+            return getAbsPos() - ObjectManager::get<Window>(parent).getAbsPos();
         }
 
         ~ShapedWindow() override = default;

@@ -12,34 +12,35 @@ int main(int argc, char* argv[]) {
     CoreApplication::init(&argc, argv);
 
     CoreApplication::create<RectWindow>(
-            nullptr,
+            0,
             WHITE,
             Vector2<double>{50, 50},
             Vector2<double>{100, 100}
             );
 
     CoreApplication::create<RectButton>(
-            nullptr,
+            0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{50, 50},
             Vector2<double>{200, 100}
     );
 
     CoreApplication::create<RectFloat>(
-            nullptr,
+            0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{50, 50},
             Vector2<double>{300, 100}
     );
 
     CoreApplication::create<RectSlider>(
-            nullptr,
+            0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{200, 0},
             Vector2<double>{50, 50},
             Vector2<double>{400, 100}
     );
 
+    /*
     CoreApplication::create<Scrollbar>(
             nullptr,
             nullptr,
@@ -54,6 +55,7 @@ int main(int argc, char* argv[]) {
             Vector2<double>{700, 300},
             Vector2<double>{500, 500}
             );
+            */
 
     return CoreApplication::run();
 }

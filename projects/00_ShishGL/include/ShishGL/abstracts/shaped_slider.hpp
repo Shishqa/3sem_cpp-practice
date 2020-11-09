@@ -17,10 +17,10 @@ namespace ShishGL {
     public:
 
         template <typename... Args>
-        ShapedSlider(Window* parent, const ButtonColorScheme& colors,
+        ShapedSlider(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                      const Vector2<double>& guide,
                      Args&&... args)
-            : ShapedFloat<SomeShape>(parent, colors, std::forward<Args>(args)...)
+            : ShapedFloat<SomeShape>(id, parent, colors, std::forward<Args>(args)...)
             , guide(guide)
             , guide_pos({}) {
             guide_pos = ShapedFloat<SomeShape>::getAbsPos();

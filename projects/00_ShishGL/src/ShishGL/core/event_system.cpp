@@ -20,8 +20,9 @@ Timer& EventSystem::EventTimer() {
 
 /*============================================================================*/
 
-bool EventSystem::sendEvent(Object* object, const Event* event) {
-    return (object->filterEvent(event) && object->getEvent(event));
+bool EventSystem::sendEvent(Object::ID receiver, const Event* event) {
+    return (ObjectManager::get(receiver).filterEvent(event) &&
+            ObjectManager::get(receiver).getEvent(event));
 }
 
 /*----------------------------------------------------------------------------*/
@@ -73,13 +74,13 @@ void EventSystem::dispatchSingleEvent() {
 
     bool status = false;
     for (const auto& obj : CoreApplication::ActiveObjects()) {
-        if (obj->filterEvent(event) && obj->getEvent(event)) {
+        if (sendEvent(obj, event)) {
             status = true;
         }
     }
 
     if (!status) {
-        //LogSystem::printWarning("missed event {type=%d}", event->type());
+        LogSystem::printWarning("missed event {type=%d}", event->type());
     }
 
     delete event;

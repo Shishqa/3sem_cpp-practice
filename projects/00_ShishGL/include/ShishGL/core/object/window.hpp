@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <unordered_set>
 
-#include "object.hpp"
+#include "object_manager.hpp"
 #include "ShishGL/core/event/base_event.hpp"
 #include "ShishGL/geometry/vector2.hpp"
 /*============================================================================*/
@@ -31,32 +31,27 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         template <typename SomeWindow, typename... Args>
-        SomeWindow* attach(Args&&... args) {
+        Object::ID attach(Args&&... args) {
 
-            /* TODO: sfinae! */
-            if (!std::is_base_of<Window, SomeWindow>::value) {
-                return nullptr;
-            }
+            Object::ID child_id =
+                    ObjectManager::create<SomeWindow>(my_id, std::forward<Args>(args)...);
 
-            auto win_ptr = new SomeWindow(this, std::forward<Args>(args)...);
-
-            subwindows.insert(win_ptr);
-            return win_ptr;
+            subwindows.insert(child_id);
+            return child_id;
         }
 
-        Window* detach(Window* win_ptr);
+        bool detach(Object::ID id);
 
         /*--------------------------------------------------------------------*/
 
     protected:
 
-        explicit Window(Window* parent = nullptr);
+        explicit Window(Object::ID id, Object::ID parent);
 
-        using WindowSet = std::unordered_set<Window*>;
+        using WindowSet = std::unordered_set<Object::ID>;
 
         WindowSet subwindows;
-
-        Window* parent;
+        Object::ID parent;
 
         /*--------------------------------------------------------------------*/
 

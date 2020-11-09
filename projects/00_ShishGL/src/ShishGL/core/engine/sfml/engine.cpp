@@ -16,7 +16,7 @@ bool SfmlEngine::initDisplay(int*, char**) {
                                   sf::Style::Fullscreen);
 
     /* todo: fix hard-coded font */
-    if (!ActiveFont().loadFromFile("./FiraCode-Regular.ttf")) {
+    if (!ActiveFont().loadFromFile("./assets/fonts/FiraCode-Regular.ttf")) {
         return false;
     }
 

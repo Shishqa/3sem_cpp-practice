@@ -43,7 +43,7 @@ namespace ShishGL {
 
     public:
 
-        Scrollbar(Window* parent, FrameScrollable* target,
+        Scrollbar(Object::ID id, Object::ID parent, FrameScrollable* target,
                   const ScrollbarColorscheme& colors,
                   const Vector2<double>& size,
                   const Vector2<double>& pos = {0, 0});
@@ -83,7 +83,7 @@ namespace ShishGL {
     class ScrollSlider : public RectSlider {
     public:
 
-        ScrollSlider(Window* parent, const ButtonColorScheme& colors,
+        ScrollSlider(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                      const Vector2<double>& guide,
                      const Vector2<double>& size,
                      const Vector2<double>& pos = {0, 0});
@@ -105,7 +105,7 @@ namespace ShishGL {
 
     public:
 
-        ScrollButton(Window* parent, Mouse::ScrollDelta delta,
+        ScrollButton(Object::ID id, Object::ID parent, Mouse::ScrollDelta delta,
                      const ButtonColorScheme& colors,
                      const Vector2<double>& size,
                      const Vector2<double>& pos = {0, 0});

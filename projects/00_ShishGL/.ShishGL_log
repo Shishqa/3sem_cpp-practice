@@ -1,30 +1,220 @@
-<OK>  [15808] : initializing engine...
-<OK>  [190649512] : engine initialized
-<OK>  [190691809] : Created window 0x55e207236c50 (parent=(nil))
-<OK>  [190802477] : Created shaped window 0x55e207236c50 at (100; 100)
-<OK>  [190836317] : Created window 0x55e207045de0 (parent=(nil))
-<OK>  [190932264] : Created shaped window 0x55e207045de0 at (200; 100)
-<OK>  [190946785] : Created window 0x55e207236cd0 (parent=(nil))
-<OK>  [191033170] : Created shaped window 0x55e207236cd0 at (300; 100)
-<OK>  [191045302] : Created window 0x55e20718a8d0 (parent=(nil))
-<OK>  [191130815] : Created shaped window 0x55e20718a8d0 at (400; 100)
-<OK>  [191142994] : Created window 0x55e2071f5e80 (parent=(nil))
-<OK>  [191227801] : Created shaped window 0x55e2071f5e80 at (300; 300)
-<OK>  [191240062] : Created window 0x55e207236dd0 (parent=0x55e2071f5e80)
-<OK>  [191325579] : Created shaped window 0x55e207236dd0 at (300; 300)
-<OK>  [191338938] : Created window 0x55e207236e70 (parent=0x55e2071f5e80)
-<OK>  [191423752] : Created shaped window 0x55e207236e70 at (300; 950)
-<OK>  [191436586] : Created window 0x55e2071868d0 (parent=0x55e2071f5e80)
-<OK>  [191521467] : Created shaped window 0x55e2071868d0 at (300; 350)
-<OK>  [191534585] : Created window 0x55e207181a40 (parent=(nil))
-<OK>  [191618960] : Created shaped window 0x55e207181a40 at (500; 500)
-<OK>  [191726145] : Created window 0x55e2071f6e80 (parent=0x55e207181a40)
-<OK>  [191818576] : Created shaped window 0x55e2071f6e80 at (1180; 500)
-<OK>  [191833403] : Created window 0x55e207236f90 (parent=0x55e2071f6e80)
-<OK>  [191917867] : Created shaped window 0x55e207236f90 at (1180; 500)
-<OK>  [191931253] : Created window 0x55e207237030 (parent=0x55e2071f6e80)
-<OK>  [192016042] : Created shaped window 0x55e207237030 at (1180; 760)
-<OK>  [192029486] : Created window 0x55e2070127b0 (parent=0x55e2071f6e80)
-<OK>  [192114758] : Created shaped window 0x55e2070127b0 at (1180; 520)
-<OK>  [104158621610] : terminating engine...
-<OK>  [104160338257] : engine terminated
+<OK>  [10391] : initializing engine...
+<OK>  [363648366] : engine initialized
+<OK>  [363669528] : Created window 1 (parent=0)
+<OK>  [363791292] : Created shaped window 0x5592bafdaf20 at (100; 100)
+<OK>  [363806580] : Created window 2 (parent=0)
+<OK>  [363845628] : Created shaped window 0x5592bb1b2ef0 at (200; 100)
+<OK>  [363852553] : Created window 3 (parent=0)
+<OK>  [363885271] : Created shaped window 0x5592bb1cf770 at (300; 100)
+<OK>  [363890131] : Created window 4 (parent=0)
+<OK>  [363922438] : Created shaped window 0x5592bb11b9e0 at (400; 100)
+<WW>  [421443229] : missed event {type=6}
+<WW>  [476742876] : missed event {type=6}
+<WW>  [531875004] : missed event {type=6}
+<WW>  [587286601] : missed event {type=6}
+<WW>  [644271119] : missed event {type=6}
+<WW>  [698265297] : missed event {type=6}
+<WW>  [756273105] : missed event {type=6}
+<WW>  [812227199] : missed event {type=6}
+<WW>  [866838398] : missed event {type=6}
+<WW>  [923502385] : missed event {type=6}
+<WW>  [978977579] : missed event {type=6}
+<WW>  [1034442130] : missed event {type=6}
+<WW>  [1091718358] : missed event {type=6}
+<WW>  [1149156334] : missed event {type=6}
+<WW>  [1203563982] : missed event {type=6}
+<WW>  [1260221764] : missed event {type=6}
+<WW>  [1316330182] : missed event {type=6}
+<WW>  [1372293540] : missed event {type=6}
+<WW>  [1428612105] : missed event {type=6}
+<WW>  [1483585247] : missed event {type=6}
+<WW>  [1540522432] : missed event {type=6}
+<WW>  [1596873250] : missed event {type=6}
+<WW>  [1651548788] : missed event {type=6}
+<WW>  [1707385951] : missed event {type=6}
+<WW>  [1763019420] : missed event {type=6}
+<WW>  [1819681290] : missed event {type=6}
+<WW>  [1876163963] : missed event {type=6}
+<WW>  [1931917645] : missed event {type=6}
+<WW>  [1988134894] : missed event {type=6}
+<WW>  [2043324507] : missed event {type=6}
+<WW>  [2099466585] : missed event {type=6}
+<WW>  [2154741593] : missed event {type=6}
+<WW>  [2210739199] : missed event {type=6}
+<WW>  [2266185593] : missed event {type=6}
+<WW>  [2321383843] : missed event {type=6}
+<WW>  [2377046079] : missed event {type=6}
+<WW>  [2432135391] : missed event {type=6}
+<WW>  [2487577187] : missed event {type=6}
+<WW>  [2544012991] : missed event {type=6}
+<WW>  [2598049250] : missed event {type=6}
+<WW>  [2654304565] : missed event {type=6}
+<WW>  [2711230970] : missed event {type=6}
+<WW>  [2765892959] : missed event {type=6}
+<WW>  [2824062573] : missed event {type=6}
+<WW>  [2880501932] : missed event {type=6}
+<WW>  [2936822064] : missed event {type=6}
+<WW>  [2992289470] : missed event {type=6}
+<WW>  [3048329379] : missed event {type=6}
+<WW>  [3103997693] : missed event {type=6}
+<WW>  [3159711413] : missed event {type=6}
+<WW>  [3215855589] : missed event {type=6}
+<WW>  [3270306430] : missed event {type=6}
+<WW>  [3326425784] : missed event {type=6}
+<WW>  [3381638533] : missed event {type=6}
+<WW>  [3437966723] : missed event {type=6}
+<WW>  [3493498785] : missed event {type=6}
+<WW>  [3550014789] : missed event {type=6}
+<WW>  [3605457400] : missed event {type=6}
+<WW>  [3660312010] : missed event {type=6}
+<WW>  [3718147558] : missed event {type=6}
+<WW>  [3774632246] : missed event {type=6}
+<WW>  [3830332215] : missed event {type=6}
+<WW>  [3887342681] : missed event {type=6}
+<WW>  [3943723162] : missed event {type=6}
+<WW>  [3998712134] : missed event {type=6}
+<WW>  [4056078832] : missed event {type=6}
+<WW>  [4110461455] : missed event {type=6}
+<WW>  [4165500131] : missed event {type=6}
+<WW>  [4220830439] : missed event {type=6}
+<WW>  [4276770785] : missed event {type=6}
+<WW>  [4332709747] : missed event {type=6}
+<WW>  [4388815194] : missed event {type=6}
+<WW>  [4443746909] : missed event {type=6}
+<WW>  [4499089407] : missed event {type=6}
+<WW>  [4554718134] : missed event {type=6}
+<WW>  [4611282734] : missed event {type=6}
+<WW>  [4667531877] : missed event {type=6}
+<WW>  [4721151363] : missed event {type=6}
+<WW>  [4777596274] : missed event {type=6}
+<WW>  [4833064872] : missed event {type=6}
+<WW>  [4889288870] : missed event {type=6}
+<WW>  [4943062004] : missed event {type=6}
+<WW>  [4999110884] : missed event {type=6}
+<WW>  [5057098557] : missed event {type=6}
+<WW>  [5111361147] : missed event {type=6}
+<WW>  [5167108607] : missed event {type=6}
+<WW>  [5223560225] : missed event {type=6}
+<WW>  [5278319862] : missed event {type=6}
+<WW>  [5334201357] : missed event {type=6}
+<WW>  [5389190325] : missed event {type=6}
+<WW>  [5444973170] : missed event {type=6}
+<WW>  [5500302318] : missed event {type=6}
+<WW>  [5559007211] : missed event {type=6}
+<WW>  [5612976649] : missed event {type=6}
+<WW>  [5669485801] : missed event {type=6}
+<WW>  [5725606878] : missed event {type=6}
+<WW>  [5781946149] : missed event {type=6}
+<WW>  [5838922333] : missed event {type=6}
+<WW>  [5893940237] : missed event {type=6}
+<WW>  [5950694821] : missed event {type=6}
+<WW>  [6006997338] : missed event {type=6}
+<WW>  [6063372480] : missed event {type=6}
+<WW>  [6117650488] : missed event {type=6}
+<WW>  [6174162245] : missed event {type=6}
+<WW>  [6229697466] : missed event {type=6}
+<WW>  [6286339792] : missed event {type=6}
+<WW>  [6341771126] : missed event {type=6}
+<WW>  [6397603457] : missed event {type=6}
+<WW>  [6453386664] : missed event {type=6}
+<WW>  [6507915483] : missed event {type=6}
+<WW>  [6564534289] : missed event {type=6}
+<WW>  [6621601148] : missed event {type=6}
+<WW>  [6677727845] : missed event {type=6}
+<WW>  [6733047050] : missed event {type=6}
+<WW>  [6788992273] : missed event {type=6}
+<WW>  [6843318067] : missed event {type=6}
+<WW>  [6899414753] : missed event {type=6}
+<WW>  [6956252474] : missed event {type=6}
+<WW>  [7011561567] : missed event {type=6}
+<WW>  [7068968559] : missed event {type=6}
+<WW>  [7123642710] : missed event {type=6}
+<WW>  [7179877693] : missed event {type=6}
+<WW>  [7235123804] : missed event {type=6}
+<WW>  [7289930758] : missed event {type=6}
+<WW>  [7345742562] : missed event {type=6}
+<WW>  [7401120718] : missed event {type=6}
+<WW>  [7456534306] : missed event {type=6}
+<WW>  [7512253759] : missed event {type=6}
+<WW>  [7569359427] : missed event {type=6}
+<WW>  [7625296258] : missed event {type=6}
+<WW>  [7681266656] : missed event {type=6}
+<WW>  [7739023684] : missed event {type=6}
+<WW>  [7793330893] : missed event {type=6}
+<WW>  [7849400709] : missed event {type=6}
+<WW>  [7905121873] : missed event {type=6}
+<WW>  [7959512321] : missed event {type=6}
+<WW>  [8016008763] : missed event {type=6}
+<WW>  [8070197043] : missed event {type=6}
+<WW>  [8125515043] : missed event {type=6}
+<WW>  [8181736148] : missed event {type=6}
+<WW>  [8238875077] : missed event {type=6}
+<WW>  [8293451671] : missed event {type=6}
+<WW>  [8349514877] : missed event {type=6}
+<WW>  [8405715915] : missed event {type=6}
+<WW>  [8461044643] : missed event {type=6}
+<WW>  [8516522356] : missed event {type=6}
+<WW>  [8573111175] : missed event {type=6}
+<WW>  [8627465894] : missed event {type=6}
+<WW>  [8683925828] : missed event {type=6}
+<WW>  [8739863702] : missed event {type=6}
+<WW>  [8794928495] : missed event {type=6}
+<WW>  [8850346867] : missed event {type=6}
+<WW>  [8905555369] : missed event {type=6}
+<WW>  [8960823663] : missed event {type=6}
+<WW>  [9016077050] : missed event {type=6}
+<WW>  [9072196795] : missed event {type=6}
+<WW>  [9127835263] : missed event {type=6}
+<WW>  [9184004017] : missed event {type=6}
+<WW>  [9239595189] : missed event {type=6}
+<WW>  [9294746038] : missed event {type=6}
+<WW>  [9350475597] : missed event {type=6}
+<WW>  [9406295380] : missed event {type=6}
+<WW>  [9461666385] : missed event {type=6}
+<WW>  [9517591614] : missed event {type=6}
+<WW>  [9574229849] : missed event {type=6}
+<WW>  [9629606630] : missed event {type=6}
+<WW>  [9684537056] : missed event {type=6}
+<WW>  [9741357822] : missed event {type=6}
+<WW>  [9796499026] : missed event {type=6}
+<WW>  [9852258907] : missed event {type=6}
+<WW>  [9908352465] : missed event {type=6}
+<WW>  [9963653693] : missed event {type=6}
+<WW>  [10019915086] : missed event {type=6}
+<WW>  [10074514134] : missed event {type=6}
+<WW>  [10129957366] : missed event {type=6}
+<WW>  [10185453788] : missed event {type=6}
+<WW>  [10240181114] : missed event {type=6}
+<WW>  [10296190428] : missed event {type=6}
+<WW>  [10351501260] : missed event {type=6}
+<WW>  [10407095610] : missed event {type=6}
+<WW>  [10462150625] : missed event {type=6}
+<WW>  [10483557615] : missed event {type=2}
+<WW>  [10517787300] : missed event {type=6}
+<WW>  [10574059825] : missed event {type=6}
+<WW>  [10629425455] : missed event {type=6}
+<WW>  [10630700938] : missed event {type=2}
+<WW>  [10685281080] : missed event {type=6}
+<WW>  [10693703971] : missed event {type=2}
+<WW>  [10740071243] : missed event {type=6}
+<WW>  [10794299185] : missed event {type=2}
+<WW>  [10796199495] : missed event {type=6}
+<WW>  [10852631026] : missed event {type=6}
+<WW>  [10908042230] : missed event {type=6}
+<WW>  [10964589183] : missed event {type=6}
+<WW>  [11020888460] : missed event {type=6}
+<WW>  [11076756808] : missed event {type=6}
+<WW>  [11132056700] : missed event {type=6}
+<WW>  [11188661439] : missed event {type=6}
+<WW>  [11243776693] : missed event {type=6}
+<WW>  [11299939500] : missed event {type=6}
+<WW>  [11355733971] : missed event {type=6}
+<WW>  [11411105915] : missed event {type=6}
+<WW>  [11466528234] : missed event {type=6}
+<WW>  [11522286624] : missed event {type=6}
+<WW>  [11578633817] : missed event {type=6}
+<WW>  [11590347198] : missed event {type=5}
+<WW>  [11633269754] : missed event {type=6}
+<WW>  [11689582553] : missed event {type=6}
+<OK>  [11730743141] : terminating engine...
+<OK>  [11734055874] : engine terminated
