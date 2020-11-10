@@ -19,14 +19,14 @@ namespace ShishGL {
 
     protected:
 
-        virtual void reactOnHold(const TimerEvent*) {};
+        virtual void reactOnHold(TimerEvent&) {};
 
-        bool onTimer(const TimerEvent* event) override {
+        bool onTimer(TimerEvent& event) override {
             if (ShapedButton<SomeShape>::is_pressed) {
                 this->reactOnHold(event);
                 return true;
             }
-            return false;
+            return ShapedButton<SomeShape>::onTimer(event);
         }
 
     };

@@ -37,6 +37,8 @@ namespace ShishGL {
                 is_mouse_inside = true;
             }
 
+            SubscriptionManager::subscribe(SystemEvents::SYSTEM, Window::id());
+
             LogSystem::printLog("Created shaped window %p at (%lg; %lg)",
                                 reinterpret_cast<void*>(this),
                                 SomeShape::getPos().x, SomeShape::getPos().y);
@@ -60,41 +62,36 @@ namespace ShishGL {
     protected:
 
         /*====================================================================*/
-        virtual bool onMouseEntered(const MouseEvent*) { return false; }
+        virtual bool onMouseEntered(MouseEvent&) { return false; }
 
-        virtual bool onMouseLeft(const MouseEvent*) { return false; }
+        virtual bool onMouseLeft(MouseEvent&) { return false; }
         /*====================================================================*/
 
-        void onRender() override {
+        bool onRender() override {
             Engine::setColor(color);
             SomeShape::render();
+            return true;
         }
 
-        bool getEvent(const Event* event) override {
-            if (Event::MOUSE_MOVE == event->type()) {
+        bool onMouseMove(MouseEvent& event) override {
 
-                auto m_event = dynamic_cast<const MouseEvent*>(event);
-                if (!m_event) {
-                    return false;
-                }
+            bool is_event_inside = SomeShape::contains(event.where());
 
-                bool is_event_inside = SomeShape::contains(m_event->where());
+            if (is_mouse_inside && !is_event_inside) {
 
-                if (is_mouse_inside && !is_event_inside) {
+                is_mouse_inside = false;
+                return this->onMouseLeft(event);
 
-                    is_mouse_inside = false;
-                    return onMouseLeft(m_event);
+            } else if (!is_mouse_inside && is_event_inside) {
 
-                } else if (!is_mouse_inside && is_event_inside) {
+                is_mouse_inside = true;
+                return this->onMouseEntered(event);
 
-                    is_mouse_inside = true;
-                    return onMouseEntered(m_event);
-
-                }
             }
 
-            return Window::getEvent(event);
+            return true;
         }
+
     };
 
 }

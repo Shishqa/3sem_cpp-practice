@@ -3,6 +3,9 @@
 #define SHISHGL_LOG_HPP
 /*============================================================================*/
 #include <cstdio>
+#include <cstdarg>
+
+#include "ShishGL/core/input/timer.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -44,6 +47,9 @@ namespace ShishGL {
         static LogStatus openLog();
 
         static LogStatus closeLog();
+
+        static LogStatus print(const TimeDelta& elapsed,
+                               const char* format, va_list args);
 
         static void printTimeStamp();
 

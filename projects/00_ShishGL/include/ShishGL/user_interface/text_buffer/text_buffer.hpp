@@ -19,12 +19,12 @@ namespace ShishGL {
 
         size_t curr_line_height;
 
-        Scrollbar* scrollbar;
+        Object::ID scrollbar;
         double curr_delta;
 
     public:
 
-        TextBuffer(Window* parent, const std::string_view& filename,
+        TextBuffer(Object::ID id, Object::ID parent, const std::string_view& filename,
                    const Vector2<double>& size,
                    const Vector2<double>& pos = {0, 0});
 

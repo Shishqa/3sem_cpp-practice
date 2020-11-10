@@ -32,8 +32,6 @@ namespace ShishGL {
             Object::ID id =
                     ObjectManager::create<SomeObject>(std::forward<Args>(args)...);
 
-            ActiveObjects().insert(id);
-
             return id;
         }
 
@@ -60,10 +58,6 @@ namespace ShishGL {
         }
 
         /*--------------------------------------------------------------------*/
-
-        using ObjectSet = std::unordered_set<Object::ID>;
-
-        static ObjectSet& ActiveObjects();
 
         friend EventSystem;
 

@@ -5,11 +5,11 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-ScrollSlider::ScrollSlider(Window *parent, const ButtonColorScheme &colors,
+ScrollSlider::ScrollSlider(Object::ID id, Object::ID parent, const ButtonColorScheme &colors,
                            const Vector2<double>& guide,
                            const Vector2<double>& size,
                            const Vector2<double>& pos)
-        : RectSlider(parent, colors, guide, size, pos) {}
+        : RectSlider(id, parent, colors, guide, size, pos) {}
 
 /*----------------------------------------------------------------------------*/
 

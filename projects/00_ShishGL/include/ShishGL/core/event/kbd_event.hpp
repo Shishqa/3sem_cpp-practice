@@ -10,11 +10,10 @@ namespace ShishGL {
     class KeyboardEvent : public Event {
     public:
 
-        KeyboardEvent(Event::Type type, Keyboard::Key key,
+        KeyboardEvent(Keyboard::Key key,
                       Keyboard::KeyState state,
                       Keyboard::ModifierMask modifiers)
-            : Event(type)
-            , k_key(key)
+            : k_key(key)
             , k_state(state)
             , k_modifiers(modifiers) {}
 
@@ -28,6 +27,10 @@ namespace ShishGL {
 
         [[nodiscard]]
         inline Keyboard::ModifierMask modifiers() const { return k_modifiers; }
+
+        bool happen(Object::ID listener) override {
+            return ObjectManager::get<Listener>(listener).onKeyboard(*this);
+        }
 
     protected:
 

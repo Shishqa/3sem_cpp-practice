@@ -1,8 +1,7 @@
 /*============================================================================*/
 #include "ShishGL.hpp"
-#include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
-#include "ShishGL/user_interface/viewport/viewport.hpp"
-#include "ShishGL/user_interface/text_buffer/text_buffer.hpp"
+//#include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
+//#include "ShishGL/user_interface/text_buffer/text_buffer.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -40,22 +39,25 @@ int main(int argc, char* argv[]) {
             Vector2<double>{400, 100}
     );
 
+
     /*
     CoreApplication::create<Scrollbar>(
-            nullptr,
+            0,
             nullptr,
             DEFAULT_SCROLLBAR_COLORS,
             Vector2<double>{50, 700},
             Vector2<double>{300, 300}
             );
+    */
 
+    /*
     CoreApplication::create<TextBuffer>(
-            nullptr,
+            0,
             std::string_view("Makefile"),
             Vector2<double>{700, 300},
             Vector2<double>{500, 500}
             );
-            */
+    */
 
     return CoreApplication::run();
 }

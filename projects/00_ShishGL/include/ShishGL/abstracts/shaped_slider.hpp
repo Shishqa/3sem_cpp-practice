@@ -62,13 +62,13 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        bool onMouseMove(const MouseEvent* event) override {
+        bool onMouseMove(MouseEvent& event) override {
 
             if (!ShapedButton<SomeShape>::is_pressed) {
-                return false;
+                return ShapedButton<SomeShape>::onMouseMove(event);
             }
 
-            auto drag_delta = event->where() - ShapedFloat<SomeShape>::where_dragged;
+            auto drag_delta = event.where() - ShapedFloat<SomeShape>::where_dragged;
 
             ShapedFloat<SomeShape>::where_dragged += advance(drag_delta);
 

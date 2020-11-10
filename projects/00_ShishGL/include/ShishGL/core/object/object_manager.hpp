@@ -20,7 +20,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         static Object::ID newId() {
-            static Object::ID MIN_AVAILABLE_ID = 1;
+            /* todo: something smarter */
+            static Object::ID MIN_AVAILABLE_ID = 200;
             return MIN_AVAILABLE_ID++;
         }
 
@@ -33,8 +34,10 @@ namespace ShishGL {
 
             Object::ID new_id = newId();
 
-            Pool().try_emplace(
-                    new_id, std::make_unique<SomeObject>(new_id, std::forward<Args>(args)...));
+            auto ptr = std::make_unique<SomeObject>(new_id, std::forward<Args>(args)...);
+
+            /* todo: handle exceptions */
+            Pool().try_emplace(new_id, std::move(ptr));
 
             return new_id;
         }
@@ -58,8 +61,6 @@ namespace ShishGL {
         friend class Window;
 
         /*----------------------------------------------------------------*/
-
-
         static Object& get(Object::ID id) {
             return *Pool()[id];
         }

@@ -1,13 +1,15 @@
 /*============================================================================*/
-#ifndef SHISHGL_EVENT_HPP
-#define SHISHGL_EVENT_HPP
+#ifndef SHISHGL_SYSTEM_SLOTS_HPP
+#define SHISHGL_SYSTEM_SLOTS_HPP
 /*============================================================================*/
-#include "base_event.hpp"
-#include "mouse_event.hpp"
-#include "kbd_event.hpp"
-#include "timer_event.hpp"
+namespace ShishGL {
 
+    enum SystemEvents {
+        SYSTEM = 1,
+        RENDER
+    };
 
+}
 /*============================================================================*/
-#endif //SHISHGL_EVENT_HPP
+#endif //SHISHGL_SYSTEM_SLOTS_HPP
 /*============================================================================*/

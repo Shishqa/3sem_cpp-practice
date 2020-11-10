@@ -5,13 +5,13 @@
 #include <cstddef>
 #include <unordered_set>
 
-#include "object_manager.hpp"
+#include "listener.hpp"
 #include "ShishGL/core/event/base_event.hpp"
 #include "ShishGL/geometry/vector2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Window : public Object {
+    class Window : public Listener {
     public:
 
         Window() = delete;
@@ -34,7 +34,7 @@ namespace ShishGL {
         Object::ID attach(Args&&... args) {
 
             Object::ID child_id =
-                    ObjectManager::create<SomeWindow>(my_id, std::forward<Args>(args)...);
+                    ObjectManager::create<SomeWindow>(std::forward<Args>(args)...);
 
             subwindows.insert(child_id);
             return child_id;
@@ -55,11 +55,24 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        bool getEvent(const Event* event) override;
-
-        virtual void onRender() = 0;
+        friend class RenderEvent;
+        virtual bool onRender() = 0;
     };
 
+    /*========================================================================*/
+
+    class RenderEvent : public Event {
+    public:
+
+        explicit RenderEvent() = default;
+
+        bool happen(Object::ID listener) override {
+            return ObjectManager::get<Window>(listener).onRender();
+        }
+
+        ~RenderEvent() override = default;
+
+    };
 }
 /*============================================================================*/
 #endif //SHISHGL_ABSTRACT_WINDOW_HPP

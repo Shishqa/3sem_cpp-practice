@@ -39,8 +39,7 @@ Event* pollMouseButton(const sf::Event& sf_event) {
             return nullptr;
     }
 
-    auto event = new MouseButtonEvent(Event::MOUSE_BUTTON, where,
-                                      button, state);
+    auto event = new MouseButtonEvent(where, button, state);
 
     return event;
 }
@@ -59,7 +58,7 @@ Event* pollMouseScroll(const sf::Event& sf_event) {
     /* todo: make configs of mouse inversion */
     Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
-    auto event = new MouseScrollEvent(Event::MOUSE_SCROLL, where, delta);
+    auto event = new MouseScrollEvent(where, delta);
 
     return event;
 }
@@ -75,7 +74,7 @@ Event* pollMouseMove(const sf::Event& sf_event) {
             static_cast<double>(sf_event.mouseMove.y)
     };
 
-    auto event = new MouseEvent(Event::MOUSE_MOVE, where);
+    auto event = new MouseEvent(where);
 
     return event;
 }
@@ -123,7 +122,7 @@ Event* pollKeyboard(const sf::Event& sf_event) {
         modifiers |= Keyboard::META_MOD;
     }
 
-    auto event = new KeyboardEvent(Event::KBD_BUTTON, key, state, modifiers);
+    auto event = new KeyboardEvent(key, state, modifiers);
 
     return event;
 }

@@ -20,7 +20,8 @@ void SfmlEngine::drawPoint(const Vector2<double>& pos) {
 
     sf::VertexArray point(sf::Points, 1);
 
-    point[0].position = sf::Vector2f(pos.x, pos.y);
+    point[0].position = sf::Vector2f(static_cast<float>(pos.x),
+                                     static_cast<float>(pos.y));
     point[0].color = sf::Color(active_color.r,
                                active_color.g,
                                active_color.b,
@@ -36,13 +37,15 @@ void SfmlEngine::drawLine(const Vector2<double>& start,
 
     sf::VertexArray line(sf::LineStrip, 2);
 
-    line[0].position = sf::Vector2f(start.x, start.y);
+    line[0].position = sf::Vector2f(static_cast<float>(start.x),
+                                    static_cast<float>(start.y));
     line[0].color = sf::Color(active_color.r,
                               active_color.g,
                               active_color.b,
                               active_color.a);
 
-    line[1].position = sf::Vector2f(end.x, end.y);
+    line[1].position = sf::Vector2f(static_cast<float>(end.x),
+                                    static_cast<float>(end.y));
     line[1].color = sf::Color(active_color.r,
                               active_color.g,
                               active_color.b,
@@ -58,8 +61,10 @@ void SfmlEngine::drawRectangle(const Vector2<double>& pos,
 
     sf::RectangleShape rectangle;
 
-    rectangle.setSize(sf::Vector2f(size.x, size.y));
-    rectangle.setPosition(sf::Vector2f(pos.x, pos.y));
+    rectangle.setSize(sf::Vector2f(static_cast<float>(size.x),
+                                   static_cast<float>(size.y)));
+    rectangle.setPosition(sf::Vector2f(static_cast<float>(pos.x),
+                                       static_cast<float>(pos.y)));
     rectangle.setFillColor(sf::Color{
         active_color.r,
         active_color.g,
@@ -77,7 +82,8 @@ void SfmlEngine::drawCircle(const Vector2<double>& pos,
 
     sf::CircleShape circle;
 
-    circle.setPosition(sf::Vector2f(pos.x, pos.y));
+    circle.setPosition(sf::Vector2f(static_cast<float>(pos.x),
+                                    static_cast<float>(pos.y)));
     circle.setRadius(static_cast<float>(radius));
 
     canvas->draw(circle);

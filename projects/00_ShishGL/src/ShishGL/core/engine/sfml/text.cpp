@@ -26,7 +26,8 @@ void SfmlEngine::displayText(const std::string_view& str, size_t font_size,
         active_color.a
     });
 
-    display_text.setPosition(sf::Vector2f(pos.x, pos.y));
+    display_text.setPosition(sf::Vector2f(static_cast<float>(pos.x),
+                                          static_cast<float>(pos.y)));
 
     canvas->draw(display_text);
 }

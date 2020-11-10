@@ -1,6 +1,7 @@
 /*============================================================================*/
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/event_system.hpp"
+#include "ShishGL/core/subscription_manager.hpp"
 #include "ShishGL/core/core_application.hpp"
 /*============================================================================*/
 using namespace ShishGL;
@@ -13,6 +14,13 @@ EventSystem::EventQueue& EventSystem::Events() {
 
 /*----------------------------------------------------------------------------*/
 
+SubscriptionManager::SubscriptionPool& SubscriptionManager::Subscriptions() {
+    static SubscriptionPool POOL;
+    return POOL;
+}
+
+/*----------------------------------------------------------------------------*/
+
 Timer& EventSystem::EventTimer() {
     static Timer EVENT_TIMER;
     return EVENT_TIMER;
@@ -20,9 +28,36 @@ Timer& EventSystem::EventTimer() {
 
 /*============================================================================*/
 
-bool EventSystem::sendEvent(Object::ID receiver, const Event* event) {
-    return (ObjectManager::get(receiver).filterEvent(event) &&
-            ObjectManager::get(receiver).getEvent(event));
+bool EventSystem::sendEvent(Object::ID sender, Event* event) {
+
+    bool status = false;
+
+    for (auto& sub : SubscriptionManager::Subscriptions()[sender]) {
+
+        if (!ObjectManager::get<Listener>(sub).filterEvent(*event)) {
+            continue;
+        }
+
+        if (event->happen(sub)) {
+            status = true;
+        }
+    }
+
+    return status;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void SubscriptionManager::subscribe(Object::ID sender, Object::ID receiver) {
+    Subscriptions()[sender].insert(receiver);
+}
+
+void SubscriptionManager::unsubscribe(Object::ID sender, Object::ID receiver) {
+    Subscriptions()[sender].erase(receiver);
+}
+
+void SubscriptionManager::unsubscribeAll(Object::ID sender) {
+    Subscriptions()[sender].clear();
 }
 
 /*----------------------------------------------------------------------------*/
@@ -55,7 +90,7 @@ void EventSystem::dispatchEvents() {
     TimeDelta elapsed = EventTimer().elapsed();
     if (elapsed.count() > 55000000) { /* todo: fix hardcoded 55ms */
 
-        postEvent<TimerEvent>(Event::TIMER, elapsed);
+        postEvent<TimerEvent>(elapsed);
         EventTimer().reset();
 
     }
@@ -69,18 +104,13 @@ void EventSystem::dispatchSingleEvent() {
         return;
     }
 
-    const Event* event = Events().front();
-                         Events().pop();
+    Event* event = Events().front();
+    Events().pop();
 
-    bool status = false;
-    for (const auto& obj : CoreApplication::ActiveObjects()) {
-        if (sendEvent(obj, event)) {
-            status = true;
-        }
-    }
+    bool status = sendEvent(SystemEvents::SYSTEM, event);
 
     if (!status) {
-        LogSystem::printWarning("missed event {type=%d}", event->type());
+        //LogSystem::printWarning("missed event %s", typeid(*event).name());
     }
 
     delete event;
@@ -95,6 +125,8 @@ void EventSystem::flush() {
 
         event = Events().front();
                 Events().pop();
+
+        LogSystem::printLog("Event %s deleted", typeid(*event).name());
 
         delete event;
     }

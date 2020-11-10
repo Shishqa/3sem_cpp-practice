@@ -5,19 +5,19 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-ScrollButton::ScrollButton(Window *parent, Mouse::ScrollDelta delta,
+ScrollButton::ScrollButton(Object::ID id, Object::ID parent,
+                           Mouse::ScrollDelta delta,
                            const ButtonColorScheme& colors,
                            const Vector2<double>& size,
                            const Vector2<double>& pos)
-    : RectHoldableButton(parent, colors, size, pos)
+    : RectHoldableButton(id, parent, colors, size, pos)
     , delta(delta) {}
 
 /*----------------------------------------------------------------------------*/
 
-void ScrollButton::reactOnHold(const TimerEvent*) {
+void ScrollButton::reactOnHold(TimerEvent&) {
     EventSystem::sendEvent<MouseScrollEvent>(
-            parent,
-            Event::MOUSE_SCROLL,
+            id(),
             getAbsPos(),
             delta
             );

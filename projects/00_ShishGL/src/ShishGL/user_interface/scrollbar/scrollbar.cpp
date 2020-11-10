@@ -6,11 +6,11 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-Scrollbar::Scrollbar(Window* parent, FrameScrollable* target,
+Scrollbar::Scrollbar(Object::ID id, Object::ID parent, FrameScrollable* target,
                      const ScrollbarColorscheme& colors,
                      const Vector2<double>& size,
                      const Vector2<double>& pos)
-        : RectButton(parent, colors.bg, size, pos)
+        : RectButton(id, parent, colors.bg, size, pos)
         , FrameScrollable()
         , target(target) {
 
@@ -66,7 +66,7 @@ double Scrollbar::contentProportion() const {
 /*----------------------------------------------------------------------------*/
 
 void Scrollbar::slide(double delta_in_pixels) {
-    slider->slide(delta_in_pixels);
+    ObjectManager::get<ScrollSlider>(slider).slide(delta_in_pixels);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -81,13 +81,13 @@ double Scrollbar::stepSize() const {
 /*----------------------------------------------------------------------------*/
 
 double Scrollbar::limitSize() const {
-    return slider->getGuide().length();
+    return ObjectManager::get<ScrollSlider>(slider).getGuide().length();
 }
 
 /*----------------------------------------------------------------------------*/
 
 double Scrollbar::frameSize() const {
-    return slider->getSize().y;
+    return ObjectManager::get<ScrollSlider>(slider).getSize().y;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -151,15 +151,15 @@ bool Scrollbar::unhandledEvent(const Event* event) {
 
 void Scrollbar::reactOnButton(const MouseButtonEvent* event) {
 
-    if (slider->contains(event->where()) ||
-        up_button->contains(event->where()) ||
-        down_button->contains(event->where())) {
+    if (ObjectManager::get<ScrollSlider>(slider).contains(event->where()) ||
+        ObjectManager::get<ScrollButton>(up_button).contains(event->where()) ||
+        ObjectManager::get<ScrollButton>(down_button).contains(event->where())) {
         return;
     }
 
     if (event->state() == Mouse::DOWN) {
         EventSystem::sendEvent<MouseButtonEvent>(slider, Event::MOUSE_BUTTON,
-                                                 slider->getCenter(),
+                                                 ObjectManager::get<ScrollSlider>(slider).getCenter(),
                                                  Mouse::LEFT, Mouse::DOWN);
 
         EventSystem::sendEvent<MouseEvent>(slider, Event::MOUSE_MOVE,

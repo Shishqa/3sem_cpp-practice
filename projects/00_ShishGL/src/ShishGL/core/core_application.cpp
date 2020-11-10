@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "ShishGL/core/object/object_manager.hpp"
-#include "ShishGL/core/input/timer.hpp"
+#include "ShishGL/core/object/window.hpp"
 #include "ShishGL/core/engine/engine.hpp"
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
@@ -11,11 +11,6 @@ using namespace ShishGL;
 /*============================================================================*/
 
 bool CoreApplication::is_initialized = false;
-
-CoreApplication::ObjectSet& CoreApplication::ActiveObjects() {
-    static ObjectSet ACTIVE_OBJECTS;
-    return ACTIVE_OBJECTS;
-}
 
 /*----------------------------------------------------------------------------*/
 
@@ -49,15 +44,24 @@ uint8_t CoreApplication::run() {
 
     EventSystem::EventTimer().reset();
 
+    Timer frame_timer = {};
+    frame_timer.reset();
+    size_t frame_counter = 0;
+
     while (Engine::isRunning()) {
 
+        ++frame_counter;
+
         Engine::clear(BLACK);
-
-        for (const auto& obj : ActiveObjects()) {
-            EventSystem::sendEvent<Event>(obj, Event::RENDER);
-        }
-
+        EventSystem::sendEvent<RenderEvent>(SystemEvents::RENDER);
         Engine::render();
+
+        TimeDelta delta = frame_timer.elapsed();
+        if (delta.count() > 1000000000LL) {
+            printf("fps: %lu\n", frame_counter);
+            frame_counter = 0;
+            frame_timer.reset();
+        }
 
         EventSystem::dispatchEvents();
     }
@@ -73,10 +77,6 @@ bool CoreApplication::terminate() {
 
     EventSystem::flush();
 
-    for (const auto& obj : ActiveObjects()) {
-        ObjectManager::remove(obj);
-    }
-
     LogSystem::printLog("terminating engine...");
     Engine::closeDisplay();
     LogSystem::printLog("engine terminated");
@@ -91,7 +91,6 @@ bool CoreApplication::terminate() {
 /*----------------------------------------------------------------------------*/
 
 void CoreApplication::remove(Object::ID id) {
-    ActiveObjects().erase(id);
     ObjectManager::remove(id);
 }
 

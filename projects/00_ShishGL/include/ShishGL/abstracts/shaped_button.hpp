@@ -33,68 +33,51 @@ namespace ShishGL {
             : ShapedWindow<SomeShape>(id, parent, colors.normal,
                                       std::forward<Args>(args)...)
             , colorscheme(colors)
-            , is_pressed(false) {}
+            , is_pressed(false) {
+
+                LogSystem::printLog("Created shaped button");
+
+            }
 
         ~ShapedButton() override = default;
 
     protected:
 
-        virtual void reactOnButton(const MouseButtonEvent*) {}
+        virtual void reactOnButton(MouseButtonEvent&) {}
 
-        bool filterEvent(const Event* event) override {
+        bool onMouseClick(MouseButtonEvent& event) override {
+            if(event.button() == Mouse::LEFT) {
+                if (event.state() == Mouse::DOWN) {
 
-            if (is_pressed) {
-                return true;
-            }
-
-            if (event->type() == Event::MOUSE_BUTTON ||
-                event->type() == Event::MOUSE_SCROLL) {
-
-                auto mouse = dynamic_cast<const MouseEvent*>(event);
-                if (!mouse) {
-                    return false;
-                }
-
-                if (!ShapedWindow<SomeShape>::contains(mouse->where())) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        bool onMouseClick(const MouseButtonEvent* event) override {
-            if(event->button() == Mouse::LEFT) {
-                if (event->state() == Mouse::DOWN) {
-
-                    is_pressed = true;
-                    reactOnButton(event);
-
-                    ShapedWindow<SomeShape>::color = colorscheme.click;
+                    if (ShapedWindow<SomeShape>::is_mouse_inside) {
+                        is_pressed = true;
+                        reactOnButton(event);
+                        ShapedWindow<SomeShape>::color = colorscheme.click;
+                    }
 
                 } else if (is_pressed) {
 
                     is_pressed = false;
-                    reactOnButton(event);
 
-                    if (ShapedWindow<SomeShape>::contains(event->where())) {
+                    if (ShapedWindow<SomeShape>::is_mouse_inside) {
+                        reactOnButton(event);
                         ShapedWindow<SomeShape>::color = colorscheme.hover;
                     } else {
                         ShapedWindow<SomeShape>::color = colorscheme.normal;
                     }
                 }
             }
-            return true;
+            return ShapedWindow<SomeShape>::onMouseClick(event);
         }
 
-        bool onMouseEntered(const MouseEvent*) override {
+        bool onMouseEntered(MouseEvent&) override {
             if (!is_pressed) {
                 ShapedWindow<SomeShape>::color = colorscheme.hover;
             }
             return true;
         }
 
-        bool onMouseLeft(const MouseEvent*) override {
+        bool onMouseLeft(MouseEvent&) override {
             if (!is_pressed) {
                 ShapedWindow<SomeShape>::color = colorscheme.normal;
             }

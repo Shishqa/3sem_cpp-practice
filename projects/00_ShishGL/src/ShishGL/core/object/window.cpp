@@ -3,13 +3,17 @@
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/event/base_event.hpp"
 #include "ShishGL/core/event_system.hpp"
+#include "ShishGL/core/subscription_manager.hpp"
+#include "ShishGL/core/event/system_slots.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 Window::Window(Object::ID id, Object::ID parent)
-        : Object(id)
+        : Listener(id)
         , parent(parent) {
+
+    SubscriptionManager::subscribe(SystemEvents::RENDER, Listener::id());
 
     LogSystem::printLog("Created window %lu (parent=%lu)", id, parent);
 
@@ -33,35 +37,6 @@ void Window::refresh() {
 
 bool Window::detach(Object::ID id) {
     return subwindows.erase(id);
-}
-
-/*----------------------------------------------------------------------------*/
-
-bool Window::getEvent(const Event* event) {
-
-    bool status = false;
-
-    switch (event->type()) {
-
-        case Event::RENDER:
-            this->onRender();
-            status = true;
-            break;
-
-        default:
-            if (Object::getEvent(event)) {
-                status = true;
-            }
-
-    }
-
-    for (auto& win : subwindows) {
-        if (EventSystem::sendEvent(win, event)) {
-            status = true;
-        }
-    }
-
-    return status;
 }
 
 /*============================================================================*/

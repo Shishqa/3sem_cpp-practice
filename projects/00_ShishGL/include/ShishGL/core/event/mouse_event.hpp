@@ -11,14 +11,17 @@ namespace ShishGL {
     class MouseEvent : public Event {
     public:
 
-        MouseEvent(Event::Type type, const Vector2<double>& where)
-            : Event(type)
-            , m_where(where) {}
+        explicit MouseEvent(const Vector2<double>& where)
+            : m_where(where) {}
 
         ~MouseEvent() override = default;
 
         [[nodiscard]]
         const Vector2<double>& where() const { return m_where; }
+
+        bool happen(Object::ID listener) override {
+            return ObjectManager::get<Listener>(listener).onMouseMove(*this);
+        }
 
     protected:
 
@@ -31,9 +34,10 @@ namespace ShishGL {
     class MouseButtonEvent : public MouseEvent {
     public:
 
-        MouseButtonEvent(Event::Type type, const Vector2<double>& where,
-                         Mouse::Button button, Mouse::ButtonState state)
-            : MouseEvent(type, where)
+        MouseButtonEvent(const Vector2<double>& where,
+                         Mouse::Button button,
+                         Mouse::ButtonState state)
+            : MouseEvent(where)
             , m_button(button)
             , m_state(state) {}
 
@@ -44,6 +48,10 @@ namespace ShishGL {
 
         [[nodiscard]]
         inline Mouse::ButtonState state() const { return m_state; }
+
+        bool happen(Object::ID listener) override {
+            return ObjectManager::get<Listener>(listener).onMouseClick(*this);
+        }
 
     protected:
 
@@ -57,23 +65,19 @@ namespace ShishGL {
     class MouseScrollEvent : public MouseEvent {
     public:
 
-        MouseScrollEvent(Event::Type type, const Vector2<double>& where,
+        MouseScrollEvent(const Vector2<double>& where,
                          Mouse::ScrollDelta delta)
-            : MouseEvent(type, where)
-            , m_delta(delta) {
-
-            if (m_delta > 1.0) {
-                m_delta = 1.0;
-            } else if (m_delta < -1.0) {
-                m_delta = -1.0;
-            }
-
-        }
+            : MouseEvent(where)
+            , m_delta(delta) {}
 
         ~MouseScrollEvent() override = default;
 
         [[nodiscard]]
         inline Mouse::ScrollDelta delta() const { return m_delta; }
+
+        bool happen(Object::ID listener) override {
+            return ObjectManager::get<Listener>(listener).onMouseScroll(*this);
+        }
 
     protected:
 

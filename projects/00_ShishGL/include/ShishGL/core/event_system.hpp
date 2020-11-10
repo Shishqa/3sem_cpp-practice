@@ -4,6 +4,8 @@
 /*============================================================================*/
 #include <type_traits>
 #include <queue>
+#include <unordered_map>
+#include <unordered_set>
 #include <cstdio>
 
 #include "object/object_manager.hpp"
@@ -30,17 +32,17 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
         template <typename SomeEvent, typename... Args>
         static Helper<SomeEvent, bool>
-        sendEvent(Object::ID receiver, Args&&... args) {
+        sendEvent(Object::ID sender, Args&&... args) {
 
             auto event = new SomeEvent(std::forward<Args>(args)...);
 
-            bool status = sendEvent(receiver, event);
+            bool status = sendEvent(sender, event);
 
             delete event;
             return status;
         }
         /*--------------------------------------------------------------------*/
-        static bool sendEvent(Object::ID receiver, const Event* event);
+        static bool sendEvent(Object::ID sender, Event* event);
         /*--------------------------------------------------------------------*/
 
         virtual ~EventSystem() = default;
@@ -63,7 +65,7 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        using EventQueue = std::queue<const Event*>;
+        using EventQueue = std::queue<Event*>;
 
         static EventQueue& Events();
 

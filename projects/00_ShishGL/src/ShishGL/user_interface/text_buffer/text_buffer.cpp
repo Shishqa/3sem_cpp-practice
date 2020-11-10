@@ -6,13 +6,13 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-TextBuffer::TextBuffer(Window *parent, const std::string_view& filename,
+TextBuffer::TextBuffer(Object::ID id, Object::ID parent, const std::string_view& filename,
                        const Vector2<double>& size,
                        const Vector2<double>& pos)
-    : RectWindow(parent, WHITE, size, pos)
+    : RectWindow(id, parent, WHITE, size, pos)
     , text(filename)
     , curr_line_height(DEFAULT_FONT_HEIGHT)
-    , scrollbar(nullptr)
+    , scrollbar(0)
     , curr_delta(0) {
 
     adjust();
@@ -60,13 +60,6 @@ void TextBuffer::adjust() {
                 Vector2<double>{SCROLLBAR_WIDTH, size.y - SCROLLBAR_WIDTH},
                 Vector2<double>{size.x - SCROLLBAR_WIDTH, 0}
                 );
-
-        printf("scrollbar height: %lg\n"
-               "scrollbar step: %lg\n"
-               "text height: %lg\n"
-               "text step: %lg\n",
-               scrollbar->limitSize(), scrollbar->stepSize(),
-               limitSize(), stepSize());
     }
 
 }
@@ -117,12 +110,12 @@ bool TextBuffer::filterEvent(const Event* event) {
 /*----------------------------------------------------------------------------*/
 
 bool TextBuffer::onMouseScroll(const MouseScrollEvent* event) {
-    if (scrollbar && !scrollbar->contains(event->where())) {
+    if (scrollbar && !ObjectManager::get<Scrollbar>(scrollbar).contains(event->where())) {
 
         auto n_steps = static_cast<int>(event->delta());
 
         scroll(n_steps);
-        scrollbar->scroll(n_steps);
+        ObjectManager::get<Scrollbar>(scrollbar).scroll(n_steps);
 
         return true;
     }

@@ -35,9 +35,9 @@ namespace ShishGL {
 
         static constexpr double MIN_SLIDER_SIZE = 20;
 
-        ScrollSlider* slider;
-        ScrollButton* up_button;
-        ScrollButton* down_button;
+        Object::ID slider;
+        Object::ID up_button;
+        Object::ID down_button;
 
         FrameScrollable* target;
 
@@ -56,7 +56,7 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
 
-        void reactOnButton(const MouseButtonEvent* event) override;
+        void reactOnButton(MouseButtonEvent& event) override;
 
         /*--------------------------------------------------------------------*/
 
@@ -70,11 +70,11 @@ namespace ShishGL {
 
     protected:
 
-        bool filterEvent(const Event* event) override;
+        bool filterEvent(Event& event) const override;
 
-        bool onMouseScroll(const MouseScrollEvent* event) override;
+        bool onMouseScroll(MouseScrollEvent& event) override;
 
-        bool unhandledEvent(const Event* event) override;
+        bool onSlide(Event& event);
 
     };
 
@@ -92,7 +92,7 @@ namespace ShishGL {
 
     protected:
 
-        bool onMouseMove(const MouseEvent* event) override;
+        bool onMouseMove(MouseEvent& event) override;
 
     };
 
@@ -105,7 +105,8 @@ namespace ShishGL {
 
     public:
 
-        ScrollButton(Object::ID id, Object::ID parent, Mouse::ScrollDelta delta,
+        ScrollButton(Object::ID id, Object::ID parent,
+                     Mouse::ScrollDelta delta,
                      const ButtonColorScheme& colors,
                      const Vector2<double>& size,
                      const Vector2<double>& pos = {0, 0});
@@ -118,7 +119,7 @@ namespace ShishGL {
 
     protected:
 
-        void reactOnHold(const TimerEvent* event) override;
+        void reactOnHold(TimerEvent& event) override;
 
     };
 

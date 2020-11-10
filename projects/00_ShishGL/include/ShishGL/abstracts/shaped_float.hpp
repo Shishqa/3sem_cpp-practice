@@ -18,24 +18,31 @@ namespace ShishGL {
         explicit ShapedFloat(Object::ID id, Object::ID parent, const ButtonColorScheme& colors,
                              Args&&... args)
                 : ShapedButton<SomeShape>(id, parent, colors,
-                                          std::forward<Args>(args)...) {}
+                                          std::forward<Args>(args)...) {
+
+                    SubscriptionManager::subscribe(SystemEvents::SYSTEM, ShapedButton<SomeShape>::id());
+
+                    LogSystem::printLog("Created shaped float");
+
+                }
 
         ~ShapedFloat() override = default;
 
     protected:
 
-        void reactOnButton(const MouseButtonEvent* event) override {
-            if (event->state() == Mouse::DOWN) {
-                where_dragged = event->where();
+        void reactOnButton(MouseButtonEvent& event) override {
+            if (event.state() == Mouse::DOWN) {
+                where_dragged = event.where();
             }
         }
 
-        bool onMouseMove(const MouseEvent* event) override {
+        bool onMouseMove(MouseEvent& event) override {
             if (ShapedButton<SomeShape>::is_pressed) {
-                ShapedWindow<SomeShape>::translate(event->where() - where_dragged);
-                where_dragged = event->where();
+                ShapedWindow<SomeShape>::translate(event.where() - where_dragged);
+                where_dragged = event.where();
+                return true;
             }
-            return true;
+            return ShapedButton<SomeShape>::onMouseMove(event);
         }
 
     };
