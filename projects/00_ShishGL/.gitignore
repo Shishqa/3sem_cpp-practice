@@ -1,9 +1,4 @@
 .idea/
-.ccls
-.clang-format
+cmake-build-debug/
 
-bin/
-build/
-
-FiraCode-Regular.ttf
-TEST_TEXT.txt
+logs
