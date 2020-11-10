@@ -10,28 +10,28 @@ int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
 
-    CoreApplication::create<RectWindow>(
+    CREATE<RectWindow>(
             0,
             WHITE,
             Vector2<double>{50, 50},
             Vector2<double>{100, 100}
             );
 
-    CoreApplication::create<RectButton>(
+    CREATE<RectButton>(
             0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{50, 50},
             Vector2<double>{200, 100}
     );
 
-    CoreApplication::create<RectFloat>(
+    CREATE<RectFloat>(
             0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{50, 50},
             Vector2<double>{300, 100}
     );
 
-    CoreApplication::create<RectSlider>(
+    CREATE<RectSlider>(
             0,
             DEFAULT_BUTTON_COLORS,
             Vector2<double>{200, 0},

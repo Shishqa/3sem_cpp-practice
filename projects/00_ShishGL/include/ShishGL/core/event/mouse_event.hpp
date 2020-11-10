@@ -20,7 +20,7 @@ namespace ShishGL {
         const Vector2<double>& where() const { return m_where; }
 
         bool happen(Object::ID listener) override {
-            return ObjectManager::get<Listener>(listener).onMouseMove(*this);
+            return GET<Object>(listener).onMouseMove(*this);
         }
 
     protected:
@@ -50,7 +50,7 @@ namespace ShishGL {
         inline Mouse::ButtonState state() const { return m_state; }
 
         bool happen(Object::ID listener) override {
-            return ObjectManager::get<Listener>(listener).onMouseClick(*this);
+            return GET<Object>(listener).onMouseClick(*this);
         }
 
     protected:
@@ -76,7 +76,7 @@ namespace ShishGL {
         inline Mouse::ScrollDelta delta() const { return m_delta; }
 
         bool happen(Object::ID listener) override {
-            return ObjectManager::get<Listener>(listener).onMouseScroll(*this);
+            return GET<Object>(listener).onMouseScroll(*this);
         }
 
     protected:

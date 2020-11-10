@@ -12,8 +12,8 @@ SRC      :=                           							\
    	$(wildcard src/ShishGL/geometry/*.cpp)						\
    	$(wildcard src/ShishGL/core/*.cpp)      					\
    	$(wildcard src/ShishGL/core/engine/sfml/*.cpp)      		\
-   	$(wildcard src/ShishGL/core/input/*.cpp)      				\
    	$(wildcard src/ShishGL/core/object/*.cpp)      				\
+   	$(wildcard src/ShishGL/core/input/*.cpp)      				\
    	$(wildcard src/ShishGL/text/*.cpp)      					\
    	#$(wildcard src/ShishGL/user_interface/scrollbar/*.cpp)		\
    	#$(wildcard src/ShishGL/user_interface/text_buffer/*.cpp)	\

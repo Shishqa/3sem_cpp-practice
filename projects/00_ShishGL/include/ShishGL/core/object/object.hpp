@@ -25,9 +25,39 @@ namespace ShishGL {
     protected:
 
         /* Creates Objects */
+        /*-------------------------------------------------------*/
         friend class ObjectManager;
 
         explicit Object(Object::ID id) : m_id(id) {};
+        /*-------------------------------------------------------*/
+
+        /* Delivers Events */
+        /*-------------------------------------------------------*/
+        friend class Event;
+        friend class EventSystem;
+
+        virtual bool filterEvent(class Event&) const { return true; }
+
+        virtual bool unhandledEvent(class Event&) { return false; }
+        /*-------------------------------------------------------*/
+
+        /* System Event handlers */
+        /*-------------------------------------------------------*/
+        friend class MouseEvent;
+        virtual bool onMouseMove(class MouseEvent&) { return false; }
+
+        friend class MouseButtonEvent;
+        virtual bool onMouseClick(class MouseButtonEvent&) { return false; }
+
+        friend class MouseScrollEvent;
+        virtual bool onMouseScroll(class MouseScrollEvent&) { return false; }
+
+        friend class KeyboardEvent;
+        virtual bool onKeyboard(class KeyboardEvent&) { return false; }
+
+        friend class TimerEvent;
+        virtual bool onTimer(class TimerEvent&) { return false; }
+        /*-------------------------------------------------------*/
 
     private:
 

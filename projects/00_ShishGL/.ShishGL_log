@@ -1,16 +1,16 @@
-[             61] : initializing engine...
-[      349414740] : engine initialized
-[      349499515] : Created window 200 (parent=0)
-[      350052863] : Created shaped window 0x558511865f10 at (100; 100)
-[      350135322] : Created window 201 (parent=0)
-[      350372557] : Created shaped window 0x558511a5be50 at (200; 100)
-[      350401807] : Created shaped button
-[      350415265] : Created window 202 (parent=0)
-[      350522378] : Created shaped window 0x558511a5bf30 at (300; 100)
-[      350546961] : Created shaped button
-[      350557780] : Created shaped float
-[      350569476] : Created window 203 (parent=0)
-[      350670954] : Created shaped window 0x5585119aa8f0 at (400; 100)
-[      350693056] : Created shaped button
-[      350704436] : Created shaped float
-[     9263408795] : terminating engine...
+[            346] : initializing engine...
+[      290901497] : engine initialized
+[      291005062] : Created window 200 (parent=0)
+[      291055860] : Created shaped window 0x60f000004870 at (100; 100)
+[      291084739] : Created window 201 (parent=0)
+[      291090888] : Created shaped window 0x610000027e40 at (200; 100)
+[      291107041] : Created shaped button
+[      291114416] : Created window 202 (parent=0)
+[      291119391] : Created shaped window 0x611000043e80 at (300; 100)
+[      291124405] : Created shaped button
+[      291144970] : Created shaped float
+[      291154507] : Created window 203 (parent=0)
+[      291159364] : Created shaped window 0x611000043fc0 at (400; 100)
+[      291164345] : Created shaped button
+[      291168113] : Created shaped float
+[     1878249514] : terminating engine...

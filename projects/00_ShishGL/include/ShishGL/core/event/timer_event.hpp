@@ -18,7 +18,7 @@ namespace ShishGL {
         inline const TimeDelta& delta() const { return time_delta; }
 
         bool happen(Object::ID listener) override {
-            return ObjectManager::get<Listener>(listener).onTimer(*this);
+            return GET<Object>(listener).onTimer(*this);
         }
 
     protected:

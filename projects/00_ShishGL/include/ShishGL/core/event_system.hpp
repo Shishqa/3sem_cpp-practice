@@ -8,7 +8,6 @@
 #include <unordered_set>
 #include <cstdio>
 
-#include "object/object_manager.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*============================================================================*/
 namespace ShishGL {

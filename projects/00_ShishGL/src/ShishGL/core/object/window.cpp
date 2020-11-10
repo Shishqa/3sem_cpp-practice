@@ -10,10 +10,10 @@ using namespace ShishGL;
 /*============================================================================*/
 
 Window::Window(Object::ID id, Object::ID parent)
-        : Listener(id)
+        : Object(id)
         , parent(parent) {
 
-    SubscriptionManager::subscribe(SystemEvents::RENDER, Listener::id());
+    SubscriptionManager::subscribe(SystemEvents::RENDER, Object::id());
 
     LogSystem::printLog("Created window %lu (parent=%lu)", id, parent);
 

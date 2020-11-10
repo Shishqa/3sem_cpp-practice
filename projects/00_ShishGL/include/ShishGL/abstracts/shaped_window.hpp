@@ -10,6 +10,9 @@
 #include "ShishGL/core/engine/template_engine.hpp"
 #include "ShishGL/core/object/window.hpp"
 #include "ShishGL/color/color.hpp"
+#include "ShishGL/core/subscription_manager.hpp"
+#include "ShishGL/core/event/system_slots.hpp"
+#include "ShishGL/core/event/event.hpp"
 /*----------------------------------------------------------------------------*/
 namespace ShishGL {
 
@@ -31,10 +34,6 @@ namespace ShishGL {
 
             if (parent) {
                 SomeShape::translate(ObjectManager::get<Window>(parent).getAbsPos());
-            }
-
-            if (SomeShape::contains(Engine::getMousePos())) {
-                is_mouse_inside = true;
             }
 
             SubscriptionManager::subscribe(SystemEvents::SYSTEM, Window::id());

@@ -3,7 +3,7 @@
 #define SHISHGL_BASE_EVENT_HPP
 /*============================================================================*/
 #include "ShishGL/core/input/timer.hpp"
-#include "ShishGL/core/object/listener.hpp"
+#include "ShishGL/core/object/object_manager.hpp"
 #include <cstdint>
 /*============================================================================*/
 namespace ShishGL {
@@ -16,7 +16,7 @@ namespace ShishGL {
         Event() = default;
 
         virtual bool happen(Object::ID listener) {
-            return ObjectManager::get<Listener>(listener).onEvent(*this);
+            return GET<Object>(listener).unhandledEvent(*this);
         }
 
         virtual ~Event() = default;

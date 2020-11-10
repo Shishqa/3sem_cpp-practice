@@ -3,6 +3,7 @@
 #include "ShishGL/core/event_system.hpp"
 #include "ShishGL/core/subscription_manager.hpp"
 #include "ShishGL/core/core_application.hpp"
+#include "ShishGL/core/event/system_slots.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -34,7 +35,7 @@ bool EventSystem::sendEvent(Object::ID sender, Event* event) {
 
     for (auto& sub : SubscriptionManager::Subscriptions()[sender]) {
 
-        if (!ObjectManager::get<Listener>(sub).filterEvent(*event)) {
+        if (!ObjectManager::get<Object>(sub).filterEvent(*event)) {
             continue;
         }
 

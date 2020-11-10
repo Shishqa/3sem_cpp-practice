@@ -29,7 +29,7 @@ namespace ShishGL {
         inline Keyboard::ModifierMask modifiers() const { return k_modifiers; }
 
         bool happen(Object::ID listener) override {
-            return ObjectManager::get<Listener>(listener).onKeyboard(*this);
+            return GET<Object>(listener).onKeyboard(*this);
         }
 
     protected:

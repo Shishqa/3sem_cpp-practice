@@ -5,6 +5,7 @@
 #include "ShishGL/core/log.hpp"
 #include "ShishGL/core/core_application.hpp"
 #include "ShishGL/core/event_system.hpp"
+#include "ShishGL/core/event/system_slots.hpp"
 #include "ShishGL/color/color_collection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
@@ -86,12 +87,6 @@ bool CoreApplication::terminate() {
     is_initialized = false;
 
     return true;
-}
-
-/*----------------------------------------------------------------------------*/
-
-void CoreApplication::remove(Object::ID id) {
-    ObjectManager::remove(id);
 }
 
 /*============================================================================*/

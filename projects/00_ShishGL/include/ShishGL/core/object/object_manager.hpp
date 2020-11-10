@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "object.hpp"
+#include "ShishGL/core/core_application.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -17,20 +18,22 @@ namespace ShishGL {
         using Helper =
                 std::enable_if_t<std::is_base_of<Object, SomeObject>::value, T>;
 
-        /*--------------------------------------------------------------------*/
-
-        static Object::ID newId() {
-            /* todo: something smarter */
-            static Object::ID MIN_AVAILABLE_ID = 200;
-            return MIN_AVAILABLE_ID++;
-        }
-
-        /*--------------------------------------------------------------------*/
+        static Object::ID newId();
 
     public:
 
+        template <typename SomeObject>
+        static Helper<SomeObject, SomeObject&> get(Object::ID id) {
+            return dynamic_cast<SomeObject&>(*Pool()[id]);
+        }
+
+        /*--------------------------------------------------------------------*/
         template <typename SomeObject, typename... Args>
         static Helper<SomeObject, Object::ID> create(Args&&... args) {
+
+            if (!CoreApplication::is_initialized) {
+                return 0;
+            }
 
             Object::ID new_id = newId();
 
@@ -42,39 +45,27 @@ namespace ShishGL {
             return new_id;
         }
 
+        static bool remove(Object::ID id);
         /*--------------------------------------------------------------------*/
-
-        static bool remove(Object::ID id) {
-            return Pool().erase(id);
-        }
-
-        /*--------------------------------------------------------------------*/
-
-        template <typename SomeObject>
-        static Helper<SomeObject, SomeObject&> get(Object::ID id) {
-            return dynamic_cast<SomeObject&>(*Pool()[id]);
-        }
 
     private:
-
-        friend class EventSystem;
-        friend class Window;
-
-        /*----------------------------------------------------------------*/
-        static Object& get(Object::ID id) {
-            return *Pool()[id];
-        }
-        /*----------------------------------------------------------------*/
 
         using ObjectPool =
                 std::unordered_map<Object::ID, std::unique_ptr<Object>>;
 
-        static ObjectPool& Pool() {
-            static ObjectPool POOL;
-            return POOL;
-        }
+        static ObjectPool& Pool();
 
     };
+
+    template <typename SomeObject, typename... Args>
+    inline Object::ID CREATE(Args&&... args) {
+        return ObjectManager::create<SomeObject>(std::forward<Args>(args)...);
+    }
+
+    template <typename SomeObject>
+    inline SomeObject& GET(Object::ID id) {
+        return ObjectManager::get<SomeObject>(id);
+    }
 
 }
 /*============================================================================*/
