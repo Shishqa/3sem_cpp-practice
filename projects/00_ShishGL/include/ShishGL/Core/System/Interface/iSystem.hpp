@@ -33,7 +33,13 @@ namespace ShishGL {
                                const size_t& radius) = 0;
         /*--------------------------------------------------------------------*/
 
-        /* TODO: Text */
+        /* Image */
+        /*--------------------------------------------------------------------*/
+        virtual void displayImage(const uint8_t* data, const size_t& data_size,
+                                  const Vector2<double>& position) = 0;
+        /*--------------------------------------------------------------------*/
+
+        /* Text */
         /*--------------------------------------------------------------------*/
         virtual void displayText(const std::string_view& text,
                                  size_t font_size,

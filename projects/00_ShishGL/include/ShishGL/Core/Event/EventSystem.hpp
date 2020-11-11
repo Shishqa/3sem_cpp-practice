@@ -20,6 +20,8 @@ namespace ShishGL {
 
     public:
 
+        static constexpr Object::ID SYSTEM_EVENTS = 1;
+
         template <typename SomeEvent, typename... Args>
         static Helper<SomeEvent, void> postEvent(Args&&... args);
 

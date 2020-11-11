@@ -85,6 +85,26 @@ void SfmlSystem::drawCircle(const Vector2<double>& pos,
 
 /*----------------------------------------------------------------------------*/
 
+void SfmlSystem::displayImage(const uint8_t* data, const size_t& data_size,
+                              const Vector2<double>& pos) {
+
+    sf::Texture texture = {};
+
+    texture.loadFromMemory(data, data_size);
+
+    sf::Sprite sprite = {};
+
+    sprite.setPosition(static_cast<float>(pos.x),
+                       static_cast<float>(pos.y));
+
+    sprite.setTexture(texture);
+
+    canvas->draw(sprite);
+
+}
+
+/*----------------------------------------------------------------------------*/
+
 void SfmlSystem::displayText(const std::string_view& str, size_t font_size,
                              const Vector2<double>& pos) {
 

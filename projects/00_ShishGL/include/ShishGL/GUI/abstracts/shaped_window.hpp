@@ -10,7 +10,7 @@
 #include "ShishGL/core/engine/template_engine.hpp"
 #include "ShishGL/core/object/window.hpp"
 #include "ShishGL/Core/Platform/Primitives/Color.hpp"
-#include "../../Core/Event/SubscriptionManager.hpp"
+#include "SubscriptionManager.hpp"
 #include "ShishGL/core/event/system_slots.hpp"
 #include "ShishGL/core/event/event.hpp"
 /*----------------------------------------------------------------------------*/

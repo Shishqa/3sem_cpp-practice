@@ -5,6 +5,7 @@
 #include "System.hpp"
 #include "EventSystem.hpp"
 #include "ColorCollection.hpp"
+#include "GraphicObject.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -78,7 +79,7 @@ uint8_t CoreApplication::run() {
         ++frame_counter;
 
         System().clear(BLACK);
-        //EventSystem::sendEvent<RenderEvent>(SystemEvents::RENDER);
+        EventSystem::sendEvent<RenderEvent>(RENDER_EVENTS);
         System().display();
 
         TimeDelta delta = frame_timer.elapsed();

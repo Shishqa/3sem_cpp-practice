@@ -1,5 +1,7 @@
 /*============================================================================*/
-#include "ShishGL.hpp"
+#include "CoreApplication.hpp"
+#include "Rectangle.hpp"
+#include "ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -7,6 +9,12 @@ using namespace ShishGL;
 int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
+
+    CREATE<Rectangle>(
+            WHITE_SMOKE,
+            Vector2<double>{1000, 100},
+            Vector2<double>{100, 500}
+            );
 
     /*
     CREATE<RectWindow>(

@@ -16,6 +16,12 @@ target_sources(ShishGL-Primitives
     ${INCROOT}/Time.hpp
   PRIVATE
     ${INCROOT}/Vector2.ipp
+    Vector2.cpp
     Time.cpp
     Text.cpp
+  )
+
+target_compile_features(ShishGL-Primitives
+  PUBLIC
+    cxx_std_17
   )

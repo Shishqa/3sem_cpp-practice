@@ -3,52 +3,47 @@
 #define SHISHGL_RECTANGLE_HPP
 /*============================================================================*/
 #include "Shape2D.hpp"
+#include "CoreApplication.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Rectangle : public GraphicObject {
+    class Rectangle : public Shape2D {
+    public:
+
+        Rectangle(Object::ID id, const Vector2<double>& size,
+                  const Vector2<double>& pos = {0, 0});
+
+        Rectangle(Object::ID id, const Color& color,
+                  const Vector2<double>& size,
+                  const Vector2<double>& pos = {0, 0});
+
+        /*--------------------------------------------------------------------*/
+
+        [[nodiscard]]
+        Vector2<double> getCenter() const;
+
+        void setCenter(const Vector2<double>& new_center);
+
+        /*--------------------------------------------------------------------*/
+
+        [[nodiscard]]
+        const Vector2<double>& getSize() const;
+
+        void setSize(const Vector2<double>& new_size);
+
+        /*--------------------------------------------------------------------*/
+
+        bool onRender() override;
+
+        [[nodiscard]]
+        bool contains(const Vector2<double>& point) const override;
+
+        [[nodiscard]]
+        Vector2<double> overallDimension() const override;
+
     protected:
 
         Vector2<double> size;
-
-    public:
-
-        explicit Rectangle(const Vector2<double>& size,
-                           const Vector2<double>& pos = {0, 0})
-            : Shape2D(pos)
-            , size(size) {}
-
-        /*--------------------------------------------------------------------*/
-
-        void setCenter(const Vector2<double>& new_center) {
-            move_to(new_center - 0.5 * size);
-        }
-
-        [[nodiscard]]
-        inline Vector2<double> getCenter() const {
-            return getPos() + 0.5 * size;
-        };
-
-        /*--------------------------------------------------------------------*/
-
-        void render() override {
-
-            Engine::drawRectangle(getPos(), size);
-
-        }
-
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        bool contains(const Vector2<double>& point) const override {
-            return (getPos().x <= point.x && point.x <= getPos().x + size.x &&
-                    getPos().y <= point.y && point.y <= getPos().y + size.y);
-        }
-
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        const Vector2<double>& getSize() const { return size; }
 
     };
 

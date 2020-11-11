@@ -1,18 +1,19 @@
 /*============================================================================*/
-#include "Shape2D.hpp"
+#include "Vector2.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-Shape2D::Shape2D(Object::ID id, const Vector2<double> &pos)
-    : GraphicObject(id)
-    , s_pos(pos)
-    { }
+template <>
+Vector2<double> Vector2<double>::operator!() const {
+    double len = this->length();
 
-/*----------------------------------------------------------------------------*/
+    if (-0.0001 < len && len < 0.0001) {
+        return *this;
+    }
 
-const Vector2<double>& Shape2D::getPos() const {
-    return s_pos;
+    Vector2<double> copy{*this};
+    return (1 / len) * copy;
 }
 
 /*============================================================================*/

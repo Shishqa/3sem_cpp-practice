@@ -14,13 +14,6 @@ EventSystem::EventQueue& EventSystem::Events() {
 
 /*----------------------------------------------------------------------------*/
 
-SubscriptionManager::SubscriptionPool& SubscriptionManager::Subscriptions() {
-    static SubscriptionPool POOL;
-    return POOL;
-}
-
-/*----------------------------------------------------------------------------*/
-
 Timer& EventSystem::EventTimer() {
     static Timer EVENT_TIMER;
     return EVENT_TIMER;
@@ -74,13 +67,11 @@ void EventSystem::dispatchSingleEvent() {
     Event* event = Events().front();
     Events().pop();
 
-    //bool status = sendEvent(SystemEvents::SYSTEM, event);
+    bool status = sendEvent(SYSTEM_EVENTS, event);
 
-    /*
     if (!status) {
-        //LogSystem::printWarning("missed event %s", typeid(*event).name());
+        LogSystem::printWarning("Missed event %s", typeid(*event).name());
     }
-     */
 
     delete event;
 }

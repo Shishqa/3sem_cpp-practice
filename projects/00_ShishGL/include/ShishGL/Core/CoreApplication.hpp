@@ -6,11 +6,14 @@
 #include <unordered_set>
 
 #include "iSystem.hpp"
+#include "Object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     class CoreApplication {
     public:
+
+        static constexpr Object::ID RENDER_EVENTS = 2;
 
         static bool init(int* argc_ptr, char* argv[]);
 

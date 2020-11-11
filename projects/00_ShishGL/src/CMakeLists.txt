@@ -9,6 +9,8 @@ target_include_directories(ShishGL
 target_link_libraries(ShishGL
   INTERFACE
     ShishGL-Core
+    ShishGL-Graphics
   )
 
 add_subdirectory(Core)
+add_subdirectory(Graphics)

@@ -37,7 +37,12 @@ namespace ShishGL {
                         const size_t& radius) override;
         /*--------------------------------------------------------------------*/
 
-        /* TODO: Text */
+        /* Image */
+        /*--------------------------------------------------------------------*/
+        void displayImage(const uint8_t* data, const size_t& data_size,
+                          const Vector2<double>& pos) override;
+
+        /* Text */
         /*--------------------------------------------------------------------*/
         void displayText(const std::string_view& text, size_t font_size,
                          const Vector2<double>& pos) override;
