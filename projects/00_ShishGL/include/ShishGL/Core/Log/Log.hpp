@@ -53,6 +53,20 @@ namespace ShishGL {
 
         /*--------------------------------------------------------------------*/
         static FILE* LOG_FILE;
+
+        static constexpr size_t BUFFER_SIZE = 4096;
+
+        struct Message {
+
+            char buffer[BUFFER_SIZE];
+            size_t cnt;
+
+            TimeDelta begin;
+            TimeDelta end;
+
+        };
+
+        static Message& LastMessage();
         /*--------------------------------------------------------------------*/
 
         static Timer& RunTimer();

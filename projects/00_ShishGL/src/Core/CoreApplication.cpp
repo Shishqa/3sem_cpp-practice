@@ -2,6 +2,7 @@
 #include "Log.hpp"
 #include "CoreApplication.hpp"
 #include "iSystem.hpp"
+#include "System.hpp"
 #include "EventSystem.hpp"
 #include "ColorCollection.hpp"
 /*============================================================================*/
@@ -41,7 +42,7 @@ bool CoreApplication::init(int *argc_ptr, char **argv) {
 #endif
 
     System().initDisplay(argc_ptr, argv);
-    LogSystem::printLog("system initialized");
+    LogSystem::printLog("System initialized");
 
     is_initialized = true;
 
@@ -54,7 +55,7 @@ uint8_t CoreApplication::run() {
 
     if (!is_initialized) {
         LogSystem::printError("Running CoreApplication before initialization");
-        return 1; /* todo */
+        return 10;
     }
 
     EventSystem::EventTimer().reset();
@@ -63,7 +64,16 @@ uint8_t CoreApplication::run() {
     frame_timer.reset();
     size_t frame_counter = 0;
 
+    LogSystem::printLog("Started run session");
+
     while (System().isRunning()) {
+
+        System().pollEvent();
+        EventSystem::dispatchEvents();
+
+        if (!System().isRunning()) {
+            break;
+        }
 
         ++frame_counter;
 
@@ -77,8 +87,6 @@ uint8_t CoreApplication::run() {
             frame_counter = 0;
             frame_timer.reset();
         }
-
-        EventSystem::dispatchEvents();
     }
 
     terminate();
@@ -92,14 +100,14 @@ bool CoreApplication::terminate() {
 
     EventSystem::flush();
 
-    LogSystem::printLog("terminating engine...");
+    LogSystem::printLog("Terminating system...");
     System().closeDisplay();
-    LogSystem::printLog("engine terminated");
+    delete active_system;
+    active_system = nullptr;
+    LogSystem::printLog("System terminated");
 
     LogSystem::closeLog();
-
     is_initialized = false;
-    active_system = nullptr;
 
     return true;
 }

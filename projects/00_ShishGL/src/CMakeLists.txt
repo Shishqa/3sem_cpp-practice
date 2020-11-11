@@ -6,4 +6,9 @@ target_include_directories(ShishGL
   INTERFACE
     ${INCROOT})
 
+target_link_libraries(ShishGL
+  INTERFACE
+    ShishGL-Core
+  )
+
 add_subdirectory(Core)

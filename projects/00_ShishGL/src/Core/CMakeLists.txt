@@ -7,10 +7,12 @@ target_include_directories(ShishGL-Core
   )
 
 target_sources(ShishGL-Core
-  PRIVATE
-    CoreApplication.cpp
   PUBLIC
     ${INCROOT}/CoreApplication.hpp
+    ${INCROOT}/GraphicObject.hpp
+  PRIVATE
+    CoreApplication.cpp
+    GraphicObject.cpp
   )
 
 target_link_libraries(ShishGL-Core
@@ -27,4 +29,3 @@ add_subdirectory(Primitives)
 add_subdirectory(Event)
 add_subdirectory(Object)
 add_subdirectory(System)
-

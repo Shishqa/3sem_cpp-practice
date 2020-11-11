@@ -1,6 +1,6 @@
 add_library(ShishGL-SystemEvents)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System/Events)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System/Interface/Events)
 
 target_include_directories(ShishGL-SystemEvents
   PUBLIC
@@ -12,8 +12,8 @@ target_sources(ShishGL-SystemEvents
     ${INCROOT}/KeyboardEvent.hpp
     ${INCROOT}/MouseEvent.hpp
   PRIVATE
-    KeyboardEvent.cpp
-    MouseEvent.cpp
+  KeyboardEvent.cpp
+  MouseEvent.cpp
   )
 
 target_link_libraries(ShishGL-SystemEvents

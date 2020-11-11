@@ -1,6 +1,6 @@
 add_library(ShishGL-SystemInput)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System/Input)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System/Interface/Input)
 
 target_include_directories(ShishGL-SystemInput
   PUBLIC
@@ -12,7 +12,7 @@ target_sources(ShishGL-SystemInput
     ${INCROOT}/Mouse.hpp
     ${INCROOT}/Keyboard.hpp
   PRIVATE
-    Keyboard.cpp
+  Keyboard.cpp
   )
 
 target_compile_features(ShishGL-SystemInput

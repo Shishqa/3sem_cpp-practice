@@ -21,7 +21,7 @@ bool pollMouseButton(const sf::Event& sf_event) {
         case sf::Event::MouseButtonReleased: state = Mouse::UP;   break;
 
         default:
-            return nullptr;
+            return false;
 
     }
 

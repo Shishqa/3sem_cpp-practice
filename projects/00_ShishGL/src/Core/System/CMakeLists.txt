@@ -1,33 +1,6 @@
-add_library(ShishGL-SystemInterface INTERFACE)
+add_library(ShishGL-System INTERFACE)
 
 set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System)
-
-target_include_directories(ShishGL-SystemInterface
-  INTERFACE
-    ${INCROOT})
-
-target_sources(ShishGL-SystemInterface
-  INTERFACE
-    ${INCROOT}/iSystem.hpp
-  )
-
-target_link_libraries(ShishGL-SystemInterface
-  INTERFACE
-    ShishGL-SystemEvents
-    ShishGL-Primitives
-  )
-
-target_compile_features(ShishGL-SystemInterface
-  INTERFACE
-    cxx_std_17
-  )
-
-add_subdirectory(Events)
-add_subdirectory(Input)
-
-#==============================================================================#
-
-add_library(ShishGL-System INTERFACE)
 
 target_include_directories(ShishGL-System
   INTERFACE
@@ -48,6 +21,8 @@ target_compile_features(ShishGL-System
   INTERFACE
     cxx_std_17
   )
+
+add_subdirectory(Interface)
 
 if (USE_SFML)
 

@@ -1,15 +1,12 @@
 /*============================================================================*/
-#ifndef INC_00_SHISHGL_RECTANGLE_HPP
-#define INC_00_SHISHGL_RECTANGLE_HPP
+#ifndef SHISHGL_RECTANGLE_HPP
+#define SHISHGL_RECTANGLE_HPP
 /*============================================================================*/
-#include "ShishGL/core/engine/engine.hpp"
-#include "ShishGL/Core/Platform/Primitives/Color.hpp"
-#include "ShishGL/Core/Platform/Primitives/Vector2.hpp"
-#include "shape2d.hpp"
+#include "Shape2D.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Rectangle : public Shape2D {
+    class Rectangle : public GraphicObject {
     protected:
 
         Vector2<double> size;
@@ -38,20 +35,6 @@ namespace ShishGL {
 
             Engine::drawRectangle(getPos(), size);
 
-#ifdef DRAW_GUIDES
-            Engine::setColor(RED);
-            Engine::drawLine(getRealPos(),
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), 0});
-            Engine::drawLine(getRealPos() + Vector2<int>{static_cast<int>(size.x), 0},
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), static_cast<int>(size.y)});
-            Engine::drawLine(getRealPos() + Vector2<int>{0, static_cast<int>(size.y)},
-                             getRealPos() + Vector2<int>{static_cast<int>(size.x), static_cast<int>(size.y)});
-            Engine::drawLine(getRealPos(),
-                             getRealPos() + Vector2<int>{0, static_cast<int>(size.y)});
-
-            Engine::setColor(BLUE);
-            Engine::drawPoint(getPos());
-#endif
         }
 
         /*--------------------------------------------------------------------*/
@@ -71,5 +54,5 @@ namespace ShishGL {
 
 }
 /*============================================================================*/
-#endif //INC_00_SHISHGL_RECTANGLE_HPP
+#endif //SHISHGL_RECTANGLE_HPP
 /*============================================================================*/

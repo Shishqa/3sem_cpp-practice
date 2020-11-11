@@ -12,6 +12,17 @@ FILE* LogSystem::LOG_FILE = nullptr;
 
 /*----------------------------------------------------------------------------*/
 
+LogSystem::Message& LogSystem::LastMessage() {
+
+    static Message LAST_MESSAGE = {
+            "", 0, {}, {}
+    };
+
+    return LAST_MESSAGE;
+}
+
+/*----------------------------------------------------------------------------*/
+
 Timer& LogSystem::RunTimer() {
     static Timer RUN_TIMER;
     return RUN_TIMER;
@@ -20,16 +31,29 @@ Timer& LogSystem::RunTimer() {
 /*----------------------------------------------------------------------------*/
 
 LogSystem::LogStatus LogSystem::openLog() {
+
     if (LOG_FILE) {
         return LOG_ALREADY_OPENED;
     }
-    LOG_FILE = fopen("logs/ShishGL_log", "a");
+    LOG_FILE = fopen("ShishGL_log", "w");
+
+    if (LOG_FILE) {
+        fprintf(LOG_FILE, "\n======================[ ShishGL Log Session ]======================\n");
+    }
+
     return (LOG_FILE ? LOG_OK : LOG_OPEN_ERR);
 }
 
 /*----------------------------------------------------------------------------*/
 
 LogSystem::LogStatus LogSystem::closeLog() {
+
+    flush();
+
+    if (LOG_FILE) {
+        fprintf(LOG_FILE, "====================================================================\n\n");
+    }
+
     fclose(LOG_FILE);
     LOG_FILE = nullptr;
     return LOG_OK;
@@ -39,12 +63,14 @@ LogSystem::LogStatus LogSystem::closeLog() {
 
 LogSystem::LogStatus LogSystem::printLog(const char *format, ...) {
 
+    if (!LOG_FILE) {
+        return LOG_PRINT_ERR;
+    }
+
     va_list arg_list = {};
     va_start(arg_list, format);
     print(RunTimer().elapsed(), format, arg_list);
     va_end(arg_list);
-
-    flush();
 
     return LOG_OK;
 }
@@ -53,12 +79,14 @@ LogSystem::LogStatus LogSystem::printLog(const char *format, ...) {
 
 LogSystem::LogStatus LogSystem::printWarning(const char *format, ...) {
 
+    if (!LOG_FILE) {
+        return LOG_PRINT_ERR;
+    }
+
     va_list arg_list = {};
     va_start(arg_list, format);
     print(RunTimer().elapsed(), format, arg_list);
     va_end(arg_list);
-
-    flush();
 
     return LOG_OK;
 }
@@ -67,12 +95,14 @@ LogSystem::LogStatus LogSystem::printWarning(const char *format, ...) {
 
 LogSystem::LogStatus LogSystem::printError(const char *format, ...) {
 
+    if (!LOG_FILE) {
+        return LOG_PRINT_ERR;
+    }
+
     va_list arg_list = {};
     va_start(arg_list, format);
     print(RunTimer().elapsed(), format, arg_list);
     va_end(arg_list);
-
-    flush();
 
     return LOG_OK;
 }
@@ -82,44 +112,24 @@ LogSystem::LogStatus LogSystem::printError(const char *format, ...) {
 LogSystem::LogStatus LogSystem::print(const TimeDelta& elapsed,
                                       const char* format, va_list args) {
 
-    static TimeDelta last_msg_begin = {};
-    static TimeDelta last_msg_end = {};
-
-    static char last_msg[4096] = "";
-    static size_t last_msg_cnt = 0;
-
-    static char buffer[4096] = "";
+    static char buffer[BUFFER_SIZE] = "";
 
     size_t str_len = vsnprintf(buffer, sizeof(buffer), format, args);
 
-    if (!strncmp(buffer, last_msg, str_len)) {
+    if (LastMessage().cnt && !strncmp(buffer, LastMessage().buffer, str_len)) {
 
-        last_msg_cnt++;
-        last_msg_end = elapsed;
+        LastMessage().cnt++;
+        LastMessage().end = elapsed;
 
     } else {
 
-        if (last_msg_cnt > 1) {
+        flush();
 
-            fprintf(LOG_FILE, "[%15ld]\n"
-                              "        |         : %s (x%lu)\n"
-                              "[%15ld]\n",
-                    last_msg_begin.count(),
-                    last_msg, last_msg_cnt,
-                    last_msg_end.count());
+        strncpy(LastMessage().buffer, buffer, str_len + 1);
 
-        } else if (last_msg_cnt == 1) {
-
-            fprintf(LOG_FILE, "[%15ld] : %s\n",
-                    last_msg_end.count(), last_msg);
-
-        }
-
-        strncpy(last_msg, buffer, str_len + 1);
-
-        last_msg_cnt = 1;
-        last_msg_begin = elapsed;
-        last_msg_end = elapsed;
+        LastMessage().cnt = 1;
+        LastMessage().begin = elapsed;
+        LastMessage().end = elapsed;
 
     }
 
@@ -129,7 +139,29 @@ LogSystem::LogStatus LogSystem::print(const TimeDelta& elapsed,
 /*----------------------------------------------------------------------------*/
 
 void LogSystem::flush() {
+
+    if (LastMessage().cnt > 1) {
+
+        fprintf(LOG_FILE, "[%15ld]\n"
+                          "        |         : %s (x%lu)\n"
+                          "[%15ld]\n",
+                LastMessage().begin.count(),
+                LastMessage().buffer,
+                LastMessage().cnt,
+                LastMessage().end.count());
+
+    } else if (LastMessage().cnt == 1) {
+
+        fprintf(LOG_FILE, "[%15ld] : %s\n",
+                LastMessage().end.count(),
+                LastMessage().buffer);
+
+    }
+
+    LastMessage().cnt = 0;
+
     fflush(LOG_FILE);
+
 }
 
 /*============================================================================*/

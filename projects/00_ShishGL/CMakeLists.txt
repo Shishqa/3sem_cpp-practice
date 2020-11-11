@@ -14,6 +14,8 @@ option(USE_SFML "Use SFML platform" ON)
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
   set(CMAKE_CXX_EXTENSIONS OFF)
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined")
+  set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined")
 
   if (MSVC)
     add_compile_options(/W3 /WX)

@@ -4,8 +4,8 @@
 /*============================================================================*/
 #include <string_view>
 
-#include "../Primitives/Vector2.hpp"
-#include "../Primitives/Color.hpp"
+#include "Vector2.hpp"
+#include "Color.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
