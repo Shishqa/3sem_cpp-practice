@@ -1,36 +1,64 @@
-add_library(ShishGL-System)
+add_library(ShishGL-SystemInterface INTERFACE)
 
 set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/System)
 
-target_include_directories(ShishGL-System
+target_include_directories(ShishGL-SystemInterface
   INTERFACE
     ${INCROOT})
 
-target_sources(ShishGL-System
-  PUBLIC
+target_sources(ShishGL-SystemInterface
+  INTERFACE
     ${INCROOT}/iSystem.hpp
-    ${INCROOT}/System.hpp
-    ${INCROOT}/Events/MouseEvent.hpp
-    ${INCROOT}/Events/KeyboardEvent.hpp
-    ${INCROOT}/Input/Mouse.hpp
-    ${INCROOT}/Input/Keyboard.hpp
-  PRIVATE
-    System.cpp
-    Input/Keyboard.cpp
-    Events/MouseEvent.cpp
-    Events/KeyboardEvent.cpp
   )
 
-target_link_libraries(ShishGL-System
-  PUBLIC
-    ShishGL-Event
+target_link_libraries(ShishGL-SystemInterface
+  INTERFACE
+    ShishGL-SystemEvents
     ShishGL-Primitives
   )
 
-target_compile_features(ShishGL-System
-  PUBLIC
+target_compile_features(ShishGL-SystemInterface
+  INTERFACE
     cxx_std_17
   )
 
 add_subdirectory(Events)
 add_subdirectory(Input)
+
+#==============================================================================#
+
+add_library(ShishGL-System INTERFACE)
+
+target_include_directories(ShishGL-System
+  INTERFACE
+    ${INCROOT}
+  )
+
+target_link_libraries(ShishGL-System
+  INTERFACE
+    ShishGL-SystemInterface
+  )
+
+target_sources(ShishGL-System
+  INTERFACE
+    ${INCROOT}/System.hpp
+  )
+
+target_compile_features(ShishGL-System
+  INTERFACE
+    cxx_std_17
+  )
+
+if (USE_SFML)
+
+  add_subdirectory(SfmlSystem)
+  target_link_libraries(ShishGL-System
+    INTERFACE
+      ShishGL-SfmlSystem
+    )
+  target_compile_definitions(ShishGL-System
+    INTERFACE
+      USE_SFML
+    )
+
+endif (USE_SFML)

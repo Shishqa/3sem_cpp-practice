@@ -7,83 +7,82 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Primitives/Color.hpp"
-#include "../Primitives/Vector2.hpp"
-#include "../../event/base_event.hpp"
+#include "iSystem.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class SfmlEngine {
+    class SfmlSystem : public ISystem {
     public:
+
+        SfmlSystem();
 
         /* Input */
         /*--------------------------------------------------------------------*/
-        static Vector2<double> getMousePos();
+        Vector2<double> getMousePos() override;
         /*--------------------------------------------------------------------*/
 
         /* Draw */
         /*--------------------------------------------------------------------*/
-        static void setColor(const Color& color);
+        void setColor(const Color& color) override;
 
-        static void drawPoint(const Vector2<double>& pos);
+        void drawPoint(const Vector2<double>& pos) override;
 
-        static void drawLine(const Vector2<double>& start,
-                             const Vector2<double>& end);
+        void drawLine(const Vector2<double>& start,
+                      const Vector2<double>& end) override;
 
-        static void drawRectangle(const Vector2<double>& pos,
-                                  const Vector2<double>& size);
+        void drawRectangle(const Vector2<double>& pos,
+                           const Vector2<double>& size) override;
 
-        static void drawCircle(const Vector2<double>& pos,
-                               const size_t& radius);
+        void drawCircle(const Vector2<double>& pos,
+                        const size_t& radius) override;
         /*--------------------------------------------------------------------*/
 
         /* TODO: Text */
         /*--------------------------------------------------------------------*/
-        static void displayText(const std::string_view& text, size_t font_size,
-                                const Vector2<double>& pos);
+        void displayText(const std::string_view& text, size_t font_size,
+                         const Vector2<double>& pos) override;
         /*--------------------------------------------------------------------*/
 
-        virtual ~SfmlEngine() = default;
+        ~SfmlSystem() override = default;
 
     protected:
 
         /* Essential */
         /*--------------------------------------------------------------------*/
-        static bool initDisplay(int* argc_ptr, char* argv[]);
+         bool initDisplay(int* argc_ptr, char* argv[]) override;
 
-        static bool isRunning();
+         bool isRunning() override;
 
-        static bool closeDisplay();
+         bool closeDisplay() override;
 
-        static Vector2<size_t> getDisplaySize();
+         Vector2<size_t> getDisplaySize() override;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */
         /*--------------------------------------------------------------------*/
-        static void clear(const Color& color);
+         void clear(const Color& color) override;
 
-        static void render();
+         void display() override;
         /*--------------------------------------------------------------------*/
 
         /* Events */
         /*--------------------------------------------------------------------*/
-        static Event* pollEvent();
+         bool pollEvent() override;
         /*--------------------------------------------------------------------*/
 
     private:
 
-        SfmlEngine() = default;
 
         /* IMPLEMENTATION SPECIAL */
     /*========================================================================*/
 
-        static bool is_running;
+         bool is_running;
 
-        static sf::RenderWindow* canvas;
+         sf::RenderWindow* canvas;
 
-        static Color active_color;
+         Color active_color;
 
-        static sf::Font& ActiveFont();
+         sf::Font active_font;
 
     };
 

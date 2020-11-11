@@ -5,9 +5,7 @@
 #include <cstdint>
 #include <unordered_set>
 
-#include "ShishGL/Core/Log/Log.hpp"
-#include "Primitives/Time.hpp"
-#include "engine/template_engine.hpp"
+#include "System/iSystem.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -20,9 +18,7 @@ namespace ShishGL {
 
         static bool terminate();
 
-        static const Timer& getRunTimer() {
-            return RunTimer();
-        }
+        static ISystem& System();
 
         virtual ~CoreApplication() = default;
 
@@ -34,14 +30,13 @@ namespace ShishGL {
 
         static bool is_initialized;
 
-
-
         /*--------------------------------------------------------------------*/
 
-        friend class EventSystem;
-        friend class ObjectManager;
+        static ISystem* active_system;
 
     };
+
+    ISystem& SYSTEM();
 
 }
 /*============================================================================*/

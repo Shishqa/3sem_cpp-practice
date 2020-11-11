@@ -2,6 +2,11 @@
 #ifndef SHISHGL_ISYSTEM_HPP
 #define SHISHGL_ISYSTEM_HPP
 /*============================================================================*/
+#include <string_view>
+
+#include "../Primitives/Vector2.hpp"
+#include "../Primitives/Color.hpp"
+/*============================================================================*/
 namespace ShishGL {
 
     class ISystem {
@@ -9,77 +14,67 @@ namespace ShishGL {
 
         /* Input */
         /*--------------------------------------------------------------------*/
-        static Vector2<double> getMousePos();
+        virtual Vector2<double> getMousePos() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Draw */
         /*--------------------------------------------------------------------*/
-        static void setColor(const Color& color);
+        virtual void setColor(const Color& color) = 0;
 
-        static void drawPoint(const Vector2<double>& pos);
+        virtual void drawPoint(const Vector2<double>& pos) = 0;
 
-        static void drawLine(const Vector2<double>& start,
-                             const Vector2<double>& end);
+        virtual void drawLine(const Vector2<double>& start,
+                             const Vector2<double>& end) = 0;
 
-        static void drawRectangle(const Vector2<double>& pos,
-                                  const Vector2<double>& size);
+        virtual void drawRectangle(const Vector2<double>& pos,
+                                  const Vector2<double>& size) = 0;
 
-        static void drawCircle(const Vector2<double>& pos,
-                               const size_t& radius);
+        virtual void drawCircle(const Vector2<double>& pos,
+                               const size_t& radius) = 0;
         /*--------------------------------------------------------------------*/
 
         /* TODO: Text */
         /*--------------------------------------------------------------------*/
-        static void displayText(const std::string_view& text, size_t font_size,
-                                const Vector2<double>& pos);
+        virtual void displayText(const std::string_view& text,
+                                 size_t font_size,
+                                 const Vector2<double>& pos) = 0;
         /*--------------------------------------------------------------------*/
 
-        virtual ~SfmlEngine() = default;
+        virtual ~ISystem() = default;
 
     protected:
 
+        friend class CoreApplication;
+
+        ISystem() = default;
+
         /* Essential */
         /*--------------------------------------------------------------------*/
-        static bool initDisplay(int* argc_ptr, char* argv[]);
+        virtual bool initDisplay(int* argc_ptr, char* argv[]) = 0;
 
-        static bool isRunning();
+        virtual bool isRunning() = 0;
 
-        static bool closeDisplay();
+        virtual bool closeDisplay() = 0;
 
-        static Vector2<size_t> getDisplaySize();
+        virtual Vector2<size_t> getDisplaySize() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */
         /*--------------------------------------------------------------------*/
-        static void clear(const Color& color);
+        virtual void clear(const Color& color) = 0;
 
-        static void render();
+        virtual void display() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Events */
         /*--------------------------------------------------------------------*/
-        static Event* pollEvent();
+        virtual bool pollEvent() = 0;
         /*--------------------------------------------------------------------*/
-
-    private:
-
-        SfmlEngine() = default;
-
-        /* IMPLEMENTATION SPECIAL */
-        /*========================================================================*/
-
-        static bool is_running;
-
-        static sf::RenderWindow* canvas;
-
-        static Color active_color;
-
-        static sf::Font& ActiveFont();
 
     };
 
 }
 
 /*============================================================================*/
-#endif //SHISHGL_IPLATFORM_HPP
+#endif //SHISHGL_ISYSTEM_HPP
 /*============================================================================*/

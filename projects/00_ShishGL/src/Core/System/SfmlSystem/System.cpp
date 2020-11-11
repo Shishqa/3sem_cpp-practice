@@ -1,22 +1,25 @@
 /*============================================================================*/
-#include "ShishGL/core/engine/sfml/engine.hpp"
+#include "System.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-sf::RenderWindow* SfmlEngine::canvas = nullptr;
-
-bool SfmlEngine::is_running = false;
+SfmlSystem::SfmlSystem()
+    : is_running(false)
+    , canvas(nullptr)
+    , active_color({})
+    , active_font({})
+    { }
 
 /*----------------------------------------------------------------------------*/
 
-bool SfmlEngine::initDisplay(int*, char**) {
+bool SfmlSystem::initDisplay(int*, char**) {
 
     canvas = new sf::RenderWindow(sf::VideoMode::getDesktopMode(), "sfml",
                                   sf::Style::Fullscreen);
 
     /* todo: fix hard-coded font */
-    if (!ActiveFont().loadFromFile("./assets/fonts/FiraCode-Regular.ttf")) {
+    if (!active_font.loadFromFile("./assets/fonts/FiraCode-Regular.ttf")) {
         return false;
     }
 
@@ -27,13 +30,13 @@ bool SfmlEngine::initDisplay(int*, char**) {
 
 /*----------------------------------------------------------------------------*/
 
-bool SfmlEngine::isRunning() {
+bool SfmlSystem::isRunning() {
     return is_running;
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool SfmlEngine::closeDisplay() {
+bool SfmlSystem::closeDisplay() {
 
     is_running = false;
 
@@ -45,19 +48,19 @@ bool SfmlEngine::closeDisplay() {
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::clear(const Color& color) {
+void SfmlSystem::clear(const Color& color) {
     canvas->clear(sf::Color{color.r, color.g, color.b, color.a});
 }
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::render() {
+void SfmlSystem::display() {
     canvas->display();
 }
 
 /*============================================================================*/
 
-Vector2<size_t> SfmlEngine::getDisplaySize() {
+Vector2<size_t> SfmlSystem::getDisplaySize() {
 
     sf::VideoMode screen = sf::VideoMode::getDesktopMode();
 
@@ -66,7 +69,7 @@ Vector2<size_t> SfmlEngine::getDisplaySize() {
 
 /*----------------------------------------------------------------------------*/
 
-Vector2<double> SfmlEngine::getMousePos() {
+Vector2<double> SfmlSystem::getMousePos() {
     return Vector2<double>{
         static_cast<double>(sf::Mouse::getPosition(*canvas).x),
         static_cast<double>(sf::Mouse::getPosition(*canvas).y)

@@ -1,13 +1,15 @@
 /*============================================================================*/
 #include <cassert>
 
-#include "ShishGL/core/engine/sfml/engine.hpp"
-#include "ShishGL/core/event/event.hpp"
+#include "System.hpp"
+#include "EventSystem.hpp"
+#include "MouseEvent.hpp"
+#include "KeyboardEvent.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-Event* pollMouseButton(const sf::Event& sf_event) {
+bool pollMouseButton(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::MouseButtonPressed ||
            sf_event.type == sf::Event::MouseButtonReleased);
@@ -36,17 +38,17 @@ Event* pollMouseButton(const sf::Event& sf_event) {
         case sf::Mouse::Middle: button = Mouse::MIDDLE; break;
 
         default:
-            return nullptr;
+            return false;
     }
 
-    auto event = new MouseButtonEvent(where, button, state);
+    EventSystem::postEvent<MouseButtonEvent>(where, button, state);
 
-    return event;
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Event* pollMouseScroll(const sf::Event& sf_event) {
+bool pollMouseScroll(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::MouseWheelScrolled);
 
@@ -58,14 +60,14 @@ Event* pollMouseScroll(const sf::Event& sf_event) {
     /* todo: make configs of mouse inversion */
     Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
-    auto event = new MouseScrollEvent(where, delta);
+    EventSystem::postEvent<MouseScrollEvent>(where, delta);
 
-    return event;
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Event* pollMouseMove(const sf::Event& sf_event) {
+bool pollMouseMove(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::MouseMoved);
 
@@ -74,14 +76,14 @@ Event* pollMouseMove(const sf::Event& sf_event) {
             static_cast<double>(sf_event.mouseMove.y)
     };
 
-    auto event = new MouseEvent(where);
+    EventSystem::postEvent<MouseEvent>(where);
 
-    return event;
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Event* pollKeyboard(const sf::Event& sf_event) {
+bool pollKeyboard(const sf::Event& sf_event) {
 
     assert(sf_event.type == sf::Event::KeyPressed ||
            sf_event.type == sf::Event::KeyReleased);
@@ -122,20 +124,20 @@ Event* pollKeyboard(const sf::Event& sf_event) {
         modifiers |= Keyboard::META_MOD;
     }
 
-    auto event = new KeyboardEvent(key, state, modifiers);
+    EventSystem::postEvent<KeyboardEvent>(key, state, modifiers);
 
-    return event;
+    return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Event* SfmlEngine::pollEvent() {
+bool SfmlSystem::pollEvent() {
 
     sf::Event sfml_event = {};
 
     bool status = canvas->pollEvent(sfml_event);
     if (!status) {
-        return nullptr;
+        return false;
     }
 
     switch (sfml_event.type) {
@@ -161,7 +163,7 @@ Event* SfmlEngine::pollEvent() {
         default: break;
     }
 
-    return nullptr;
+    return false;
 }
 
 /*============================================================================*/

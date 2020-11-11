@@ -1,12 +1,22 @@
 /*============================================================================*/
-#ifndef SHISHGL_PLATFORM_HPP
-#define SHISHGL_PLATFORM_HPP
+#ifndef SHISHGL_SYSTEM_HPP
+#define SHISHGL_SYSTEM_HPP
 /*============================================================================*/
-namespace ShishGL {
+#ifdef USE_SFML
+#include "SfmlSystem/System.hpp"
+#endif
+/*============================================================================*/
+namespace ShishGL::System {
 
+    enum Implementations {
 
+#ifdef USE_SFML
+            SFML,
+#endif
+
+    };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_PLATFORM_HPP
+#endif //SHISHGL_SYSTEM_HPP
 /*============================================================================*/

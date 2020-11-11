@@ -1,16 +1,14 @@
 /*============================================================================*/
-//#include "ShishGL/ShishGL.hpp"
-//#include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
-//#include "ShishGL/user_interface/text_buffer/text_buffer.hpp"
+#include "ShishGL.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 int main(int argc, char* argv[]) {
 
-    /*
     CoreApplication::init(&argc, argv);
 
+    /*
     CREATE<RectWindow>(
             0,
             WHITE,
@@ -60,9 +58,10 @@ int main(int argc, char* argv[]) {
             );
 
 
+     */
+
     return CoreApplication::run();
 
-    */
 }
 
 /*============================================================================*/

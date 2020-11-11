@@ -1,17 +1,28 @@
 /*============================================================================*/
-#include "ShishGL/core/object/object_manager.hpp"
-#include "ShishGL/core/object/window.hpp"
-#include "ShishGL/core/engine/engine.hpp"
-#include "ShishGL/Core/Log/Log.hpp"
-#include "ShishGL/Core/CoreApplication.hpp"
-#include "ShishGL/Core/Event/EventSystem.hpp"
-#include "ShishGL/core/event/system_slots.hpp"
-#include "ShishGL/Core/Platform/ColorCollection.hpp"
+#include "Log.hpp"
+#include "CoreApplication.hpp"
+#include "iSystem.hpp"
+#include "EventSystem.hpp"
+#include "ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 bool CoreApplication::is_initialized = false;
+
+ISystem* CoreApplication::active_system = nullptr;
+
+/*----------------------------------------------------------------------------*/
+
+ISystem& CoreApplication::System() {
+    return *active_system;
+}
+
+/*----------------------------------------------------------------------------*/
+
+ISystem& SYSTEM() {
+    return CoreApplication::System();
+}
 
 /*----------------------------------------------------------------------------*/
 
@@ -22,12 +33,15 @@ bool CoreApplication::init(int *argc_ptr, char **argv) {
     }
 
     LogSystem::openLog();
+    LogSystem::printLog("Initializing system...");
 
-    RunTimer().reset();
+#ifdef USE_SFML
+    active_system = new SfmlSystem();
+    LogSystem::printLog("SFML System is now active");
+#endif
 
-    LogSystem::printLog("initializing engine...");
-    Engine::initDisplay(argc_ptr, argv);
-    LogSystem::printLog("engine initialized");
+    System().initDisplay(argc_ptr, argv);
+    LogSystem::printLog("system initialized");
 
     is_initialized = true;
 
@@ -49,13 +63,13 @@ uint8_t CoreApplication::run() {
     frame_timer.reset();
     size_t frame_counter = 0;
 
-    while (Engine::isRunning()) {
+    while (System().isRunning()) {
 
         ++frame_counter;
 
-        Engine::clear(BLACK);
-        EventSystem::sendEvent<RenderEvent>(SystemEvents::RENDER);
-        Engine::render();
+        System().clear(BLACK);
+        //EventSystem::sendEvent<RenderEvent>(SystemEvents::RENDER);
+        System().display();
 
         TimeDelta delta = frame_timer.elapsed();
         if (delta.count() > 1000000000LL) {
@@ -79,12 +93,13 @@ bool CoreApplication::terminate() {
     EventSystem::flush();
 
     LogSystem::printLog("terminating engine...");
-    Engine::closeDisplay();
+    System().closeDisplay();
     LogSystem::printLog("engine terminated");
 
     LogSystem::closeLog();
 
     is_initialized = false;
+    active_system = nullptr;
 
     return true;
 }

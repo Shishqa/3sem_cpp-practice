@@ -1,22 +1,16 @@
 /*============================================================================*/
-#include <GL/freeglut.h>
-
-#include "ShishGL/core/engine/sfml/engine.hpp"
+#include "System.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-Color SfmlEngine::active_color = {};
-
-/*----------------------------------------------------------------------------*/
-
-void SfmlEngine::setColor(const Color& color) {
+void SfmlSystem::setColor(const Color& color) {
     active_color = color;
 }
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::drawPoint(const Vector2<double>& pos) {
+void SfmlSystem::drawPoint(const Vector2<double>& pos) {
 
     sf::VertexArray point(sf::Points, 1);
 
@@ -32,7 +26,7 @@ void SfmlEngine::drawPoint(const Vector2<double>& pos) {
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::drawLine(const Vector2<double>& start,
+void SfmlSystem::drawLine(const Vector2<double>& start,
                           const Vector2<double>& end) {
 
     sf::VertexArray line(sf::LineStrip, 2);
@@ -56,7 +50,7 @@ void SfmlEngine::drawLine(const Vector2<double>& start,
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::drawRectangle(const Vector2<double>& pos,
+void SfmlSystem::drawRectangle(const Vector2<double>& pos,
                                const Vector2<double>& size) {
 
     sf::RectangleShape rectangle;
@@ -77,7 +71,7 @@ void SfmlEngine::drawRectangle(const Vector2<double>& pos,
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlEngine::drawCircle(const Vector2<double>& pos,
+void SfmlSystem::drawCircle(const Vector2<double>& pos,
                             const size_t& radius) {
 
     sf::CircleShape circle;
@@ -91,17 +85,10 @@ void SfmlEngine::drawCircle(const Vector2<double>& pos,
 
 /*----------------------------------------------------------------------------*/
 
-sf::Font& SfmlEngine::ActiveFont() {
-    static sf::Font ACTIVE_FONT;
-    return ACTIVE_FONT;
-}
-
-/*----------------------------------------------------------------------------*/
-
-void SfmlEngine::displayText(const std::string_view& str, size_t font_size,
+void SfmlSystem::displayText(const std::string_view& str, size_t font_size,
                              const Vector2<double>& pos) {
 
-    sf::Text display_text(sf::String(str.data()), ActiveFont(),
+    sf::Text display_text(sf::String(str.data()), active_font,
                           static_cast<unsigned int>(font_size));
 
     display_text.setFillColor(sf::Color{

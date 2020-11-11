@@ -2,9 +2,9 @@
 #ifndef SHISHGL_KEYBOARD_EVENT_HPP
 #define SHISHGL_KEYBOARD_EVENT_HPP
 /*============================================================================*/
-#include "../../Event/Event.hpp"
-#include "../Input/Keyboard.hpp"
-#include "../../Object/Object.hpp"
+#include "Event.hpp"
+#include "Keyboard.hpp"
+#include "Object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
