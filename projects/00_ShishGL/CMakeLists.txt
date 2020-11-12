@@ -14,8 +14,23 @@ option(USE_SFML "Use SFML platform" ON)
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
   set(CMAKE_CXX_EXTENSIONS OFF)
-  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined")
-  set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined")
+
+  set(DEBUG_FLAGS " \
+    -O3 \
+    -Wconversion \
+    -Wlogical-op \
+    -Wshift-overflow=2 \
+		-Wduplicated-cond \
+		-Wcast-qual -Wcast-align \
+		-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC \
+		-D_FORTIFY_SOURCE=2 -fsanitize=address \
+		-fsanitize=undefined -fno-sanitize-recover \
+		-fstack-protector -Wno-format-nonliteral \
+    -fno-omit-frame-pointer \
+  ")
+
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${DEBUG_FLAGS}")
+  set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} ${DEBUG_FLAGS}")
 
   if (MSVC)
     add_compile_options(/W3 /WX)

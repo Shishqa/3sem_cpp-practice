@@ -8,10 +8,18 @@ target_include_directories(ShishGL-Graphics
     ${INCROOT}
   )
 
+target_sources(ShishGL-Graphics
+  INTERFACE
+    ${INCROOT}/ColorCollection.hpp
+    ${INCROOT}/WindowTypes.hpp
+  )
+
 target_link_libraries(ShishGL-Graphics
   INTERFACE
     ShishGL-Core
     ShishGL-Shapes
+    ShishGL-Window
   )
 
 add_subdirectory(Shapes)
+add_subdirectory(Window)

@@ -1,10 +1,8 @@
 /*============================================================================*/
 #include "Log.hpp"
 #include "CoreApplication.hpp"
-#include "iSystem.hpp"
 #include "System.hpp"
 #include "EventSystem.hpp"
-#include "ColorCollection.hpp"
 #include "GraphicObject.hpp"
 /*============================================================================*/
 using namespace ShishGL;
@@ -59,8 +57,6 @@ uint8_t CoreApplication::run() {
         return 10;
     }
 
-    EventSystem::EventTimer().reset();
-
     Timer frame_timer = {};
     frame_timer.reset();
     size_t frame_counter = 0;
@@ -70,7 +66,7 @@ uint8_t CoreApplication::run() {
     while (System().isRunning()) {
 
         System().pollEvent();
-        EventSystem::dispatchEvents();
+        EventSystem::dispatchAll();
 
         if (!System().isRunning()) {
             break;
@@ -78,7 +74,7 @@ uint8_t CoreApplication::run() {
 
         ++frame_counter;
 
-        System().clear(BLACK);
+        System().clear(Color{0, 0, 0, 255});
         EventSystem::sendEvent<RenderEvent>(RENDER_EVENTS);
         System().display();
 
@@ -99,9 +95,10 @@ uint8_t CoreApplication::run() {
 
 bool CoreApplication::terminate() {
 
-    EventSystem::flush();
-
     LogSystem::printLog("Terminating system...");
+    EventManager::flush();
+    ObjectManager::clear();
+
     System().closeDisplay();
     delete active_system;
     active_system = nullptr;

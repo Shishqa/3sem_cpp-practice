@@ -5,6 +5,7 @@
 #include "Event.hpp"
 #include "Mouse.hpp"
 #include "Vector2.hpp"
+#include "SystemObject.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -18,7 +19,7 @@ namespace ShishGL {
         [[nodiscard]]
         const Vector2<double>& where() const;
 
-        bool happen(Object::ID listener) override;
+        bool happen(SystemObject::ID listener) override;
 
     protected:
 
@@ -43,7 +44,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline Mouse::ButtonState state() const;
 
-        bool happen(Object::ID listener) override;
+        bool happen(SystemObject::ID listener) override;
 
     protected:
 
@@ -65,7 +66,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline Mouse::ScrollDelta delta() const;
 
-        bool happen(Object::ID listener) override;
+        bool happen(SystemObject::ID listener) override;
 
     protected:
 

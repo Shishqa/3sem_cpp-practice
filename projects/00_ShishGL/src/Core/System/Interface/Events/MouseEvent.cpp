@@ -17,7 +17,7 @@ const Vector2<double>& MouseEvent::where() const {
 /*----------------------------------------------------------------------------*/
 
 bool MouseEvent::happen(Object::ID listener) {
-    return GET<Object>(listener).onMouseMove(*this);
+    return GET<SystemObject>(listener).onMouseMove(*this);
 }
 
 /*============================================================================*/
@@ -45,7 +45,7 @@ Mouse::ButtonState MouseButtonEvent::state() const {
 /*----------------------------------------------------------------------------*/
 
 bool MouseButtonEvent::happen(Object::ID listener) {
-    return GET<Object>(listener).onMouseClick(*this);
+    return GET<SystemObject>(listener).onMouseButton(*this);
 }
 
 /*============================================================================*/
@@ -65,7 +65,7 @@ Mouse::ScrollDelta MouseScrollEvent::delta() const {
 /*----------------------------------------------------------------------------*/
 
 bool MouseScrollEvent::happen(Object::ID listener) {
-    return GET<Object>(listener).onMouseScroll(*this);
+    return GET<SystemObject>(listener).onMouseScroll(*this);
 }
 
 /*============================================================================*/

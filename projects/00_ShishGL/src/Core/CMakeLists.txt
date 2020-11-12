@@ -18,14 +18,11 @@ target_sources(ShishGL-Core
 target_link_libraries(ShishGL-Core
   PUBLIC
     ShishGL-Log
-    ShishGL-Primitives
-    ShishGL-Object
-    ShishGL-Event
+    ShishGL-EventSystem
     ShishGL-System
   )
 
+add_subdirectory(EventSystem)
 add_subdirectory(Log)
-add_subdirectory(Primitives)
-add_subdirectory(Event)
-add_subdirectory(Object)
 add_subdirectory(System)
+

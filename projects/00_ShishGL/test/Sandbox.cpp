@@ -2,6 +2,7 @@
 #include "CoreApplication.hpp"
 #include "Rectangle.hpp"
 #include "ColorCollection.hpp"
+#include "WindowTypes.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -14,6 +15,13 @@ int main(int argc, char* argv[]) {
             WHITE_SMOKE,
             Vector2<double>{1000, 100},
             Vector2<double>{100, 500}
+            );
+
+    ObjectManager::create<Window<Rectangle>>(
+            ObjectManager::ID_UNDEFINED,
+            INDIAN_RED,
+            Vector2<double>{1000, 200},
+            Vector2<double>{300, 200}
             );
 
     /*

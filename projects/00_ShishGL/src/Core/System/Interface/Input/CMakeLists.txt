@@ -12,7 +12,7 @@ target_sources(ShishGL-SystemInput
     ${INCROOT}/Mouse.hpp
     ${INCROOT}/Keyboard.hpp
   PRIVATE
-  Keyboard.cpp
+    Keyboard.cpp
   )
 
 target_compile_features(ShishGL-SystemInput

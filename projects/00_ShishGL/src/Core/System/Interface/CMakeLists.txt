@@ -13,7 +13,9 @@ target_sources(ShishGL-SystemInterface
 
 target_link_libraries(ShishGL-SystemInterface
   INTERFACE
+    ShishGL-Log
     ShishGL-SystemEvents
+    ShishGL-SystemInput
     ShishGL-Primitives
   )
 
@@ -24,3 +26,4 @@ target_compile_features(ShishGL-SystemInterface
 
 add_subdirectory(Events)
 add_subdirectory(Input)
+add_subdirectory(Primitives)

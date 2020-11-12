@@ -1,5 +1,6 @@
 /*============================================================================*/
 #include "KeyboardEvent.hpp"
+#include "SystemObject.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -15,7 +16,7 @@ KeyboardEvent::KeyboardEvent(Keyboard::Key key,
 /*----------------------------------------------------------------------------*/
 
 bool KeyboardEvent::happen(Object::ID listener) {
-    return GET<Object>(listener).onKeyboard(*this);
+    return GET<SystemObject>(listener).onKeyboard(*this);
 }
 
 /*----------------------------------------------------------------------------*/

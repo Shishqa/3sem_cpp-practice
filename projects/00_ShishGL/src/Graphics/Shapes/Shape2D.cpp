@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "Shape2D.hpp"
-#include "ColorCollection.hpp"
+#include "../../../include/ShishGL/Graphics/ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -30,6 +30,12 @@ const Vector2<double>& Shape2D::getPos() const {
 
 void Shape2D::setPos(const Vector2<double>& pos) {
     s_pos = pos;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Shape2D::translate(const Vector2<double>& delta) {
+    s_pos += delta;
 }
 
 /*----------------------------------------------------------------------------*/

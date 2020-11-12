@@ -2,7 +2,7 @@
 #include <cassert>
 
 #include "System.hpp"
-#include "EventSystem.hpp"
+#include "../../../../include/ShishGL/Core/EventSystem/EventManager/EventManager.hpp"
 #include "MouseEvent.hpp"
 #include "KeyboardEvent.hpp"
 /*============================================================================*/
@@ -41,7 +41,7 @@ bool pollMouseButton(const sf::Event& sf_event) {
             return false;
     }
 
-    EventSystem::postEvent<MouseButtonEvent>(where, button, state);
+    EventManager::postEvent<MouseButtonEvent>(where, button, state);
 
     return true;
 }
@@ -60,7 +60,7 @@ bool pollMouseScroll(const sf::Event& sf_event) {
     /* todo: make configs of mouse inversion */
     Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
-    EventSystem::postEvent<MouseScrollEvent>(where, delta);
+    EventManager::postEvent<MouseScrollEvent>(where, delta);
 
     return true;
 }
@@ -76,7 +76,7 @@ bool pollMouseMove(const sf::Event& sf_event) {
             static_cast<double>(sf_event.mouseMove.y)
     };
 
-    EventSystem::postEvent<MouseEvent>(where);
+    EventManager::postEvent<MouseEvent>(where);
 
     return true;
 }
@@ -124,7 +124,7 @@ bool pollKeyboard(const sf::Event& sf_event) {
         modifiers |= Keyboard::META_MOD;
     }
 
-    EventSystem::postEvent<KeyboardEvent>(key, state, modifiers);
+    EventManager::postEvent<KeyboardEvent>(key, state, modifiers);
 
     return true;
 }

@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <unordered_set>
 
-#include "ObjectManager.hpp"
+#include "Object.hpp"
 #include "Event.hpp"
 /*============================================================================*/
 namespace ShishGL {

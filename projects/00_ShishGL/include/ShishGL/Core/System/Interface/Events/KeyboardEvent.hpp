@@ -4,7 +4,7 @@
 /*============================================================================*/
 #include "Event.hpp"
 #include "Keyboard.hpp"
-#include "Object.hpp"
+#include "SystemObject.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -26,7 +26,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline Keyboard::ModifierMask modifiers() const;
 
-        bool happen(Object::ID listener) override;
+        bool happen(SystemObject::ID listener) override;
 
     protected:
 

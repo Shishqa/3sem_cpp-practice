@@ -114,9 +114,13 @@ LogSystem::LogStatus LogSystem::print(const TimeDelta& elapsed,
 
     static char buffer[BUFFER_SIZE] = "";
 
-    size_t str_len = vsnprintf(buffer, sizeof(buffer), format, args);
+    int str_len = vsnprintf(buffer, sizeof(buffer), format, args);
 
-    if (LastMessage().cnt && !strncmp(buffer, LastMessage().buffer, str_len)) {
+    if (str_len < 0) {
+        return LOG_PRINT_ERR;
+    }
+
+    if (LastMessage().cnt && !strncmp(buffer, LastMessage().buffer, static_cast<size_t>(str_len))) {
 
         LastMessage().cnt++;
         LastMessage().end = elapsed;
@@ -125,7 +129,7 @@ LogSystem::LogStatus LogSystem::print(const TimeDelta& elapsed,
 
         flush();
 
-        strncpy(LastMessage().buffer, buffer, str_len + 1);
+        strncpy(LastMessage().buffer, buffer, static_cast<size_t>(str_len) + 1);
 
         LastMessage().cnt = 1;
         LastMessage().begin = elapsed;

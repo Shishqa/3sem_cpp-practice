@@ -9,16 +9,20 @@ target_include_directories(ShishGL-SystemEvents
 
 target_sources(ShishGL-SystemEvents
   PUBLIC
+    ${INCROOT}/SystemObject.hpp
     ${INCROOT}/KeyboardEvent.hpp
     ${INCROOT}/MouseEvent.hpp
+    ${INCROOT}/TimerEvent.hpp
   PRIVATE
-  KeyboardEvent.cpp
-  MouseEvent.cpp
+    SystemObject.cpp
+    KeyboardEvent.cpp
+    MouseEvent.cpp
+    TimerEvent.cpp
   )
 
 target_link_libraries(ShishGL-SystemEvents
   PUBLIC
-    ShishGL-Event
+    ShishGL-EventSystem
     ShishGL-SystemInput
   )
 

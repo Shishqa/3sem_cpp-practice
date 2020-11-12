@@ -23,6 +23,8 @@ namespace ShishGL {
 
         void setPos(const Vector2<double>& pos);
 
+        void translate(const Vector2<double>& delta);
+
         /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
