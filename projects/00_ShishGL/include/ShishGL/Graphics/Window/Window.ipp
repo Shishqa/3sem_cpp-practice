@@ -7,7 +7,7 @@ namespace ShishGL {
     template <typename Shape>
     template <typename... Args>
     Window<Shape>::Window(Object::ID id, Object::ID parent, Args&&... args)
-            : SystemObject(id)
+            : PlatformListener(id)
             , is_active(false)
             , parent(parent) {
         shape = CREATE<ShapeHelper<Shape, Shape>>(std::forward<Args>(args)...);
@@ -20,7 +20,7 @@ namespace ShishGL {
     Object::ID Window<Shape>::attach(Args&&... args) {
 
         Object::ID subwindow =
-                CREATE<WindowHelper<SomeWindow, SomeWindow>>(std::forward<Args>(args)...);
+                CREATE<WindowHelper<SomeWindow, SomeWindow>>(id(), std::forward<Args>(args)...);
 
         subwindows.insert(subwindow);
 
@@ -74,7 +74,7 @@ namespace ShishGL {
             return onMouseEntered(event);
         }
 
-        return SystemObject::onMouseMove(event);
+        return PlatformListener::onMouseMove(event);
     }
 
     /*------------------------------------------------------------------------*/

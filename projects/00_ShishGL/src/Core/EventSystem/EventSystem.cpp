@@ -1,5 +1,5 @@
 /*============================================================================*/
-#include "Log.hpp"
+#include "LogSystem.hpp"
 #include "EventManager.hpp"
 #include "SubscriptionManager.hpp"
 #include "EventSystem.hpp"

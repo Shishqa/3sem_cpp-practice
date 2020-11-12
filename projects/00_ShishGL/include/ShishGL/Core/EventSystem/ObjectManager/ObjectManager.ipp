@@ -2,7 +2,7 @@
 #ifndef SHISHGL_OBJECT_MANAGER_IPP
 #define SHISHGL_OBJECT_MANAGER_IPP
 /*============================================================================*/
-#include "Log.hpp"
+#include "LogSystem.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

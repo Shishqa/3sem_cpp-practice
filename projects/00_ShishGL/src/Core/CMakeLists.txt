@@ -9,20 +9,21 @@ target_include_directories(ShishGL-Core
 target_sources(ShishGL-Core
   PUBLIC
     ${INCROOT}/CoreApplication.hpp
-    ${INCROOT}/GraphicObject.hpp
   PRIVATE
     CoreApplication.cpp
-    GraphicObject.cpp
   )
 
 target_link_libraries(ShishGL-Core
   PUBLIC
-    ShishGL-Log
+    ShishGL-Primitives
+    ShishGL-LogSystem
     ShishGL-EventSystem
-    ShishGL-System
+    ShishGL-RenderSystem
+    ShishGL-Platform
   )
 
+add_subdirectory(Primitives)
+add_subdirectory(LogSystem)
 add_subdirectory(EventSystem)
-add_subdirectory(Log)
-add_subdirectory(System)
-
+add_subdirectory(RenderSystem)
+add_subdirectory(Platform)

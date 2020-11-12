@@ -1,28 +1,13 @@
 /*============================================================================*/
-#include "Log.hpp"
-#include "CoreApplication.hpp"
-#include "System.hpp"
+#include "LogSystem.hpp"
 #include "EventSystem.hpp"
-#include "GraphicObject.hpp"
+#include "RenderSystem.hpp"
+#include "CoreApplication.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 bool CoreApplication::is_initialized = false;
-
-ISystem* CoreApplication::active_system = nullptr;
-
-/*----------------------------------------------------------------------------*/
-
-ISystem& CoreApplication::System() {
-    return *active_system;
-}
-
-/*----------------------------------------------------------------------------*/
-
-ISystem& SYSTEM() {
-    return CoreApplication::System();
-}
 
 /*----------------------------------------------------------------------------*/
 
@@ -33,15 +18,11 @@ bool CoreApplication::init(int *argc_ptr, char **argv) {
     }
 
     LogSystem::openLog();
-    LogSystem::printLog("Initializing system...");
+    LogSystem::printLog("Initializing RenderSystem...");
 
-#ifdef USE_SFML
-    active_system = new SfmlSystem();
-    LogSystem::printLog("SFML System is now active");
-#endif
+    RenderSystem::init(argc_ptr, argv);
 
-    System().initDisplay(argc_ptr, argv);
-    LogSystem::printLog("System initialized");
+    LogSystem::printLog("RenderSystem initialized");
 
     is_initialized = true;
 
@@ -63,20 +44,17 @@ uint8_t CoreApplication::run() {
 
     LogSystem::printLog("Started run session");
 
-    while (System().isRunning()) {
+    while (RENDERER().isRunning()) {
 
-        System().pollEvent();
+        RENDERER().pollEvent();
         EventSystem::dispatchAll();
-
-        if (!System().isRunning()) {
+        if (!RENDERER().isRunning()) {
             break;
         }
 
         ++frame_counter;
 
-        System().clear(Color{0, 0, 0, 255});
-        EventSystem::sendEvent<RenderEvent>(RENDER_EVENTS);
-        System().display();
+        RenderSystem::update();
 
         TimeDelta delta = frame_timer.elapsed();
         if (delta.count() > 1000000000LL) {
@@ -95,14 +73,11 @@ uint8_t CoreApplication::run() {
 
 bool CoreApplication::terminate() {
 
-    LogSystem::printLog("Terminating system...");
+    LogSystem::printLog("Terminating Core...");
     EventManager::flush();
     ObjectManager::clear();
-
-    System().closeDisplay();
-    delete active_system;
-    active_system = nullptr;
-    LogSystem::printLog("System terminated");
+    RenderSystem::terminate();
+    LogSystem::printLog("Core terminated");
 
     LogSystem::closeLog();
     is_initialized = false;

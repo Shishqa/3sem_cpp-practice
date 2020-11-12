@@ -5,14 +5,14 @@
 #include <type_traits>
 #include <unordered_set>
 
-#include "SystemObject.hpp"
+#include "PlatformListener.hpp"
 #include "MouseEvent.hpp"
 #include "Shape2D.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
-    class Window : public SystemObject {
+    class Window : public PlatformListener {
     private:
 
         /*--------------------------------------------------------------------*/

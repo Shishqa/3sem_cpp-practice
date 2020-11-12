@@ -27,5 +27,5 @@ target_compile_features(ShishGL-ObjectManager
 
 target_link_libraries(ShishGL-ObjectManager
   PUBLIC
-    ShishGL-Log
+    ShishGL-LogSystem
   )

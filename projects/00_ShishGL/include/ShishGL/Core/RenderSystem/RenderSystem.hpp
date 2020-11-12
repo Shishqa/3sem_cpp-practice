@@ -1,39 +1,35 @@
 /*============================================================================*/
-#ifndef SHISHGL_CORE_APPLICATION_HPP
-#define SHISHGL_CORE_APPLICATION_HPP
+#ifndef SHISHGL_RENDER_SYSTEM_HPP
+#define SHISHGL_RENDER_SYSTEM_HPP
 /*============================================================================*/
-#include <cstdint>
-#include <unordered_set>
-
 #include "IPlatform.hpp"
-#include "Object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class CoreApplication {
+    class RenderSystem {
     public:
 
         static bool init(int* argc_ptr, char* argv[]);
 
-        static uint8_t run();
+        static bool update();
 
         static bool terminate();
 
         static bool isInitialized();
 
-        virtual ~CoreApplication() = default;
+        static IPlatform& Renderer();
 
     private:
 
-        CoreApplication() = default;
-
-        /*--------------------------------------------------------------------*/
-
         static bool is_initialized;
+
+        static IPlatform* active_platform;
 
     };
 
+    IPlatform& RENDERER();
+
 }
 /*============================================================================*/
-#endif //SHISHGL_CORE_APPLICATION_HPP
+#endif //SHISHGL_RENDER_SYSTEM_HPP
 /*============================================================================*/

@@ -17,7 +17,7 @@ target_sources(ShishGL-EventSystem
 
 target_link_libraries(ShishGL-EventSystem
   PUBLIC
-    ShishGL-Log
+    ShishGL-LogSystem
     ShishGL-ObjectManager
     ShishGL-EventManager
   )

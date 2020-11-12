@@ -1,4 +1,3 @@
-
 add_library(ShishGL-EventManager)
 
 set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/EventSystem/EventManager)
@@ -20,6 +19,6 @@ target_sources(ShishGL-EventManager
 
 target_link_libraries(ShishGL-EventManager
   PUBLIC
-    ShishGL-Log
+    ShishGL-LogSystem
     ShishGL-ObjectManager
   )

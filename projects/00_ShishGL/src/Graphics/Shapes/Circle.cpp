@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "Circle.hpp"
-#include "CoreApplication.hpp"
+#include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -43,8 +43,8 @@ void Circle::setCenter(const Vector2<double>& new_center) {
 /*----------------------------------------------------------------------------*/
 
 bool Circle::onRender() {
-    CoreApplication::System().setColor(color);
-    CoreApplication::System().drawCircle(getPos(), radius);
+    RENDERER().setColor(color);
+    RENDERER().drawCircle(getPos(), radius);
     return true;
 }
 

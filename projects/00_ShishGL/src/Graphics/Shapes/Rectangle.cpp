@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "Rectangle.hpp"
-#include "CoreApplication.hpp"
+#include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -44,8 +44,8 @@ void Rectangle::setSize(const Vector2<double>& new_size) {
 /*----------------------------------------------------------------------------*/
 
 bool Rectangle::onRender() {
-    CoreApplication::System().setColor(color);
-    CoreApplication::System().drawRectangle(getPos(), size);
+    RENDERER().setColor(color);
+    RENDERER().drawRectangle(getPos(), size);
     return true;
 }
 
