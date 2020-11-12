@@ -4,6 +4,7 @@
 #include "Circle.hpp"
 #include "ColorCollection.hpp"
 #include "WindowTypes.hpp"
+#include "CursorLocator.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -11,6 +12,10 @@ using namespace ShishGL;
 int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
+
+    CREATE<CursorLocator>(
+            ObjectManager::ID_UNDEFINED
+    );
 
     CREATE<Window<Rectangle>>(
             ObjectManager::ID_UNDEFINED,
@@ -52,6 +57,7 @@ int main(int argc, char* argv[]) {
             WHEAT, 50,
             Vector2<double>{350, 400}
     );
+
 
     return CoreApplication::run();
 

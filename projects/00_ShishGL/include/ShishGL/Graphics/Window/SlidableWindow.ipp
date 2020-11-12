@@ -42,9 +42,14 @@ namespace ShishGL {
         Vector2<double> correction =
                 new_pos - Window<Shape>::getShape().getPos() - delta;
 
+        Vector2<double> old_event_where = event.where();
         event.setWhere(event.where() + correction);
 
-        return (DraggableWindow<Shape>::onMouseMove(event));
+        bool status = DraggableWindow<Shape>::onMouseMove(event);
+
+        event.setWhere(old_event_where);
+
+        return status;
     }
 
 }
