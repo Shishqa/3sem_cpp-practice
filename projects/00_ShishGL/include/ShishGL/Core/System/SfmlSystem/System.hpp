@@ -34,7 +34,7 @@ namespace ShishGL {
                            const Vector2<double>& size) override;
 
         void drawCircle(const Vector2<double>& pos,
-                        const size_t& radius) override;
+                        const double& radius) override;
         /*--------------------------------------------------------------------*/
 
         /* Image */

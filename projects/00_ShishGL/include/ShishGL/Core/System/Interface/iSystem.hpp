@@ -30,7 +30,7 @@ namespace ShishGL {
                                   const Vector2<double>& size) = 0;
 
         virtual void drawCircle(const Vector2<double>& pos,
-                               const size_t& radius) = 0;
+                                const double& radius) = 0;
         /*--------------------------------------------------------------------*/
 
         /* Image */

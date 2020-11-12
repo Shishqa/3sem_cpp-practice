@@ -10,10 +10,12 @@ target_include_directories(ShishGL-Shapes
 target_sources(ShishGL-Shapes
   PUBLIC
     ${INCROOT}/Rectangle.hpp
+    ${INCROOT}/Circle.hpp
     ${INCROOT}/Shape2D.hpp
   PRIVATE
-  Rectangle.cpp
-  Shape2D.cpp
+    Rectangle.cpp
+    Circle.cpp
+    Shape2D.cpp
   )
 
 target_link_libraries(ShishGL-Shapes

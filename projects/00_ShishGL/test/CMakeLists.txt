@@ -1,7 +1,13 @@
 
-add_executable(Sandbox
-  Sandbox.cpp)
+add_executable(TestAbstracts)
 
-target_link_libraries(Sandbox
+target_sources(TestAbstracts
+  PRIVATE
+    TestAbstracts.cpp
+  )
+
+target_link_libraries(TestAbstracts
   PRIVATE
     ShishGL)
+
+#==============================================================================#

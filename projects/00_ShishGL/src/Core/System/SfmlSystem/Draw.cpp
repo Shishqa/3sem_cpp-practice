@@ -72,13 +72,20 @@ void SfmlSystem::drawRectangle(const Vector2<double>& pos,
 /*----------------------------------------------------------------------------*/
 
 void SfmlSystem::drawCircle(const Vector2<double>& pos,
-                            const size_t& radius) {
+                            const double& radius) {
 
     sf::CircleShape circle;
 
     circle.setPosition(sf::Vector2f(static_cast<float>(pos.x),
                                     static_cast<float>(pos.y)));
     circle.setRadius(static_cast<float>(radius));
+
+    circle.setFillColor(sf::Color{
+            active_color.r,
+            active_color.g,
+            active_color.b,
+            active_color.a
+    });
 
     canvas->draw(circle);
 }
