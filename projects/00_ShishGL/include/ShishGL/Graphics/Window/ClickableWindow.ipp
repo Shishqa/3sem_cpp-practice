@@ -2,8 +2,6 @@
 #ifndef SHISHGL_CLICKABLE_WINDOW_IPP
 #define SHISHGL_CLICKABLE_WINDOW_IPP
 /*============================================================================*/
-#include "MouseEvent.hpp"
-/*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
@@ -16,23 +14,25 @@ namespace ShishGL {
     /*------------------------------------------------------------------------*/
 
     template <typename Shape>
-    bool ClickableWindow<Shape>::filterEvent(const Event& event) const try {
+    bool ClickableWindow<Shape>::filterEvent(Event& event) const {
+        try {
 
-        auto mouse_button = dynamic_cast<const MouseButtonEvent&>(event);
+            auto mouse_button = dynamic_cast<const MouseButtonEvent&>(event);
 
-        if (mouse_button.state() != Mouse::DOWN) {
+            if (mouse_button.state() != Mouse::DOWN) {
+                return true;
+            }
+
+            if (!Window<Shape>::getShape().contains(mouse_button.where())) {
+                return false;
+            }
             return true;
+
+        } catch (...) {
+
+            return true;
+
         }
-
-        if (!Window<Shape>::getShape().contains(mouse_button.where())) {
-            return false;
-        }
-        return true;
-
-    } catch (...) {
-
-        return true;
-
     }
 
 }

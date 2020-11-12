@@ -6,6 +6,8 @@
 /*============================================================================*/
 namespace ShishGL {
 
+    class Event;
+
     class Object {
     public:
 
@@ -27,14 +29,14 @@ namespace ShishGL {
         explicit Object(Object::ID id);
 
         [[nodiscard]]
-        virtual bool filterEvent(class Event&) const;
+        virtual bool filterEvent(Event&) const;
 
         [[nodiscard]]
-        virtual bool onEvent(class Event&);
+        virtual bool onEvent(Event&);
 
         friend class ObjectManager;
         friend class EventSystem;
-        friend class Event;
+        friend Event;
 
     private:
 

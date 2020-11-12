@@ -19,6 +19,8 @@ namespace ShishGL {
         [[nodiscard]]
         const Vector2<double>& where() const;
 
+        void setWhere(const Vector2<double>& pos);
+
         bool happen(SystemObject::ID listener) override;
 
     protected:
@@ -39,10 +41,10 @@ namespace ShishGL {
         ~MouseButtonEvent() override = default;
 
         [[nodiscard]]
-        inline Mouse::Button button() const;
+        Mouse::Button button() const;
 
         [[nodiscard]]
-        inline Mouse::ButtonState state() const;
+        Mouse::ButtonState state() const;
 
         bool happen(SystemObject::ID listener) override;
 

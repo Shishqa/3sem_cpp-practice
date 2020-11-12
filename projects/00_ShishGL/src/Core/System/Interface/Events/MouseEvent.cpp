@@ -16,6 +16,12 @@ const Vector2<double>& MouseEvent::where() const {
 
 /*----------------------------------------------------------------------------*/
 
+void MouseEvent::setWhere(const Vector2<double>& pos) {
+    m_where = pos;
+}
+
+/*----------------------------------------------------------------------------*/
+
 bool MouseEvent::happen(Object::ID listener) {
     return GET<SystemObject>(listener).onMouseMove(*this);
 }

@@ -81,7 +81,7 @@ namespace ShishGL {
 
     template <typename Shape>
     Shape& Window<Shape>::getShape() const {
-        return GET<Shape2D>(shape);
+        return GET<Shape>(shape);
     }
 
 }

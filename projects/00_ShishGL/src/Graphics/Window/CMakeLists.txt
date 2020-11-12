@@ -18,8 +18,8 @@ target_sources(ShishGL-Window
     ${INCROOT}/HoldableWindow.ipp
     ${INCROOT}/DraggableWindow.hpp
     ${INCROOT}/DraggableWindow.ipp
-    ${INCROOT}/SlideWindow.hpp
-    ${INCROOT}/SlideWindow.ipp
+    ${INCROOT}/SlidableWindow.hpp
+    ${INCROOT}/SlidableWindow.ipp
   )
 
 target_link_libraries(ShishGL-Window

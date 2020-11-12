@@ -10,6 +10,7 @@ target_include_directories(ShishGL-Primitives
 target_sources(ShishGL-Primitives
   PUBLIC
     ${INCROOT}/Vector2.hpp
+    ${INCROOT}/Segment2.hpp
     ${INCROOT}/Color.hpp
     ${INCROOT}/Time.hpp
   PRIVATE

@@ -1,29 +1,36 @@
 /*============================================================================*/
-#ifndef SHISHGL_CLICKABLE_WINDOW_HPP
-#define SHISHGL_CLICKABLE_WINDOW_HPP
+#ifndef SHISHGL_SLIDABLE_WINDOW_HPP
+#define SHISHGL_SLIDABLE_WINDOW_HPP
 /*============================================================================*/
-#include "Window.hpp"
-#include "MouseEvent.hpp"
+#include "DraggableWindow.hpp"
+#include "Segment2.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
-    class ClickableWindow : public Window<Shape> {
+    class SlidableWindow : public DraggableWindow<Shape> {
     public:
 
         template <typename... Args>
-        ClickableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        SlidableWindow(Object::ID id, Object::ID parent,
+                       const Segment2<double>& slide,
+                       Args&&... args);
 
-        ~ClickableWindow() override = default;
+        ~SlidableWindow() override = default;
 
-        [[nodiscard]]
-        bool filterEvent(Event& event) const override;
+    protected:
+
+        bool onMouseMove(MouseEvent& event) override;
+
+    private:
+
+        Segment2<double> slide_seg;
 
     };
 
 }
 /*============================================================================*/
-#include "ClickableWindow.ipp"
+#include "SlidableWindow.ipp"
 /*============================================================================*/
-#endif //SHISHGL_CLICKABLE_WINDOW_HPP
+#endif //SHISHGL_SLIDABLE_WINDOW_HPP
 /*============================================================================*/

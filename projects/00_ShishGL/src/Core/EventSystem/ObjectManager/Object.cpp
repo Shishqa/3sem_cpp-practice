@@ -24,13 +24,13 @@ Object::ID Object::id() const {
 
 /*----------------------------------------------------------------------------*/
 
-bool Object::filterEvent(class Event&) const {
+bool Object::filterEvent(Event&) const {
     return true;
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool Object::onEvent(class Event&) {
+bool Object::onEvent(Event&) {
     return false;
 }
 

@@ -7,7 +7,7 @@
 #include "ClickableWindow.hpp"
 #include "HoldableWindow.hpp"
 #include "DraggableWindow.hpp"
-#include "SlideWindow.hpp"
+#include "SlidableWindow.hpp"
 
 /*============================================================================*/
 #endif //SHISHGL_WINDOW_TYPES_HPP

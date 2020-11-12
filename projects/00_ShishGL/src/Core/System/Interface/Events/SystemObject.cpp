@@ -1,12 +1,15 @@
 /*============================================================================*/
 #include "SystemObject.hpp"
+#include "SubscriptionManager.hpp"
+#include "EventSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 SystemObject::SystemObject(Object::ID id)
-    : Object(id)
-    { }
+        : Object(id) {
+    SubscriptionManager::subscribe(EventSystem::SystemEvents, Object::id());
+}
 
 /*----------------------------------------------------------------------------*/
 

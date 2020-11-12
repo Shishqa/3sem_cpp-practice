@@ -53,7 +53,7 @@ bool EventSystem::dispatchOne() {
     EventManager::Events().pop();
 
     bool status = sendEvent(SystemEvents, event);
-    if (!status) {
+    if (!status && !SubscriptionManager::Subscriptions()[SystemEvents].empty()) {
         LogSystem::printWarning("Missed event %s", typeid(*event).name());
     }
 
