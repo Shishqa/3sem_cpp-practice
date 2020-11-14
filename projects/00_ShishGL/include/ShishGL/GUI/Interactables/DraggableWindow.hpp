@@ -1,39 +1,37 @@
 /*============================================================================*/
-#ifndef SHISHGL_HOLDABLE_WINDOW_HPP
-#define SHISHGL_HOLDABLE_WINDOW_HPP
+#ifndef SHISHGL_DRAGGABLE_WINDOW_HPP
+#define SHISHGL_DRAGGABLE_WINDOW_HPP
 /*============================================================================*/
-#include <cstdint>
-
-#include "ClickableWindow.hpp"
+#include "Vector2.hpp"
+#include "HoldableWindow.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
-    class HoldableWindow : public ClickableWindow<Shape> {
+    class DraggableWindow : public HoldableWindow<Shape> {
     public:
 
         template <typename... Args>
-        HoldableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        DraggableWindow(Object::ID id, Object::ID parent, Args&&... args);
 
-        ~HoldableWindow() override = default;
+        ~DraggableWindow() override = default;
 
         bool onMouseButton(MouseButtonEvent& event) override;
 
-        [[nodiscard]]
-        inline bool isHolded() const;
+        bool onMouseMove(MouseEvent& event) override;
 
         [[nodiscard]]
-        inline uint8_t numHolded() const;
+        const Vector2<double>& dragPoint() const;
 
     private:
 
-        uint8_t n_holded;
+        Vector2<double> drag_point;
 
     };
 
 }
 /*============================================================================*/
-#include "HoldableWindow.ipp"
+#include "../../../../src/GUI/Interactables/DraggableWindow.ipp"
 /*============================================================================*/
-#endif //SHISHGL_HOLDABLE_WINDOW_HPP
+#endif //SHISHGL_DRAGGABLE_WINDOW_HPP
 /*============================================================================*/

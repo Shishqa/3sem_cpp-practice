@@ -1,37 +1,29 @@
 /*============================================================================*/
-#ifndef SHISHGL_DRAGGABLE_WINDOW_HPP
-#define SHISHGL_DRAGGABLE_WINDOW_HPP
+#ifndef SHISHGL_CLICKABLE_WINDOW_HPP
+#define SHISHGL_CLICKABLE_WINDOW_HPP
 /*============================================================================*/
-#include "Vector2.hpp"
-#include "HoldableWindow.hpp"
+#include "Window.hpp"
+#include "MouseEvent.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
-    class DraggableWindow : public HoldableWindow<Shape> {
+    class ClickableWindow : public Window<Shape> {
     public:
 
         template <typename... Args>
-        DraggableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        ClickableWindow(Object::ID id, Object::ID parent, Args&&... args);
 
-        ~DraggableWindow() override = default;
-
-        bool onMouseButton(MouseButtonEvent& event) override;
-
-        bool onMouseMove(MouseEvent& event) override;
+        ~ClickableWindow() override = default;
 
         [[nodiscard]]
-        const Vector2<double>& dragPoint() const;
-
-    private:
-
-        Vector2<double> drag_point;
+        bool filterEvent(Event& event) const override;
 
     };
 
 }
 /*============================================================================*/
-#include "DraggableWindow.ipp"
+#include "../../../../src/GUI/Interactables/ClickableWindow.ipp"
 /*============================================================================*/
-#endif //SHISHGL_DRAGGABLE_WINDOW_HPP
+#endif //SHISHGL_CLICKABLE_WINDOW_HPP
 /*============================================================================*/

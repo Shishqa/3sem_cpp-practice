@@ -3,14 +3,14 @@
 #define SHISHGL_CURSOR_LOCATOR_HPP
 /*============================================================================*/
 #include "Window.hpp"
-#include "Rectangle.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class CursorLocator : public Window<Rectangle> {
+    class CursorLocator : public Window {
     public:
 
-        CursorLocator(Object::ID id, Object::ID parent);
+        CursorLocator(Object::ID id, Object::ID shape,
+                      Object::ID parent = LayoutManager::ROOT);
 
     protected:
 

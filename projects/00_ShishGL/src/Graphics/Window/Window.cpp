@@ -34,8 +34,9 @@ using namespace ShishGL;
 Window::Window(Object::ID id, Object::ID shape, Object::ID parent)
         : Renderable(id)
         , PlatformListener()
-        , is_active(false)
         , viewport({})
+        , use_viewport(false)
+        , is_active(false)
         , shape(shape) {
 
     printf("WINDOW, parent = %lu\n", parent);
@@ -59,6 +60,9 @@ Window::Window(Object::ID id, Object::ID shape, Object::ID parent)
     LayoutManager::attach(parent, Object::id());
     LayoutManager::attach(Object::id(), shape_ref.id());
 
+    if (parent == LayoutManager::ROOT) {
+        SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
+    }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -68,9 +72,19 @@ bool Window::detach(Object::ID) {
     return true;
 }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+
+void Window::setViewportUse(bool state) {
+    use_viewport = state;
+}
+
+/*----------------------------------------------------------------------------*/
 
 bool Window::onRender() {
+
+    if (!use_viewport) {
+        return true;
+    }
 
     Viewport to_set = viewport;
 
@@ -134,7 +148,7 @@ bool Window::onMouseMove(MouseEvent& event) {
     }
 
     Vector2<double> where = event.where();
-    event.setWhere(where + getViewport().pos);
+    event.setWhere(getViewport().pos - viewport.pos + where);
 
     if (EventSystem::sendEvent(this, event)) {
         status = true;

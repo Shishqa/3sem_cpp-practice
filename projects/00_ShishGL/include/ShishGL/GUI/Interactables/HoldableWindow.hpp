@@ -1,29 +1,39 @@
 /*============================================================================*/
-#ifndef SHISHGL_CLICKABLE_WINDOW_HPP
-#define SHISHGL_CLICKABLE_WINDOW_HPP
+#ifndef SHISHGL_HOLDABLE_WINDOW_HPP
+#define SHISHGL_HOLDABLE_WINDOW_HPP
 /*============================================================================*/
-#include "Window.hpp"
-#include "MouseEvent.hpp"
+#include <cstdint>
+
+#include "ClickableWindow.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     template <typename Shape>
-    class ClickableWindow : public Window<Shape> {
+    class HoldableWindow : public ClickableWindow<Shape> {
     public:
 
         template <typename... Args>
-        ClickableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        HoldableWindow(Object::ID id, Object::ID parent, Args&&... args);
 
-        ~ClickableWindow() override = default;
+        ~HoldableWindow() override = default;
+
+        bool onMouseButton(MouseButtonEvent& event) override;
 
         [[nodiscard]]
-        bool filterEvent(Event& event) const override;
+        inline bool isHolded() const;
+
+        [[nodiscard]]
+        inline uint8_t numHolded() const;
+
+    private:
+
+        uint8_t n_holded;
 
     };
 
 }
 /*============================================================================*/
-#include "ClickableWindow.ipp"
+#include "../../../../src/GUI/Interactables/HoldableWindow.ipp"
 /*============================================================================*/
-#endif //SHISHGL_CLICKABLE_WINDOW_HPP
+#endif //SHISHGL_HOLDABLE_WINDOW_HPP
 /*============================================================================*/

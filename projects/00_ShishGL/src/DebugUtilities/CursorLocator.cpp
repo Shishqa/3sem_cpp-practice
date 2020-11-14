@@ -1,20 +1,19 @@
 /*============================================================================*/
-#include "Rectangle.hpp"
 #include "CursorLocator.hpp"
-#include "ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-CursorLocator::CursorLocator(Object::ID id, Object::ID parent)
-    : Window<Rectangle>(id, parent, RED, Vector2<double>{10, 10})
+CursorLocator::CursorLocator(Object::ID id, Object::ID shape, Object::ID parent)
+    : Window(id, shape, parent)
     { }
 
 /*----------------------------------------------------------------------------*/
 
 bool CursorLocator::onMouseMove(MouseEvent& event) {
 
-    Window::getShape().setCenter(event.where());
+    viewport.pos = event.where();
+    Window::getShape().setPos(event.where());
     return true;
 
 }

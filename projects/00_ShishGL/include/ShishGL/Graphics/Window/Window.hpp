@@ -42,6 +42,8 @@ namespace ShishGL {
 
     protected:
 
+        void setViewportUse(bool state);
+
         bool onRender() override;
 
         virtual bool onMouseEntered(MouseEvent&);
@@ -57,11 +59,13 @@ namespace ShishGL {
         [[nodiscard]]
         Shape2D& getShape() const;
 
+        Viewport viewport;
+
     private:
 
-        bool is_active;
+        bool use_viewport;
 
-        Viewport viewport;
+        bool is_active;
 
         Object::ID shape;
 
