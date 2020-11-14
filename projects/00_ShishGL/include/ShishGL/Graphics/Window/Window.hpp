@@ -42,8 +42,6 @@ namespace ShishGL {
 
     protected:
 
-        void setViewportUse(bool state);
-
         bool onRender() override;
 
         virtual bool onMouseEntered(MouseEvent&);
@@ -62,8 +60,6 @@ namespace ShishGL {
         Viewport viewport;
 
     private:
-
-        bool use_viewport;
 
         bool is_active;
 

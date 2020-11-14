@@ -18,8 +18,6 @@ public:
 
     void initLayout() override {
 
-        setViewportUse(true);
-
         attach<Window, Rectangle>(
                 GREEN,
                 Vector2<double>{50, 50},
@@ -45,8 +43,6 @@ public:
     { }
 
     void initLayout() override {
-
-        setViewportUse(true);
 
         attach<CursorLocator, Circle>(
                 BLUE, 15

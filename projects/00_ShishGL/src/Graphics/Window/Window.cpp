@@ -35,7 +35,6 @@ Window::Window(Object::ID id, Object::ID shape, Object::ID parent)
         : Renderable(id)
         , PlatformListener()
         , viewport({})
-        , use_viewport(false)
         , is_active(false)
         , shape(shape) {
 
@@ -74,17 +73,7 @@ bool Window::detach(Object::ID) {
 
 /*----------------------------------------------------------------------------*/
 
-void Window::setViewportUse(bool state) {
-    use_viewport = state;
-}
-
-/*----------------------------------------------------------------------------*/
-
 bool Window::onRender() {
-
-    if (!use_viewport) {
-        return true;
-    }
 
     Viewport to_set = viewport;
 
