@@ -15,8 +15,8 @@ KeyboardEvent::KeyboardEvent(Keyboard::Key key,
 
 /*----------------------------------------------------------------------------*/
 
-bool KeyboardEvent::happen(Object::ID listener) {
-    return GET<PlatformListener>(listener).onKeyboard(*this);
+bool KeyboardEvent::happen(Listener* listener) {
+    return dynamic_cast<PlatformListener*>(listener)->onKeyboard(*this);
 }
 
 /*----------------------------------------------------------------------------*/

@@ -5,11 +5,11 @@
 namespace ShishGL {
 
     template <typename SomeEvent, typename... Args>
-    bool EventSystem::sendEvent(Object::ID sender, Args&&... args) {
+    bool EventSystem::sendEvent(Listener* sender, Args&&... args) {
 
         auto event = new SomeEvent(std::forward<Args>(args)...);
 
-        bool status = sendEvent(sender, event);
+        bool status = sendEvent(sender, *event);
 
         delete event;
 

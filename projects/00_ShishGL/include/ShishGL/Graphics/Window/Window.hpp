@@ -5,45 +5,44 @@
 #include <type_traits>
 #include <unordered_set>
 
+#include "SubscriptionManager.hpp"
+#include "EventSystem.hpp"
 #include "PlatformListener.hpp"
+#include "RenderSystem.hpp"
 #include "MouseEvent.hpp"
 #include "Shape2D.hpp"
+#include "Viewport.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename Shape>
-    class Window : public PlatformListener {
-    private:
-
-        /*--------------------------------------------------------------------*/
-        template <typename SomeWindow, typename T>
-        using WindowHelper =
-                std::enable_if_t<std::is_base_of<Window, SomeWindow>::value, T>;
-
-        template <typename SomeShape, typename T>
-        using ShapeHelper =
-                std::enable_if_t<std::is_base_of<Shape2D, SomeShape>::value, T>;
-        /*--------------------------------------------------------------------*/
-
+    class Window : public Renderable, public PlatformListener {
     public:
 
-        /*--------------------------------------------------------------------*/
-        template <typename... Args>
-        explicit Window(Object::ID id, Object::ID parent, Args&&... args);
+        explicit Window(Object::ID id, Object::ID shape,
+                        Object::ID parent = LayoutManager::ROOT);
 
         Window() = delete;
 
-        ~Window() override;
         /*--------------------------------------------------------------------*/
 
+        virtual void initLayout() { }
+
         /*--------------------------------------------------------------------*/
-        template <typename SomeWindow, typename... Args>
+        template <typename SomeWindow, typename SomeShape, typename... Args>
         Object::ID attach(Args&&... args);
+
+        template <typename SomeWindow, typename SomeShape, typename... Args>
+        Object::ID attachSubscribe(Args&&... args);
 
         bool detach(Object::ID subwindow);
         /*--------------------------------------------------------------------*/
 
+        [[nodiscard]]
+        const Viewport& getViewport() const;
+
     protected:
+
+        bool onRender() override;
 
         virtual bool onMouseEntered(MouseEvent&);
 
@@ -51,18 +50,22 @@ namespace ShishGL {
 
         bool onMouseMove(MouseEvent& event) override;
 
-        Shape& getShape() const;
+        bool onMouseButton(MouseButtonEvent& event) override;
+
+        bool onMouseScroll(class MouseScrollEvent& event) override;
+
+        [[nodiscard]]
+        Shape2D& getShape() const;
 
     private:
 
         bool is_active;
 
-        Shape2D::ID shape;
+        Viewport viewport;
 
-        using WindowPool = std::unordered_set<Window::ID>;
+        Object::ID shape;
 
-        Window::ID parent;
-        WindowPool subwindows;
+        friend class WindowManager;
 
     };
 

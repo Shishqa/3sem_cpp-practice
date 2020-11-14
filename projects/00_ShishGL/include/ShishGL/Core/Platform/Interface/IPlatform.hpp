@@ -17,6 +17,12 @@ namespace ShishGL {
         virtual Vector2<double> getMousePos() = 0;
         /*--------------------------------------------------------------------*/
 
+        /* View */
+        /*--------------------------------------------------------------------*/
+        virtual void setViewport(const Vector2<double>& pos,
+                                 const Vector2<double>& size) = 0;
+        /*--------------------------------------------------------------------*/
+
         /* Draw */
         /*--------------------------------------------------------------------*/
         virtual void setColor(const Color& color) = 0;

@@ -1,6 +1,6 @@
 /*============================================================================*/
 #include "ShishGL/Core/Log/LogSystem.hpp"
-#include "ShishGL/Core/EventSystem/EventManager/EventManager.hpp"
+#include "ShishGL/Core/EventSystem/EventManager.hpp"
 #include "ShishGL/user_interface/scrollbar/scrollbar.hpp"
 /*============================================================================*/
 using namespace ShishGL;

@@ -18,7 +18,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline const TimeDelta& delta() const;
 
-        bool happen(PlatformListener::ID listener) override;
+        bool happen(Listener* listener) override;
 
     protected:
 

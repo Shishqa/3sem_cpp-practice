@@ -1,0 +1,10 @@
+digraph "ShishGL-DebugUtilities" {
+node [
+  fontsize = "12"
+];
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node15" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node19" [ label = "TestAbstracts", shape = egg ];
+    "node19" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+}

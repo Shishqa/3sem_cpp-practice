@@ -2,14 +2,12 @@
 #ifndef SHISHGL_SYSTEM_OBJECT_HPP
 #define SHISHGL_SYSTEM_OBJECT_HPP
 /*============================================================================*/
-#include "Object.hpp"
+#include "Listener.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class PlatformListener : public Object {
+    class PlatformListener : public Listener {
     public:
-
-        explicit PlatformListener(Object::ID id);
 
         ~PlatformListener() override = default;
 

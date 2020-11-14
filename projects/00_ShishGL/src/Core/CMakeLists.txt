@@ -23,6 +23,7 @@ target_link_libraries(ShishGL-Core
   )
 
 add_subdirectory(Primitives)
+add_subdirectory(ObjectManager)
 add_subdirectory(LogSystem)
 add_subdirectory(EventSystem)
 add_subdirectory(RenderSystem)

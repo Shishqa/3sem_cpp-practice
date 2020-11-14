@@ -10,7 +10,8 @@ namespace ShishGL {
     class Rectangle : public Shape2D {
     public:
 
-        Rectangle(Object::ID id, const Vector2<double>& size,
+        Rectangle(Object::ID id,
+                  const Vector2<double>& size,
                   const Vector2<double>& pos = {0, 0});
 
         Rectangle(Object::ID id, const Color& color,

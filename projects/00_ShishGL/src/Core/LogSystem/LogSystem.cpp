@@ -123,6 +123,8 @@ LogSystem::LogStatus LogSystem::print(const TimeDelta& elapsed,
 
     if (LastMessage().cnt && !strncmp(buffer, LastMessage().buffer, static_cast<size_t>(str_len))) {
 
+        //flush();
+
         LastMessage().cnt++;
         LastMessage().end = elapsed;
 

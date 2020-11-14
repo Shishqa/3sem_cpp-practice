@@ -4,25 +4,25 @@
 #include "Circle.hpp"
 #include "ColorCollection.hpp"
 #include "WindowTypes.hpp"
-#include "CursorLocator.hpp"
+//#include "CursorLocator.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-class NestedTester : public Window<Rectangle> {
+class NestedTester : public Window {
 public:
 
-    NestedTester(Object::ID id, Object::ID parent,
-                 const Vector2<double>& pos)
-                 : Window<Rectangle>(id, parent, YELLOW,
-                                     Vector2<double>{500, 500},
-                                     pos) {
+    NestedTester(Object::ID id, Object::ID shape, Object::ID parent = LayoutManager::ROOT)
+                 : Window(id, shape, parent)
+                 { }
 
-        attach<DraggableWindow<Rectangle>>(
+    void initLayout() override {
+
+        attach<Window, Rectangle>(
                 GREEN,
-                Vector2<double>{100, 100},
-                Vector2<double>{0, 0}
-                );
+                Vector2<double>{50, 50},
+                Vector2<double>{-25, -25}
+        );
 
     }
 
@@ -36,19 +36,15 @@ int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
 
-
-    CREATE<NestedTester>(
-            ObjectManager::ID_UNDEFINED,
-            Vector2<double>{500, 500}
-            );
-
-    CREATE<Window<Rectangle>>(
-            ObjectManager::ID_UNDEFINED,
+    WindowManager::create<NestedTester, Rectangle>(
             WHITE_SMOKE,
             Vector2<double>{100, 100},
             Vector2<double>{100, 100}
             );
 
+    LayoutManager::dump("LayoutDump.dot");
+
+    /*
     CREATE<DraggableWindow<Rectangle>>(
             ObjectManager::ID_UNDEFINED,
             WHITE_SMOKE,
@@ -86,6 +82,8 @@ int main(int argc, char* argv[]) {
     CREATE<CursorLocator>(
             ObjectManager::ID_UNDEFINED
     );
+
+     */
 
     return CoreApplication::run();
 

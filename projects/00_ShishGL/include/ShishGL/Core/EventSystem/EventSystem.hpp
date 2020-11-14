@@ -9,12 +9,12 @@ namespace ShishGL {
     class EventSystem {
     public:
 
-        static constexpr Object::ID SystemEvents = 1;
+        static constexpr Listener* SystemEvents = nullptr;
 
         template <typename SomeEvent, typename... Args>
-        static bool sendEvent(Object::ID sender, Args&&... args);
+        static bool sendEvent(Listener* sender, Args&&... args);
 
-        static bool sendEvent(Object::ID sender, Event* event);
+        static bool sendEvent(Listener* sender, Event& event);
 
         static bool dispatchAll();
 

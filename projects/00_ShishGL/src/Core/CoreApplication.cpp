@@ -1,5 +1,6 @@
 /*============================================================================*/
 #include "LogSystem.hpp"
+#include "ObjectManager.hpp"
 #include "EventSystem.hpp"
 #include "RenderSystem.hpp"
 #include "CoreApplication.hpp"

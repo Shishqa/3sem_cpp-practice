@@ -1,6 +1,5 @@
 /*============================================================================*/
 #include "TimerEvent.hpp"
-#include "ObjectManager.hpp"
 #include "PlatformListener.hpp"
 /*============================================================================*/
 using namespace ShishGL;
@@ -17,8 +16,8 @@ const TimeDelta& TimerEvent::delta() const {
 
 /*----------------------------------------------------------------------------*/
 
-bool TimerEvent::happen(Object::ID listener) {
-    return GET<PlatformListener>(listener).onTimer(*this);
+bool TimerEvent::happen(Listener* listener) {
+    return dynamic_cast<PlatformListener*>(listener)->onTimer(*this);
 }
 
 /*============================================================================*/

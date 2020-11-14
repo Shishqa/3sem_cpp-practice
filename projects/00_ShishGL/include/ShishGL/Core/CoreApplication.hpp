@@ -6,7 +6,7 @@
 #include <unordered_set>
 
 #include "IPlatform.hpp"
-#include "Object.hpp"
+#include "ObjectManager/Object.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

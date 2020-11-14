@@ -3,7 +3,7 @@
 
 #include "LogSystem.hpp"
 #include "ObjectManager.hpp"
-#include "GraphicObject.hpp"
+#include "Renderable.hpp"
 #include "LayoutManager.hpp"
 #include "RenderSystem.hpp"
 #include "Platform.hpp"
@@ -71,14 +71,24 @@ bool RenderSystem::update() {
     }
 
     Renderer().clear(Color{0, 0, 0, 255});
-
-    for (auto& id : LayoutManager::getLayout()) {
-        GET<GraphicObject>(id).onRender();
-    }
-
+    render(LayoutManager::ROOT);
     Renderer().display();
 
     return true;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void RenderSystem::render(Renderable::ID obj) {
+
+    if (!LayoutManager::Layout().count(obj)) {
+        return;
+    }
+
+    for (auto& child : LayoutManager::Layout()[obj].children) {
+        GET<Renderable>(child).onRender();
+        render(child);
+    }
 }
 
 /*----------------------------------------------------------------------------*/

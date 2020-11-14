@@ -9,11 +9,10 @@ target_include_directories(ShishGL-RenderSystem
 
 target_sources(ShishGL-RenderSystem
   PUBLIC
-    ${INCROOT}/GraphicObject.hpp
+    ${INCROOT}/Renderable.hpp
     ${INCROOT}/LayoutManager.hpp
     ${INCROOT}/RenderSystem.hpp
   PRIVATE
-    GraphicObject.cpp
     LayoutManager.cpp
     RenderSystem.cpp
   )
@@ -21,6 +20,6 @@ target_sources(ShishGL-RenderSystem
 target_link_libraries(ShishGL-RenderSystem
   PUBLIC
     ShishGL-LogSystem
-    ShishGL-EventSystem
+    ShishGL-ObjectManager
     ShishGL-Platform
   )

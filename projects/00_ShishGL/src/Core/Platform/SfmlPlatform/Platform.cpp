@@ -18,7 +18,7 @@ bool SfmlPlatform::initDisplay(int*, char**) {
     canvas = new sf::RenderWindow(sf::VideoMode::getDesktopMode(), "sfml",
                                   sf::Style::Fullscreen);
 
-    canvas->setMouseCursorVisible(false);
+    //canvas->setMouseCursorVisible(false);
 
     /* todo: fix hard-coded font */
     if (!active_font.loadFromFile("./FiraCode-Regular.ttf")) {

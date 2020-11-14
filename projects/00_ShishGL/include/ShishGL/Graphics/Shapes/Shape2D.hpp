@@ -2,18 +2,18 @@
 #ifndef SHISHGL_SHAPE_2D_HPP
 #define SHISHGL_SHAPE_2D_HPP
 /*============================================================================*/
-#include "GraphicObject.hpp"
+#include "Renderable.hpp"
 #include "Vector2.hpp"
 #include "Color.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Shape2D : public GraphicObject {
+    class Shape2D : public Renderable {
     public:
 
         explicit Shape2D(Object::ID id, const Vector2<double>& pos = {0, 0});
 
-        explicit Shape2D(Object::ID id, const Color& color ,
+        explicit Shape2D(Object::ID id, const Color& color,
                          const Vector2<double>& pos = {0, 0});
 
         /*--------------------------------------------------------------------*/

@@ -1,0 +1,10 @@
+digraph "ShishGL-ObjectManager" {
+node [
+  fontsize = "12"
+];
+    "node5" [ label = "ShishGL-ObjectManager", shape = octagon ];
+    "node3" [ label = "ShishGL-LogSystem", shape = octagon ];
+    "node5" -> "node3"  // ShishGL-ObjectManager -> ShishGL-LogSystem
+    "node4" [ label = "ShishGL-Primitives", shape = octagon ];
+    "node3" -> "node4"  // ShishGL-LogSystem -> ShishGL-Primitives
+}

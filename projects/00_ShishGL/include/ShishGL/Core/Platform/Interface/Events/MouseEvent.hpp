@@ -21,7 +21,7 @@ namespace ShishGL {
 
         void setWhere(const Vector2<double>& pos);
 
-        bool happen(PlatformListener::ID listener) override;
+        bool happen(Listener* listener) override;
 
     protected:
 
@@ -46,7 +46,7 @@ namespace ShishGL {
         [[nodiscard]]
         Mouse::ButtonState state() const;
 
-        bool happen(PlatformListener::ID listener) override;
+        bool happen(Listener* listener) override;
 
     protected:
 
@@ -68,7 +68,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline Mouse::ScrollDelta delta() const;
 
-        bool happen(PlatformListener::ID listener) override;
+        bool happen(Listener* listener) override;
 
     protected:
 

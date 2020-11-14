@@ -1,0 +1,42 @@
+digraph "sfml-window" {
+node [
+  fontsize = "12"
+];
+    "node12" [ label = "sfml-window", shape = doubleoctagon ];
+    "node11" [ label = "sfml-graphics", shape = doubleoctagon ];
+    "node11" -> "node12" [ style = dashed ] // sfml-graphics -> sfml-window
+    "node10" [ label = "ShishGL-SfmlPlatform", shape = octagon ];
+    "node10" -> "node11"  // ShishGL-SfmlPlatform -> sfml-graphics
+    "node6" [ label = "ShishGL-Platform", shape = pentagon ];
+    "node6" -> "node10" [ style = dashed ] // ShishGL-Platform -> ShishGL-SfmlPlatform
+    "node1" [ label = "ShishGL-Core", shape = octagon ];
+    "node1" -> "node6"  // ShishGL-Core -> ShishGL-Platform
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node1" [ style = dashed ] // ShishGL -> ShishGL-Core
+    "node19" [ label = "TestAbstracts", shape = egg ];
+    "node19" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node15" -> "node1"  // ShishGL-DebugUtilities -> ShishGL-Core
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node15" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node16" [ label = "ShishGL-Graphics", shape = pentagon ];
+    "node16" -> "node1" [ style = dashed ] // ShishGL-Graphics -> ShishGL-Core
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node15" -> "node16"  // ShishGL-DebugUtilities -> ShishGL-Graphics
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node16" [ style = dashed ] // ShishGL -> ShishGL-Graphics
+    "node17" [ label = "ShishGL-Shapes", shape = octagon ];
+    "node17" -> "node1"  // ShishGL-Shapes -> ShishGL-Core
+    "node16" [ label = "ShishGL-Graphics", shape = pentagon ];
+    "node16" -> "node17" [ style = dashed ] // ShishGL-Graphics -> ShishGL-Shapes
+    "node18" [ label = "ShishGL-Window", shape = pentagon ];
+    "node18" -> "node17" [ style = dashed ] // ShishGL-Window -> ShishGL-Shapes
+    "node16" [ label = "ShishGL-Graphics", shape = pentagon ];
+    "node16" -> "node18" [ style = dashed ] // ShishGL-Graphics -> ShishGL-Window
+    "node14" [ label = "ShishGL-RenderSystem", shape = octagon ];
+    "node14" -> "node6"  // ShishGL-RenderSystem -> ShishGL-Platform
+    "node1" [ label = "ShishGL-Core", shape = octagon ];
+    "node1" -> "node14"  // ShishGL-Core -> ShishGL-RenderSystem
+    "node10" [ label = "ShishGL-SfmlPlatform", shape = octagon ];
+    "node10" -> "node12"  // ShishGL-SfmlPlatform -> sfml-window
+}

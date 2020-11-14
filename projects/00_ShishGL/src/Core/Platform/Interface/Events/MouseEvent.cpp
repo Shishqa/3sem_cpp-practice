@@ -22,8 +22,8 @@ void MouseEvent::setWhere(const Vector2<double>& pos) {
 
 /*----------------------------------------------------------------------------*/
 
-bool MouseEvent::happen(Object::ID listener) {
-    return GET<PlatformListener>(listener).onMouseMove(*this);
+bool MouseEvent::happen(Listener* listener) {
+    return dynamic_cast<PlatformListener*>(listener)->onMouseMove(*this);
 }
 
 /*============================================================================*/
@@ -50,8 +50,8 @@ Mouse::ButtonState MouseButtonEvent::state() const {
 
 /*----------------------------------------------------------------------------*/
 
-bool MouseButtonEvent::happen(Object::ID listener) {
-    return GET<PlatformListener>(listener).onMouseButton(*this);
+bool MouseButtonEvent::happen(Listener* listener) {
+    return dynamic_cast<PlatformListener*>(listener)->onMouseButton(*this);
 }
 
 /*============================================================================*/
@@ -70,8 +70,8 @@ Mouse::ScrollDelta MouseScrollEvent::delta() const {
 
 /*----------------------------------------------------------------------------*/
 
-bool MouseScrollEvent::happen(Object::ID listener) {
-    return GET<PlatformListener>(listener).onMouseScroll(*this);
+bool MouseScrollEvent::happen(Listener* listener) {
+    return dynamic_cast<PlatformListener*>(listener)->onMouseScroll(*this);
 }
 
 /*============================================================================*/

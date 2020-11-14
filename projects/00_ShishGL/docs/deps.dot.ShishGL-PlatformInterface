@@ -1,0 +1,26 @@
+digraph "ShishGL-PlatformInterface" {
+node [
+  fontsize = "12"
+];
+    "node7" [ label = "ShishGL-PlatformInterface", shape = pentagon ];
+    "node3" [ label = "ShishGL-LogSystem", shape = octagon ];
+    "node7" -> "node3" [ style = dashed ] // ShishGL-PlatformInterface -> ShishGL-LogSystem
+    "node4" [ label = "ShishGL-Primitives", shape = octagon ];
+    "node3" -> "node4"  // ShishGL-LogSystem -> ShishGL-Primitives
+    "node8" [ label = "ShishGL-PlatformEvents", shape = octagon ];
+    "node7" -> "node8" [ style = dashed ] // ShishGL-PlatformInterface -> ShishGL-PlatformEvents
+    "node2" [ label = "ShishGL-EventSystem", shape = octagon ];
+    "node8" -> "node2"  // ShishGL-PlatformEvents -> ShishGL-EventSystem
+    "node3" [ label = "ShishGL-LogSystem", shape = octagon ];
+    "node2" -> "node3"  // ShishGL-EventSystem -> ShishGL-LogSystem
+    "node5" [ label = "ShishGL-ObjectManager", shape = octagon ];
+    "node2" -> "node5"  // ShishGL-EventSystem -> ShishGL-ObjectManager
+    "node3" [ label = "ShishGL-LogSystem", shape = octagon ];
+    "node5" -> "node3"  // ShishGL-ObjectManager -> ShishGL-LogSystem
+    "node9" [ label = "ShishGL-PlatformInput", shape = octagon ];
+    "node8" -> "node9"  // ShishGL-PlatformEvents -> ShishGL-PlatformInput
+    "node9" [ label = "ShishGL-PlatformInput", shape = octagon ];
+    "node7" -> "node9" [ style = dashed ] // ShishGL-PlatformInterface -> ShishGL-PlatformInput
+    "node4" [ label = "ShishGL-Primitives", shape = octagon ];
+    "node7" -> "node4" [ style = dashed ] // ShishGL-PlatformInterface -> ShishGL-Primitives
+}

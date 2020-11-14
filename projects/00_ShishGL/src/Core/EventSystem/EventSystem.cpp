@@ -1,5 +1,6 @@
 /*============================================================================*/
 #include "LogSystem.hpp"
+#include "Listener.hpp"
 #include "EventManager.hpp"
 #include "SubscriptionManager.hpp"
 #include "EventSystem.hpp"
@@ -7,17 +8,12 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-bool EventSystem::sendEvent(Object::ID sender, Event* event) {
+bool EventSystem::sendEvent(Listener* sender, Event& event) {
 
     bool status = false;
 
     for (auto& sub : SubscriptionManager::Subscriptions()[sender]) {
-
-        if (!GET<Object>(sub).filterEvent(*event)) {
-            continue;
-        }
-
-        if (event->happen(sub)) {
+        if (sub->filterEvent(event) && event.happen(sub)) {
             status = true;
         }
     }
@@ -52,7 +48,7 @@ bool EventSystem::dispatchOne() {
     Event* event = EventManager::Events().front();
     EventManager::Events().pop();
 
-    bool status = sendEvent(SystemEvents, event);
+    bool status = sendEvent(SystemEvents, *event);
     if (!status && !SubscriptionManager::Subscriptions()[SystemEvents].empty()) {
         LogSystem::printWarning("Missed event %s", typeid(*event).name());
     }

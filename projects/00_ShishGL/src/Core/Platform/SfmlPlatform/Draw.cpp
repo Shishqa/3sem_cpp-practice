@@ -1,8 +1,35 @@
 /*============================================================================*/
+#include "LogSystem.hpp"
 #include "Platform.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
+
+void SfmlPlatform::setViewport(const Vector2<double>& pos,
+                               const Vector2<double>& size) {
+
+    sf::View view(sf::FloatRect{
+            static_cast<float>(pos.x),
+            static_cast<float>(pos.y),
+            static_cast<float>(size.x),
+            static_cast<float>(size.y)
+    });
+
+    view.setViewport(sf::FloatRect{
+            static_cast<float>(pos.x / static_cast<double>(getDisplaySize().x)),
+            static_cast<float>(pos.y / static_cast<double>(getDisplaySize().y)),
+            static_cast<float>(size.x / static_cast<double>(getDisplaySize().x)),
+            static_cast<float>(size.y / static_cast<double>(getDisplaySize().y))
+    });
+
+    canvas->setView(view);
+
+    //printf("setting viewport at (%lg; %lg) %lgx%lgpx\n",
+    //       pos.x, pos.y, size.x, size.y);
+
+}
+
+/*----------------------------------------------------------------------------*/
 
 void SfmlPlatform::setColor(const Color& color) {
     active_color = color;

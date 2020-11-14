@@ -4,10 +4,10 @@
 /*============================================================================*/
 
 #include "Window.hpp"
-#include "ClickableWindow.hpp"
-#include "HoldableWindow.hpp"
-#include "DraggableWindow.hpp"
-#include "SlidableWindow.hpp"
+//#include "ClickableWindow.hpp"
+//#include "HoldableWindow.hpp"
+//#include "DraggableWindow.hpp"
+//#include "SlidableWindow.hpp"
 
 /*============================================================================*/
 #endif //SHISHGL_WINDOW_TYPES_HPP

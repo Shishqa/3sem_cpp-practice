@@ -26,7 +26,7 @@ namespace ShishGL {
         [[nodiscard]]
         inline Keyboard::ModifierMask modifiers() const;
 
-        bool happen(PlatformListener::ID listener) override;
+        bool happen(Listener* listener) override;
 
     protected:
 

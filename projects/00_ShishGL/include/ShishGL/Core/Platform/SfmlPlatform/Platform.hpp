@@ -21,6 +21,12 @@ namespace ShishGL {
         Vector2<double> getMousePos() override;
         /*--------------------------------------------------------------------*/
 
+        /* View */
+        /*--------------------------------------------------------------------*/
+        void setViewport(const Vector2<double>& pos,
+                         const Vector2<double>& size) override;
+        /*--------------------------------------------------------------------*/
+
         /* Draw */
         /*--------------------------------------------------------------------*/
         void setColor(const Color& color) override;

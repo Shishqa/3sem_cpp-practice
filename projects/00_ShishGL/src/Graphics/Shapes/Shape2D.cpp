@@ -1,21 +1,20 @@
 /*============================================================================*/
 #include "Shape2D.hpp"
-#include "Object.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
 Shape2D::Shape2D(Object::ID id, const Vector2<double> &pos)
-    : GraphicObject(id)
+    : Renderable(id)
     , s_pos(pos)
-    , color({0, 0, 0, 255})
+    , color({0, 0, 0, 255}) // Black
     { }
 
 /*----------------------------------------------------------------------------*/
 
 Shape2D::Shape2D(Object::ID id, const Color& color,
                  const Vector2<double>& pos)
-    : GraphicObject(id)
+    : Renderable(id)
     , s_pos(pos)
     , color(color)
     { }

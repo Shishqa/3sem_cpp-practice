@@ -9,18 +9,22 @@ target_include_directories(ShishGL-EventSystem
 
 target_sources(ShishGL-EventSystem
   PUBLIC
+    ${INCROOT}/Event.hpp
+    ${INCROOT}/EventManager.hpp
+    ${INCROOT}/Listener.hpp
+    ${INCROOT}/SubscriptionManager.hpp
     ${INCROOT}/EventSystem.hpp
   PRIVATE
     ${INCROOT}/EventSystem.ipp
+    ${INCROOT}/EventManager.ipp
+    Event.cpp
+    EventManager.cpp
+    Listener.cpp
+    SubscriptionManager.cpp
     EventSystem.cpp
   )
 
 target_link_libraries(ShishGL-EventSystem
   PUBLIC
     ShishGL-LogSystem
-    ShishGL-ObjectManager
-    ShishGL-EventManager
   )
-
-add_subdirectory(ObjectManager)
-add_subdirectory(EventManager)
