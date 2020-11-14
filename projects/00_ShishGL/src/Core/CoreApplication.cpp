@@ -43,9 +43,16 @@ uint8_t CoreApplication::run() {
     frame_timer.reset();
     size_t frame_counter = 0;
 
+    Timer profiling_timer = {};
+
+    TimeDelta for_poll = {};
+    TimeDelta for_render = {};
+
     LogSystem::printLog("Started run session");
 
     while (RENDERER().isRunning()) {
+
+        profiling_timer.reset();
 
         RENDERER().pollEvent();
         EventSystem::dispatchAll();
@@ -53,9 +60,19 @@ uint8_t CoreApplication::run() {
             break;
         }
 
+        TimeDelta polling = profiling_timer.elapsed();
+        if (polling > for_poll) {
+            for_poll = polling;
+        }
+
         ++frame_counter;
 
         RenderSystem::update();
+
+        TimeDelta render = profiling_timer.elapsed();
+        if (render - polling > for_render) {
+            for_render = render - polling;
+        }
 
         TimeDelta delta = frame_timer.elapsed();
         if (delta.count() > 1000000000LL) {
@@ -64,6 +81,12 @@ uint8_t CoreApplication::run() {
             frame_timer.reset();
         }
     }
+
+    printf("POLL MAX: %lu\n"
+           "RENDER MAX: %lu\n",
+           for_poll.count(),
+           for_render.count());
+    fflush(stdout);
 
     terminate();
 

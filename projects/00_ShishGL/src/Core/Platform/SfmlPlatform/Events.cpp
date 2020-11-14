@@ -135,32 +135,30 @@ bool SfmlPlatform::pollEvent() {
 
     sf::Event sfml_event = {};
 
-    bool status = canvas->pollEvent(sfml_event);
-    if (!status) {
-        return false;
-    }
+    while (canvas->pollEvent(sfml_event)) {
+        switch (sfml_event.type) {
 
-    switch (sfml_event.type) {
+            case sf::Event::Closed:
+                is_running = false;
+                break;
 
-        case sf::Event::Closed:
-            is_running = false;
-            break;
+            case sf::Event::MouseButtonPressed:
+            case sf::Event::MouseButtonReleased:
+                return pollMouseButton(sfml_event);
 
-        case sf::Event::MouseButtonPressed:
-        case sf::Event::MouseButtonReleased:
-            return pollMouseButton(sfml_event);
+            case sf::Event::MouseMoved:
+                return pollMouseMove(sfml_event);
 
-        case sf::Event::MouseMoved:
-            return pollMouseMove(sfml_event);
+            case sf::Event::MouseWheelScrolled:
+                return pollMouseScroll(sfml_event);
 
-        case sf::Event::MouseWheelScrolled:
-            return pollMouseScroll(sfml_event);
+            case sf::Event::KeyPressed:
+            case sf::Event::KeyReleased:
+                return pollKeyboard(sfml_event);
 
-        case sf::Event::KeyPressed:
-        case sf::Event::KeyReleased:
-            return pollKeyboard(sfml_event);
-
-        default: break;
+            default:
+                break;
+        }
     }
 
     return false;

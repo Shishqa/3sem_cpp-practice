@@ -69,7 +69,7 @@ namespace ShishGL {
 
         virtual bool closeDisplay() = 0;
 
-        virtual Vector2<size_t> getDisplaySize() = 0;
+        virtual const Vector2<double>& getDisplaySize() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */

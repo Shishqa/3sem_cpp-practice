@@ -28,7 +28,7 @@ public:
 
         attach<CursorLocator, Rectangle>(
                 YELLOW,
-                Vector2<double>{30, 30}
+                Vector2<double>{40, 40}
         );
 
     }
@@ -48,15 +48,13 @@ public:
 
         setViewportUse(true);
 
-        attach<Window, Rectangle>(
-                DARK_VIOLET,
-                Vector2<double>{50, 50},
-                Vector2<double>{-25, -25}
+        attach<CursorLocator, Circle>(
+                BLUE, 15
         );
 
-        attach<CursorLocator, Rectangle>(
-                BLUE,
-                Vector2<double>{30, 30}
+        attach<NestedTester, Circle>(
+                DARK_VIOLET, 100,
+                Vector2<double>{100, 100}
         );
 
     }
@@ -73,27 +71,31 @@ int main(int argc, char* argv[]) {
 
     WindowManager::create<NestedTester, Rectangle>(
             DARK_SEA_GREEN,
-            Vector2<double>{100, 100},
-            Vector2<double>{600, 600}
+            Vector2<double>{400, 400},
+            Vector2<double>{500, 200}
             );
+
+
+    WindowManager::create<NestedTester1, Rectangle>(
+            PALE_VIOLET_RED,
+            Vector2<double>{400, 400},
+            Vector2<double>{500, 600}
+    );
+    /*
+
 
     WindowManager::create<NestedTester, Rectangle>(
             GRAY,
-            Vector2<double>{100, 100},
-            Vector2<double>{700, 700}
+            Vector2<double>{400, 400},
+            Vector2<double>{900, 600}
     );
 
     WindowManager::create<NestedTester1, Rectangle>(
             PALE_VIOLET_RED,
-            Vector2<double>{100, 100},
-            Vector2<double>{700, 600}
+            Vector2<double>{400, 400},
+            Vector2<double>{900, 200}
     );
-
-    WindowManager::create<NestedTester1, Rectangle>(
-            PALE_VIOLET_RED,
-            Vector2<double>{100, 100},
-            Vector2<double>{600, 700}
-    );
+    */
 
     LayoutManager::dump("LayoutDump.dot");
 

@@ -15,8 +15,14 @@ SfmlPlatform::SfmlPlatform()
 
 bool SfmlPlatform::initDisplay(int*, char**) {
 
-    canvas = new sf::RenderWindow(sf::VideoMode::getDesktopMode(), "sfml",
-                                  sf::Style::Fullscreen);
+    sf::VideoMode screen = sf::VideoMode::getDesktopMode();
+
+    canvas = new sf::RenderWindow(screen, "sfml", sf::Style::Fullscreen);
+
+    display_size = Vector2<double>{
+        static_cast<double>(screen.width),
+        static_cast<double>(screen.height)
+    };
 
     //canvas->setMouseCursorVisible(false);
 
@@ -62,11 +68,8 @@ void SfmlPlatform::display() {
 
 /*============================================================================*/
 
-Vector2<size_t> SfmlPlatform::getDisplaySize() {
-
-    sf::VideoMode screen = sf::VideoMode::getDesktopMode();
-
-    return Vector2<size_t>{screen.width, screen.height};
+const Vector2<double>& SfmlPlatform::getDisplaySize() {
+    return display_size;
 }
 
 /*----------------------------------------------------------------------------*/

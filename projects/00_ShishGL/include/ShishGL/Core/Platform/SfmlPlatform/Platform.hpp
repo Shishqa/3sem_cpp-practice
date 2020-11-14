@@ -66,7 +66,7 @@ namespace ShishGL {
 
          bool closeDisplay() override;
 
-         Vector2<size_t> getDisplaySize() override;
+         const Vector2<double>& getDisplaySize() override;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */
@@ -84,15 +84,17 @@ namespace ShishGL {
     private:
 
         /* IMPLEMENTATION SPECIAL */
-    /*========================================================================*/
+        /*====================================================================*/
 
-         bool is_running;
+        Vector2<double> display_size;
 
-         sf::RenderWindow* canvas;
+        bool is_running;
 
-         Color active_color;
+        sf::RenderWindow* canvas;
 
-         sf::Font active_font;
+        Color active_color;
+
+        sf::Font active_font;
 
     };
 
