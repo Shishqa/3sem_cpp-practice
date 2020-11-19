@@ -9,17 +9,29 @@ target_include_directories(ShishGL-RenderSystem
 
 target_sources(ShishGL-RenderSystem
   PUBLIC
-    ${INCROOT}/Renderable.hpp
-    ${INCROOT}/LayoutManager.hpp
     ${INCROOT}/RenderSystem.hpp
   PRIVATE
-    LayoutManager.cpp
     RenderSystem.cpp
   )
 
 target_link_libraries(ShishGL-RenderSystem
   PUBLIC
     ShishGL-LogSystem
-    ShishGL-ObjectManager
-    ShishGL-Platform
+    ShishGL-GraphicsPlatform
   )
+
+add_subdirectory(GraphicsPlatform)
+
+if (USE_SFML)
+
+  add_subdirectory(SfmlPlatform)
+  target_link_libraries(ShishGL-RenderSystem
+    PUBLIC
+      ShishGL-SfmlPlatform
+    )
+  target_compile_definitions(ShishGL-RenderSystem
+    PRIVATE
+      USE_SFML
+    )
+
+endif (USE_SFML)

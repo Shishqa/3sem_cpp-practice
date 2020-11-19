@@ -1,6 +1,6 @@
 add_library(ShishGL-PlatformInput)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/Platform/Interface/Input)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/RenderSystem/GraphicsPlatform/Input)
 
 target_include_directories(ShishGL-PlatformInput
   PUBLIC

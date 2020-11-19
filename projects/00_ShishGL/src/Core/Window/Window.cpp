@@ -1,7 +1,7 @@
 /*============================================================================*/
-#include "Window.hpp"
+#include "GraphicsPlatform/Window/Window.hpp"
 #include "Object.hpp"
-#include "WindowManager.hpp"
+#include "GraphicsPlatform/Window/WindowManager.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/

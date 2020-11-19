@@ -1,6 +1,6 @@
 add_library(ShishGL-PlatformInterface INTERFACE)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/Platform/Interface)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/RenderSystem/GraphicsPlatform)
 
 target_include_directories(ShishGL-PlatformInterface
   INTERFACE

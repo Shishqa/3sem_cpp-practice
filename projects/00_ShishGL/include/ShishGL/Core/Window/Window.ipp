@@ -2,7 +2,7 @@
 #ifndef SHISHGL_WINDOW_IPP
 #define SHISHGL_WINDOW_IPP
 /*============================================================================*/
-#include "WindowManager.hpp"
+#include "__WindowManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

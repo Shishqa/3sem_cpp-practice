@@ -3,7 +3,6 @@
 #define SHISHGL_RENDER_SYSTEM_HPP
 /*============================================================================*/
 #include "IPlatform.hpp"
-#include "LayoutManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -12,8 +11,6 @@ namespace ShishGL {
 
         static bool init(int* argc_ptr, char* argv[]);
 
-        static bool update();
-
         static bool terminate();
 
         static bool isInitialized();
@@ -21,8 +18,6 @@ namespace ShishGL {
         static IPlatform& Renderer();
 
     private:
-
-        static void render(Renderable::ID obj);
 
         static bool is_initialized;
 

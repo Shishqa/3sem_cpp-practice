@@ -16,7 +16,7 @@ target_sources(ShishGL-Window
   PRIVATE
     ${INCROOT}/Window.ipp
     ${INCROOT}/WindowManager.ipp
-    Window.cpp
+  ../../Core/Window/Window.cpp
     #${INCROOT}/ClickableWindow.hpp
     #${INCROOT}/ClickableWindow.ipp
     #${INCROOT}/HoldableWindow.hpp

@@ -5,7 +5,8 @@ using namespace ShishGL;
 /*============================================================================*/
 
 SfmlPlatform::SfmlPlatform()
-    : is_running(false)
+    : display_size({})
+    , is_running(false)
     , canvas(nullptr)
     , active_color({})
     , active_font({})

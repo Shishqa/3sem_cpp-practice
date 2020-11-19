@@ -6,24 +6,27 @@
 #include <unordered_map>
 #include <string_view>
 
-#include "Renderable.hpp"
+#include "Window.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class LayoutManager {
+    class WindowManager {
 
         struct Node {
-            std::list<Renderable::ID> children;
-            Renderable::ID parent;
+            std::list<Window*> children;
+            Window* parent;
         };
 
     public:
 
-        using RenderLayout = std::unordered_map<Renderable::ID, Node>;
+        template <typename SomeWindow>
+        static SomeWindow* create(Vector2<double>);
 
-        static constexpr Object::ID ROOT = 0;
+        using RenderLayout = std::unordered_map<Window*, Node>;
 
-        static Renderable::ID getParent(Renderable::ID obj);
+        static constexpr Window* ROOT = nullptr;
+
+        static Window* getParent(Window* window);
 
         static void putRoot(Renderable::ID obj);
 

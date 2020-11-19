@@ -2,11 +2,12 @@
 #include <stdexcept>
 
 #include "LogSystem.hpp"
-#include "ObjectManager.hpp"
-#include "Renderable.hpp"
-#include "LayoutManager.hpp"
 #include "RenderSystem.hpp"
-#include "Platform.hpp"
+
+#ifdef USE_SFML
+#include "SfmlPlatform/Platform.hpp"
+#endif
+
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -59,36 +60,6 @@ bool RenderSystem::init(int *argc_ptr, char **argv) {
     is_initialized = true;
 
     return true;
-}
-
-/*----------------------------------------------------------------------------*/
-
-bool RenderSystem::update() {
-
-    if (!is_initialized) {
-        LogSystem::printError("Running RenderSystem before initialization");
-        throw std::runtime_error("Error: Running RenderSystem before initialization");
-    }
-
-    Renderer().clear(Color{0, 0, 0, 255});
-    render(LayoutManager::ROOT);
-    Renderer().display();
-
-    return true;
-}
-
-/*----------------------------------------------------------------------------*/
-
-void RenderSystem::render(Renderable::ID obj) {
-
-    if (!LayoutManager::Layout().count(obj)) {
-        return;
-    }
-
-    for (auto& child : LayoutManager::Layout()[obj].children) {
-        GET<Renderable>(child).onRender();
-        render(child);
-    }
 }
 
 /*----------------------------------------------------------------------------*/

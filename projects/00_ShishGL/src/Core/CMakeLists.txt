@@ -19,12 +19,10 @@ target_link_libraries(ShishGL-Core
     ShishGL-LogSystem
     ShishGL-EventSystem
     ShishGL-RenderSystem
-    ShishGL-Platform
   )
 
 add_subdirectory(Primitives)
-add_subdirectory(ObjectManager)
 add_subdirectory(LogSystem)
 add_subdirectory(EventSystem)
 add_subdirectory(RenderSystem)
-add_subdirectory(Platform)
+add_subdirectory(Window)

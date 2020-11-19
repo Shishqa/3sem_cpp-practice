@@ -15,7 +15,7 @@ target_sources(ShishGL-Shapes
   PRIVATE
     Rectangle.cpp
     Circle.cpp
-    Shape2D.cpp
+  ../../Core/Primitives/Shape2D.cpp
   )
 
 target_link_libraries(ShishGL-Shapes

@@ -2,7 +2,7 @@
 #ifndef SHISHGL_CURSOR_LOCATOR_HPP
 #define SHISHGL_CURSOR_LOCATOR_HPP
 /*============================================================================*/
-#include "Window.hpp"
+#include "Core/GraphicsPlatform/Window/Window.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

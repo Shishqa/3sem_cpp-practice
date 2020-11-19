@@ -1,6 +1,6 @@
 add_library(ShishGL-SfmlPlatform)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/Platform/SfmlPlatform)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/RenderSystem/SfmlPlatform)
 
 target_include_directories(ShishGL-SfmlPlatform
   PUBLIC

@@ -3,7 +3,7 @@
 #define SHISHGL_WINDOW_TYPES_HPP
 /*============================================================================*/
 
-#include "Window.hpp"
+#include "Core/GraphicsPlatform/Window/Window.hpp"
 //#include "ClickableWindow.hpp"
 //#include "HoldableWindow.hpp"
 //#include "DraggableWindow.hpp"

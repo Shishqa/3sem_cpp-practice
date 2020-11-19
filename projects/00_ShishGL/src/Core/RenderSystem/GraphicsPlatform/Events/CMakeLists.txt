@@ -1,6 +1,6 @@
 add_library(ShishGL-PlatformEvents)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/Platform/Interface/Events)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/RenderSystem/GraphicsPlatform/Events)
 
 target_include_directories(ShishGL-PlatformEvents
   PUBLIC
