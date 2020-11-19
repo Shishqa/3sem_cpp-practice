@@ -6,6 +6,7 @@
 
 #include "Vector2.hpp"
 #include "Color.hpp"
+#include "ResourceManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -33,6 +34,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
         virtual void setColor(const Color& color) = 0;
 
+        virtual void setTexture(const ResourceManager::Resource& texture) = 0;
+
         virtual void drawPoint(const Vector2<double>& pos) = 0;
 
         virtual void drawLine(const Vector2<double>& start,
@@ -47,14 +50,16 @@ namespace ShishGL {
 
         /* Image */
         /*--------------------------------------------------------------------*/
-        virtual void displayImage(const uint8_t* data, const size_t& data_size,
+        virtual void displayImage(const ResourceManager::Resource& image,
                                   const Vector2<double>& position) = 0;
         /*--------------------------------------------------------------------*/
 
         /* Text */
         /*--------------------------------------------------------------------*/
-        virtual void displayText(const std::string_view& text,
-                                 size_t font_size,
+        virtual void setFont(const ResourceManager::Resource& font) = 0;
+
+        virtual void displayText(const ResourceManager::Resource& text,
+                                 const size_t& font_size,
                                  const Vector2<double>& pos) = 0;
         /*--------------------------------------------------------------------*/
 

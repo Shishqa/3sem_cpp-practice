@@ -15,6 +15,7 @@ target_link_libraries(ShishGL-GraphicsPlatform
   INTERFACE
     ShishGL-Primitives
     ShishGL-LogSystem
+    ShishGL-ResourceManager
     ShishGL-PlatformEvents
     ShishGL-PlatformInput
   )

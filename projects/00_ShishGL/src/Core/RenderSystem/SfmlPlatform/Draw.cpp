@@ -25,16 +25,31 @@ void SfmlPlatform::setViewport(const Vector2<double>& pos,
     });
 
     canvas->setView(view);
-
-    //printf("setting viewport at (%lg; %lg) %lgx%lgpx\n",
-    //       pos.x, pos.y, size.x, size.y);
-
 }
 
 /*----------------------------------------------------------------------------*/
 
 void SfmlPlatform::setColor(const Color& color) {
     active_color = color;
+    active_texture = nullptr;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void SfmlPlatform::setTexture(const ResourceManager::Resource& texture) {
+
+    if (textures.count(texture.filename)) {
+        active_texture = textures[texture.filename];
+        return;
+    }
+
+    printf("SFML LOADING!!!!\n");
+
+    auto sf_texture = new sf::Texture;
+    sf_texture->loadFromMemory(texture.data, texture.size);
+
+    textures[texture.filename] = sf_texture;
+    active_texture = sf_texture;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -88,12 +103,20 @@ void SfmlPlatform::drawRectangle(const Vector2<double>& pos,
                                    static_cast<float>(size.y)));
     rectangle.setPosition(sf::Vector2f(static_cast<float>(pos.x),
                                        static_cast<float>(pos.y)));
-    rectangle.setFillColor(sf::Color{
-        active_color.r,
-        active_color.g,
-        active_color.b,
-        active_color.a
-    });
+
+    if (active_texture) {
+
+        rectangle.setTexture(active_texture);
+
+    } else {
+
+        rectangle.setFillColor(sf::Color{
+                active_color.r,
+                active_color.g,
+                active_color.b,
+                active_color.a
+        });
+    }
 
     canvas->draw(rectangle);
 }
@@ -109,43 +132,67 @@ void SfmlPlatform::drawCircle(const Vector2<double>& pos,
                                     static_cast<float>(pos.y)));
     circle.setRadius(static_cast<float>(radius));
 
-    circle.setFillColor(sf::Color{
-            active_color.r,
-            active_color.g,
-            active_color.b,
-            active_color.a
-    });
+    if (active_texture) {
+
+        circle.setTexture(active_texture);
+
+    } else {
+
+        circle.setFillColor(sf::Color{
+                active_color.r,
+                active_color.g,
+                active_color.b,
+                active_color.a
+        });
+    }
 
     canvas->draw(circle);
 }
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlPlatform::displayImage(const uint8_t* data, const size_t& data_size,
-                              const Vector2<double>& pos) {
+void SfmlPlatform::displayImage(const ResourceManager::Resource& image,
+                                const Vector2<double>& pos) {
 
     sf::Texture texture = {};
-
-    texture.loadFromMemory(data, data_size);
+    texture.loadFromMemory(image.data, image.size);
 
     sf::Sprite sprite = {};
-
     sprite.setPosition(static_cast<float>(pos.x),
                        static_cast<float>(pos.y));
 
     sprite.setTexture(texture);
-
     canvas->draw(sprite);
-
 }
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlPlatform::displayText(const std::string_view& str, size_t font_size,
-                             const Vector2<double>& pos) {
+void SfmlPlatform::setFont(const ResourceManager::Resource& font) {
 
-    sf::Text display_text(sf::String(str.data()), active_font,
-                          static_cast<unsigned int>(font_size));
+    if (fonts.count(font.filename)) {
+        active_font = fonts[font.filename];
+        return;
+    }
+
+    auto sf_font = new sf::Font;
+    sf_font->loadFromMemory(font.data, font.size);
+
+    fonts[font.filename] = sf_font;
+    active_font = sf_font;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void SfmlPlatform::displayText(const ResourceManager::Resource& text,
+                               const size_t& font_size,
+                               const Vector2<double>& pos) {
+
+    if (!active_font) {
+        return;
+    }
+
+    sf::Text display_text(sf::String{reinterpret_cast<char*>(text.data)},
+                          *active_font, static_cast<unsigned int>(font_size));
 
     display_text.setFillColor(sf::Color{
             active_color.r,

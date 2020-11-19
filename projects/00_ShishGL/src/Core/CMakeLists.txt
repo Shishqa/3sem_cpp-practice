@@ -17,6 +17,7 @@ target_link_libraries(ShishGL-Core
   PUBLIC
     ShishGL-Primitives
     ShishGL-LogSystem
+    ShishGL-ResourceManager
     ShishGL-EventSystem
     ShishGL-RenderSystem
     ShishGL-Window
@@ -27,3 +28,4 @@ add_subdirectory(LogSystem)
 add_subdirectory(EventSystem)
 add_subdirectory(RenderSystem)
 add_subdirectory(Window)
+add_subdirectory(ResourceManager)

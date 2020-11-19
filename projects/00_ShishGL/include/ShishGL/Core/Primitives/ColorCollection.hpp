@@ -2,7 +2,7 @@
 #ifndef SHISHGL_COLOR_COLLECTION_HPP
 #define SHISHGL_COLOR_COLLECTION_HPP
 /*============================================================================*/
-#include "Primitives/Color.hpp"
+#include "Color.hpp"
 /*============================================================================*/
 namespace ShishGL {
 

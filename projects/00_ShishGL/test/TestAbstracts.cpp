@@ -7,6 +7,7 @@
 //#include "WindowTypes.hpp"
 #include "CursorLocator.hpp"
 #include "ColorFill.hpp"
+#include "TextureFill.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -69,13 +70,13 @@ int main(int argc, char* argv[]) {
             Vector2<double>{200, 200}
             );
 
-    win->applyStyle<ColorFill>(RED);
+    win->applyStyle<TextureFill>("textures/PaperTexture.jpg");
 
     auto loc = WindowManager::create<CursorLocator, RectangleShape>(
             Vector2<double>{50, 50}
             );
 
-    loc->applyStyle<ColorFill>(BLUE_VIOLET);
+    loc->applyStyle<TextureFill>("textures/Transparent.png");
 
     WindowManager::attach(win, loc);
 

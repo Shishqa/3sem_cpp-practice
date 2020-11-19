@@ -1,5 +1,6 @@
 /*============================================================================*/
 #include "Platform.hpp"
+#include "ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -8,8 +9,9 @@ SfmlPlatform::SfmlPlatform()
     : display_size({})
     , is_running(false)
     , canvas(nullptr)
-    , active_color({})
-    , active_font({})
+    , active_color(NONE)
+    , active_texture(nullptr)
+    , active_font(nullptr)
     { }
 
 /*----------------------------------------------------------------------------*/
@@ -24,13 +26,6 @@ bool SfmlPlatform::initDisplay(int*, char**) {
         static_cast<double>(screen.width),
         static_cast<double>(screen.height)
     };
-
-    //canvas->setMouseCursorVisible(false);
-
-    /* todo: fix hard-coded font */
-    if (!active_font.loadFromFile("fonts/FiraCode-Regular.ttf")) {
-        return false;
-    }
 
     is_running = true;
 
@@ -48,6 +43,14 @@ bool SfmlPlatform::isRunning() {
 bool SfmlPlatform::closeDisplay() {
 
     is_running = false;
+
+    for (auto& resource : textures) {
+        delete resource.second;
+    }
+
+    for (auto& resource : fonts) {
+        delete resource.second;
+    }
 
     delete canvas;
     canvas = nullptr;

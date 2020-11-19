@@ -37,6 +37,8 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
         void setColor(const Color& color) override;
 
+        void setTexture(const ResourceManager::Resource& texture) override;
+
         void drawPoint(const Vector2<double>& pos) override;
 
         void drawLine(const Vector2<double>& start,
@@ -51,12 +53,15 @@ namespace ShishGL {
 
         /* Image */
         /*--------------------------------------------------------------------*/
-        void displayImage(const uint8_t* data, const size_t& data_size,
+        void displayImage(const ResourceManager::Resource& image,
                           const Vector2<double>& pos) override;
 
         /* Text */
         /*--------------------------------------------------------------------*/
-        void displayText(const std::string_view& text, size_t font_size,
+        void setFont(const ResourceManager::Resource& font) override;
+
+        void displayText(const ResourceManager::Resource& text,
+                         const size_t& font_size,
                          const Vector2<double>& pos) override;
         /*--------------------------------------------------------------------*/
 
@@ -97,7 +102,11 @@ namespace ShishGL {
 
         Color active_color;
 
-        sf::Font active_font;
+        sf::Texture* active_texture;
+        std::unordered_map<std::string_view, sf::Texture*> textures;
+
+        sf::Font* active_font;
+        std::unordered_map<std::string_view, sf::Font*> fonts;
 
     };
 
