@@ -1,23 +1,23 @@
 /*============================================================================*/
-#ifndef SHISHGL_CURSOR_LOCATOR_HPP
-#define SHISHGL_CURSOR_LOCATOR_HPP
+#ifndef SHISHGL_STYLE_HPP
+#define SHISHGL_STYLE_HPP
 /*============================================================================*/
-#include "Window.hpp"
+#include "Shape2D.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class CursorLocator : public Window {
+    class Style {
     public:
 
-        explicit CursorLocator(Shape2D* shape);
+        Style() = default;
 
-    protected:
+        virtual void apply(Shape2D* shape) = 0;
 
-        bool onMouseMove(MouseEvent& event) override;
+        virtual ~Style() = default;
 
     };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_CURSOR_LOCATOR_HPP
+#endif //SHISHGL_STYLE_HPP
 /*============================================================================*/

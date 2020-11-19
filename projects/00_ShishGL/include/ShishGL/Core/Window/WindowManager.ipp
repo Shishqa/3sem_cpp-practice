@@ -5,25 +5,12 @@
 namespace ShishGL {
 
     template <typename SomeWindow, typename SomeShape, typename... Args>
-    Object::ID WindowManager::create(Args&&... args) {
+    SomeWindow* WindowManager::create(Args&&... args) {
 
-        Object::ID shape = CREATE<SomeShape>(std::forward<Args>(args)...);
+        auto* shape = new SomeShape(std::forward<Args>(args)...);
+        auto* win = new SomeWindow(shape);
 
-        Object::ID win = CREATE<SomeWindow>(shape);
-        GET<Window>(win).initLayout();
-
-        return win;
-    }
-
-    /*------------------------------------------------------------------------*/
-
-    template <typename SomeWindow, typename SomeShape, typename... Args>
-    Object::ID WindowManager::create(Object::ID parent, Args&&... args) {
-
-        Object::ID shape = CREATE<SomeShape>(std::forward<Args>(args)...);
-
-        Object::ID win = CREATE<SomeWindow>(shape, parent);
-        GET<Window>(win).initLayout();
+        putRoot(win);
 
         return win;
     }

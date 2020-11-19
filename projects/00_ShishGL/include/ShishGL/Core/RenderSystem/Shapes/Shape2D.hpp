@@ -33,7 +33,7 @@ namespace ShishGL {
 
         virtual void draw() = 0;
 
-        ~Shape2D() = default;
+        virtual ~Shape2D() = default;
 
     protected:
 

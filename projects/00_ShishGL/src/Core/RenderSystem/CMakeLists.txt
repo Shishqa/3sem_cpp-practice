@@ -21,6 +21,7 @@ target_link_libraries(ShishGL-RenderSystem
   )
 
 add_subdirectory(GraphicsPlatform)
+add_subdirectory(Shapes)
 
 if (USE_SFML)
 

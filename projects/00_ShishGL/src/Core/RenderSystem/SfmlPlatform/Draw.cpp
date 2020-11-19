@@ -6,7 +6,9 @@ using namespace ShishGL;
 /*============================================================================*/
 
 void SfmlPlatform::setViewport(const Vector2<double>& pos,
-                               const Vector2<double>& size) {
+                               const Vector2<double>& size,
+                               const Vector2<double>& dp_pos,
+                               const Vector2<double>& dp_size) {
 
     sf::View view(sf::FloatRect{
             static_cast<float>(pos.x),
@@ -16,10 +18,10 @@ void SfmlPlatform::setViewport(const Vector2<double>& pos,
     });
 
     view.setViewport(sf::FloatRect{
-            static_cast<float>(pos.x / static_cast<double>(getDisplaySize().x)),
-            static_cast<float>(pos.y / static_cast<double>(getDisplaySize().y)),
-            static_cast<float>(size.x / static_cast<double>(getDisplaySize().x)),
-            static_cast<float>(size.y / static_cast<double>(getDisplaySize().y))
+            static_cast<float>(dp_pos.x),
+            static_cast<float>(dp_pos.y),
+            static_cast<float>(dp_size.x),
+            static_cast<float>(dp_size.y)
     });
 
     canvas->setView(view);

@@ -1,17 +1,17 @@
-add_library(ShishGL-PlatformInterface INTERFACE)
+add_library(ShishGL-GraphicsPlatform INTERFACE)
 
 set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/Core/RenderSystem/GraphicsPlatform)
 
-target_include_directories(ShishGL-PlatformInterface
+target_include_directories(ShishGL-GraphicsPlatform
   INTERFACE
     ${INCROOT})
 
-target_sources(ShishGL-PlatformInterface
+target_sources(ShishGL-GraphicsPlatform
   INTERFACE
     ${INCROOT}/IPlatform.hpp
   )
 
-target_link_libraries(ShishGL-PlatformInterface
+target_link_libraries(ShishGL-GraphicsPlatform
   INTERFACE
     ShishGL-Primitives
     ShishGL-LogSystem
@@ -19,7 +19,7 @@ target_link_libraries(ShishGL-PlatformInterface
     ShishGL-PlatformInput
   )
 
-target_compile_features(ShishGL-PlatformInterface
+target_compile_features(ShishGL-GraphicsPlatform
   INTERFACE
     cxx_std_17
   )

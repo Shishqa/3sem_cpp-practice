@@ -1,14 +1,17 @@
 /*============================================================================*/
 #include "CoreApplication.hpp"
-#include "Rectangle.hpp"
-#include "Circle.hpp"
+#include "RectangleShape.hpp"
+#include "CircleShape.hpp"
+#include "WindowManager.hpp"
 #include "ColorCollection.hpp"
-#include "WindowTypes.hpp"
+//#include "WindowTypes.hpp"
 #include "CursorLocator.hpp"
+#include "ColorFill.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
+/*
 class NestedTester : public Window {
 public:
 
@@ -53,6 +56,7 @@ public:
     ~NestedTesterParent() override = default;
 
 };
+*/
 
 /*============================================================================*/
 
@@ -60,32 +64,22 @@ int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
 
-    WindowManager::create<NestedTester, Rectangle>(
-            DARK_SEA_GREEN,
-            Vector2<double>{400, 400},
-            Vector2<double>{500, 200}
+    auto win = WindowManager::create<Window, CircleShape>(
+            300,
+            Vector2<double>{200, 200}
             );
 
+    win->applyStyle<ColorFill>(RED);
 
-    WindowManager::create<NestedTesterParent, Rectangle>(
-            PALE_VIOLET_RED,
-            Vector2<double>{400, 400},
-            Vector2<double>{500, 600}
-    );
+    auto loc = WindowManager::create<CursorLocator, RectangleShape>(
+            Vector2<double>{50, 50}
+            );
 
-    WindowManager::create<NestedTester, Rectangle>(
-            GRAY,
-            Vector2<double>{400, 400},
-            Vector2<double>{900, 600}
-    );
+    loc->applyStyle<ColorFill>(BLUE_VIOLET);
 
-    WindowManager::create<NestedTesterParent, Rectangle>(
-            PALE_VIOLET_RED,
-            Vector2<double>{400, 400},
-            Vector2<double>{900, 200}
-    );
+    WindowManager::attach(win, loc);
 
-    LayoutManager::dump("LayoutDump.dot");
+    WindowManager::dump("LayoutDump.dot");
 
     return CoreApplication::run();
 

@@ -11,13 +11,12 @@ target_sources(ShishGL-Primitives
   PUBLIC
     ${INCROOT}/Vector2.hpp
     ${INCROOT}/Segment2.hpp
-    ${INCROOT}/Shape2D.hpp
     ${INCROOT}/Color.hpp
+    ${INCROOT}/ColorCollection.hpp
     ${INCROOT}/Time.hpp
   PRIVATE
     ${INCROOT}/Vector2.ipp
     Vector2.cpp
-    Shape2D.cpp
     Time.cpp
   )
 

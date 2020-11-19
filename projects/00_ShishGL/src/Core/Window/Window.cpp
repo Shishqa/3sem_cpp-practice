@@ -1,118 +1,59 @@
 /*============================================================================*/
-#include "GraphicsPlatform/Window/Window.hpp"
-#include "Object.hpp"
-#include "GraphicsPlatform/Window/WindowManager.hpp"
+#include "Window.hpp"
+#include "WindowManager.hpp"
+#include "RectangleShape.hpp"
+#include "LogSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
-//
-//Window::Window(Object::ID id, Object::ID win_shape)
-//        : Renderable(id)
-//        , PlatformListener()
-//        , is_active(false)
-//        , viewport({})
-//        , shape(win_shape) {
-//
-//    printf("PARENT\n");
-//    fflush(stdout);
-//
-//    auto& shape_ref = GET<Shape2D>(shape);
-//
-//    viewport = Viewport{
-//            shape_ref.getPos(),
-//            shape_ref.overallDimension()
-//    };
-//
-//    LayoutManager::putRoot(Renderable::id());
-//    LayoutManager::attach(Renderable::id(), shape);
-//
-//    SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
-//}
 
-/*------------------------------------------------------------------------*/
+void Window::applyShape(Shape2D* new_shape) {
 
-Window::Window(Object::ID id, Object::ID shape, Object::ID parent)
-        : Renderable(id)
-        , PlatformListener()
-        , viewport({})
-        , is_active(false)
-        , shape(shape) {
+    delete shape;
+    shape = new_shape;
 
-    printf("WINDOW, parent = %lu\n", parent);
-    fflush(stdout);
-
-    auto& shape_ref = GET<Shape2D>(shape);
-
-    if (parent != LayoutManager::ROOT) {
-
-        auto &parent_ref = GET<Window>(parent);
-        shape_ref.translate(parent_ref.getViewport().pos);
-
-        SubscriptionManager::subscribe(&parent_ref, this);
-    }
-
-    viewport = Viewport{
-            shape_ref.getPos(),
-            shape_ref.overallDimension()
-    };
-
-    LayoutManager::attach(parent, Object::id());
-    LayoutManager::attach(Object::id(), shape_ref.id());
-
-    if (parent == LayoutManager::ROOT) {
-        SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
-    }
+    viewport.fit(*shape);
+    fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool Window::detach(Object::ID) {
-    /* TODO */
-    return true;
+Window::Window(Shape2D* win_shape)
+    : is_active(false)
+    , shape(nullptr)
+    , viewport({}) {
+    applyShape(win_shape);
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool Window::onRender() {
+Window::~Window() {
 
-    Viewport to_set = viewport;
-
-    Object::ID parent = LayoutManager::getParent(id());
-
-    if (LayoutManager::ROOT != parent) {
-
-        Viewport parent_vp = GET<Window>(parent).getViewport();
-
-        to_set.size.x = std::min(to_set.size.x, parent_vp.pos.x +
-                                 parent_vp.size.x - to_set.pos.x);
-
-        to_set.size.y = std::min(to_set.size.y, parent_vp.pos.y +
-                                 parent_vp.size.y - to_set.pos.y);
-
-        if (to_set.pos.x < parent_vp.pos.x) {
-            to_set.size.x -= (parent_vp.pos.x - to_set.pos.x);
-            to_set.pos.x = parent_vp.pos.x;
-        }
-
-        if (to_set.pos.y < parent_vp.pos.y) {
-            to_set.size.y -= (parent_vp.pos.y - to_set.pos.y);
-            to_set.pos.y = parent_vp.pos.y;
-        }
-
+    for (auto style : styles) {
+        delete style;
     }
 
-    RENDERER().setViewport(to_set.pos, to_set.size);
-
-    return true;
+    delete shape;
 }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+
+void Window::onRender() {
+
+    for (auto style : styles) {
+        style->apply(shape);
+    }
+
+    shape->draw();
+}
+
+/*============================================================================*/
 
 bool Window::onMouseEntered(MouseEvent&) { return false; }
 
-bool Window::onMouseLeft(MouseEvent &) { return false; }
+bool Window::onMouseLeft(MouseEvent&) { return false; }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
 bool Window::onMouseMove(MouseEvent& event) {
 
@@ -136,54 +77,77 @@ bool Window::onMouseMove(MouseEvent& event) {
         }
     }
 
-    Vector2<double> where = event.where();
-    event.setWhere(getViewport().pos - viewport.pos + where);
-
-    if (EventSystem::sendEvent(this, event)) {
+    if (resendMouse(event)) {
         status = true;
     }
 
-    event.setWhere(where);
-
     return status;
 }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
 bool Window::onMouseButton(MouseButtonEvent& event) {
-
-    Vector2<double> where = event.where();
-    event.setWhere(where + getViewport().pos);
-
-    bool status = EventSystem::sendEvent(this, event);
-
-    event.setWhere(where);
-
-    return status;
+    return resendMouse(event);
 }
+
+/*----------------------------------------------------------------------------*/
 
 bool Window::onMouseScroll(class MouseScrollEvent& event) {
-
-    Vector2<double> where = event.where();
-    event.setWhere(where + getViewport().pos);
-
-    bool status = EventSystem::sendEvent(this, event);
-
-    event.setWhere(where);
-
-    return status;
+    return resendMouse(event);
 }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
-Shape2D& Window::getShape() const {
-    return GET<Shape2D>(shape);
+const Shape2D& Window::getShape() const {
+    return *shape;
 }
 
-/*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
 const Viewport& Window::getViewport() const {
     return viewport;
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Window::fit_parent() {
+    Window *parent = WindowManager::getParent(this);
+    if (parent) {
+        viewport.fit_into(parent->getViewport());
+    }
+    viewport.recountDisplay();
+}
+
+/*----------------------------------------------------------------------------*/
+
+const Vector2<double>& Window::getPos() const {
+    return shape->getPos();
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Window::setPos(const Vector2<double>& pos) {
+
+    shape->setPos(pos);
+
+    viewport.fit(*shape);
+    fit_parent();
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Window::translate(const Vector2<double>& delta) {
+
+    shape->translate(delta);
+
+    viewport.fit(*shape);
+    fit_parent();
+}
+
+/*----------------------------------------------------------------------------*/
+
+bool Window::contains(const Vector2<double>& point) {
+    return shape->contains(point);
 }
 
 /*============================================================================*/

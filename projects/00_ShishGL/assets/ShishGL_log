@@ -1,0 +1,20 @@
+
+======================[ ShishGL Log Session ]======================
+[           1806] : Initializing RenderSystem...
+[          46414] : Initializing platform
+[          80051] : SFML platform is now active
+[      268560305] : Platform initialized
+[      268586646] : RenderSystem initialized
+[      268815177] : Started run session
+[     7093971208]
+        |         : Missed event N7ShishGL16MouseButtonEventE (x2)
+[     7364826150]
+[    12194823279] : Missed event N7ShishGL13KeyboardEventE
+[    12296145567] : Terminating Core...
+[    12296276063] : Flushing unused events...
+[    12296302564] : Events flushed
+[    12296315010] : Terminating platform...
+[    12299702307] : Platform terminated
+[    12299830689] : Core terminated
+====================================================================
+

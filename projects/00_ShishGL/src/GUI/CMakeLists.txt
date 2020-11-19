@@ -9,7 +9,8 @@ target_include_directories(ShishGL-GUI
 
 target_link_libraries(ShishGL-GUI
   INTERFACE
-    ShishGL-Interactables
+    ShishGL-Styles
   )
 
-add_subdirectory(Interactables)
+add_subdirectory(Styles)
+

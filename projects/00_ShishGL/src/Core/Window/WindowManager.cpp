@@ -1,51 +1,93 @@
 /*============================================================================*/
 #include <cstdio>
 
-#include "Window/LayoutManager.hpp"
+#include "WindowManager.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-LayoutManager::RenderLayout& LayoutManager::Layout() {
+WindowManager::RenderLayout& WindowManager::Layout() {
     static RenderLayout LAYOUT;
     return LAYOUT;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Renderable::ID LayoutManager::getParent(Renderable::ID obj) {
-    return Layout()[obj].parent;
+Window* WindowManager::getParent(Window* win) {
+    return Layout()[win].parent;
 }
 
 /*----------------------------------------------------------------------------*/
 
-const LayoutManager::RenderLayout& LayoutManager::getLayout() {
+const WindowManager::RenderLayout& WindowManager::getLayout() {
     return Layout();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void LayoutManager::putRoot(Object::ID object) {
-    Layout()[ROOT].children.push_back(object);
-    Layout()[object].parent = ROOT;
+void WindowManager::putRoot(Window* window) {
+    Layout()[Layout()[window].parent].children.remove(window);
+    Layout()[ROOT].children.push_back(window);
+    Layout()[window].parent = ROOT;
+
+    window->fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void LayoutManager::attach(Object::ID parent, Object::ID child) {
+void WindowManager::attach(Window* parent, Window* child) {
+    Layout()[Layout()[child].parent].children.remove(child);
     Layout()[parent].children.push_back(child);
     Layout()[child].parent = parent;
+
+    child->fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void LayoutManager::detach(Object::ID parent, Object::ID child) {
-    Layout()[parent].children.remove(child);
+void WindowManager::detach(Window* child) {
+    Layout()[Layout()[child].parent].children.remove(child);
 }
 
 /*----------------------------------------------------------------------------*/
 
-void LayoutManager::dump(const std::string_view& file_name) {
+void WindowManager::clear() {
+    clear(ROOT);
+}
+
+/*----------------------------------------------------------------------------*/
+
+void WindowManager::clear(Window* root) {
+    for (auto& child : Layout()[root].children) {
+        clear(child);
+        delete child;
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+
+void WindowManager::refresh() {
+    RENDERER().clear({0, 0, 0, 255});
+    refresh(ROOT);
+    RENDERER().display();
+}
+
+/*----------------------------------------------------------------------------*/
+
+void WindowManager::refresh(Window* root) {
+    for (auto& child : Layout()[root].children) {
+        RENDERER().setViewport(child->viewport.pos,
+                               child->viewport.size,
+                               child->viewport.display_pos,
+                               child->viewport.display_size);
+        child->onRender();
+        refresh(child);
+    }
+}
+
+/*----------------------------------------------------------------------------*/
+
+void WindowManager::dump(const std::string_view& file_name) {
 
     FILE* file = fopen(file_name.data(), "w");
 
@@ -58,13 +100,14 @@ void LayoutManager::dump(const std::string_view& file_name) {
 
 /*----------------------------------------------------------------------------*/
 
-void LayoutManager::dump(FILE* file, Object::ID root) {
+void WindowManager::dump(FILE* file, Window* root) {
 
     for (auto& child : Layout()[root].children) {
-        fprintf(file, "%lu -> %lu\n", root, child);
+        fprintf(file, "%p -> %p\n",
+                reinterpret_cast<void*>(root),
+                reinterpret_cast<void*>(child));
         dump(file, child);
     }
-
 }
 
 /*============================================================================*/

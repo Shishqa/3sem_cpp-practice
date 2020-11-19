@@ -1,20 +1,16 @@
 /*============================================================================*/
-#ifndef SHISHGL_CIRCLE_HPP
-#define SHISHGL_CIRCLE_HPP
+#ifndef SHISHGL_RECTANGLE_HPP
+#define SHISHGL_RECTANGLE_HPP
 /*============================================================================*/
 #include "Shape2D.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Circle : public Shape2D {
+    class RectangleShape : public Shape2D {
     public:
 
-        Circle(Object::ID id, const double& radius,
-               const Vector2<double>& pos = {0, 0});
-
-        Circle(Object::ID id, const Color& color,
-               const double& radius,
-               const Vector2<double>& pos = {0, 0});
+        explicit RectangleShape(const Vector2<double>& size,
+                                const Vector2<double>& pos = {0, 0});
 
         /*--------------------------------------------------------------------*/
 
@@ -26,13 +22,13 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
-        const double& getRadius() const;
+        const Vector2<double>& getSize() const;
 
-        void setRadius(const double& new_radius);
+        void setSize(const Vector2<double>& new_size);
 
         /*--------------------------------------------------------------------*/
 
-        bool onRender() override;
+        void draw() override;
 
         [[nodiscard]]
         bool contains(const Vector2<double>& point) const override;
@@ -42,11 +38,11 @@ namespace ShishGL {
 
     protected:
 
-        double radius;
+        Vector2<double> size;
 
     };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_CIRCLE_HPP
+#endif //SHISHGL_RECTANGLE_HPP
 /*============================================================================*/

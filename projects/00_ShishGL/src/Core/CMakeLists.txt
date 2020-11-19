@@ -19,6 +19,7 @@ target_link_libraries(ShishGL-Core
     ShishGL-LogSystem
     ShishGL-EventSystem
     ShishGL-RenderSystem
+    ShishGL-Window
   )
 
 add_subdirectory(Primitives)

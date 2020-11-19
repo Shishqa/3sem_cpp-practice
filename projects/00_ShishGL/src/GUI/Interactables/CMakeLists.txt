@@ -6,8 +6,3 @@ target_include_directories(ShishGL-Interactables
   PUBLIC
     ${INCROOT}
   )
-
-target_sources(ShishGL-Interactables
-
-
-  )

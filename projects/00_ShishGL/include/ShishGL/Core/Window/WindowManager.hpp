@@ -11,6 +11,7 @@
 namespace ShishGL {
 
     class WindowManager {
+    private:
 
         struct Node {
             std::list<Window*> children;
@@ -19,40 +20,50 @@ namespace ShishGL {
 
     public:
 
-        template <typename SomeWindow>
-        static SomeWindow* create(Vector2<double>);
+        WindowManager() = delete;
 
         using RenderLayout = std::unordered_map<Window*, Node>;
+
+        template <typename SomeWindow, typename SomeShape, typename... Args>
+        static SomeWindow* create(Args&&... args);
 
         static constexpr Window* ROOT = nullptr;
 
         static Window* getParent(Window* window);
 
-        static void putRoot(Renderable::ID obj);
+        static void putRoot(Window* window);
 
-        static void attach(Renderable::ID parent, Renderable::ID child);
+        static void attach(Window* parent, Window* child);
 
-        static void detach(Renderable::ID parent, Renderable::ID child);
+        static void detach(Window* child);
 
         static const RenderLayout& getLayout();
 
         static void dump(const std::string_view& file_name);
 
-        virtual ~LayoutManager() = default;
+        virtual ~WindowManager() = default;
 
     private:
 
-        static void dump(FILE* file, Renderable::ID root);
+        static void refresh();
 
-        friend class RenderSystem;
+        static void refresh(Window* root);
 
-        LayoutManager() = default;
+        static void clear();
+
+        static void clear(Window* root);
+
+        static void dump(FILE* file, Window* root);
 
         static RenderLayout& Layout();
+
+        friend class CoreApplication;
 
     };
 
 }
+/*============================================================================*/
+#include "WindowManager.ipp"
 /*============================================================================*/
 #endif //SHISHGL_LAYOUT_MANAGER_HPP
 /*============================================================================*/

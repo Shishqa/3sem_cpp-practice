@@ -6,9 +6,11 @@
 #include <unordered_set>
 
 #include "IPlatform.hpp"
-#include "ObjectManager/Object.hpp"
 /*============================================================================*/
 namespace ShishGL {
+
+    static constexpr char RUNTIME_DIR[] = "/home/shishqa/dev/MIPT/2020_3/CPP/projects/"
+                                          "00_ShishGL/assets";
 
     class CoreApplication {
     public:
@@ -18,8 +20,6 @@ namespace ShishGL {
         static uint8_t run();
 
         static bool terminate();
-
-        static bool isInitialized();
 
         virtual ~CoreApplication() = default;
 

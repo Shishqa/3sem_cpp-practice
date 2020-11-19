@@ -1,19 +1,21 @@
 /*============================================================================*/
 #include "CursorLocator.hpp"
+#include "ColorCollection.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-CursorLocator::CursorLocator(Object::ID id, Object::ID shape, Object::ID parent)
-    : Window(id, shape, parent)
-    { }
+CursorLocator::CursorLocator(Shape2D* shape)
+    : Window(shape)
+    {
+    SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
+    }
 
 /*----------------------------------------------------------------------------*/
 
 bool CursorLocator::onMouseMove(MouseEvent& event) {
 
-    viewport.pos = event.where();
-    Window::getShape().setPos(event.where());
+    setPos(event.where());
     return true;
 
 }

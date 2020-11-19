@@ -28,7 +28,7 @@ bool SfmlPlatform::initDisplay(int*, char**) {
     //canvas->setMouseCursorVisible(false);
 
     /* todo: fix hard-coded font */
-    if (!active_font.loadFromFile("./FiraCode-Regular.ttf")) {
+    if (!active_font.loadFromFile("fonts/FiraCode-Regular.ttf")) {
         return false;
     }
 

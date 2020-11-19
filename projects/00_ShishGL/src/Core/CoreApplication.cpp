@@ -1,9 +1,11 @@
 /*============================================================================*/
+#include <unistd.h>
+
 #include "LogSystem.hpp"
-#include "ObjectManager.hpp"
 #include "EventSystem.hpp"
 #include "RenderSystem.hpp"
 #include "CoreApplication.hpp"
+#include "WindowManager.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -15,6 +17,10 @@ bool CoreApplication::is_initialized = false;
 bool CoreApplication::init(int *argc_ptr, char **argv) {
 
     if (is_initialized) {
+        return false;
+    }
+
+    if (-1 == chdir(RUNTIME_DIR)) {
         return false;
     }
 
@@ -67,7 +73,7 @@ uint8_t CoreApplication::run() {
 
         ++frame_counter;
 
-        RenderSystem::update();
+        WindowManager::refresh();
 
         TimeDelta render = profiling_timer.elapsed();
         if (render - polling > for_render) {
@@ -99,8 +105,8 @@ bool CoreApplication::terminate() {
 
     LogSystem::printLog("Terminating Core...");
     EventManager::flush();
-    ObjectManager::clear();
     RenderSystem::terminate();
+    WindowManager::clear();
     LogSystem::printLog("Core terminated");
 
     LogSystem::closeLog();

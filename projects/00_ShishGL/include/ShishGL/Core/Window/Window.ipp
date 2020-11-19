@@ -2,26 +2,36 @@
 #ifndef SHISHGL_WINDOW_IPP
 #define SHISHGL_WINDOW_IPP
 /*============================================================================*/
-#include "__WindowManager.hpp"
+#include "RenderSystem.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename SomeWindow, typename SomeShape, typename... Args>
-    Object::ID Window::attach(Args&&... args) {
-        return WindowManager::create<SomeWindow, SomeShape>(id(), std::forward<Args>(args)...);
+    template <typename SomeShape, typename... Args>
+    void Window::applyShape(Args&&... args) {
+        applyShape(new SomeShape(std::forward<Args>(args)...));
     }
 
     /*------------------------------------------------------------------------*/
 
-    template <typename SomeWindow, typename SomeShape, typename... Args>
-    Object::ID Window::attachSubscribe(Args&&... args) {
+    template <typename SomeMouseEvent>
+    bool Window::resendMouse(SomeMouseEvent& event) {
 
-        Object::ID child =
-                WindowManager::create<SomeWindow, SomeShape>(id(), std::forward<Args>(args)...);
+        Vector2<double> where = event.where();
+        event.setWhere(viewport.remap(where));
 
-        SubscriptionManager::subscribe(this, &GET<Window>(child));
+        bool status = EventSystem::sendEvent(this, event);
 
-        return child;
+        event.setWhere(where);
+
+        return status;
+    }
+
+    /*------------------------------------------------------------------------*/
+
+    template <typename SomeStyle, typename... Args>
+    void Window::applyStyle(Args&&... args) {
+        auto style = new SomeStyle(std::forward<Args>(args)...);
+        styles.push_back(style);
     }
 
 }

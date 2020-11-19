@@ -25,7 +25,7 @@ find_package(SFML REQUIRED system window graphics)
 
 target_link_libraries(ShishGL-SfmlPlatform
   PUBLIC
-    ShishGL-PlatformInterface
+    ShishGL-GraphicsPlatform
     sfml-system
     sfml-window
     sfml-graphics

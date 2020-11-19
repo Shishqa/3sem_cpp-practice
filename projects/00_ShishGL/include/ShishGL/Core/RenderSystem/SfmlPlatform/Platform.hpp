@@ -16,6 +16,8 @@ namespace ShishGL {
 
         SfmlPlatform();
 
+        bool isRunning() override;
+
         /* Input */
         /*--------------------------------------------------------------------*/
         Vector2<double> getMousePos() override;
@@ -24,7 +26,11 @@ namespace ShishGL {
         /* View */
         /*--------------------------------------------------------------------*/
         void setViewport(const Vector2<double>& pos,
-                         const Vector2<double>& size) override;
+                         const Vector2<double>& size,
+                         const Vector2<double>& dp_pos,
+                         const Vector2<double>& dp_size) override;
+
+        const Vector2<double>& getDisplaySize() override;
         /*--------------------------------------------------------------------*/
 
         /* Draw */
@@ -54,6 +60,7 @@ namespace ShishGL {
                          const Vector2<double>& pos) override;
         /*--------------------------------------------------------------------*/
 
+
         ~SfmlPlatform() override = default;
 
     protected:
@@ -62,11 +69,7 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
          bool initDisplay(int* argc_ptr, char* argv[]) override;
 
-         bool isRunning() override;
-
          bool closeDisplay() override;
-
-         const Vector2<double>& getDisplaySize() override;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */

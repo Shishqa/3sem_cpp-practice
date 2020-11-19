@@ -12,6 +12,8 @@ namespace ShishGL {
     class IPlatform {
     public:
 
+        virtual bool isRunning() = 0;
+
         /* Input */
         /*--------------------------------------------------------------------*/
         virtual Vector2<double> getMousePos() = 0;
@@ -20,7 +22,11 @@ namespace ShishGL {
         /* View */
         /*--------------------------------------------------------------------*/
         virtual void setViewport(const Vector2<double>& pos,
-                                 const Vector2<double>& size) = 0;
+                                 const Vector2<double>& size,
+                                 const Vector2<double>& dp_pos,
+                                 const Vector2<double>& dp_size) = 0;
+
+        virtual const Vector2<double>& getDisplaySize() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Draw */
@@ -57,6 +63,7 @@ namespace ShishGL {
     protected:
 
         friend class RenderSystem;
+        friend class WindowManager;
         friend class CoreApplication;
 
         IPlatform() = default;
@@ -65,11 +72,7 @@ namespace ShishGL {
         /*--------------------------------------------------------------------*/
         virtual bool initDisplay(int* argc_ptr, char* argv[]) = 0;
 
-        virtual bool isRunning() = 0;
-
         virtual bool closeDisplay() = 0;
-
-        virtual const Vector2<double>& getDisplaySize() = 0;
         /*--------------------------------------------------------------------*/
 
         /* Rendering */
