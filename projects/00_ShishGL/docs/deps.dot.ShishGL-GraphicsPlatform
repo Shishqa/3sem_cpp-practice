@@ -1,10 +1,8 @@
-digraph "ShishGL-SfmlPlatform" {
+digraph "ShishGL-GraphicsPlatform" {
 node [
   fontsize = "12"
 ];
-    "node10" [ label = "ShishGL-SfmlPlatform", shape = octagon ];
     "node6" [ label = "ShishGL-GraphicsPlatform", shape = pentagon ];
-    "node10" -> "node6"  // ShishGL-SfmlPlatform -> ShishGL-GraphicsPlatform
     "node3" [ label = "ShishGL-LogSystem", shape = octagon ];
     "node6" -> "node3" [ style = dashed ] // ShishGL-GraphicsPlatform -> ShishGL-LogSystem
     "node4" [ label = "ShishGL-Primitives", shape = octagon ];
@@ -23,14 +21,4 @@ node [
     "node6" -> "node4" [ style = dashed ] // ShishGL-GraphicsPlatform -> ShishGL-Primitives
     "node9" [ label = "ShishGL-ResourceManager", shape = octagon ];
     "node6" -> "node9" [ style = dashed ] // ShishGL-GraphicsPlatform -> ShishGL-ResourceManager
-    "node11" [ label = "sfml-graphics", shape = doubleoctagon ];
-    "node10" -> "node11"  // ShishGL-SfmlPlatform -> sfml-graphics
-    "node12" [ label = "sfml-window", shape = doubleoctagon ];
-    "node11" -> "node12" [ style = dashed ] // sfml-graphics -> sfml-window
-    "node13" [ label = "sfml-system", shape = doubleoctagon ];
-    "node12" -> "node13" [ style = dashed ] // sfml-window -> sfml-system
-    "node13" [ label = "sfml-system", shape = doubleoctagon ];
-    "node10" -> "node13"  // ShishGL-SfmlPlatform -> sfml-system
-    "node12" [ label = "sfml-window", shape = doubleoctagon ];
-    "node10" -> "node12"  // ShishGL-SfmlPlatform -> sfml-window
 }

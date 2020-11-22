@@ -1,0 +1,12 @@
+digraph "ShishGL-Styles" {
+node [
+  fontsize = "12"
+];
+    "node18" [ label = "ShishGL-Styles", shape = pentagon ];
+    "node17" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node17" -> "node18" [ style = dashed ] // ShishGL-GUI -> ShishGL-Styles
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node17" [ style = dashed ] // ShishGL -> ShishGL-GUI
+    "node19" [ label = "TestAbstracts", shape = egg ];
+    "node19" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+}

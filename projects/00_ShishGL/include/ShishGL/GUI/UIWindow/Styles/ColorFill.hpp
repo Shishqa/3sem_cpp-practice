@@ -2,7 +2,7 @@
 #ifndef SHISHGL_COLOR_FILL_HPP
 #define SHISHGL_COLOR_FILL_HPP
 /*============================================================================*/
-#include "Style.hpp"
+#include "GUI/UIWindow/Styles/Style.hpp"
 #include "Color.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/

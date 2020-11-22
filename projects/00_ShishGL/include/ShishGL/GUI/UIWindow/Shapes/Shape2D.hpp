@@ -26,6 +26,10 @@ namespace ShishGL {
         [[nodiscard]]
         virtual bool contains(const Vector2<double>& point) const = 0;
 
+        /*--------------------------------------------------------------------*/
+
+        virtual void setOverallDimension(const Vector2<double>& new_size) = 0;
+
         [[nodiscard]]
         virtual Vector2<double> overallDimension() const = 0;
 

@@ -4,7 +4,7 @@
 /*============================================================================*/
 #include <string_view>
 
-#include "Style.hpp"
+#include "GUI/UIWindow/Styles/Style.hpp"
 #include "Shape2D.hpp"
 #include "ResourceManager.hpp"
 #include "RenderSystem.hpp"

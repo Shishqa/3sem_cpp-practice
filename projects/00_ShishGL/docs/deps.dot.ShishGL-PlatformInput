@@ -2,5 +2,5 @@ digraph "ShishGL-PlatformInput" {
 node [
   fontsize = "12"
 ];
-    "node9" [ label = "ShishGL-PlatformInput", shape = octagon ];
+    "node8" [ label = "ShishGL-PlatformInput", shape = octagon ];
 }
