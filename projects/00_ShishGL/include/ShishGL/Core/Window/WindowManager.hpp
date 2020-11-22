@@ -13,18 +13,19 @@ namespace ShishGL {
     class WindowManager {
     private:
 
-        struct Node {
+        struct WindowNode {
             std::list<Window*> children;
             Window* parent;
+            Viewport to_set;
         };
 
     public:
 
         WindowManager() = delete;
 
-        using RenderLayout = std::unordered_map<Window*, Node>;
+        using RenderLayout = std::unordered_map<Window*, WindowNode>;
 
-        template <typename SomeWindow, typename SomeShape, typename... Args>
+        template <typename SomeWindow, typename... Args>
         static SomeWindow* create(Args&&... args);
 
         static constexpr Window* ROOT = nullptr;
@@ -37,13 +38,13 @@ namespace ShishGL {
 
         static void detach(Window* child);
 
-        static const RenderLayout& getLayout();
-
         static void dump(const std::string_view& file_name);
 
         virtual ~WindowManager() = default;
 
     private:
+
+        static WindowNode& get(Window* window);
 
         static void refresh();
 
@@ -51,12 +52,15 @@ namespace ShishGL {
 
         static void clear();
 
-        static void clear(Window* root);
-
         static void dump(FILE* file, Window* root);
 
         static RenderLayout& Layout();
 
+        using WindowPool = std::unordered_set<Window*>;
+
+        static WindowPool& Pool();
+
+        friend class Window;
         friend class CoreApplication;
 
     };

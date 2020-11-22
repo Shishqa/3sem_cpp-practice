@@ -1,46 +1,40 @@
 /*============================================================================*/
-#ifndef SHISHGL_HOLDABLE_WINDOW_IPP
-#define SHISHGL_HOLDABLE_WINDOW_IPP
+#include <cstdio>
+
+#include "HoldableWindow.hpp"
 /*============================================================================*/
-namespace ShishGL {
+using namespace ShishGL;
+/*============================================================================*/
 
-    template <typename Shape>
-    template <typename... Args>
-    HoldableWindow<Shape>::HoldableWindow(Object::ID id, Object::ID parent,
-                                          Args&&... args)
-        : ClickableWindow<Shape>(id, parent, std::forward<Args>(args)...)
-        , n_holded(0)
-        { }
+HoldableWindow::HoldableWindow(Shape2D* shape)
+    : ClickableWindow(shape)
+    , n_held(0)
+    { }
 
-    /*------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------*/
 
-    template <typename Shape>
-    bool HoldableWindow<Shape>::onMouseButton(MouseButtonEvent& event) {
+bool HoldableWindow::onMouseButton(MouseButtonEvent& event) {
 
-        if (Mouse::DOWN == event.state()) {
-            ++n_holded;
-        } else {
-            n_holded = (n_holded ? n_holded - 1 : 0);
-        }
-
-        return true;
+    if (Mouse::DOWN == event.state()) {
+        ++n_held;
+        printf("++click\n");
+    } else {
+        n_held = (n_held ? n_held - 1 : 0);
     }
 
-    /*------------------------------------------------------------------------*/
-
-    template <typename Shape>
-    uint8_t HoldableWindow<Shape>::numHolded() const {
-        return n_holded;
-    }
-
-    /*------------------------------------------------------------------------*/
-
-    template <typename Shape>
-    bool HoldableWindow<Shape>::isHolded() const {
-        return (n_holded > 0);
-    }
-
+    return true;
 }
-/*============================================================================*/
-#endif //SHISHGL_HOLDABLE_WINDOW_IPP
+
+/*------------------------------------------------------------------------*/
+
+uint8_t HoldableWindow::numHeld() const {
+    return n_held;
+}
+
+/*------------------------------------------------------------------------*/
+
+bool HoldableWindow::isHeld() const {
+    return (n_held > 0);
+}
+
 /*============================================================================*/

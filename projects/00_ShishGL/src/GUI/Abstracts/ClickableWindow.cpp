@@ -1,41 +1,41 @@
 /*============================================================================*/
-#ifndef SHISHGL_CLICKABLE_WINDOW_IPP
-#define SHISHGL_CLICKABLE_WINDOW_IPP
-/*============================================================================*/
-namespace ShishGL {
+#include <cstdio>
 
-    template <typename Shape>
-    template <typename... Args>
-    ClickableWindow<Shape>::ClickableWindow(Object::ID id, Object::ID parent,
-                                            Args&&... args)
-        : Window<Shape>(id, parent, std::forward<Args>(args)...)
+#include "ClickableWindow.hpp"
+/*============================================================================*/
+using namespace ShishGL;
+/*============================================================================*/
+
+ClickableWindow::ClickableWindow(Shape2D* shape)
+        : Window(shape)
         { }
 
-    /*------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 
-    template <typename Shape>
-    bool ClickableWindow<Shape>::filterEvent(Event& event) const {
-        try {
+bool ClickableWindow::filterEvent(Event& event) const {
+    try {
 
-            auto mouse_button = dynamic_cast<const MouseButtonEvent&>(event);
+        auto mouse_button = dynamic_cast<const MouseButtonEvent&>(event);
 
-            if (mouse_button.state() != Mouse::DOWN) {
-                return true;
-            }
-
-            if (!Window<Shape>::getShape().contains(mouse_button.where())) {
-                return false;
-            }
+        if (mouse_button.state() != Mouse::DOWN) {
             return true;
-
-        } catch (...) {
-
-            return true;
-
         }
-    }
 
+        if (!contains(mouse_button.where())) {
+
+            printf("clicked at (%lg %lg) i am at {%lg %lg}\n",
+                   mouse_button.where().x, mouse_button.where().y,
+                   getPos().x, getPos().y);
+
+            return false;
+        }
+        return true;
+
+    } catch (...) {
+
+        return true;
+
+    }
 }
-/*============================================================================*/
-#endif //SHISHGL_CLICKABLE_WINDOW_IPP
+
 /*============================================================================*/

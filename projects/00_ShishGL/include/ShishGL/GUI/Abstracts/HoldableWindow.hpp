@@ -8,32 +8,28 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename Shape>
-    class HoldableWindow : public ClickableWindow<Shape> {
+    class HoldableWindow : public ClickableWindow {
     public:
 
-        template <typename... Args>
-        HoldableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        explicit HoldableWindow(Shape2D* shape);
 
         ~HoldableWindow() override = default;
 
         bool onMouseButton(MouseButtonEvent& event) override;
 
         [[nodiscard]]
-        inline bool isHolded() const;
+        bool isHeld() const;
 
         [[nodiscard]]
-        inline uint8_t numHolded() const;
+        uint8_t numHeld() const;
 
     private:
 
-        uint8_t n_holded;
+        uint8_t n_held;
 
     };
 
 }
-/*============================================================================*/
-#include "../../../../src/GUI/Interactables/HoldableWindow.ipp"
 /*============================================================================*/
 #endif //SHISHGL_HOLDABLE_WINDOW_HPP
 /*============================================================================*/

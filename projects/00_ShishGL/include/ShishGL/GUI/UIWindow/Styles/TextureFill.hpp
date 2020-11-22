@@ -5,7 +5,7 @@
 #include <string_view>
 
 #include "GUI/UIWindow/Styles/Style.hpp"
-#include "Shape2D.hpp"
+#include "GUI/UIWindow/Shapes/Shape2D.hpp"
 #include "ResourceManager.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
@@ -19,7 +19,7 @@ namespace ShishGL {
             ResourceManager::load(file);
         }
 
-        void apply(Shape2D*) override {
+        void apply(Viewport&, const Shape2D&) override {
             RENDERER().setTexture(ResourceManager::get(file));
         }
 

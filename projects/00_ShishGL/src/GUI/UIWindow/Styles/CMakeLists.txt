@@ -1,6 +1,6 @@
 add_library(ShishGL-Styles INTERFACE)
 
-set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/GUI/Styles)
+set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/GUI/UIWindow/Styles)
 
 target_include_directories(ShishGL-Styles
   INTERFACE
@@ -9,6 +9,7 @@ target_include_directories(ShishGL-Styles
 
 target_sources(ShishGL-Styles
   INTERFACE
+    ${INCROOT}/Style.hpp
     ${INCROOT}/ColorFill.hpp
     ${INCROOT}/TextureFill.hpp
     ${INCROOT}/Bordered.hpp
@@ -17,4 +18,5 @@ target_sources(ShishGL-Styles
 target_link_libraries(ShishGL-Styles
   INTERFACE
     ShishGL-Window
+    ShishGL-Shapes
   )

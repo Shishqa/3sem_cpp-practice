@@ -15,7 +15,7 @@ namespace ShishGL {
             : fill_color(color)
             { }
 
-        void apply(Shape2D*) override {
+        void apply(Viewport&, const Shape2D&) override {
             RENDERER().setColor(fill_color);
         }
 

@@ -1,51 +1,20 @@
 /*============================================================================*/
 #include "Window.hpp"
 #include "WindowManager.hpp"
-#include "RectangleShape.hpp"
 #include "LogSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-void Window::applyShape(Shape2D* new_shape) {
-
-    delete shape;
-    shape = new_shape;
-
-    viewport.fit(*shape);
+Window::Window(const Viewport& win_vp)
+    : is_active(false)
+    , viewport(win_vp) {
     fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-Window::Window(Shape2D* win_shape)
-    : is_active(false)
-    , shape(nullptr)
-    , viewport({}) {
-    applyShape(win_shape);
-}
-
-/*----------------------------------------------------------------------------*/
-
-Window::~Window() {
-
-    for (auto style : styles) {
-        delete style;
-    }
-
-    delete shape;
-}
-
-/*----------------------------------------------------------------------------*/
-
-void Window::onRender() {
-
-    for (auto style : styles) {
-        style->apply(shape);
-    }
-
-    shape->draw();
-}
+void Window::onRender() { /* something */ }
 
 /*============================================================================*/
 
@@ -57,7 +26,7 @@ bool Window::onMouseLeft(MouseEvent&) { return false; }
 
 bool Window::onMouseMove(MouseEvent& event) {
 
-    bool is_event_inside = getShape().contains(event.where());
+    bool is_event_inside = contains(event.where());
 
     bool status = false;
 
@@ -77,29 +46,12 @@ bool Window::onMouseMove(MouseEvent& event) {
         }
     }
 
-    if (resendMouse(event)) {
+    if (EventSystem::sendEvent(this, event))
+    {
         status = true;
     }
 
     return status;
-}
-
-/*----------------------------------------------------------------------------*/
-
-bool Window::onMouseButton(MouseButtonEvent& event) {
-    return resendMouse(event);
-}
-
-/*----------------------------------------------------------------------------*/
-
-bool Window::onMouseScroll(class MouseScrollEvent& event) {
-    return resendMouse(event);
-}
-
-/*----------------------------------------------------------------------------*/
-
-const Shape2D& Window::getShape() const {
-    return *shape;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -111,43 +63,41 @@ const Viewport& Window::getViewport() const {
 /*----------------------------------------------------------------------------*/
 
 void Window::fit_parent() {
-    Window *parent = WindowManager::getParent(this);
-    if (parent) {
-        viewport.fit_into(parent->getViewport());
+
+    auto& node = WindowManager::get(this);
+
+    node.to_set = viewport;
+
+    if (node.parent) {
+        node.to_set.fit_into(node.parent->getViewport());
     }
-    viewport.recountDisplay();
 }
 
 /*----------------------------------------------------------------------------*/
 
 const Vector2<double>& Window::getPos() const {
-    return shape->getPos();
+    return viewport.pos;
 }
 
 /*----------------------------------------------------------------------------*/
 
 void Window::setPos(const Vector2<double>& pos) {
-
-    shape->setPos(pos);
-
-    viewport.fit(*shape);
+    viewport.pos = pos;
     fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
 void Window::translate(const Vector2<double>& delta) {
-
-    shape->translate(delta);
-
-    viewport.fit(*shape);
+    viewport.pos += delta;
     fit_parent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-bool Window::contains(const Vector2<double>& point) {
-    return shape->contains(point);
+bool Window::contains(const Vector2<double>& point) const {
+    return (viewport.pos.x <= point.x && point.x <= viewport.pos.x + viewport.size.x &&
+            viewport.pos.y <= point.y && point.y <= viewport.pos.y + viewport.size.y);
 }
 
 /*============================================================================*/

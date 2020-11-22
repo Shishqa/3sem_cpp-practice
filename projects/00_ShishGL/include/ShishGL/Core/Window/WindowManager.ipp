@@ -4,13 +4,11 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename SomeWindow, typename SomeShape, typename... Args>
+    template <typename SomeWindow, typename... Args>
     SomeWindow* WindowManager::create(Args&&... args) {
 
-        auto* shape = new SomeShape(std::forward<Args>(args)...);
-        auto* win = new SomeWindow(shape);
-
-        putRoot(win);
+        auto* win = new SomeWindow(std::forward<Args>(args)...);
+        Pool().insert(win);
 
         return win;
     }

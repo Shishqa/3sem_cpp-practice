@@ -2,7 +2,7 @@
 #ifndef SHISHGL_STYLE_HPP
 #define SHISHGL_STYLE_HPP
 /*============================================================================*/
-#include "Shape2D.hpp"
+#include "GUI/UIWindow/Shapes/Shape2D.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -11,7 +11,7 @@ namespace ShishGL {
 
         Style() = default;
 
-        virtual void apply(Shape2D* shape) = 0;
+        virtual void apply(Viewport& viewport, const Shape2D& shape) = 0;
 
         virtual ~Style() = default;
 

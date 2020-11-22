@@ -5,24 +5,8 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-void Viewport::recountDisplay() {
-
-    display_size = Vector2<double>{
-            size.x / RENDERER().getDisplaySize().x,
-            size.y / RENDERER().getDisplaySize().y
-    };
-
-    display_pos = Vector2<double>{
-            pos.x / RENDERER().getDisplaySize().x,
-            pos.y / RENDERER().getDisplaySize().y
-    };
-}
-
-/*----------------------------------------------------------------------------*/
-
-void Viewport::fit(const Shape2D& shape) {
-    pos = shape.getPos();
-    size = shape.overallDimension();
+void Viewport::set() const {
+    RENDERER().setViewport(pos, size);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -41,8 +25,6 @@ void Viewport::fit_into(const Viewport& other) {
         size.y -= other.pos.y - pos.y;
         pos.y = other.pos.y;
     }
-
-    recountDisplay();
 }
 
 /*----------------------------------------------------------------------------*/

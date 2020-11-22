@@ -21,10 +21,10 @@ target_link_libraries(ShishGL-RenderSystem
   )
 
 add_subdirectory(GraphicsPlatform)
-add_subdirectory(Shapes)
+
+#==============================================================================#
 
 if (USE_SFML)
-
   add_subdirectory(SfmlPlatform)
   target_link_libraries(ShishGL-RenderSystem
     PUBLIC
@@ -34,5 +34,4 @@ if (USE_SFML)
     PRIVATE
       USE_SFML
     )
-
 endif (USE_SFML)

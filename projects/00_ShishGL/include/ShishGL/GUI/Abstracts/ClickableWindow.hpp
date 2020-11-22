@@ -7,12 +7,10 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename Shape>
-    class ClickableWindow : public Window<Shape> {
+    class ClickableWindow : public Window {
     public:
 
-        template <typename... Args>
-        ClickableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        explicit ClickableWindow(Shape2D* shape);
 
         ~ClickableWindow() override = default;
 
@@ -22,8 +20,6 @@ namespace ShishGL {
     };
 
 }
-/*============================================================================*/
-#include "../../../../src/GUI/Interactables/ClickableWindow.ipp"
 /*============================================================================*/
 #endif //SHISHGL_CLICKABLE_WINDOW_HPP
 /*============================================================================*/

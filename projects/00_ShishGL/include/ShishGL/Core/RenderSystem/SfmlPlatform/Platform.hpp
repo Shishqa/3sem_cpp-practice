@@ -26,9 +26,7 @@ namespace ShishGL {
         /* View */
         /*--------------------------------------------------------------------*/
         void setViewport(const Vector2<double>& pos,
-                         const Vector2<double>& size,
-                         const Vector2<double>& dp_pos,
-                         const Vector2<double>& dp_size) override;
+                         const Vector2<double>& size) override;
 
         const Vector2<double>& getDisplaySize() override;
         /*--------------------------------------------------------------------*/

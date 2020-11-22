@@ -16,19 +16,15 @@ namespace ShishGL {
             , color(border_color)
             { }
 
-        void apply(Shape2D* shape) override {
-
-            Vector2<double> old_dimension = shape->overallDimension();
-            Vector2<double> offset{width, width};
-
-            shape->translate(-offset);
-            shape->setOverallDimension(old_dimension + 2.0 * offset);
+        void apply(Viewport& viewport, const Shape2D& shape) override {
 
             RENDERER().setColor(color);
-            shape->draw();
+            shape.draw(viewport);
 
-            shape->translate(offset);
-            shape->setOverallDimension(old_dimension);
+            Vector2<double> offset{width, width};
+
+            viewport.pos += offset;
+            viewport.size -= 2.0 * offset;
         }
 
         ~Bordered() override = default;
@@ -37,8 +33,6 @@ namespace ShishGL {
 
         double width;
         Color color;
-
-
     };
 
 

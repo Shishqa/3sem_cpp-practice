@@ -7,10 +7,8 @@
 #include "SubscriptionManager.hpp"
 #include "PlatformListener.hpp"
 #include "MouseEvent.hpp"
-#include "Shape2D.hpp"
 #include "EventSystem.hpp"
 #include "Viewport.hpp"
-#include "Style.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -22,34 +20,14 @@ namespace ShishGL {
         Window(const Window& other) = delete;
         Window& operator=(const Window& other) = delete;
 
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        const Shape2D& getShape() const;
-
-        template <typename SomeShape, typename... Args>
-        void applyShape(Args&&... args);
-
-        void applyShape(Shape2D* new_shape);
-        /*--------------------------------------------------------------------*/
-
-        template <typename SomeStyle, typename... Args>
-        void applyStyle(Args&&... args);
-
-        /*--------------------------------------------------------------------*/
-
         [[nodiscard]]
         const Viewport& getViewport() const;
 
-        ~Window() override;
+        ~Window() override = default;
 
     protected:
 
-        explicit Window(Shape2D* win_shape);
-
-        /*--------------------------------------------------------------------*/
-
-        void fit_parent();
+        explicit Window(const Viewport& viewport);
 
         /*--------------------------------------------------------------------*/
 
@@ -60,10 +38,8 @@ namespace ShishGL {
 
         void translate(const Vector2<double>& delta);
 
-        /*--------------------------------------------------------------------*/
-
         [[nodiscard]]
-        virtual bool contains(const Vector2<double>& point);
+        virtual bool contains(const Vector2<double>& point) const;
 
         /*--------------------------------------------------------------------*/
 
@@ -75,30 +51,19 @@ namespace ShishGL {
 
         bool onMouseMove(MouseEvent& event) override;
 
-        bool onMouseButton(MouseButtonEvent& event) override;
-
-        bool onMouseScroll(MouseScrollEvent& event) override;
-
     private:
 
-        template <typename SomeMouseEvent>
-        bool resendMouse(SomeMouseEvent& event);
+        void fit_parent();
 
         bool is_active;
 
-        Shape2D* shape;
-
         Viewport viewport;
-
-        std::list<Style*> styles;
 
         friend class WindowManager;
 
     };
 
 }
-/*============================================================================*/
-#include "Window.ipp"
 /*============================================================================*/
 #endif //SHISHGL_WINDOW_HPP
 /*============================================================================*/

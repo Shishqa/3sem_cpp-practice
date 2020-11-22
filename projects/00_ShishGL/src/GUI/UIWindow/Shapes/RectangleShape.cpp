@@ -1,59 +1,20 @@
 /*============================================================================*/
-#include "../../../../include/ShishGL/GUI/UIWindow/Shapes/RectangleShape.hpp"
+#include "RectangleShape.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-RectangleShape::RectangleShape(const Vector2<double> &size,
-                               const Vector2<double> &pos)
-        : Shape2D(pos)
-        , size(size)
-        { }
-
-/*----------------------------------------------------------------------------*/
-
-Vector2<double> RectangleShape::getCenter() const {
-    return getPos() + 0.5 * size;
-}
-
-void RectangleShape::setCenter(const Vector2<double>& new_center) {
-    setPos(new_center - 0.5 * size);
+void RectangleShape::draw(const Viewport& viewport) const {
+    RENDERER().drawRectangle(viewport.pos, viewport.size);
 }
 
 /*----------------------------------------------------------------------------*/
 
-const Vector2<double>& RectangleShape::getSize() const {
-    return size;
-}
-
-void RectangleShape::setSize(const Vector2<double>& new_size) {
-    size = new_size;
-}
-
-/*----------------------------------------------------------------------------*/
-
-void RectangleShape::draw() {
-    RENDERER().drawRectangle(getPos(), size);
-}
-
-/*----------------------------------------------------------------------------*/
-
-bool RectangleShape::contains(const Vector2<double>& point) const {
-    return (getPos().x <= point.x && point.x <= getPos().x + size.x &&
-            getPos().y <= point.y && point.y <= getPos().y + size.y);
-}
-
-/*----------------------------------------------------------------------------*/
-
-void RectangleShape::setOverallDimension(const Vector2<double>& new_size) {
-    size = new_size;
-}
-
-/*----------------------------------------------------------------------------*/
-
-Vector2<double> RectangleShape::overallDimension() const {
-    return size;
+bool RectangleShape::contains(const Viewport &viewport,
+                              const Vector2<double> &point) const {
+    return (viewport.pos.x <= point.x && point.x <= viewport.pos.x + viewport.size.x &&
+            viewport.pos.y <= point.y && point.y <= viewport.pos.y + viewport.size.y);
 }
 
 /*============================================================================*/

@@ -2,6 +2,7 @@
 #include <cstdio>
 
 #include "WindowManager.hpp"
+#include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -13,34 +14,37 @@ WindowManager::RenderLayout& WindowManager::Layout() {
 
 /*----------------------------------------------------------------------------*/
 
+WindowManager::WindowPool& WindowManager::Pool() {
+    static WindowPool POOL;
+    return POOL;
+}
+
+/*============================================================================*/
+
 Window* WindowManager::getParent(Window* win) {
     return Layout()[win].parent;
 }
 
 /*----------------------------------------------------------------------------*/
 
-const WindowManager::RenderLayout& WindowManager::getLayout() {
-    return Layout();
-}
-
-/*----------------------------------------------------------------------------*/
-
 void WindowManager::putRoot(Window* window) {
-    Layout()[Layout()[window].parent].children.remove(window);
-    Layout()[ROOT].children.push_back(window);
-    Layout()[window].parent = ROOT;
-
-    window->fit_parent();
+    attach(ROOT, window);
 }
 
 /*----------------------------------------------------------------------------*/
 
 void WindowManager::attach(Window* parent, Window* child) {
+
     Layout()[Layout()[child].parent].children.remove(child);
     Layout()[parent].children.push_back(child);
     Layout()[child].parent = parent;
 
     child->fit_parent();
+    if (parent) {
+        child->translate(parent->getPos());
+    }
+
+    SubscriptionManager::subscribe(parent, child);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -52,15 +56,8 @@ void WindowManager::detach(Window* child) {
 /*----------------------------------------------------------------------------*/
 
 void WindowManager::clear() {
-    clear(ROOT);
-}
-
-/*----------------------------------------------------------------------------*/
-
-void WindowManager::clear(Window* root) {
-    for (auto& child : Layout()[root].children) {
-        clear(child);
-        delete child;
+    for (auto& win : Pool()) {
+        delete win;
     }
 }
 
@@ -76,10 +73,11 @@ void WindowManager::refresh() {
 
 void WindowManager::refresh(Window* root) {
     for (auto& child : Layout()[root].children) {
-        RENDERER().setViewport(child->viewport.pos,
-                               child->viewport.size,
-                               child->viewport.display_pos,
-                               child->viewport.display_size);
+
+        Viewport to_set = Layout()[child].to_set;
+
+        RENDERER().setViewport(to_set.pos,
+                               to_set.size);
         child->onRender();
         refresh(child);
     }
@@ -103,11 +101,20 @@ void WindowManager::dump(const std::string_view& file_name) {
 void WindowManager::dump(FILE* file, Window* root) {
 
     for (auto& child : Layout()[root].children) {
-        fprintf(file, "%p -> %p\n",
-                reinterpret_cast<void*>(root),
-                reinterpret_cast<void*>(child));
+        if (!root) {
+            fprintf(file, "%s", "ROOT");
+        } else {
+            fprintf(file, "win%p", reinterpret_cast<void*>(root));
+        }
+        fprintf(file, " -> win%p\n", reinterpret_cast<void*>(child));
         dump(file, child);
     }
+}
+
+/*----------------------------------------------------------------------------*/
+
+WindowManager::WindowNode& WindowManager::get(Window* window) {
+    return Layout()[window];
 }
 
 /*============================================================================*/

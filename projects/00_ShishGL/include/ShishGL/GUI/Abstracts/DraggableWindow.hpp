@@ -7,12 +7,10 @@
 /*============================================================================*/
 namespace ShishGL {
 
-    template <typename Shape>
-    class DraggableWindow : public HoldableWindow<Shape> {
+    class DraggableWindow : public HoldableWindow {
     public:
 
-        template <typename... Args>
-        DraggableWindow(Object::ID id, Object::ID parent, Args&&... args);
+        explicit DraggableWindow(Shape2D* shape);
 
         ~DraggableWindow() override = default;
 
@@ -30,8 +28,6 @@ namespace ShishGL {
     };
 
 }
-/*============================================================================*/
-#include "../../../../src/GUI/Interactables/DraggableWindow.ipp"
 /*============================================================================*/
 #endif //SHISHGL_DRAGGABLE_WINDOW_HPP
 /*============================================================================*/

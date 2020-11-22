@@ -23,9 +23,7 @@ namespace ShishGL {
         /* View */
         /*--------------------------------------------------------------------*/
         virtual void setViewport(const Vector2<double>& pos,
-                                 const Vector2<double>& size,
-                                 const Vector2<double>& dp_pos,
-                                 const Vector2<double>& dp_size) = 0;
+                                 const Vector2<double>& size) = 0;
 
         virtual const Vector2<double>& getDisplaySize() = 0;
         /*--------------------------------------------------------------------*/

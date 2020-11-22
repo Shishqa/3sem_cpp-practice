@@ -9,8 +9,8 @@ target_include_directories(ShishGL-GUI
 
 target_link_libraries(ShishGL-GUI
   INTERFACE
-    ShishGL-Styles
+    ShishGL-UIWindow
   )
 
-add_subdirectory(Styles)
+add_subdirectory(UIWindow)
 

@@ -1,85 +1,34 @@
 /*============================================================================*/
-#ifndef SHISHGL_SHAPED_WINDOW_HPP
-#define SHISHGL_SHAPED_WINDOW_HPP
+#ifndef SHISHGL_UI_WINDOW_HPP
+#define SHISHGL_UI_WINDOW_HPP
+/*============================================================================*/
+#include "Window.hpp"
+#include "Style.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-
-    class Window : public PlatformListener {
+    template <typename SomeShape>
+    class UIWindow : public Window {
     public:
 
-        Window() = delete;
-
-        Window(const Window& other) = delete;
-        Window& operator=(const Window& other) = delete;
-
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        const Shape2D& getShape() const;
-
-        template <typename SomeShape, typename... Args>
-        void applyShape(Args&&... args);
-
-        void applyShape(Shape2D* new_shape);
-        /*--------------------------------------------------------------------*/
+        using Shape = SomeShape;
 
         template <typename SomeStyle, typename... Args>
         void applyStyle(Args&&... args);
 
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        const Viewport& getViewport() const;
-
-        ~Window() override;
+        ~UIWindow() override;
 
     protected:
 
-        explicit Window(const Viewport& viewport);
+        explicit UIWindow(const Viewport& viewport);
 
-        /*--------------------------------------------------------------------*/
-
-        void fit_parent();
-
-        /*--------------------------------------------------------------------*/
 
         [[nodiscard]]
-        const Vector2<double>& getPos() const;
+        bool contains(const Vector2<double>& point) const override;
 
-        void setPos(const Vector2<double>& pos);
-
-        void translate(const Vector2<double>& delta);
-
-        /*--------------------------------------------------------------------*/
-
-        [[nodiscard]]
-        virtual bool contains(const Vector2<double>& point) const;
-
-        /*--------------------------------------------------------------------*/
-
-        virtual void onRender();
-
-        virtual bool onMouseEntered(MouseEvent& event);
-
-        virtual bool onMouseLeft(MouseEvent& event);
-
-        bool onMouseMove(MouseEvent& event) override;
-
-        bool onMouseButton(MouseButtonEvent& event) override;
-
-        bool onMouseScroll(MouseScrollEvent& event) override;
+        void onRender() override;
 
     private:
-
-        template <typename SomeMouseEvent>
-        bool resendMouse(SomeMouseEvent& event);
-
-        bool is_active;
-
-        Shape2D* shape;
-
-        Viewport viewport;
 
         std::list<Style*> styles;
 
@@ -89,5 +38,7 @@ namespace ShishGL {
 
 }
 /*============================================================================*/
-#endif //SHISHGL_SHAPED_WINDOW_HPP
+#include "UIWindow.ipp"
+/*============================================================================*/
+#endif //SHISHGL_UI_WINDOW_HPP
 /*============================================================================*/
