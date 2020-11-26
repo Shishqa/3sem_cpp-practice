@@ -9,61 +9,77 @@
 #include "MouseEvent.hpp"
 #include "EventSystem.hpp"
 #include "Viewport.hpp"
+#include "WindowManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class Window : public PlatformListener {
+    class Window {
     public:
 
         Window() = delete;
 
+        virtual ~Window() = default;
+
+        /* No-Copyable */
+        /*-----------------------------------------------*/
         Window(const Window& other) = delete;
         Window& operator=(const Window& other) = delete;
+        /*-----------------------------------------------*/
 
+        /*-----------------------------------------------*/
         [[nodiscard]]
-        const Viewport& getViewport() const;
+        const Window* getParent() const;
 
-        ~Window() override = default;
+        template <typename SomeWindow, typename... Args>
+        SomeWindow* attach(Args&&... args);
 
-    protected:
+        virtual void attach(Window* child);
 
-        explicit Window(const Viewport& viewport);
+        virtual void detach(Window* child);
+        /*-----------------------------------------------*/
 
-        /*--------------------------------------------------------------------*/
+        /*-----------------------------------------------*/
+        [[nodiscard]]
+        const Viewport& getFrame() const;
 
         [[nodiscard]]
         const Vector2<double>& getPos() const;
 
-        void setPos(const Vector2<double>& pos);
-
-        void translate(const Vector2<double>& delta);
-
         [[nodiscard]]
         virtual bool contains(const Vector2<double>& point) const;
 
-        /*--------------------------------------------------------------------*/
+        void setPos(const Vector2<double>& pos);
+
+        void translate(const Vector2<double>& delta);
+        /*-----------------------------------------------*/
+
+    protected:
+
+        explicit Window(const Viewport& frame);
 
         virtual void onRender();
 
-        virtual bool onMouseEntered(MouseEvent& event);
-
-        virtual bool onMouseLeft(MouseEvent& event);
-
-        bool onMouseMove(MouseEvent& event) override;
-
     private:
 
-        void fit_parent();
+        void render();
 
-        bool is_active;
+        void setParent(Window* new_parent);
 
-        Viewport viewport;
+        void fitParent();
 
         friend class WindowManager;
+
+        /* DATA */
+        Viewport frame;
+        Viewport view;
+        Window* parent;
+        std::unordered_set<Window*> children;
 
     };
 
 }
+/*============================================================================*/
+#include "Window.ipp"
 /*============================================================================*/
 #endif //SHISHGL_WINDOW_HPP
 /*============================================================================*/

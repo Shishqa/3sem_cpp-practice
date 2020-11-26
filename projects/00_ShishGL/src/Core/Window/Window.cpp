@@ -2,102 +2,114 @@
 #include "Window.hpp"
 #include "WindowManager.hpp"
 #include "LogSystem.hpp"
+#include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-Window::Window(const Viewport& win_vp)
-    : is_active(false)
-    , viewport(win_vp) {
-    fit_parent();
+Window::Window(const Viewport& frame)
+        : frame(frame)
+        , view(frame)
+        , parent(WindowManager::ROOT) {
+    fitParent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-void Window::onRender() { /* something */ }
+const Window* Window::getParent() const {
+    return parent;
+}
+
+const Viewport& Window::getFrame() const {
+    return frame;
+}
 
 /*============================================================================*/
 
-bool Window::onMouseEntered(MouseEvent&) { return false; }
-
-bool Window::onMouseLeft(MouseEvent&) { return false; }
-
-/*----------------------------------------------------------------------------*/
-
-bool Window::onMouseMove(MouseEvent& event) {
-
-    bool is_event_inside = contains(event.where());
-
-    bool status = false;
-
-    if (is_active && !is_event_inside) {
-
-        is_active = false;
-
-        if (onMouseLeft(event)) {
-            status = true;
-        }
-
-    } else if (!is_active && is_event_inside) {
-
-        is_active = true;
-        if (onMouseEntered(event)) {
-            status = true;
-        }
+void Window::setParent(Window* new_parent) {
+    parent = new_parent;
+    if (parent) {
+        translate(parent->getPos());
     }
-
-    if (EventSystem::sendEvent(this, event))
-    {
-        status = true;
-    }
-
-    return status;
+    fitParent();
 }
 
 /*----------------------------------------------------------------------------*/
 
-const Viewport& Window::getViewport() const {
-    return viewport;
+void Window::attach(Window* child) {
+    children.insert(child);
+    child->setParent(this);
 }
 
 /*----------------------------------------------------------------------------*/
 
-void Window::fit_parent() {
+void Window::detach(Window* child) {
+    children.erase(child);
+}
 
-    auto& node = WindowManager::get(this);
+/*============================================================================*/
 
-    node.to_set = viewport;
+void Window::render() {
+    onRender();
+    for (auto& child : children) {
+        child->render();
+    }
+}
 
-    if (node.parent) {
-        node.to_set.fit_into(node.parent->getViewport());
+/*----------------------------------------------------------------------------*/
+
+void Window::onRender() {
+    RENDERER().setViewport(frame.pos, frame.size);
+}
+
+/*============================================================================*/
+
+void Window::fitParent() {
+    if (parent) {
+        view.fit_into(parent->view);
+        for (auto& child : children) {
+            child->fitParent();
+        }
     }
 }
 
 /*----------------------------------------------------------------------------*/
 
 const Vector2<double>& Window::getPos() const {
-    return viewport.pos;
+    return frame.pos;
 }
 
 /*----------------------------------------------------------------------------*/
 
 void Window::setPos(const Vector2<double>& pos) {
-    viewport.pos = pos;
-    fit_parent();
+
+    Vector2<double> old_pos = pos;
+
+    frame.pos = pos;
+    fitParent();
+
+    for (auto& child : children) {
+        child->translate(pos - old_pos);
+    }
 }
 
 /*----------------------------------------------------------------------------*/
 
 void Window::translate(const Vector2<double>& delta) {
-    viewport.pos += delta;
-    fit_parent();
+
+    frame.pos += delta;
+    fitParent();
+
+    for (auto& child : children) {
+        child->translate(delta);
+    }
 }
 
 /*----------------------------------------------------------------------------*/
 
 bool Window::contains(const Vector2<double>& point) const {
-    return (viewport.pos.x <= point.x && point.x <= viewport.pos.x + viewport.size.x &&
-            viewport.pos.y <= point.y && point.y <= viewport.pos.y + viewport.size.y);
+    return (frame.pos.x <= point.x && point.x <= frame.pos.x + frame.size.x &&
+            frame.pos.y <= point.y && point.y <= frame.pos.y + frame.size.y);
 }
 
 /*============================================================================*/

@@ -2,55 +2,27 @@
 #include <cstdio>
 
 #include "WindowManager.hpp"
+#include "Window.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
-
-WindowManager::RenderLayout& WindowManager::Layout() {
-    static RenderLayout LAYOUT;
-    return LAYOUT;
-}
-
-/*----------------------------------------------------------------------------*/
 
 WindowManager::WindowPool& WindowManager::Pool() {
     static WindowPool POOL;
     return POOL;
 }
 
+WindowManager::WinLayout& WindowManager::RootChildren() {
+    static WinLayout CHILDREN;
+    return CHILDREN;
+}
+
 /*============================================================================*/
 
-Window* WindowManager::getParent(Window* win) {
-    return Layout()[win].parent;
-}
-
-/*----------------------------------------------------------------------------*/
-
 void WindowManager::putRoot(Window* window) {
-    attach(ROOT, window);
-}
-
-/*----------------------------------------------------------------------------*/
-
-void WindowManager::attach(Window* parent, Window* child) {
-
-    Layout()[Layout()[child].parent].children.remove(child);
-    Layout()[parent].children.push_back(child);
-    Layout()[child].parent = parent;
-
-    child->fit_parent();
-    if (parent) {
-        child->translate(parent->getPos());
-    }
-
-    SubscriptionManager::subscribe(parent, child);
-}
-
-/*----------------------------------------------------------------------------*/
-
-void WindowManager::detach(Window* child) {
-    Layout()[Layout()[child].parent].children.remove(child);
+    window->setParent(ROOT);
+    RootChildren().push_back(window);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -64,22 +36,8 @@ void WindowManager::clear() {
 /*----------------------------------------------------------------------------*/
 
 void WindowManager::refresh() {
-    RENDERER().clear({0, 0, 0, 255});
-    refresh(ROOT);
-    RENDERER().display();
-}
-
-/*----------------------------------------------------------------------------*/
-
-void WindowManager::refresh(Window* root) {
-    for (auto& child : Layout()[root].children) {
-
-        Viewport to_set = Layout()[child].to_set;
-
-        RENDERER().setViewport(to_set.pos,
-                               to_set.size);
-        child->onRender();
-        refresh(child);
+    for (auto& win : RootChildren()) {
+        win->render();
     }
 }
 
@@ -89,8 +47,13 @@ void WindowManager::dump(const std::string_view& file_name) {
 
     FILE* file = fopen(file_name.data(), "w");
 
-    fprintf(file, "digraph {\n");
-    dump(file, ROOT);
+    fprintf(file, "digraph {\n"
+                  "\tnode [shape=record]\n");
+
+    for (auto& child : RootChildren()) {
+        dump(file, child);
+    }
+
     fprintf(file, "}\n");
 
     fclose(file);
@@ -100,21 +63,26 @@ void WindowManager::dump(const std::string_view& file_name) {
 
 void WindowManager::dump(FILE* file, Window* root) {
 
-    for (auto& child : Layout()[root].children) {
-        if (!root) {
-            fprintf(file, "%s", "ROOT");
-        } else {
-            fprintf(file, "win%p", reinterpret_cast<void*>(root));
-        }
-        fprintf(file, " -> win%p\n", reinterpret_cast<void*>(child));
+    fprintf(file,
+            "\tnode%p [label = \"{"
+            "address : %p |"
+            "transform : %lgx%lg at (%lg; %lg) |"
+            "viewport to set : %lgx%lg at (%lg; %lg)"
+            "}\"];\n\n",
+            reinterpret_cast<void*>(root), reinterpret_cast<void*>(root),
+            root->getFrame().size.x, root->getFrame().size.y,
+            root->getPos().x, root->getPos().y,
+            root->view.size.x, root->view.size.x,
+            root->view.pos.x, root->view.pos.y
+            );
+
+    for (auto& child : root->children) {
+        fprintf(file, "\t node%p -> node%p [color=black];\n",
+                reinterpret_cast<void*>(root),
+                reinterpret_cast<void*>(child));
         dump(file, child);
     }
-}
 
-/*----------------------------------------------------------------------------*/
-
-WindowManager::WindowNode& WindowManager::get(Window* window) {
-    return Layout()[window];
 }
 
 /*============================================================================*/

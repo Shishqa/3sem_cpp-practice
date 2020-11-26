@@ -3,40 +3,26 @@
 #define SHISHGL_LAYOUT_MANAGER_HPP
 /*============================================================================*/
 #include <list>
-#include <unordered_map>
+#include <unordered_set>
 #include <string_view>
-
-#include "Window.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
+    class Window;
+
     class WindowManager {
-    private:
-
-        struct WindowNode {
-            std::list<Window*> children;
-            Window* parent;
-            Viewport to_set;
-        };
-
     public:
 
         WindowManager() = delete;
 
-        using RenderLayout = std::unordered_map<Window*, WindowNode>;
-
         template <typename SomeWindow, typename... Args>
         static SomeWindow* create(Args&&... args);
 
+        /*----------------------------------------------*/
         static constexpr Window* ROOT = nullptr;
 
-        static Window* getParent(Window* window);
-
         static void putRoot(Window* window);
-
-        static void attach(Window* parent, Window* child);
-
-        static void detach(Window* child);
+        /*----------------------------------------------*/
 
         static void dump(const std::string_view& file_name);
 
@@ -44,21 +30,17 @@ namespace ShishGL {
 
     private:
 
-        static WindowNode& get(Window* window);
-
         static void refresh();
-
-        static void refresh(Window* root);
 
         static void clear();
 
         static void dump(FILE* file, Window* root);
 
-        static RenderLayout& Layout();
-
         using WindowPool = std::unordered_set<Window*>;
-
         static WindowPool& Pool();
+
+        using WinLayout = std::list<Window*>;
+        static WinLayout& RootChildren();
 
         friend class Window;
         friend class CoreApplication;

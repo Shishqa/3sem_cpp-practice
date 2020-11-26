@@ -1,8 +1,24 @@
-//
-// Created by shishqa on 11/24/20.
-//
+/*============================================================================*/
+#ifndef SHISHGL_UI_FRAME_HPP
+#define SHISHGL_UI_FRAME_HPP
+/*============================================================================*/
+#include "UIWindow.hpp"
+#include "Clickable.hpp"
+/*============================================================================*/
+namespace ShishGL {
 
-#ifndef SHISHGL_UIFRAME_HPP
-#define SHISHGL_UIFRAME_HPP
+    class UIFrame : public UIWindow {
+    protected:
 
-#endif //SHISHGL_UIFRAME_HPP
+        explicit UIFrame(const Viewport& viewport);
+
+        void attach(Window* child) override;
+
+        void detach(Window* child) override;
+
+    };
+
+}
+/*============================================================================*/
+#endif //SHISHGL_UI_FRAME_HPP
+/*============================================================================*/

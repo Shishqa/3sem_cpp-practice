@@ -2,7 +2,7 @@
 #ifndef SHISHGL_COLOR_FILL_HPP
 #define SHISHGL_COLOR_FILL_HPP
 /*============================================================================*/
-#include "GUI/UIWindow/Styles/Style.hpp"
+#include "Style.hpp"
 #include "Color.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
@@ -15,8 +15,9 @@ namespace ShishGL {
             : fill_color(color)
             { }
 
-        void apply(Viewport&, const Shape2D&) override {
+        void apply(Viewport& frame, const Shape2D& shape) override {
             RENDERER().setColor(fill_color);
+            shape.draw(frame);
         }
 
         ~ColorFill() override = default;

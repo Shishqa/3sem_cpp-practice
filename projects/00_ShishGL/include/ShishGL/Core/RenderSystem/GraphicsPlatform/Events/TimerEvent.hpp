@@ -15,8 +15,12 @@ namespace ShishGL {
 
         ~TimerEvent() override = default;
 
+        EventMask mask() override {
+            return TIMER;
+        }
+
         [[nodiscard]]
-        inline const TimeDelta& delta() const;
+        const TimeDelta& delta() const;
 
         bool happen(Listener* listener) override;
 

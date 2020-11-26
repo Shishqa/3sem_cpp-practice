@@ -6,12 +6,14 @@
 
 #include "Vector2.hpp"
 #include "Color.hpp"
+#include "ColorCollection.hpp"
 #include "ResourceManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
     class IPlatform {
     public:
+
 
         virtual bool isRunning() = 0;
 
@@ -30,6 +32,23 @@ namespace ShishGL {
 
         /* Draw */
         /*--------------------------------------------------------------------*/
+        class IContext {
+        public:
+
+            IContext() = default;
+
+            virtual void update(const Color* data) = 0;
+
+            virtual void updateAt(const Vector2<size_t>& pos,
+                                  const Color& color) = 0;
+
+            virtual ~IContext() = default;
+
+        };
+
+        virtual IContext* createContext(const Vector2<size_t>& size,
+                                        const Color& color = COLOR::BLACK) = 0;
+
         virtual void setColor(const Color& color) = 0;
 
         virtual void setTexture(const ResourceManager::Resource& texture) = 0;
@@ -48,15 +67,15 @@ namespace ShishGL {
 
         /* Image */
         /*--------------------------------------------------------------------*/
-        virtual void displayImage(const ResourceManager::Resource& image,
-                                  const Vector2<double>& position) = 0;
+        virtual void displayContext(const IContext* context,
+                                    const Vector2<double>& position) = 0;
         /*--------------------------------------------------------------------*/
 
         /* Text */
         /*--------------------------------------------------------------------*/
         virtual void setFont(const ResourceManager::Resource& font) = 0;
 
-        virtual void displayText(const ResourceManager::Resource& text,
+        virtual void displayText(const std::string_view& text,
                                  const size_t& font_size,
                                  const Vector2<double>& pos) = 0;
         /*--------------------------------------------------------------------*/

@@ -4,6 +4,8 @@
 /*============================================================================*/
 #include <string_view>
 #include <vector>
+
+#include "ResourceManager.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
@@ -12,17 +14,19 @@ namespace ShishGL {
 
         Text() = delete;
 
-        explicit Text(const std::string_view& filename, size_t n_bytes = 0);
+        explicit Text(const std::string_view& filename);
 
-        virtual ~Text();
+        [[nodiscard]]
+        const ResourceManager::Resource& data() const;
+
+        ~Text() = default;
 
         [[nodiscard]]
         const std::vector<std::string_view>& lines() const { return text_lines; }
 
     protected:
 
-        char* buffer;
-        size_t buffer_size;
+        const std::string_view filename;
 
         std::vector<std::string_view> text_lines;
 

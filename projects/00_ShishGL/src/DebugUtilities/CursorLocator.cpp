@@ -5,19 +5,8 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-CursorLocator::CursorLocator(Shape2D* shape)
-    : Window(shape)
-    {
-    SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
-    }
-
-/*----------------------------------------------------------------------------*/
-
-bool CursorLocator::onMouseMove(MouseEvent& event) {
-
-    setPos(event.where());
-    return true;
-
+int sum(int a, int b) {
+    return a + b;
 }
 
 /*============================================================================*/

@@ -12,12 +12,6 @@ Listener::~Listener() {
 
 /*----------------------------------------------------------------------------*/
 
-bool Listener::filterEvent(Event&) const {
-    return true;
-}
-
-/*----------------------------------------------------------------------------*/
-
 bool Listener::onEvent(Event&) {
     return false;
 }

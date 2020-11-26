@@ -14,6 +14,7 @@ target_sources(ShishGL-Window
     ${INCROOT}/Window.hpp
     ${INCROOT}/WindowManager.hpp
   PRIVATE
+    ${INCROOT}/Window.ipp
     ${INCROOT}/WindowManager.ipp
     Viewport.cpp
     Window.cpp
@@ -24,5 +25,4 @@ target_link_libraries(ShishGL-Window
   PUBLIC
     ShishGL-LogSystem
     ShishGL-RenderSystem
-    ShishGL-Shapes
   )

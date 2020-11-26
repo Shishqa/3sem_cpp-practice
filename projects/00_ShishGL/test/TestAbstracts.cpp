@@ -4,12 +4,17 @@
 #include "CircleShape.hpp"
 #include "WindowManager.hpp"
 #include "ColorCollection.hpp"
+#include "TextBuffer.hpp"
 //#include "WindowTypes.hpp"
+#include "Clickable.hpp"
 //#include "CursorLocator.hpp"
+#include "UIScrollbar.hpp"
 #include "ColorFill.hpp"
 #include "TextureFill.hpp"
 #include "Bordered.hpp"
 #include "UIWindow.hpp"
+#include "Draggable.hpp"
+#include "Slidable.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -17,28 +22,84 @@ int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
 
-    auto win = WindowManager::create<UIWindow<CircleShape>>(
-            Viewport{
-                Vector2<double>{0, 0},
-                Vector2<double>{400, 400}
-            }
-            );
-    win->applyStyle<Bordered>(5, RED);
-    win->applyStyle<TextureFill>("textures/PaperTexture.jpg");
+    RENDERER().setFont(ResourceManager::get("fonts/FiraCode-Regular.ttf"));
 
-    auto button = WindowManager::create<UIWindow<RectangleShape>>(
-            Viewport{
-                Vector2<double>{200, 200},
-                Vector2<double>{400, 400}
-            }
+    for (int h = 0; h < 3; ++h) {
+        for (int l = 0; l < 15; ++l) {
+            auto win_1 = WindowManager::create<UIWindow>(
+                    Viewport{
+                            {static_cast<double>(l * 100),
+                             static_cast<double>(h * 100)},
+                            {100,   100}
+                    }
             );
-    button->applyStyle<Bordered>(10, GREEN);
-    button->applyStyle<ColorFill>(BROWN);
+            win_1->addBehavior<Draggable>();
+            win_1->applyShape<RectangleShape>();
+            win_1->applyStyle<UIWindow::NORMAL>(
+                    ColorFill{COLOR::WHITE}
+            );
+            win_1->applyStyle<UIWindow::HOVER>(
+                    Bordered{10, COLOR::GREEN},
+                    ColorFill{COLOR::WHITE}
+            );
+            win_1->applyStyle<UIWindow::CLICK>(
+                    Bordered{10, COLOR::BLUE},
+                    ColorFill{COLOR::WHITE}
+            );
+            win_1->applyStyle<UIWindow::HOLD>(
+                    Bordered{10, COLOR::RED},
+                    ColorFill{COLOR::WHITE}
+            );
 
-    WindowManager::putRoot(button);
-    WindowManager::attach(button, win);
+            auto win_2 = win_1->attach<UIWindow>(
+                    Viewport{
+                            {10, 10},
+                            {50, 50}
+                    }
+            );
+            win_2->applyShape<CircleShape>();
+            win_2->addBehavior<Slidable>(
+                    Segment2<double>{
+                            {10, 10},
+                            {50, 50}
+                    }
+                    );
+            win_2->applyStyle<UIWindow::NORMAL>(
+                    ColorFill{COLOR::BLUE_VIOLET}
+            );
+
+            WindowManager::putRoot(win_1);
+        }
+    }
+
+    auto sb = WindowManager::create<UIWindow>(
+            Viewport{ {500, 50}, {800, 100}}
+            );
+    auto scrollbar = sb->addBehavior<Scrollbar>(
+            10, Scrollbar::HORIZONTAL
+            );
+    scrollbar->inc_button->applyShape<RectangleShape>();
+    scrollbar->inc_button->applyStyle<UIWindow::NORMAL>(
+            ColorFill{COLOR::BEIGE}
+            );
+    scrollbar->dec_button->applyShape<RectangleShape>();
+    scrollbar->dec_button->applyStyle<UIWindow::NORMAL>(
+            ColorFill{COLOR::BEIGE}
+    );
+    scrollbar->slider->applyShape<CircleShape>();
+    scrollbar->slider->applyStyle<UIWindow::NORMAL>(
+            ColorFill{COLOR::BLUE}
+    );
+    sb->applyShape<RectangleShape>();
+    sb->applyStyle<UIWindow::NORMAL>(
+            ColorFill{COLOR::BLACK}
+            );
+
+    WindowManager::putRoot(sb);
+
 
     WindowManager::dump("LayoutDump.dot");
+    SubscriptionManager::dump("Subscriptions.dot");
 
     return CoreApplication::run();
 

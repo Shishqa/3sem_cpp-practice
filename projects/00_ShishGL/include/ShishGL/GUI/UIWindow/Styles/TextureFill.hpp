@@ -4,8 +4,7 @@
 /*============================================================================*/
 #include <string_view>
 
-#include "GUI/UIWindow/Styles/Style.hpp"
-#include "GUI/UIWindow/Shapes/Shape2D.hpp"
+#include "Style.hpp"
 #include "ResourceManager.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
@@ -19,8 +18,9 @@ namespace ShishGL {
             ResourceManager::load(file);
         }
 
-        void apply(Viewport&, const Shape2D&) override {
+        void apply(Viewport& frame, const Shape2D& shape) override {
             RENDERER().setTexture(ResourceManager::get(file));
+            shape.draw(frame);
         }
 
         ~TextureFill() override = default;

@@ -10,16 +10,13 @@ using namespace ShishGL;
 
 bool EventSystem::sendEvent(Listener* sender, Event& event) {
 
-    bool status = false;
-
     for (auto& sub : SubscriptionManager::Subscriptions()[sender]) {
-        if (sub->filterEvent(event) && event.happen(sub)) {
-            status = true;
+        if ((sub.second & event.mask()) && event.happen(sub.first)) {
+            event.received = true;
         }
     }
 
-    return status;
-
+    return event.received;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -50,7 +47,7 @@ bool EventSystem::dispatchOne() {
 
     bool status = sendEvent(SystemEvents, *event);
     if (!status && !SubscriptionManager::Subscriptions()[SystemEvents].empty()) {
-        LogSystem::printWarning("Missed event %s", typeid(*event).name());
+        //LogSystem::printWarning("Missed event %s", typeid(*event).name());
     }
 
     delete event;

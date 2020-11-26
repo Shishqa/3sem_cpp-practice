@@ -16,6 +16,10 @@ namespace ShishGL {
 
         ~MouseEvent() override = default;
 
+        EventMask mask() override {
+            return MOUSE_MOVE;
+        }
+
         [[nodiscard]]
         const Vector2<double>& where() const;
 
@@ -40,6 +44,10 @@ namespace ShishGL {
 
         ~MouseButtonEvent() override = default;
 
+        EventMask mask() override {
+            return MOUSE_BUTTON;
+        }
+
         [[nodiscard]]
         Mouse::Button button() const;
 
@@ -61,18 +69,27 @@ namespace ShishGL {
     public:
 
         MouseScrollEvent(const Vector2<double>& where,
-                         Mouse::ScrollDelta delta);
+                         Mouse::ScrollDelta delta,
+                         Mouse::ScrollType type);
 
         ~MouseScrollEvent() override = default;
 
+        EventMask mask() override {
+            return MOUSE_SCROLL;
+        }
+
         [[nodiscard]]
         inline Mouse::ScrollDelta delta() const;
+
+        [[nodiscard]]
+        Mouse::ScrollType type() const;
 
         bool happen(Listener* listener) override;
 
     protected:
 
         Mouse::ScrollDelta m_delta;
+        Mouse::ScrollType m_type;
 
     };
 

@@ -2,18 +2,24 @@
 #ifndef SHISHGL_CURSOR_LOCATOR_HPP
 #define SHISHGL_CURSOR_LOCATOR_HPP
 /*============================================================================*/
-#include "Window.hpp"
+#include "UIWindow.hpp"
 /*============================================================================*/
 namespace ShishGL {
 
-    class CursorLocator : public Window {
+    class CursorLocator : public UIWindow {
     public:
 
-        explicit CursorLocator(Shape2D* shape);
+        explicit CursorLocator(const Viewport& viewport)
+            : UIWindow(viewport) {
+            SubscriptionManager::subscribe(EventSystem::SystemEvents, this);
+        }
 
     protected:
 
-        bool onMouseMove(MouseEvent& event) override;
+        bool onMouseMove(MouseEvent& event) override {
+            UIWindow::setPos(event.where());
+            return true;
+        }
 
     };
 

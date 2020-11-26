@@ -2,7 +2,7 @@
 #ifndef SHISHGL_BORDERED_HPP
 #define SHISHGL_BORDERED_HPP
 /*============================================================================*/
-#include "GUI/UIWindow/Styles/Style.hpp"
+#include "Style.hpp"
 #include "RenderSystem.hpp"
 /*============================================================================*/
 namespace ShishGL {

@@ -7,24 +7,38 @@ node [
     "node1" -> "node5"  // ShishGL-Core -> ShishGL-RenderSystem
     "node0" [ label = "ShishGL", shape = pentagon ];
     "node0" -> "node1" [ style = dashed ] // ShishGL -> ShishGL-Core
-    "node19" [ label = "TestAbstracts", shape = egg ];
-    "node19" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
-    "node16" [ label = "ShishGL-DebugUtilities", shape = octagon ];
-    "node16" -> "node1"  // ShishGL-DebugUtilities -> ShishGL-Core
+    "node23" [ label = "TestAbstracts", shape = egg ];
+    "node23" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+    "node17" [ label = "ShishGL-TextBuffer", shape = octagon ];
+    "node17" -> "node1"  // ShishGL-TextBuffer -> ShishGL-Core
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node17" [ style = dashed ] // ShishGL-GUI -> ShishGL-TextBuffer
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node15" -> "node16"  // ShishGL-DebugUtilities -> ShishGL-GUI
     "node0" [ label = "ShishGL", shape = pentagon ];
-    "node0" -> "node16" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node0" -> "node15" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node16" [ style = dashed ] // ShishGL -> ShishGL-GUI
+    "node20" [ label = "ShishGL-Shapes", shape = octagon ];
+    "node20" -> "node1"  // ShishGL-Shapes -> ShishGL-Core
+    "node19" [ label = "ShishGL-UIWindow", shape = octagon ];
+    "node19" -> "node20" [ style = dashed ] // ShishGL-UIWindow -> ShishGL-Shapes
+    "node18" [ label = "ShishGL-UIButton", shape = pentagon ];
+    "node18" -> "node19" [ style = dashed ] // ShishGL-UIButton -> ShishGL-UIWindow
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node18" [ style = dashed ] // ShishGL-GUI -> ShishGL-UIButton
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node19" [ style = dashed ] // ShishGL-GUI -> ShishGL-UIWindow
+    "node21" [ label = "ShishGL-Styles", shape = pentagon ];
+    "node21" -> "node20" [ style = dashed ] // ShishGL-Styles -> ShishGL-Shapes
+    "node19" [ label = "ShishGL-UIWindow", shape = octagon ];
+    "node19" -> "node21" [ style = dashed ] // ShishGL-UIWindow -> ShishGL-Styles
+    "node21" [ label = "ShishGL-Styles", shape = pentagon ];
+    "node21" -> "node1" [ style = dashed ] // ShishGL-Styles -> ShishGL-Core
     "node14" [ label = "ShishGL-Window", shape = octagon ];
     "node14" -> "node5"  // ShishGL-Window -> ShishGL-RenderSystem
     "node1" [ label = "ShishGL-Core", shape = octagon ];
     "node1" -> "node14"  // ShishGL-Core -> ShishGL-Window
-    "node18" [ label = "ShishGL-Styles", shape = pentagon ];
-    "node18" -> "node14" [ style = dashed ] // ShishGL-Styles -> ShishGL-Window
-    "node17" [ label = "ShishGL-GUI", shape = pentagon ];
-    "node17" -> "node18" [ style = dashed ] // ShishGL-GUI -> ShishGL-Styles
-    "node0" [ label = "ShishGL", shape = pentagon ];
-    "node0" -> "node17" [ style = dashed ] // ShishGL -> ShishGL-GUI
-    "node15" [ label = "ShishGL-Shapes", shape = octagon ];
-    "node15" -> "node5"  // ShishGL-Shapes -> ShishGL-RenderSystem
-    "node14" [ label = "ShishGL-Window", shape = octagon ];
-    "node14" -> "node15"  // ShishGL-Window -> ShishGL-Shapes
+    "node19" [ label = "ShishGL-UIWindow", shape = octagon ];
+    "node19" -> "node14" [ style = dashed ] // ShishGL-UIWindow -> ShishGL-Window
 }

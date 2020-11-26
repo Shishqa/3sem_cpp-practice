@@ -25,6 +25,8 @@ namespace ShishGL {
 
         static void forget(const std::string_view& filename);
 
+        static void clear();
+
     private:
 
         using ResourceMap = std::unordered_map<std::string_view, Resource>;

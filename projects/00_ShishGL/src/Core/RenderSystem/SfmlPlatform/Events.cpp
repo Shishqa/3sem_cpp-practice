@@ -60,7 +60,12 @@ bool pollMouseScroll(const sf::Event& sf_event) {
     /* todo: make configs of mouse inversion */
     Mouse::ScrollDelta delta = -1.0 * sf_event.mouseWheelScroll.delta;
 
-    EventManager::postEvent<MouseScrollEvent>(where, delta);
+    Mouse::ScrollType type = ShishGL::Mouse::VERTICAL;
+    if (sf_event.mouseWheelScroll.wheel == sf::Mouse::Wheel::HorizontalWheel) {
+        type = ShishGL::Mouse::HORIZONTAL;
+    }
+
+    EventManager::postEvent<MouseScrollEvent>(where, delta, type);
 
     return true;
 }

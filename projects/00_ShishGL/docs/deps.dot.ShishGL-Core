@@ -55,10 +55,4 @@ node [
     "node14" -> "node3"  // ShishGL-Window -> ShishGL-LogSystem
     "node5" [ label = "ShishGL-RenderSystem", shape = octagon ];
     "node14" -> "node5"  // ShishGL-Window -> ShishGL-RenderSystem
-    "node15" [ label = "ShishGL-Shapes", shape = octagon ];
-    "node14" -> "node15"  // ShishGL-Window -> ShishGL-Shapes
-    "node4" [ label = "ShishGL-Primitives", shape = octagon ];
-    "node15" -> "node4"  // ShishGL-Shapes -> ShishGL-Primitives
-    "node5" [ label = "ShishGL-RenderSystem", shape = octagon ];
-    "node15" -> "node5"  // ShishGL-Shapes -> ShishGL-RenderSystem
 }

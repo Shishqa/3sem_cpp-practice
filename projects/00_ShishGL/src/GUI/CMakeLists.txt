@@ -1,16 +1,29 @@
-add_library(ShishGL-GUI INTERFACE)
+add_library(ShishGL-GUI)
 
 set(INCROOT ${ShishGL_SOURCE_DIR}/include/ShishGL/GUI)
 
 target_include_directories(ShishGL-GUI
-  INTERFACE
+  PUBLIC
     ${INCROOT}
   )
 
+target_sources(ShishGL-GUI
+  PUBLIC
+    ${INCROOT}/UIScrollbar.hpp
+  PRIVATE
+    UIScrollbar.cpp
+
+  )
+
 target_link_libraries(ShishGL-GUI
-  INTERFACE
+  PUBLIC
+    ShishGL-Core
     ShishGL-UIWindow
+    ShishGL-Styles
+    ShishGL-Shapes
+    ShishGL-Behaviors
+    ShishGL-TextBuffer
   )
 
 add_subdirectory(UIWindow)
-
+add_subdirectory(TextBuffer)

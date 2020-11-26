@@ -2,52 +2,34 @@
 #ifndef SHISHGL_UI_WINDOW_IPP
 #define SHISHGL_UI_WINDOW_IPP
 /*============================================================================*/
+#include <cstdio>
+/*============================================================================*/
 namespace ShishGL {
 
-    template <typename SomeShape>
-    UIWindow<SomeShape>::UIWindow(const Viewport& viewport)
-        : Window(viewport)
-        { }
-
-    /*------------------------------------------------------------------------*/
-
-    template <typename SomeShape>
-    template <typename SomeStyle, typename... Args>
-    void UIWindow<SomeShape>::applyStyle(Args&&... args) {
-        auto* style = new SomeStyle(std::forward<Args>(args)...);
-        styles.push_back(style);
+    template <int SomeState, typename... Args>
+    void UIWindow::applyStyle(Args&&... args) {
+        style_map[SomeState].add(std::forward<Args>(args)...);
     }
 
     /*------------------------------------------------------------------------*/
 
-    template <typename SomeShape>
-    UIWindow<SomeShape>::~UIWindow() {
-        for (auto& style : styles) {
-            delete style;
-        }
+    template <typename SomeShape, typename... Args>
+    void UIWindow::applyShape(Args&&... args) {
+        delete shape_impl;
+        shape_impl = new SomeShape(std::forward(args)...);
+        /* TODO: point to already allocated implementation */
     }
 
     /*------------------------------------------------------------------------*/
 
-    template <typename SomeShape>
-    void UIWindow<SomeShape>::onRender() {
+    template <typename SomeBehavior, typename... Args>
+    SomeBehavior* UIWindow::addBehavior(Args&&... args) {
 
-        Shape shape;
-        Viewport frame = getViewport();
+        auto behavior = new SomeBehavior(this, std::forward<Args>(args)...);
 
-        for (auto& style : styles) {
-            style->apply(frame, shape);
-        }
+        behaviors.insert(behavior);
 
-        shape.draw(frame);
-    }
-
-    /*------------------------------------------------------------------------*/
-
-    template <typename SomeShape>
-    bool UIWindow<SomeShape>::contains(const Vector2<double>& point) const {
-        Shape shape;
-        return shape.contains(getViewport(), point);
+        return behavior;
     }
 
 }

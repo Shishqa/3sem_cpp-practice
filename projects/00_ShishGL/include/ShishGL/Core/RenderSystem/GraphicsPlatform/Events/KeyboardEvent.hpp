@@ -17,6 +17,10 @@ namespace ShishGL {
 
         ~KeyboardEvent() override = default;
 
+        EventMask mask() override {
+            return KEYBOARD;
+        }
+
         [[nodiscard]]
         inline Keyboard::Key key() const;
 

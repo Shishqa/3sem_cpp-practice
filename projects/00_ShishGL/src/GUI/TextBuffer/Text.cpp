@@ -5,54 +5,54 @@
 #include <sys/stat.h>
 #include <string_view>
 
-#include "ShishGL/GUI/text_buffer/Text.hpp"
+#include "Text.hpp"
+#include "ResourceManager.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
 
-Text::Text(const std::string_view &filename, size_t n_bytes)
-    : buffer(nullptr)
-    , buffer_size(n_bytes) {
+Text::Text(const std::string_view& file)
+    : filename(file) {
 
-    std::ifstream input(filename.data());
-
-    if (n_bytes == 0) {
-        struct stat stat_buf = {};
-        if (-1 == stat(filename.data(), &stat_buf)) {
-            perror("stat");
-            abort();
-        }
-        buffer_size = stat_buf.st_size;
+    auto& text = ResourceManager::get(filename);
+    for (size_t i = 0; i < text.size; ++i) {
+        printf("%c", text.data[i]);
     }
 
-    assert(buffer_size != 0);
 
-    buffer = new char[buffer_size];
-    input.read(buffer, buffer_size);
+    std::string_view buf_str(reinterpret_cast<const char*>(text.data), text.size);
 
-    std::string_view buf_str(buffer, buffer_size);
+    printf("%s", buf_str.data());
+
     size_t curr_pos = 0;
     do {
-
         size_t line_end = buf_str.find('\n', curr_pos);
+
+        printf("%lu -- %lu (%lu)\n", curr_pos, line_end, std::string_view::npos);
 
         if (line_end == std::string_view::npos) {
             text_lines.emplace_back(buf_str.substr(curr_pos, buf_str.size() - curr_pos));
             curr_pos = line_end;
         } else {
             text_lines.emplace_back(buf_str.substr(curr_pos, line_end - curr_pos));
-            buffer[line_end] = '\0';
+            text.data[line_end] = '\0';
             curr_pos = line_end + 1;
         }
 
     } while (curr_pos != std::string_view::npos);
 
+    for (auto& line : lines()) {
+        printf("%s\n", line.data());
+    }
+
+    printf("text constructed!\n");
+
 }
 
 /*----------------------------------------------------------------------------*/
 
-Text::~Text() {
-    delete[] buffer;
+const ResourceManager::Resource& Text::data() const {
+    return ResourceManager::get(filename);
 }
 
 /*============================================================================*/

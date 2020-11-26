@@ -7,7 +7,7 @@ project(ShishGL
   LANGUAGES CXX)
 
 
-option(USE_OPEN_GL "Use OpenGL platform" OFF)
+option(USE_XORG "Use Xlib platform" OFF)
 option(USE_SFML "Use SFML platform" ON)
 
 
@@ -17,6 +17,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
   set(RELEASE_FLAGS " \
     -O3 \
+    -Wno-unused-parameter \
   ")
 
   set(DEBUG_FLAGS " \
@@ -26,6 +27,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     -Wlogical-op \
     -Wshift-overflow=2 \
 		-Wduplicated-cond \
+		-Wno-unused-parameter \
 		-Wcast-qual -Wcast-align \
 		-D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC \
 		-D_FORTIFY_SOURCE=2 -fsanitize=address \
@@ -59,3 +61,4 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(test)
+add_subdirectory(apps)

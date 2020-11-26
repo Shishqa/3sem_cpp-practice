@@ -18,6 +18,11 @@ namespace ShishGL {
             MIDDLE
         };
 
+        enum ScrollType {
+            VERTICAL,
+            HORIZONTAL
+        };
+
         using ScrollDelta = double;
 
     };

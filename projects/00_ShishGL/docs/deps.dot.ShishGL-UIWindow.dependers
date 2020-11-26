@@ -1,0 +1,20 @@
+digraph "ShishGL-UIWindow" {
+node [
+  fontsize = "12"
+];
+    "node19" [ label = "ShishGL-UIWindow", shape = octagon ];
+    "node18" [ label = "ShishGL-UIButton", shape = pentagon ];
+    "node18" -> "node19" [ style = dashed ] // ShishGL-UIButton -> ShishGL-UIWindow
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node18" [ style = dashed ] // ShishGL-GUI -> ShishGL-UIButton
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node15" -> "node16"  // ShishGL-DebugUtilities -> ShishGL-GUI
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node15" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node23" [ label = "TestAbstracts", shape = egg ];
+    "node23" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node16" [ style = dashed ] // ShishGL -> ShishGL-GUI
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node19" [ style = dashed ] // ShishGL-GUI -> ShishGL-UIWindow
+}

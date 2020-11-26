@@ -1,0 +1,6 @@
+digraph "ShishGL-UIFrame" {
+node [
+  fontsize = "12"
+];
+    "node22" [ label = "ShishGL-UIFrame", shape = pentagon ];
+}

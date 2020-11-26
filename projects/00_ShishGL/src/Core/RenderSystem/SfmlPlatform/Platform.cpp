@@ -9,7 +9,7 @@ SfmlPlatform::SfmlPlatform()
     : display_size({})
     , is_running(false)
     , canvas(nullptr)
-    , active_color(NONE)
+    , active_color(COLOR::NONE)
     , active_texture(nullptr)
     , active_font(nullptr)
     { }

@@ -3,6 +3,6 @@ node [
   fontsize = "12"
 ];
     "node0" [ label = "ShishGL", shape = pentagon ];
-    "node19" [ label = "TestAbstracts", shape = egg ];
-    "node19" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+    "node23" [ label = "TestAbstracts", shape = egg ];
+    "node23" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
 }

@@ -33,6 +33,29 @@ namespace ShishGL {
 
         /* Draw */
         /*--------------------------------------------------------------------*/
+        class SfmlContext : public IContext {
+        public:
+
+            explicit SfmlContext(const Vector2<size_t>& size,
+                                 const Color& color = COLOR::BLACK);
+
+            void update(const Color* data) override;
+
+            void updateAt(const Vector2<size_t>& pos,
+                          const Color& color) override;
+
+            ~SfmlContext() override = default;
+
+        private:
+
+            sf::Texture texture;
+
+            friend class SfmlPlatform;
+        };
+
+        IContext* createContext(const Vector2<size_t>& size,
+                                const Color& color) override;
+
         void setColor(const Color& color) override;
 
         void setTexture(const ResourceManager::Resource& texture) override;
@@ -51,14 +74,14 @@ namespace ShishGL {
 
         /* Image */
         /*--------------------------------------------------------------------*/
-        void displayImage(const ResourceManager::Resource& image,
-                          const Vector2<double>& pos) override;
+        void displayContext(const IPlatform::IContext* context,
+                            const Vector2<double>& pos) override;
 
         /* Text */
         /*--------------------------------------------------------------------*/
         void setFont(const ResourceManager::Resource& font) override;
 
-        void displayText(const ResourceManager::Resource& text,
+        void displayText(const std::string_view& text,
                          const size_t& font_size,
                          const Vector2<double>& pos) override;
         /*--------------------------------------------------------------------*/

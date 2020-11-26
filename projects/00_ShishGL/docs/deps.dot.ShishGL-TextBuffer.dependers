@@ -1,0 +1,16 @@
+digraph "ShishGL-TextBuffer" {
+node [
+  fontsize = "12"
+];
+    "node17" [ label = "ShishGL-TextBuffer", shape = octagon ];
+    "node16" [ label = "ShishGL-GUI", shape = pentagon ];
+    "node16" -> "node17" [ style = dashed ] // ShishGL-GUI -> ShishGL-TextBuffer
+    "node15" [ label = "ShishGL-DebugUtilities", shape = octagon ];
+    "node15" -> "node16"  // ShishGL-DebugUtilities -> ShishGL-GUI
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node15" [ style = dashed ] // ShishGL -> ShishGL-DebugUtilities
+    "node23" [ label = "TestAbstracts", shape = egg ];
+    "node23" -> "node0" [ style = dotted ] // TestAbstracts -> ShishGL
+    "node0" [ label = "ShishGL", shape = pentagon ];
+    "node0" -> "node16" [ style = dashed ] // ShishGL -> ShishGL-GUI
+}

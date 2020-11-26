@@ -14,9 +14,6 @@ namespace ShishGL {
     protected:
 
         [[nodiscard]]
-        virtual bool filterEvent(class Event&) const;
-
-        [[nodiscard]]
         virtual bool onEvent(class Event&);
 
         friend class Event;

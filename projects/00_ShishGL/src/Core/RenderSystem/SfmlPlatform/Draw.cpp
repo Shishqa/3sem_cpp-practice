@@ -5,6 +5,39 @@
 using namespace ShishGL;
 /*============================================================================*/
 
+SfmlPlatform::SfmlContext::SfmlContext(const Vector2<size_t>& size,
+                                       const Color& color) {
+    sf::Image img;
+    img.create(
+            static_cast<uint32_t>(size.x),
+            static_cast<uint32_t>(size.y),
+            sf::Color{color.r, color.g, color.b, color.a}
+            );
+    texture.loadFromImage(img);
+}
+
+void SfmlPlatform::SfmlContext::update(const Color* data) {
+    texture.update(reinterpret_cast<const uint8_t*>(data));
+}
+
+void SfmlPlatform::SfmlContext::updateAt(const Vector2<size_t>& pos,
+                                         const Color& color) {
+    texture.update(reinterpret_cast<const uint8_t*>(&color),
+                   1, 1, static_cast<uint32_t>(pos.x),
+                   static_cast<uint32_t>(pos.y));
+}
+
+IPlatform::IContext* SfmlPlatform::createContext(const Vector2<size_t>& size,
+                                                 const Color& color) {
+
+    auto memory = aligned_alloc(sizeof(SfmlContext), sizeof(SfmlContext));
+    new(memory) SfmlContext(size, color);
+
+    return reinterpret_cast<IContext*>(memory);
+}
+
+/*----------------------------------------------------------------------------*/
+
 void SfmlPlatform::setViewport(const Vector2<double>& pos,
                                const Vector2<double>& size) {
 
@@ -149,17 +182,20 @@ void SfmlPlatform::drawCircle(const Vector2<double>& pos,
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlPlatform::displayImage(const ResourceManager::Resource& image,
-                                const Vector2<double>& pos) {
+void SfmlPlatform::displayContext(const IPlatform::IContext* context,
+                                  const Vector2<double>& pos) {
 
-    sf::Texture texture = {};
-    texture.loadFromMemory(image.data, image.size);
+    auto sfml_image = dynamic_cast<const SfmlContext*>(context);
+    if (!sfml_image) {
+        return;
+    }
 
-    sf::Sprite sprite = {};
-    sprite.setPosition(static_cast<float>(pos.x),
-                       static_cast<float>(pos.y));
+    sf::Sprite sprite(sfml_image->texture);
+    sprite.setPosition(
+            static_cast<float>(pos.x),
+            static_cast<float>(pos.y)
+            );
 
-    sprite.setTexture(texture);
     canvas->draw(sprite);
 }
 
@@ -181,7 +217,7 @@ void SfmlPlatform::setFont(const ResourceManager::Resource& font) {
 
 /*----------------------------------------------------------------------------*/
 
-void SfmlPlatform::displayText(const ResourceManager::Resource& text,
+void SfmlPlatform::displayText(const std::string_view& text,
                                const size_t& font_size,
                                const Vector2<double>& pos) {
 
@@ -189,8 +225,9 @@ void SfmlPlatform::displayText(const ResourceManager::Resource& text,
         return;
     }
 
-    sf::Text display_text(sf::String{reinterpret_cast<char*>(text.data)},
-                          *active_font, static_cast<unsigned int>(font_size));
+    /*
+    sf::Text display_text(sf::String{text.data()}, *active_font,
+                          static_cast<unsigned int>(font_size));
 
     display_text.setFillColor(sf::Color{
             active_color.r,
@@ -202,7 +239,8 @@ void SfmlPlatform::displayText(const ResourceManager::Resource& text,
     display_text.setPosition(sf::Vector2f(static_cast<float>(pos.x),
                                           static_cast<float>(pos.y)));
 
-    canvas->draw(display_text);
+    //canvas->draw(display_text);
+     */
 }
 
 /*============================================================================*/

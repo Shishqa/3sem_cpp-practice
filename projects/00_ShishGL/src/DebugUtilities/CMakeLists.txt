@@ -16,5 +16,5 @@ target_sources(ShishGL-DebugUtilities
 
 target_link_libraries(ShishGL-DebugUtilities
   PUBLIC
-    ShishGL-Core
+    ShishGL-GUI
   )

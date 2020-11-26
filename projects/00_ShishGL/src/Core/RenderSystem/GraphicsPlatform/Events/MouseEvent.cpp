@@ -57,15 +57,21 @@ bool MouseButtonEvent::happen(Listener* listener) {
 /*============================================================================*/
 
 MouseScrollEvent::MouseScrollEvent(const Vector2<double>& where,
-                                   Mouse::ScrollDelta delta)
+                                   Mouse::ScrollDelta delta,
+                                   Mouse::ScrollType type)
                                    : MouseEvent(where)
                                    , m_delta(delta)
+                                   , m_type(type)
                                    { }
 
 /*----------------------------------------------------------------------------*/
 
 Mouse::ScrollDelta MouseScrollEvent::delta() const {
     return m_delta;
+}
+
+Mouse::ScrollType MouseScrollEvent::type() const {
+    return m_type;
 }
 
 /*----------------------------------------------------------------------------*/

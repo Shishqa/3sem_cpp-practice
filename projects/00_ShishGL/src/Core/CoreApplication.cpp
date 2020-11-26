@@ -6,6 +6,7 @@
 #include "RenderSystem.hpp"
 #include "CoreApplication.hpp"
 #include "WindowManager.hpp"
+#include "TimerEvent.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -45,6 +46,9 @@ uint8_t CoreApplication::run() {
         return 10;
     }
 
+    Timer event_timer = {};
+    event_timer.reset();
+
     Timer frame_timer = {};
     frame_timer.reset();
     size_t frame_counter = 0;
@@ -57,6 +61,12 @@ uint8_t CoreApplication::run() {
     LogSystem::printLog("Started run session");
 
     while (RENDERER().isRunning()) {
+
+        TimeDelta event_delta = event_timer.elapsed();
+        if (event_delta.count() > 55000000) {
+            EventManager::postEvent<TimerEvent>(event_delta);
+            event_timer.reset();
+        }
 
         profiling_timer.reset();
 
@@ -73,7 +83,9 @@ uint8_t CoreApplication::run() {
 
         ++frame_counter;
 
+        RENDERER().clear(COLOR::WHITE);
         WindowManager::refresh();
+        RENDERER().display();
 
         TimeDelta render = profiling_timer.elapsed();
         if (render - polling > for_render) {
@@ -86,13 +98,15 @@ uint8_t CoreApplication::run() {
             frame_counter = 0;
             frame_timer.reset();
         }
-    }
 
-    printf("POLL MAX: %lu\n"
+        /*
+        printf("POLL MAX: %lu\n"
            "RENDER MAX: %lu\n",
-           for_poll.count(),
-           for_render.count());
-    fflush(stdout);
+           polling.count(),
+           render.count());
+        fflush(stdout);
+         */
+    }
 
     terminate();
 
@@ -107,6 +121,7 @@ bool CoreApplication::terminate() {
     EventManager::flush();
     RenderSystem::terminate();
     WindowManager::clear();
+    ResourceManager::clear();
     LogSystem::printLog("Core terminated");
 
     LogSystem::closeLog();

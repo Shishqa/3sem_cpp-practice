@@ -9,7 +9,6 @@ target_include_directories(ShishGL-Shapes
 
 target_sources(ShishGL-Shapes
   PUBLIC
-    ${INCROOT}/Shape2D.hpp
     ${INCROOT}/RectangleShape.hpp
     ${INCROOT}/CircleShape.hpp
   PRIVATE
@@ -20,4 +19,5 @@ target_sources(ShishGL-Shapes
 target_link_libraries(ShishGL-Shapes
   PUBLIC
     ShishGL-Core
+    ShishGL-UIWindow
   )
