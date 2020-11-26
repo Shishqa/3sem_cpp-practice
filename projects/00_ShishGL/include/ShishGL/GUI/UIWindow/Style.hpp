@@ -2,6 +2,8 @@
 #ifndef SHISHGL_STYLE_HPP
 #define SHISHGL_STYLE_HPP
 /*============================================================================*/
+#include <vector>
+
 #include "Shape2D.hpp"
 #include "Viewport.hpp"
 /*============================================================================*/

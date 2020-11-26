@@ -10,18 +10,19 @@ target_include_directories(yage
 target_sources(yage
   PUBLIC
     ${INCROOT}/YAGE.hpp
-    ${INCROOT}/Canvas.hpp
   PRIVATE
     main.cpp
     YAGE.cpp
-    Canvas.cpp
   )
 
 target_link_libraries(yage
   PUBLIC
     ShishGL
     YAGE-ToolManager
+    YAGE-Tools
+    YAGE-ImageManager
   )
 
 add_subdirectory(ToolManager)
 add_subdirectory(PropertyManager)
+add_subdirectory(ImageManager)

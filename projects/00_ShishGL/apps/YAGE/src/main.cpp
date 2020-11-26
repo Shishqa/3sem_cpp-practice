@@ -3,6 +3,7 @@
 #include "CoreApplication.hpp"
 #include "WindowManager.hpp"
 #include "SubscriptionManager.hpp"
+#include "ImageManager.hpp"
 /*============================================================================*/
 using namespace ShishGL;
 /*============================================================================*/
@@ -11,7 +12,8 @@ int main(int argc, char* argv[]) {
 
     CoreApplication::init(&argc, argv);
 
-    YAGE::create();
+    YAGE::init();
+
 
     WindowManager::dump("layout.dot");
     SubscriptionManager::dump("subs.dot");

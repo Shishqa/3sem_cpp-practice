@@ -16,6 +16,10 @@ SfmlPlatform::SfmlContext::SfmlContext(const Vector2<size_t>& size,
     texture.loadFromImage(img);
 }
 
+SfmlPlatform::SfmlContext::SfmlContext(const std::string_view& filename) {
+    texture.loadFromFile(filename.data());
+}
+
 void SfmlPlatform::SfmlContext::update(const Color* data) {
     texture.update(reinterpret_cast<const uint8_t*>(data));
 }
@@ -29,11 +33,23 @@ void SfmlPlatform::SfmlContext::updateAt(const Vector2<size_t>& pos,
 
 IPlatform::IContext* SfmlPlatform::createContext(const Vector2<size_t>& size,
                                                  const Color& color) {
+    return new SfmlContext(size, color);
+}
 
-    auto memory = aligned_alloc(sizeof(SfmlContext), sizeof(SfmlContext));
-    new(memory) SfmlContext(size, color);
+IPlatform::IContext* SfmlPlatform::loadContextFromImage(const std::string_view& filename) {
+    return new SfmlContext(filename);
+}
 
-    return reinterpret_cast<IContext*>(memory);
+void SfmlPlatform::saveContextAsImage(IContext* context, const std::string_view& filename) {
+
+    auto sfml_context = dynamic_cast<SfmlContext*>(context);
+    if (!sfml_context) {
+        return;
+    }
+
+    sf::Image img = sfml_context->texture.copyToImage();
+
+    img.saveToFile(filename.data());
 }
 
 /*----------------------------------------------------------------------------*/
@@ -73,8 +89,6 @@ void SfmlPlatform::setTexture(const ResourceManager::Resource& texture) {
         active_texture = textures[texture.filename];
         return;
     }
-
-    printf("SFML LOADING!!!!\n");
 
     auto sf_texture = new sf::Texture;
     sf_texture->loadFromMemory(texture.data, texture.size);

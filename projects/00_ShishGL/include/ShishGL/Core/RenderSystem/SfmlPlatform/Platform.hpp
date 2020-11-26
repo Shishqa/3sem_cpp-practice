@@ -39,6 +39,8 @@ namespace ShishGL {
             explicit SfmlContext(const Vector2<size_t>& size,
                                  const Color& color = COLOR::BLACK);
 
+            explicit SfmlContext(const std::string_view& filename);
+
             void update(const Color* data) override;
 
             void updateAt(const Vector2<size_t>& pos,
@@ -56,6 +58,11 @@ namespace ShishGL {
         IContext* createContext(const Vector2<size_t>& size,
                                 const Color& color) override;
 
+        IContext* loadContextFromImage(const std::string_view& filename) override;
+
+        void saveContextAsImage(IContext* context, const std::string_view& filename) override;
+
+        /*--------------------------------------------------------------------*/
         void setColor(const Color& color) override;
 
         void setTexture(const ResourceManager::Resource& texture) override;

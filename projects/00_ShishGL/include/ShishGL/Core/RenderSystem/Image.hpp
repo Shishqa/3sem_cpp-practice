@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <vector>
 #include <memory>
+#include <immintrin.h>
 
 #include "Color.hpp"
 #include "ColorCollection.hpp"
@@ -21,12 +22,8 @@ namespace ShishGL {
 
         explicit Image(const Vector2<size_t>& size,
                        const Color& color = COLOR::WHITE)
-                : context(nullptr)
-                , img_size(size) {
-
-            pixels = reinterpret_cast<Color*>(aligned_alloc(sizeof(Color), size.x * size.y * sizeof(Color)));
-
-            context = RENDERER().createContext(size, color);
+                : img_size(size) {
+            pixels.resize(size.x * size.y, color);
         }
 
         void setPixel(const Vector2<size_t>& pos, const Color& color) {
@@ -34,26 +31,30 @@ namespace ShishGL {
         }
 
         [[nodiscard]]
+        const Color* getPixels() const {
+            return pixels.data();
+        }
+
+        [[nodiscard]]
+        Color getPixel(size_t x, size_t y) const {
+            return pixels[y * img_size.x + x];
+        }
+
+        [[nodiscard]]
         const Vector2<size_t>& size() const {
             return img_size;
         }
 
-        void draw(const Vector2<double>& pos) {
-            context->update(pixels);
-            RENDERER().displayContext(context, pos);
-        }
+        void blend(const Image& other);
 
-        ~Image() {
-            delete context;
-            delete[] pixels;
+        void draw(IPlatform::IContext* context) {
+            context->update(pixels.data());
         }
 
     private:
 
-        IPlatform::IContext* context;
-
         Vector2<size_t> img_size;
-        Color* pixels;
+        std::vector<Color> pixels;
 
     };
 

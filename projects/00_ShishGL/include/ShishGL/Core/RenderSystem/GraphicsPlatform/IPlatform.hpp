@@ -47,7 +47,13 @@ namespace ShishGL {
         };
 
         virtual IContext* createContext(const Vector2<size_t>& size,
-                                        const Color& color = COLOR::BLACK) = 0;
+                                        const Color& color) = 0;
+
+        virtual IContext* loadContextFromImage(const std::string_view& filename) = 0;
+
+        virtual void saveContextAsImage(IContext* context, const std::string_view& filename) = 0;
+
+        /*--------------------------------------------------------------------*/
 
         virtual void setColor(const Color& color) = 0;
 

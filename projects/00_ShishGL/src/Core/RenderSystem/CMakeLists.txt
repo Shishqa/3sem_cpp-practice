@@ -13,6 +13,7 @@ target_sources(ShishGL-RenderSystem
     ${INCROOT}/Image.hpp
   PRIVATE
     RenderSystem.cpp
+    Image.cpp
   )
 
 target_link_libraries(ShishGL-RenderSystem

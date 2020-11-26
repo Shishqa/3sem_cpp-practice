@@ -73,23 +73,42 @@ int main(int argc, char* argv[]) {
     }
 
     auto sb = WindowManager::create<UIWindow>(
-            Viewport{ {500, 50}, {800, 100}}
+            Viewport{ {500, 50}, {50, 800}}
             );
     auto scrollbar = sb->addBehavior<Scrollbar>(
-            10, Scrollbar::HORIZONTAL
+            0.3, 0.3, Scrollbar::VERTICAL
             );
-    scrollbar->inc_button->applyShape<RectangleShape>();
-    scrollbar->inc_button->applyStyle<UIWindow::NORMAL>(
+    scrollbar->inc_bt_win->applyShape<RectangleShape>();
+    scrollbar->inc_bt_win->applyStyle<UIWindow::NORMAL>(
             ColorFill{COLOR::BEIGE}
             );
-    scrollbar->dec_button->applyShape<RectangleShape>();
-    scrollbar->dec_button->applyStyle<UIWindow::NORMAL>(
+    scrollbar->inc_bt_win->applyStyle<UIWindow::HOVER>(
+            ColorFill{COLOR::ROSY_BROWN}
+            );
+    scrollbar->inc_bt_win->applyStyle<UIWindow::CLICK>(
+            ColorFill{COLOR::GREY}
+    );
+
+    scrollbar->dec_bt_win->applyShape<RectangleShape>();
+    scrollbar->dec_bt_win->applyStyle<UIWindow::NORMAL>(
             ColorFill{COLOR::BEIGE}
     );
-    scrollbar->slider->applyShape<CircleShape>();
-    scrollbar->slider->applyStyle<UIWindow::NORMAL>(
+    scrollbar->dec_bt_win->applyStyle<UIWindow::HOVER>(
+            ColorFill{COLOR::ROSY_BROWN}
+            );
+    scrollbar->dec_bt_win->applyStyle<UIWindow::CLICK>(
+            ColorFill{COLOR::GREY}
+            );
+
+    scrollbar->slider_win->applyShape<RectangleShape>();
+    scrollbar->slider_win->applyStyle<UIWindow::NORMAL>(
             ColorFill{COLOR::BLUE}
     );
+    scrollbar->slider_win->applyStyle<UIWindow::CLICK>(
+            ColorFill{COLOR::RED}
+            );
+
+
     sb->applyShape<RectangleShape>();
     sb->applyStyle<UIWindow::NORMAL>(
             ColorFill{COLOR::BLACK}

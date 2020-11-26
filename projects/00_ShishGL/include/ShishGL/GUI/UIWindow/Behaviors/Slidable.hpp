@@ -15,7 +15,9 @@ namespace ShishGL {
                           const Segment2<double>& slide,
                           bool send_event = false);
 
-        bool onMouseMove(ShishGL::MouseEvent& event) override;
+        bool onMouseMove(MouseEvent& event) override;
+
+        void slide(const Vector2<double>& delta, Mouse::Button button);
 
     private:
 

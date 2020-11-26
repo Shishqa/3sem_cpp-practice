@@ -14,7 +14,7 @@ namespace ShishGL {
 
         static constexpr double DEFAULT_PROPORTION = 0.2;
         static constexpr double DEFAULT_STEP_SIZE = 1.0;
-        static constexpr double MIN_SLIDER_SIZE = 20;
+        static constexpr double MIN_SLIDER_RATIO = 0.1;
 
     public:
 
@@ -23,14 +23,30 @@ namespace ShishGL {
             HORIZONTAL
         };
 
-        explicit Scrollbar(UIWindow* target, const double& slider_ratio,
+        explicit Scrollbar(UIWindow* target, double slider_size, double slider_pos,
                            Scrollbar::Type type);
 
         void reactOnPress(MouseButtonEvent& event) override;
 
-        UIWindow* inc_button;
-        UIWindow* dec_button;
-        UIWindow* slider;
+        bool onMouseScroll(MouseScrollEvent& event) override;
+
+        // TODO: destructor
+
+        Button* inc_button;
+        Button* dec_button;
+        Slidable* slider;
+
+        UIWindow* inc_bt_win;
+        UIWindow* dec_bt_win;
+        UIWindow* slider_win;
+
+    private:
+
+        void constructVertical(UIWindow* target, double slider_size, double slider_pos);
+
+        void constructHorizontal(UIWindow* target, double slider_size, double slider_pos);
+
+        Type s_type;
 
     };
 
@@ -56,9 +72,11 @@ namespace ShishGL {
 
     protected:
 
-        void reactOnPress(MouseButtonEvent& event) override {}
-
-        void reactOnHold(TimerEvent& event) override {}
+        void reactOnHold(TimerEvent&) override {
+            EventSystem::sendEvent<MouseScrollEvent>(
+                    this, target<UIWindow>()->getPos(), m_delta, m_type
+                    );
+        }
 
     };
 

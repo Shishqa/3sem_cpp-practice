@@ -6,114 +6,148 @@
 using namespace ShishGL;
 /*============================================================================*/
 
-Scrollbar::Scrollbar(UIWindow* target, const double& slider_ratio,
+Scrollbar::Scrollbar(UIWindow* target, double slider_size, double slider_pos,
                      Scrollbar::Type type)
         : Clickable(target)
         , inc_button(nullptr)
         , dec_button(nullptr)
-        , slider(nullptr) {
+        , slider(nullptr)
+        , inc_bt_win(nullptr)
+        , dec_bt_win(nullptr)
+        , slider_win(nullptr)
+        , s_type(type) {
 
-    Vector2<double> size = target->getFrame().size;
-    Vector2<double> button_size = {};
-
-    if (type == VERTICAL) {
-
-        button_size = {size.x, size.x};
-
-        inc_button = target->attach<UIWindow>(
-                Viewport{ {0, 0}, button_size }
-                );
-
-        dec_button = target->attach<UIWindow>(
-                Viewport{ {0, size.y - button_size.y}, button_size }
-                );
-
-        slider = target->attach<UIWindow>(
-                Viewport{ {0, button_size.y * 2}, button_size }
-                );
-
-    } else {
-
-        button_size = {size.y, size.y};
-
-        inc_button = target->attach<UIWindow>(
-                Viewport{ {0, 0}, button_size }
-                );
-
-        dec_button = target->attach<UIWindow>(
-                Viewport{ {size.x - button_size.x, 0}, button_size }
-                );
-
-        slider = target->attach<UIWindow>(
-                Viewport{ {button_size.x * 2, 0}, button_size }
-                );
-
+    if (slider_size > 1.0) {
+        slider_size = 0.99;
+    } else if (slider_size < MIN_SLIDER_RATIO) {
+        slider_size = MIN_SLIDER_RATIO;
     }
 
-    /*
-    Vector2<double> button_size{size.x, size.x};
-    auto slide_space_size = size - Vector2<double>{0, 2 * button_size.y};
-
-    up_button = attach<ScrollButton>(
-        -1.0,
-        colors.button,
-        button_size,
-        Vector2<double>{0, 0}
-        );
-
-    down_button = attach<ScrollButton>(
-        +1.0,
-        colors.button,
-        button_size,
-        Vector2<double>{0, button_size.y + slide_space_size.y}
-        );
-
-    double slider_height = MIN_SLIDER_SIZE;
-    if (target) {
-        slider_height = std::max(
-                slider_height,
-                slide_space_size.y * target->frameSize() / target->limitSize()
-                );
+    if (slider_pos > 1.0) {
+        slider_pos = 0.99;
+    } else if (slider_pos < 0.0) {
+        slider_pos = 0.01;
     }
 
-    Vector2<double> slider_size{slide_space_size.x, slider_height};
-    Vector2<double> slider_guide{0, slide_space_size.y - slider_size.y};
-    Vector2<double> slider_pos{0, button_size.y};
+    switch (type) {
+        case VERTICAL:
+            constructVertical(target, slider_size, slider_pos);
+            break;
 
-    slider = attach<ScrollSlider>(
-            colors.slider,
-            slider_guide,
-            slider_size,
-            slider_pos
-    );
-    */
+        case HORIZONTAL:
+            constructHorizontal(target, slider_size, slider_pos);
+            break;
 
+        default:
+            LogSystem::printError("Constructing scrollbar with unknown type");
+    }
+
+    SubscriptionManager::subscribe(this, slider, MOUSE_BUTTON | MOUSE_MOVE);
 }
 
 /*----------------------------------------------------------------------------*/
 
-void Scrollbar::reactOnPress(MouseButtonEvent&) {
+void Scrollbar::constructVertical(UIWindow* target, double slider_size_ratio,
+                                  double slider_pos) {
 
-    printf("PRESSED!\n");
+    Vector2<double> size = target->getFrame().size;
+    Vector2<double> button_size = {size.x, size.x};
 
-    /*
-    if (ObjectManager::get<ScrollSlider>(slider).contains(event->where()) ||
-        ObjectManager::get<ScrollButton>(up_button).contains(event->where()) ||
-        ObjectManager::get<ScrollButton>(down_button).contains(event->where())) {
+    Vector2<double> slider_size =
+            {size.x, (size.y - 2 * button_size.y) * slider_size_ratio};
+
+    Segment2<double> slider_guide = {};
+    slider_guide.begin = {0, button_size.y};
+    slider_guide.end   = {0, size.y - button_size.y - slider_size.y};
+
+    inc_bt_win = target->attach<UIWindow>(
+            Viewport{ {0, 0}, button_size }
+    );
+    inc_button = inc_bt_win->addBehavior<Scrollbar::Button>(
+            1.0, Mouse::VERTICAL
+    );
+
+    dec_bt_win = target->attach<UIWindow>(
+            Viewport{ {0, size.y - button_size.y}, button_size }
+    );
+    dec_button = dec_bt_win->addBehavior<Scrollbar::Button>(
+            -1.0, Mouse::VERTICAL
+    );
+
+    slider_win = target->attach<UIWindow>(
+            Viewport{ slider_guide.begin + slider_pos * slider_guide.guide(), slider_size }
+    );
+    slider = slider_win->addBehavior<Slidable>(
+            slider_guide
+    );
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Scrollbar::constructHorizontal(UIWindow* target, double slider_size_ratio,
+                                    double slider_pos) {
+    Vector2<double> size = target->getFrame().size;
+    Vector2<double> button_size = {size.y, size.y};
+
+    Vector2<double> slider_size =
+            {(size.x - 2 * button_size.x) * slider_size_ratio, size.y};
+
+    Segment2<double> slider_guide = {};
+    slider_guide.begin = {button_size.x, 0};
+    slider_guide.end   = {size.x - button_size.x - slider_size.x, 0};
+
+    inc_bt_win = target->attach<UIWindow>(
+            Viewport{ {0, 0}, button_size }
+    );
+    inc_button = inc_bt_win->addBehavior<Scrollbar::Button>(
+            1.0, Mouse::HORIZONTAL
+            );
+
+    dec_bt_win = target->attach<UIWindow>(
+            Viewport{ {size.x - button_size.x, 0}, button_size }
+    );
+    dec_button = dec_bt_win->addBehavior<Scrollbar::Button>(
+            -1.0, Mouse::HORIZONTAL
+            );
+
+    slider_win = target->attach<UIWindow>(
+            Viewport{ slider_guide.begin + slider_pos * slider_guide.guide(), slider_size }
+    );
+    slider = slider_win->addBehavior<Slidable>(
+            slider_guide
+    );
+}
+
+/*----------------------------------------------------------------------------*/
+
+void Scrollbar::reactOnPress(MouseButtonEvent& event) {
+
+    if (slider_win->contains(event.where()) ||
+        inc_bt_win->contains(event.where()) ||
+        dec_bt_win->contains(event.where())) {
         return;
     }
 
-    if (event->state() == Mouse::DOWN) {
-        EventSystem::sendEvent<MouseButtonEvent>(slider, Event::MOUSE_BUTTON,
-                                                 ObjectManager::get<ScrollSlider>(slider).getCenter(),
-                                                 Mouse::LEFT, Mouse::DOWN);
+    printf("PRESSED!\n");
 
-        EventSystem::sendEvent<MouseEvent>(slider, Event::MOUSE_MOVE,
-                                           event->where());
+    if (event.state() == Mouse::DOWN) {
+        EventSystem::sendEvent<MouseButtonEvent>(this,
+                slider_win->getPos() + 0.5 * slider_win->getFrame().size,
+                Mouse::LEFT, Mouse::DOWN
+                );
+        EventSystem::sendEvent<MouseEvent>(this, event.where());
     }
-
-    */
 }
+
+bool Scrollbar::onMouseScroll(MouseScrollEvent&) {
+
+
+
+    return true;
+
+}
+
+/*----------------------------------------------------------------------------*/
 
 /*
 ScrollSlider::ScrollSlider(Object::ID id, Object::ID parent, const ButtonColorScheme &colors,

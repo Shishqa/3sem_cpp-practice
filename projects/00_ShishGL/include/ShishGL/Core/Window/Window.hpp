@@ -53,6 +53,10 @@ namespace ShishGL {
         void translate(const Vector2<double>& delta);
         /*-----------------------------------------------*/
 
+        const std::unordered_set<Window*>& getChildren() {
+            return children;
+        }
+
     protected:
 
         explicit Window(const Viewport& frame);

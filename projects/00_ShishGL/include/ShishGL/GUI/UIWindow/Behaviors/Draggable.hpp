@@ -19,6 +19,8 @@ namespace ShishGL {
 
         bool onMouseMove(MouseEvent& event) override;
 
+        void drag(const Vector2<double>& delta, Mouse::Button button);
+
     private:
 
         Vector2<double> drag_point;

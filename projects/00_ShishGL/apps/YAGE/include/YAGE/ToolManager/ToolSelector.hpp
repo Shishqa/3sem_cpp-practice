@@ -9,11 +9,10 @@ using namespace ShishGL;
 /*============================================================================*/
 namespace YAGE {
 
-    class ToolButtonBehaviour : public Clickable {
+    class ToolSelector : public Clickable {
     public:
 
-        explicit ToolButtonBehaviour(Window* target,
-                                     const Tool* tool)
+        explicit ToolSelector(UIWindow* target, Tool* tool)
             : Clickable(target)
             , impl_to_set(tool)
             { }
@@ -21,20 +20,12 @@ namespace YAGE {
     protected:
 
         void reactOnRelease(MouseButtonEvent&) override {
-            EventSystem::sendEvent<ToolSelectEvent>(this, impl_to_set);
+            ToolManager::setTool(impl_to_set);
         }
 
     private:
 
-        const Tool* impl_to_set;
-
-    };
-
-    /*------------------------------------------------------------------------*/
-
-    class ToolSelectorButton : public UIButton {
-
-
+        Tool* impl_to_set;
 
     };
 
