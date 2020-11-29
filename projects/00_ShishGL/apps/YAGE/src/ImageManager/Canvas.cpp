@@ -1,7 +1,7 @@
 /*============================================================================*/
 #include "Canvas.hpp"
 #include "ImageManager.hpp"
-#include "Pen.hpp"
+#include "Pencil.hpp"
 /*============================================================================*/
 using namespace YAGE;
 /*============================================================================*/
@@ -24,7 +24,7 @@ CanvasBehaviour::CanvasBehaviour(UIWindow* target)
         , applying_tool(false) {
     SubscriptionManager::subscribe(EventSystem::SystemEvents, this,
                                        MOUSE_MOVE | MOUSE_BUTTON);
-    ToolManager::set<Pen>();
+    ToolManager::set<Pencil>();
 }
 
 /*----------------------------------------------------------------------------*/

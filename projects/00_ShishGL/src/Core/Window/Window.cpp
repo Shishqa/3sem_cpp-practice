@@ -59,12 +59,13 @@ void Window::render() {
 /*----------------------------------------------------------------------------*/
 
 void Window::onRender() {
-    RENDERER().setViewport(frame.pos, frame.size);
+    RENDERER().setViewport(view.pos, view.size);
 }
 
 /*============================================================================*/
 
 void Window::fitParent() {
+    view = frame;
     if (parent) {
         view.fit_into(parent->view);
         for (auto& child : children) {
@@ -108,8 +109,8 @@ void Window::translate(const Vector2<double>& delta) {
 /*----------------------------------------------------------------------------*/
 
 bool Window::contains(const Vector2<double>& point) const {
-    return (frame.pos.x <= point.x && point.x <= frame.pos.x + frame.size.x &&
-            frame.pos.y <= point.y && point.y <= frame.pos.y + frame.size.y);
+    return (view.pos.x <= point.x && point.x <= view.pos.x + view.size.x &&
+            view.pos.y <= point.y && point.y <= view.pos.y + view.size.y);
 }
 
 /*============================================================================*/

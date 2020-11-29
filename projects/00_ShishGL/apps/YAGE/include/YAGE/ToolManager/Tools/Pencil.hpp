@@ -1,26 +1,28 @@
 /*============================================================================*/
-#ifndef SHISHGL_PEN_HPP
-#define SHISHGL_PEN_HPP
+#ifndef SHISHGL_PENCIL_HPP
+#define SHISHGL_PENCIL_HPP
 /*============================================================================*/
 #include "Tool.hpp"
 #include "ToolManager.hpp"
-#include "StrokeProperties.hpp"
+#include "Stroke.hpp"
 /*============================================================================*/
 namespace YAGE {
 
-    class Pen : public Tool {
+    class Pencil : public Tool {
     public:
 
-        Pen() : last_pos({})
+        Pencil() : last_pos({})
         { }
 
         void startApplying(Image& img, const Vector2<int64_t>& pos) override {
             last_pos = pos;
-            draw(img, pos, StrokeProperties::activeThickness(), StrokeProperties::activeColor());
+            draw(img, pos, property<Stroke>().activeThickness(),
+                 property<Stroke>().activeColor());
         }
 
         void update(Image& img, const Vector2<int64_t>& pos) override {
-            draw(img, pos, StrokeProperties::activeThickness(), StrokeProperties::activeColor());
+            draw(img, pos, property<Stroke>().activeThickness(),
+                 property<Stroke>().activeColor());
             last_pos = pos;
         }
 
@@ -44,5 +46,5 @@ namespace YAGE {
 
 }
 /*============================================================================*/
-#endif //SHISHGL_PEN_HPP
+#endif //SHISHGL_PENCIL_HPP
 /*============================================================================*/

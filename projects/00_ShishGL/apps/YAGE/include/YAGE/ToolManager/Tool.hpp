@@ -17,6 +17,12 @@ namespace YAGE {
 
         virtual void stopApplying(Image& img, const Vector2<int64_t>& pos) = 0;
 
+        template <typename SomeProperty>
+        SomeProperty& property() {
+            static SomeProperty PROPERTY;
+            return PROPERTY;
+        }
+
         [[nodiscard]]
         virtual std::string_view getIcon() const = 0;
 

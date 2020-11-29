@@ -4,6 +4,7 @@
 /*============================================================================*/
 #include <string_view>
 #include <vector>
+#include <cassert>
 
 #include "Vector2.hpp"
 #include "Color.hpp"
@@ -44,22 +45,20 @@ namespace YAGE {
             delete ImageContext();
             ImageContext() = RENDERER().createContext(size, COLOR::WHITE);
 
-            Layers().clear();
             Layers().emplace_back(size, COLOR::WHITE);
             Layers().emplace_back(size, COLOR::NONE);
-            ActiveLayer() = 1;
+            ActiveLayer() = 0;
         }
 
         static void displayImage(const Vector2<double>& pos) {
 
-            Image result(Layers()[0].size());
+            Image result(Layers()[0].size(), COLOR::NONE);
 
             for (auto& layer : Layers()) {
                 result.blend(layer);
             }
 
-            ImageContext()->update(result.getPixels());
-
+            result.paste(ImageContext());
             RENDERER().displayContext(ImageContext(), pos);
         }
 

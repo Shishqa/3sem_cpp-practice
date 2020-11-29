@@ -10,9 +10,9 @@ target_include_directories(YAGE-PropertyManager
 
 target_sources(YAGE-PropertyManager
   PUBLIC
-    ${INCROOT}/Properties/StrokeProperties.hpp
+    ${INCROOT}/Properties/Stroke.hpp
   PRIVATE
-    Properties/StrokeProperties.cpp
+  Properties/Stroke.cpp
   )
 
 target_link_libraries(YAGE-PropertyManager

@@ -7,11 +7,12 @@
 #include "Draggable.hpp"
 #include "YAGE.hpp"
 #include "Canvas.hpp"
+#include "Dialog.hpp"
 #include "RectangleShape.hpp"
 #include "ToolSelector.hpp"
 #include "ImageManager.hpp"
 
-#include "Pen.hpp"
+#include "Pencil.hpp"
 #include "Eraser.hpp"
 
 /*============================================================================*/
@@ -30,6 +31,7 @@ void YAGE::init() {
                     {WIN_WIDTH + 20, WIN_HEIGHT + 50}
             }
     );
+    holder->addBehavior<Dialog>();
     holder->applyShape<RectangleShape>();
     holder->applyStyle<UIWindow::NORMAL>(
             ColorFill{COLOR::PALE_VIOLET_RED}
@@ -60,7 +62,7 @@ UIWindow* YAGE::createMainLayout(const Viewport& frame) {
 
 UIWindow* YAGE::createCanvasLayout(const Viewport &frame) {
 
-    ImageManager::createImage({500, 500});
+    ImageManager::createImage({1100, 600});
 
     auto canvas_frame = WindowManager::create<UIWindow>(frame);
     canvas_frame->applyShape<RectangleShape>();
@@ -123,7 +125,7 @@ UIWindow* YAGE::createToolsLayout(const Viewport& frame) {
     );
 
     tools->attach(createToolButton({PADDING, PADDING},
-                                   ToolManager::getImpl<Pen>()));
+                                   ToolManager::getImpl<Pencil>()));
     tools->attach(createToolButton({PADDING + BUTTON_SIZE.x + SPACING, PADDING},
                                    ToolManager::getImpl<Eraser>()));
 

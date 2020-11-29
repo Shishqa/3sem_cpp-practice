@@ -2,23 +2,23 @@
 #ifndef SHISHGL_ERASER_HPP
 #define SHISHGL_ERASER_HPP
 /*============================================================================*/
-#include "Pen.hpp"
+#include "Pencil.hpp"
 /*============================================================================*/
 namespace YAGE {
 
-    class Eraser : public Pen {
+    class Eraser : public Pencil {
     public:
 
-        Eraser() : Pen()
+        Eraser() : Pencil()
         { }
 
         void startApplying(Image& img, const Vector2<int64_t>& pos) override {
             last_pos = pos;
-            draw(img, pos, StrokeProperties::activeThickness(), COLOR::NONE);
+            draw(img, pos, property<Stroke>().activeThickness(), COLOR::NONE);
         }
 
         void update(Image& img, const Vector2<int64_t>& pos) override {
-            draw(img, pos, StrokeProperties::activeThickness(), COLOR::NONE);
+            draw(img, pos, property<Stroke>().activeThickness(), COLOR::NONE);
             last_pos = pos;
         }
 

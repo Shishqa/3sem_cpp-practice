@@ -6,7 +6,7 @@
 #include "Image.hpp"
 #include "RenderSystem.hpp"
 #include "ToolManager.hpp"
-#include "Pen.hpp"
+#include "Pencil.hpp"
 using namespace ShishGL;
 /*============================================================================*/
 namespace YAGE {

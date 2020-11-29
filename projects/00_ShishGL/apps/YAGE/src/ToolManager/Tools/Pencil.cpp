@@ -1,11 +1,11 @@
 /*============================================================================*/
-#include "Pen.hpp"
+#include "Pencil.hpp"
 /*============================================================================*/
 using namespace YAGE;
 /*============================================================================*/
 
-void Pen::draw(Image& img, const Vector2<int64_t>& pos,
-               size_t thickness, const Color& color) {
+void Pencil::draw(Image& img, const Vector2<int64_t>& pos,
+                  size_t thickness, const Color& color) {
 
     thickness /= 2;
 

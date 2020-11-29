@@ -19,12 +19,14 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     -O3 \
     -Wno-unused-parameter \
     -msse4.2 \
+    -march=native \
   ")
 
   set(DEBUG_FLAGS " \
     -g \
     -O3 \
     -msse4.2 \
+    -march=native \
     -Wconversion \
     -Wlogical-op \
     -Wshift-overflow=2 \

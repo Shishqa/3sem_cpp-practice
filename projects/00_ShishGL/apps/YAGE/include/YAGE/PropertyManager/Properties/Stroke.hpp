@@ -1,43 +1,46 @@
 /*============================================================================*/
-#ifndef SHISHGL_STROKE_PROPERTIES_HPP
-#define SHISHGL_STROKE_PROPERTIES_HPP
+#ifndef SHISHGL_STROKE_PROPERTY_HPP
+#define SHISHGL_STROKE_PROPERTY_HPP
 /*============================================================================*/
 #include <cstddef>
 
 #include "Color.hpp"
 #include "ColorCollection.hpp"
+#include "UIWindow.hpp"
 using namespace ShishGL;
 /*============================================================================*/
 namespace YAGE {
 
-    class StrokeProperties {
+    class Stroke {
     public:
 
         /*--------------------------------------------------------------------*/
         static constexpr Color DEFAULT_COLOR = COLOR::GREEN;
 
-        static const Color& activeColor();
+        [[nodiscard]]
+        const Color& activeColor() const;
 
-        static void setColor(const Color& new_color);
+        void setColor(const Color& new_color);
         /*--------------------------------------------------------------------*/
 
         /*--------------------------------------------------------------------*/
-        static constexpr size_t DEFAULT_THICKNESS = 20;
+        static constexpr size_t DEFAULT_THICKNESS = 5;
 
-        static const size_t& activeThickness();
+        [[nodiscard]]
+        const size_t& activeThickness() const;
 
-        static void setThickness(const size_t& new_thickness);
+        void setThickness(const size_t& new_thickness);
         /*--------------------------------------------------------------------*/
 
     private:
 
-        static Color& color();
+        Color color = DEFAULT_COLOR;
 
-        static size_t& thickness();
+        size_t thickness = DEFAULT_THICKNESS;
 
     };
 
 }
 /*============================================================================*/
-#endif //SHISHGL_STROKE_PROPERTIES_HPP
+#endif //SHISHGL_STROKE_PROPERTY_HPP
 /*============================================================================*/

@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 #include <immintrin.h>
+#include <cstring>
+#include <cassert>
+#include <cstdlib>
 
 #include "Color.hpp"
 #include "ColorCollection.hpp"
@@ -24,6 +27,7 @@ namespace ShishGL {
                        const Color& color = COLOR::WHITE)
                 : img_size(size) {
             pixels.resize(size.x * size.y, color);
+            assert(reinterpret_cast<uint64_t>(pixels.data()) % 32 == 0);
         }
 
         void setPixel(const Vector2<size_t>& pos, const Color& color) {
@@ -33,6 +37,11 @@ namespace ShishGL {
         [[nodiscard]]
         const Color* getPixels() const {
             return pixels.data();
+        }
+
+        [[nodiscard]]
+        const uint8_t* getData() const {
+            return reinterpret_cast<const uint8_t*>(pixels.data());
         }
 
         [[nodiscard]]
@@ -47,13 +56,14 @@ namespace ShishGL {
 
         void blend(const Image& other);
 
-        void draw(IPlatform::IContext* context) {
+        void paste(IPlatform::IContext* context) {
             context->update(pixels.data());
         }
 
     private:
 
         Vector2<size_t> img_size;
+
         std::vector<Color> pixels;
 
     };
