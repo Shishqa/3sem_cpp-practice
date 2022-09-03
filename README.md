@@ -1,4 +1,4 @@
-# C++ course (MIPT 3rd semester)
+# C++ course (3rd semester)
 
 ## List of contents
 
